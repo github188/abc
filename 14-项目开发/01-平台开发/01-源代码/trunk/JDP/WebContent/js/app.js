@@ -1,22 +1,22 @@
-angular.module('app', []).controller('ctrl', ['$scope','$location','$http', function($scope,$location,$http){
-	$scope.usr='';
-	$scope.pwd='';
-	$scope.cc = function(){
-		console.log($scope.usr+':'+$scope.pwd);
-		$scope.data={'name': '擦', 'age': '28'}//测试Django后台是否可以读取数据
-		var url = "user/login.do?";
-		
-		$http.post(url+"usr="+$scope.usr+"&pwd="+$scope.pwd+"").success(function(response) {
-			console.log(response);
-			if(response=="success"){
-				location.href = "index.html";
-			}
-		});
-	}
-}]);
-var app = angular.module('jsywp', ['ui.bootstrap','ui.router','chart.js','ngFileUpload']);
+//angular.module('app', []).controller('ctrl', ['$scope','$location','$http', function($scope,$location,$http){
+//	$scope.usr='';
+//	$scope.pwd='';
+//	$scope.cc = function(){
+//		console.log($scope.usr+':'+$scope.pwd);
+//		$scope.data={'name': '哦', 'age': '28'}//测试Django后台是否可以读取数据
+//		var url = "as/login.do?";
+//		
+//		$http.post(url+"usr="+$scope.usr+"&pwd="+$scope.pwd+"").success(function(response) {
+//			console.log(response);
+//			if(response=="success"){
+//				location.href = "index.html";
+//			}
+//		});
+//	}
+//}]);
+var app = angular.module('jsywp', ['ui.bootstrap','ui.router','chart.js','ngFileUpload','ngCookies']);
 
-app.controller('indexCtrl', ['$scope','$rootScope', function($scope,$rootScope){
+app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',function($scope,$rootScope,$http,$cookieStore){
     $rootScope.systems=["一系统","二系统","三系统"];
     $rootScope.subsystems = [
         {
@@ -42,6 +42,30 @@ app.controller('indexCtrl', ['$scope','$rootScope', function($scope,$rootScope){
 		closeothers : false,
 		isoneopen : true ,
 		isonedisable : false
+	}
+	console.log($cookieStore.get('showornot'));
+	  // Setting a cookie
+	if($cookieStore.get('showornot')=='true'){
+		$scope.showornot='false';
+	}else{
+		$scope.showornot='true';
+	}
+	$scope.usr='';
+	$scope.pwd='';
+	$scope.cc = function(){
+		$cookieStore.put('showornot', 'true');
+		console.log($scope.usr+':'+$scope.pwd);
+		var url = "as/biz.do?";
+		
+		$http.post(url+"usr="+$scope.usr+"&pwd="+$scope.pwd+"").success(function(response) {
+			console.log('123:'+$cookieStore.get('showornot'));
+			console.log(response);
+			if(response=="success"){
+				$scope.showornot='false';
+				$cookieStore.put('showornot', 'true');
+//				location.href = "index.html";
+			}
+		});
 	}
 }]);
 
