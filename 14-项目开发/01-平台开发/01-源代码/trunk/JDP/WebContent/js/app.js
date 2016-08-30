@@ -53,7 +53,7 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 	$scope.usr='';
 	$scope.pwd='';
 	$scope.cc = function(){
-		$cookieStore.put('showornot', 'true');
+//		$cookieStore.put('showornot', 'true');
 		console.log($scope.usr+':'+$scope.pwd);
 		var url = "as/biz.do?";
 		
