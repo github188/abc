@@ -1,4 +1,4 @@
-package com.jd.pems.util;
+package com.jd.pims.pem.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

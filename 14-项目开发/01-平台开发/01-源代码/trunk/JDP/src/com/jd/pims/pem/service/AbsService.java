@@ -1,4 +1,4 @@
-package com.jd.pems.service;
+package com.jd.pims.pem.service;
 
 public abstract class AbsService {
 	

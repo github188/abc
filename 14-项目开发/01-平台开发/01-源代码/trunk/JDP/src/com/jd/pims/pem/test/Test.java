@@ -1,4 +1,4 @@
-package com.jd.pems.test;
+package com.jd.pims.pem.test;
 
 public class Test {
 	public static void main(String[] args) {

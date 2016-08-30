@@ -1,8 +1,8 @@
-package com.jd.pems.dao.impl;
+package com.jd.pims.pem.dao.impl;
 
 import org.springframework.stereotype.Service;
 
-import com.jd.pems.dao.UserDao;
+import com.jd.pims.pem.dao.UserDao;
 
 @Service("userDaoImpl")
 public class UserDaoImpl implements UserDao{

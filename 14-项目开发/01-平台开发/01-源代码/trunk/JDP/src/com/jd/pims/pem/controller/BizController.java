@@ -1,4 +1,4 @@
-package com.jd.pems.controller;
+package com.jd.pims.pem.controller;
 
 import java.io.InputStream;
 import java.io.ObjectOutputStream;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
-import com.jd.pems.model.empDTO;
-import com.jd.pems.service.impl.BizServiceImpl;
-import com.jd.pems.service.impl.LoginServiceImpl;
-import com.jd.pems.service.impl.LogoutServiceImpl;
-import com.jd.pems.util.changeTool;
+import com.jd.pims.pem.model.empDTO;
+import com.jd.pims.pem.service.impl.BizServiceImpl;
+import com.jd.pims.pem.service.impl.LoginServiceImpl;
+import com.jd.pims.pem.service.impl.LogoutServiceImpl;
+import com.jd.pims.pem.util.changeTool;
 
 @Controller
 @RequestMapping("/as")

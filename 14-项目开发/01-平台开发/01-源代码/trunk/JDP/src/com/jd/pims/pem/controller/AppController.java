@@ -1,4 +1,4 @@
-package com.jd.pems.controller;
+package com.jd.pims.pem.controller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;

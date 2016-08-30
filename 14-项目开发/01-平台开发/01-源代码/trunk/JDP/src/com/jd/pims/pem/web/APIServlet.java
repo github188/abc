@@ -1,4 +1,4 @@
-package com.jd.pems.web;
+package com.jd.pims.pem.web;
 
 import java.io.IOException;
 

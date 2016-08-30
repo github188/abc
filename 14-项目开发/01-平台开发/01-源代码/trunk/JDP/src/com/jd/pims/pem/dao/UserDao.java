@@ -1,4 +1,4 @@
-package com.jd.pems.dao;
+package com.jd.pims.pem.dao;
 
 public interface UserDao {
 

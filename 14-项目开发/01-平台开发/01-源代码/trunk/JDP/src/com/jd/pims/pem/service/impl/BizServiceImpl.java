@@ -1,12 +1,12 @@
-package com.jd.pems.service.impl;
+package com.jd.pims.pem.service.impl;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jd.pems.dao.UserDao;
-import com.jd.pems.service.AbsService;
+import com.jd.pims.pem.dao.UserDao;
+import com.jd.pims.pem.service.AbsService;
 
 @Service("bizServiceImpl")
 public class BizServiceImpl extends AbsService {

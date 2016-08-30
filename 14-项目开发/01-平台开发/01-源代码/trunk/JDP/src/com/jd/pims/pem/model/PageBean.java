@@ -1,4 +1,4 @@
-package com.jd.pems.model;
+package com.jd.pims.pem.model;
 
 import java.util.List;
 
