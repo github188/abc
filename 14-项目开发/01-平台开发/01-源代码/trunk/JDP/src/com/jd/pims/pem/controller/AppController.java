@@ -1,11 +1,7 @@
 package com.jd.pims.pem.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.jd.pims.pem.model.empDTO;
-import com.jd.pims.pem.util.changeTool;
 
 @Controller
 @RequestMapping("/jdemws")
@@ -46,6 +41,30 @@ public class AppController {
 		    String msg=JSON.toJSONString(dto);
 		    Map<String,String>map = new HashMap<String,String>();
 		    map.put("result", msg);
+		    map.put("message", "wangwangwang");
+		    map.put("returnCode", "0");
+		    String result=JSON.toJSONString(map);
+		    PrintWriter out = response.getWriter();  
+		    out.println(result);  
+		    out.flush();  
+		    out.close();  
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 业务接口
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/logout", method = RequestMethod.POST)
+	@ResponseBody
+	public void logout(HttpServletRequest request,HttpServletResponse response){
+		try {
+			String empId= request.getParameter("empId");
+		    Map<String,String>map = new HashMap<String,String>();
 		    map.put("message", "wangwangwang");
 		    map.put("returnCode", "0");
 		    String result=JSON.toJSONString(map);
