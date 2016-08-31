@@ -1,5 +1,8 @@
 package com.jd.pims.pem.controller;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -7,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.jd.pims.pem.util.changeTool;
 
 @Controller
 @RequestMapping("/jdemws")
@@ -22,6 +27,13 @@ public class AppController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public String login(HttpServletRequest request){
+		try {
+			InputStream ins = request.getInputStream();
+			String a = changeTool.ConvertStream2Json(ins);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "SUCCESS";
 	}
 	
