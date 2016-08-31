@@ -1,4 +1,4 @@
-package com.jd.pims.pem.util;
+package com.jd.pims.util;
 
 public class FileNameUtil {
 	public static String getName(){

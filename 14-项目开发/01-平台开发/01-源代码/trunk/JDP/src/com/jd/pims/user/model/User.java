@@ -1,4 +1,4 @@
-package com.jd.pims.pem.model;
+package com.jd.pims.user.model;
 
 public class User{
     

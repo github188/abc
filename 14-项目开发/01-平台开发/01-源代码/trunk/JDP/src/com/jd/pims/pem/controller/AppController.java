@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jd.pims.pem.util.changeTool;
+import com.jd.pims.util.changeTool;
 
 @Controller
 @RequestMapping("/jdemws")
@@ -19,23 +19,7 @@ public class AppController {
 	@Value("${app.address}")  
     private String appAddress;
 	
-	/**
-	 * 业务接口
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	@ResponseBody
-	public String login(HttpServletRequest request){
-		try {
-			InputStream ins = request.getInputStream();
-			String a = changeTool.ConvertStream2Json(ins);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "SUCCESS";
-	}
+	
 	
 	/**
 	 * 业务接口

@@ -20,7 +20,7 @@ import com.jd.pims.pem.model.empDTO;
 import com.jd.pims.pem.service.impl.BizServiceImpl;
 import com.jd.pims.pem.service.impl.LoginServiceImpl;
 import com.jd.pims.pem.service.impl.LogoutServiceImpl;
-import com.jd.pims.pem.util.changeTool;
+import com.jd.pims.util.changeTool;
 
 @Controller
 @RequestMapping("/as")
