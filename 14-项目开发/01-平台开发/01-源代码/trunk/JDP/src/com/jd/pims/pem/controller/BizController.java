@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jd.pims.pem.model.empDTO;
 import com.jd.pims.pem.service.impl.BizServiceImpl;
@@ -46,7 +47,7 @@ public class BizController {
 //		System.out.println(bizService.login("admin", "123"));
 		String usr= request.getParameter("usr");
 		String pwd= request.getParameter("pwd");
-		int returnCode = 1;
+		String returnCode = "1";
 		String message = "";
 		String result = "";
 		if("admin".equals(usr)&&"123456".equals(pwd)){
@@ -69,8 +70,8 @@ public class BizController {
 			objOutputStrm.flush();
 			InputStream ips = huconn.getInputStream();
 			String a = changeTool.ConvertStream2Json(ips);
-			returnCode =  huconn.getResponseCode();
-			message = huconn.getResponseMessage();
+			returnCode = (String)JSON.parseObject(a).get("returnCode");
+			message = (String)JSON.parseObject(a).get("message");
 			objOutputStrm.close(); 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

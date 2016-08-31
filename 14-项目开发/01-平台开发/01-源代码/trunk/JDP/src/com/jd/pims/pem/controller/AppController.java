@@ -2,8 +2,14 @@ package com.jd.pims.pem.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -11,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
+import com.jd.pims.pem.model.empDTO;
 import com.jd.pims.pem.util.changeTool;
 
 @Controller
@@ -26,15 +34,29 @@ public class AppController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(HttpServletRequest request){
+	public void login(HttpServletRequest request,HttpServletResponse response){
 		try {
-			InputStream ins = request.getInputStream();
-			String a = changeTool.ConvertStream2Json(ins);
-		} catch (IOException e) {
+			String usr= request.getParameter("account");
+			String pwd= request.getParameter("password");
+			empDTO dto = new empDTO();
+			dto.setId("wangwangwang");
+			dto.setOrgCode("wangwangwang");
+			dto.setOrgName("wangwangwang");
+			dto.setSex("18");
+		    String msg=JSON.toJSONString(dto);
+		    Map<String,String>map = new HashMap<String,String>();
+		    map.put("result", msg);
+		    map.put("message", "wangwangwang");
+		    map.put("returnCode", "0");
+		    String result=JSON.toJSONString(map);
+		    PrintWriter out = response.getWriter();  
+		    out.println(result);  
+		    out.flush();  
+		    out.close();  
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "SUCCESS";
 	}
 	
 	/**
