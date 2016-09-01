@@ -55,9 +55,9 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 	$scope.cc = function(){
 //		$cookieStore.put('showornot', 'true');
 		console.log($scope.usr+':'+$scope.pwd);
-		var url = "as/biz.do?";
+		var url = "jdemws/getNumberOnDuty.do?";
 		
-		$http.post(url+"usr="+$scope.usr+"&pwd="+$scope.pwd+"").success(function(response) {
+		$http.post(url+"empId="+$scope.usr+"&orgCode="+$scope.pwd+"").success(function(response) {
 			console.log('123:'+$cookieStore.get('showornot'));
 			console.log(response);
 			if(response=="success"){

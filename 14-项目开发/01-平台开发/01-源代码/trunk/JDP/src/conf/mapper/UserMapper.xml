@@ -28,6 +28,7 @@
   <insert id="insert" parameterType="com.jd.pims.user.model.User" >
     insert into t_user ( name, age,password,email)
     values ( #{name}, #{age},#{password},#{email})
+
   </insert>
   <!--  
   <insert id="insertSelective" parameterType="com.jd.pims.pem.model.Add" >
@@ -112,7 +113,7 @@
   	
   </select>
   
-  <!-- 员工信息 -->
+  <!-- 根据员工ID取员工基本信息 -->
   <select id="getEmployeeById" resultMap="BaseResultMap" >
   	select e.id,e.person_name,e.sex,o.id as org_id,o.org_code,o.org_name
   		c.id as cu_id,c.code as cu_code,c.name as cu_name
