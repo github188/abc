@@ -1,11 +1,11 @@
 package com.jd.pims.pem.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import com.google.gson.Gson;
+import com.jd.pims.comm.BaseDataModel;
 
-public class LabourEfficiencyDay implements Serializable{
+public class LabourEfficiencyDay extends BaseDataModel{
 	/**
 	 * 
 	 */

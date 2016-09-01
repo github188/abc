@@ -3,14 +3,22 @@ package com.jd.pims.pem.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jd.pims.pem.dao.LabourEfficiencyDao;
+import com.jd.pims.pem.dao.LabourOndutyDao;
+import com.jd.pims.pem.dao.OrderQuantityDao;
 import com.jd.pims.pem.service.AbsService;
-import com.jd.pims.user.dao.UserDao;
 
 @Service("bizServiceImpl")
 public class BizServiceImpl extends AbsService {
 	@Autowired
-	private UserDao userDaoImpl;
+	private LabourOndutyDao labourOndutyDao;
 
+	@Autowired
+	private LabourEfficiencyDao labourEfficiencyDao;
+	
+	@Autowired
+	private OrderQuantityDao orderQuantityDao;
+	
 	
 
 }

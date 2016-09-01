@@ -10,12 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jd.pims.util.changeTool;
+import com.jd.pims.comm.BaseController;
+import com.jd.pims.util.StringUtil;
 
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends BaseController{
 	/**
 	 * 用户登录 
 	 * @param request
@@ -24,9 +25,10 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
 	public String login(HttpServletRequest request){
+		String retMsg=null;
 		try {
 			InputStream ins = request.getInputStream();
-			String a = changeTool.ConvertStream2Json(ins);
+			String a = StringUtil.ConvertStream2Json(ins);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -44,7 +46,7 @@ public class UserController {
 	public String logout(HttpServletRequest request){
 		try {
 			InputStream ins = request.getInputStream();
-			String a = changeTool.ConvertStream2Json(ins);
+			String a = StringUtil.ConvertStream2Json(ins);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

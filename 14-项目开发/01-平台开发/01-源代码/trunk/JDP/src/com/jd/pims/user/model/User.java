@@ -5,12 +5,13 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 
 import com.google.gson.Gson;
+import com.jd.pims.comm.BaseDataModel;
 
 /**
  * 用户领域对象
  */
 @Entity
-public class User implements Serializable{
+public class User extends BaseDataModel{
 
 	/**
 	 * 

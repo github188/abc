@@ -1,4 +1,4 @@
-package com.jd.pims.comm.dao;
+package com.jd.pims.comm;
 
 public interface IBaseDao {
 	

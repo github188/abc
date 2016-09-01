@@ -1,12 +1,12 @@
 package com.jd.pims.pem.model;
 
-import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
 import com.google.gson.Gson;
+import com.jd.pims.comm.BaseDataModel;
 
-public class LabourOnDuty implements Serializable{
+public class LabourOnDuty extends BaseDataModel{
 
 	
 	/**

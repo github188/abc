@@ -5,9 +5,10 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 
 import com.google.gson.Gson;
+import com.jd.pims.comm.BaseDataModel;
 
 @Entity
-public class Employee implements Serializable{
+public class Employee extends BaseDataModel{
 	/**
 	 * 
 	 */

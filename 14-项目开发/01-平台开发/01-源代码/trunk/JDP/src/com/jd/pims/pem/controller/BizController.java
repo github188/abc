@@ -17,20 +17,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.jd.pims.comm.BaseController;
 import com.jd.pims.pem.service.impl.BizServiceImpl;
-import com.jd.pims.pem.service.impl.LoginServiceImpl;
-import com.jd.pims.pem.service.impl.LogoutServiceImpl;
-import com.jd.pims.util.changeTool;
+import com.jd.pims.util.StringUtil;
 
 @Controller
 @RequestMapping("/as")
-public class BizController {
+public class BizController extends BaseController{
 	@Autowired
 	private BizServiceImpl bizServiceImpl;
-	@Autowired
-	private LoginServiceImpl loginServiceImpl;
-	@Autowired
-	private LogoutServiceImpl logoutServiceImpl;
+
 	@Value("${jsis.address}")  
     private String jsisAddress;
 
@@ -68,7 +64,7 @@ public class BizController {
 			objOutputStrm.writeObject(new String []{usr,pwd});
 			objOutputStrm.flush();
 			InputStream ips = huconn.getInputStream();
-			String a = changeTool.ConvertStream2Json(ips);
+			String a = StringUtil.ConvertStream2Json(ips);
 			returnCode = (String)JSON.parseObject(a).get("returnCode");
 			message = (String)JSON.parseObject(a).get("message");
 			objOutputStrm.close(); 

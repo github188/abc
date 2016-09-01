@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-public class changeTool {
+public class StringUtil {
 	
 	public static String ConvertStream2Json(InputStream inputStream)
     {

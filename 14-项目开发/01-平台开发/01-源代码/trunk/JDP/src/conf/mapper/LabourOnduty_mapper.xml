@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.pims.pem.dao.LabourOndutyDao" >
+  <!-- 在岗人数  -->
+  <resultMap id="BaseResultMap" type="com.jd.pims.pem.model.LabourOnduty" >
+    <id column="id" property="id" />
+    <result column="cu_id" property="cuId"  />
+    <result column="biz_date" property="bizDate"  />
+    <result column="timing" property="timing"  />
+    <result column="person_type" property="personType"  />
+    <result column="quantity_onduty" property="quantityOnduty"  />
+    <result column="create_time" property="createTime"  />
+    <result column="last_update_time" property="lastUpdateTime"  />
+  </resultMap>
+</mapper>  

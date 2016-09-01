@@ -15,13 +15,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.jd.pims.comm.BaseController;
 import com.jd.pims.user.model.Employee;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 @Controller
 @RequestMapping("/jdemws")
-public class AppController {
+public class AppController extends BaseController{
 	@Value("${app.address}")  
     private String appAddress;
 	

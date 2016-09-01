@@ -6,9 +6,10 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.google.gson.Gson;
+import com.jd.pims.comm.BaseDataModel;
 
 @Entity
-public class LabourEfficiencyHour implements Serializable {
+public class LabourEfficiencyHour extends BaseDataModel {
 	/**
 	 * 
 	 */

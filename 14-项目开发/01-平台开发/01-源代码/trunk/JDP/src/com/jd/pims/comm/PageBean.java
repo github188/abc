@@ -1,4 +1,4 @@
-package com.jd.pims.comm.pager;
+package com.jd.pims.comm;
 
 import java.util.List;
 
