@@ -1,68 +1,32 @@
 package com.jd.pims.user.model;
 
-public class User{
-    
+import java.io.Serializable;
 
-	private Integer id;
+import javax.persistence.Entity;
 
-    private String name;
+/**
+ * 用户领域对象
+ */
+@Entity
+public class User implements Serializable{
 
-    private String age;
-    private String password;
-    private String email;
-    private String icon;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAge() {
-		return age;
-	}
-
-	public void setAge(String age) {
-		this.age = age;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getIcon() {
-		return icon;
-	}
-
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -509152048516306632L;
 	
-	
-    
-    
+	private String id;
+	private String userName;
+	private String password;
+	private String personId; // 员工编号
+	private String userType;
+	private String status;
+	private String controlunitid;
+
+	public String toString() {
+		return "id:" + id + ",userName:" + userName + ",personId:" + personId
+				+ ",userType:" + userType + ",status:" + status
+				+ ",controlunitid:" + controlunitid;
+	}
 
 }

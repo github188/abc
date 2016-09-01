@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.jd.pims.pem.model.empDTO;
 import com.jd.pims.pem.service.impl.BizServiceImpl;
 import com.jd.pims.pem.service.impl.LoginServiceImpl;
 import com.jd.pims.pem.service.impl.LogoutServiceImpl;

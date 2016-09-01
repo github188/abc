@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
-import com.jd.pims.pem.model.empDTO;
+import com.jd.pims.user.model.Employee;
 
 @Controller
 @RequestMapping("/jdemws")
@@ -33,10 +33,10 @@ public class AppController {
 		try {
 			String usr= request.getParameter("account");
 			String pwd= request.getParameter("password");
-			empDTO dto = new empDTO();
+			Employee dto = new Employee();
 			dto.setId("wangwangwang");
-			dto.setOrgCode("wangwangwang");
-			dto.setOrgName("wangwangwang");
+			//dto.setOrgCode("wangwangwang");
+			//dto.setOrgName("wangwangwang");
 			dto.setSex("18");
 		    String msg=JSON.toJSONString(dto);
 		    Map<String,String>map = new HashMap<String,String>();
