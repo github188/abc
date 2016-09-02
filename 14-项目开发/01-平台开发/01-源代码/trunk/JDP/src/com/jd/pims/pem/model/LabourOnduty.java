@@ -3,10 +3,13 @@ package com.jd.pims.pem.model;
 import java.sql.Time;
 import java.util.Date;
 
+import javax.persistence.Entity;
+
 import com.google.gson.Gson;
 import com.jd.pims.comm.BaseDataModel;
 
-public class LabourOnDuty extends BaseDataModel{
+@Entity
+public class LabourOnduty extends BaseDataModel{
 
 	
 	/**

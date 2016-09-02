@@ -55,7 +55,7 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 	$scope.cc = function(){
 //		$cookieStore.put('showornot', 'true');
 		console.log($scope.usr+':'+$scope.pwd);
-		var url = "jdemws/getNumberOnDuty.do?";
+		var url = "user/login.do?";
 		
 		$http.post(url+"empId="+$scope.usr+"&orgCode="+$scope.pwd+"").success(function(response) {
 			console.log('123:'+$cookieStore.get('showornot'));

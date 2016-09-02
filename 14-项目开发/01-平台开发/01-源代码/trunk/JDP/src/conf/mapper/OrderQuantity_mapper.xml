@@ -3,7 +3,7 @@
 <mapper namespace="com.jd.pims.pem.dao.OrderyQuantityDao" >
   
   <!-- 订单数量 -->
-  <resultMap id="BaseResultMap" type="com.jd.pims.pem.model.OrderQuantity" >
+  <resultMap id="orderQuantity" type="com.jd.pims.pem.model.OrderQuantity" >
   	<id column="id" property="id" />
     <result column="cu_id" property="cuId"  />
     <result column="biz_date" property="bizDate"  />
@@ -12,8 +12,5 @@
     <result column="create_time" property="createTime"  />
     <result column="last_update_time" property="lastUpdateTime"  />
   </resultMap>
- 
- 	
-  
   
 </mapper>
