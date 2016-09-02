@@ -6,7 +6,7 @@ import java.util.Date;
 import com.google.gson.Gson;
 import com.jd.pims.comm.BaseDataModel;
 
-public class LabourOnDuty extends BaseDataModel{
+public class LabourOnduty extends BaseDataModel{
 
 	
 	/**
