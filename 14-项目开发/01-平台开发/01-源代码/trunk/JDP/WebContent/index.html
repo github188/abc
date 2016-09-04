@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<head>
+<html style="height: 100%">
+<head >
   <meta charset="utf-8">
   <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><![endif]-->
-  <title>捷顺科技运维中心运维管理平台</title>
+  <title>京东</title>
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="viewport" content="width=device-width">
@@ -13,6 +14,33 @@
   <link rel="stylesheet" type="text/css" href="css/ngDialog.min.css">
   <link rel="stylesheet" type="text/css" href="css/ngDialog-theme-default.min.css">
   <link rel="stylesheet" type="text/css" href="css/ngDialog-theme-plain.min.css">
+  <style type="text/css">
+	body{
+		 background:url(images/京东平台登录2.png)no-repeat;
+		 background-size: 100% 100%;
+		 font: 63% Arial, Helvetica, sans-serif;
+		 margin:0;
+		 padding:0;
+		 color:#0F0F0F; 
+		 height: 100%;
+		 TEXT-ALIGN: center;
+	}
+	@font-face {
+    font-family: 'digital-7__mono';
+    src: url('fonts/digital-7__mono.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: '造字工房悦圆常规体';
+    src: url('fonts/造字工房悦圆常规体.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+.template-page-wrapper{font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif; font-size:2em;color:#46d7ff;}
+.title {height: 8%; margin:0 auto;padding-top:0.5em;padding-bottom:2em; color:#FFFFFF;background:url(images/切图_36.png)no-repeat; background-size: 100% 100%;}
+#world {width:69%;left:16%;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif; font-size:5.5em; text-align:center; text-shadow:0 0 5px #00c6ff;font-weight:10 }
+  </style>
 <!-- 
 Dashboard Template 
 http://www.templatemo.com/preview/templatemo_415_dashboard
@@ -42,33 +70,26 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
     <script src="js/app.js"></script>
     <script src="js/controller.js"></script>
     <script src="js/services.js"></script>
-  <body ng-app="jsywp" ng-controller="indexCtrl">
-  
+  <body  ng-controller="indexCtrl">
     <div id="main-wrapper">
-      <div style="background:black;height:50px">
-          <div class="logo"><img src="images/logo.png"/><h1>捷顺科技运维管理平台</h1></div>
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-      </div>
-      <div class="template-page-wrapper"  ng-show='showornot'>
+		<div class="title">
+			<div id="world">京东集团分拣中心管理部全国在岗人员监控平台</div>	
+		</div>
+      <div class="template-page-wrapper" style="margin-top:30% ;" ng-show='showornot'>
       <form class="form-horizontal templatemo-signin-form" role="form" action="index.html" method="get">
         <div class="form-group">
           <div class="col-md-12">
-            <label for="username" class="col-sm-2 control-label">用户</label>
+            <!--<label for="username" class="col-sm-2 control-label">用户</label>-->
             <div class="col-sm-10">
-              <input type="text" class="form-control" id="username" placeholder="Username" ng-model="usr">
+              <input type="text" placeholder="请输入用户名" style="background:url(images/切图_31.png)no-repeat; background-size: 100% 100%;color: #46d7ff;" class="form-control" id="username" placeholder="Username" ng-model="usr">
             </div>
           </div>
         </div>
         <div class="form-group">
           <div class="col-md-12">
-            <label for="password" class="col-sm-2 control-label">密码</label>
+            <!--<label for="password" class="col-sm-2 control-label">密码</label>-->
             <div class="col-sm-10">
-              <input type="password" class="form-control" id="password" placeholder="Password" ng-model="pwd">
+              <input type="password" placeholder="请输入密码" style="background:url(images/切图_31.png)no-repeat; background-size: 100% 100%;color: #46d7ff;" class="form-control" id="password" placeholder="Password" ng-model="pwd">
             </div>
           </div>
         </div>
@@ -83,116 +104,18 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
             </div>
           </div>
         </div>
-        <div class="form-group">
-          <div class="col-md-12">
+          <div class="col-md-12" >
             <div class="col-sm-offset-2 col-sm-10">
-              <input value="Sign in" class="btn btn-default" ng-click="cc()">
+              <input value="登录"style="background:url(images/切图_31.png)no-repeat; background-size: 100% 100%;color: #FFFFFF;" class="btn btn-default" ng-click="cc()">
             </div>
           </div>
-        </div>
       </form>
     </div>
-      <div class="template-page-wrapper" ng-hide='showornot'>
-        <div class="navbar-collapse collapse templatemo-sidebar">
-          <ul class="templatemo-sidebar-menu">
-            <li>
-              <form class="navbar-form">
-                <input type="text" class="form-control" id="templatemo_search_box" placeholder="Search...">
-                <span class="btn btn-default">Go</span>
-              </form>
-            </li>
-            <br>
-            <div>
-              <accordion close-others='status.closeothers'>
-                <accordion-group>
-                  <accordion-heading>
-                    <ul class="nav nav-pills nav-stacked">
-                      <li><i class="fa fa-home"></i><span><a ui-sref="index">&nbsp; &nbsp;首页</a></span></li>
-                    </ul>
-                  </accordion-heading>
-                </accordion-group>
-
-                <accordion-group is-open='status.isoneopen' is-disable='status.isonedisable'>
-                  <accordion-heading>
-                    <ul class="nav nav-pills nav-stacked">
-                      <li><i class="fa fa-database"></i><span><a href="#">&nbsp; &nbsp;项目在线率管理</a></span></li>
-                    </ul>
-                  </accordion-heading>
-                   <ul class="nav nav-pills nav-stacked">
-                    <li><a ui-sref="ProjectList">接入项目档案</a></li>
-                    <li><a ui-sref="ProjectOnlineList">项目在线日志管理</a></li>
-                    <li><a ui-sref="ProjectOnlineState">项目在线率统计分析</a></li>
-                  </ul>
-                </accordion-group>
-                <accordion-group heading='two'>
-                  <accordion-heading>
-                    <ul class="nav nav-pills nav-stacked">
-                      <li><i class="fa fa-database"></i><span><a href="#">&nbsp; &nbsp;API接入管理</a></span></li>
-                    </ul>
-                  </accordion-heading>
-                   <ul class="nav nav-pills nav-stacked">
-                    <li><a ui-sref="APICustomerList">API接入客户档案</a></li>
-                    <li><a ui-sref="APIProjectList">API接入项目档案</a></li>
-                    <li><a ui-sref="APIProjectState">API接入项目统计分析</a></li>
-                    <li><a ui-sref="APIList">API接口清单</a></li>
-                  </ul>
-                </accordion-group>
-                <accordion-group heading='three' >
-                  <accordion-heading>
-                    <ul class="nav nav-pills nav-stacked">
-                      <li><i class="fa fa-database"></i><span><a href="#">&nbsp; &nbsp;自动化部署管理</a></span></li>
-                    </ul>
-                  </accordion-heading>
-                   <ul class="nav nav-pills nav-stacked">
-                    <li><a ui-sref="Hosts">主机档案</a></li>
-                    <li><a ui-sref="Projects">项目档案</a></li>
-                    <li><a ui-sref="Services">服务档案</a></li>
-                    <li><a ui-sref="Automation">自动化部署</a></li>
-                  </ul>
-                </accordion-group>
-              </accordion>
-
-            </div>
-
-            <li style="background:#DEDCDC"><a href="" data-toggle="modal" data-target="#myModal"><i class="fa fa-sign-out"></i>Sign Out</a></li>
-          </ul>
-        </div>
-        <!--/.navbar-collapse -->
-        <!-- data start -->
-        <div class="templatemo-content-wrapper">
-          <div class="templatemo-content">
-            <div ui-view></div>
-          </div>
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-           <div class="modal-dialog">
-              <div class="modal-content">
-                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                          &times;
-                    </button>
-                    <h4 class="modal-title" id="myModalLabel">
-                       Are you sure you want to sign out?
-                    </h4>
-                 </div>
-                 <!--<div class="modal-body">
-                    在这里添加一些文本
-                 </div>-->
-                 <div class="modal-footer">
-                    <a href="sign-in.html" class="btn btn-primary">Yes</a>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
-                 </div>
-              </div><!-- /.modal-content -->
-           </div><!-- /.modal -->
-        </div>
-        <footer class="templatemo-footer">
-          <div class="templatemo-copyright">
-            <p>Copyright &copy; 2016 捷顺科技智慧运维中心 <!-- Credit: www.templatemo.com --></p>
-          </div>
-        </footer>
+<!--    <footer class="templatemo-footer">
+      <div class="templatemo-copyright">
+        <p>Copyright &copy; 2016 </p>
       </div>
-    </div>
+    </footer>-->
 
   </body>
 </html>
