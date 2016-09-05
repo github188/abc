@@ -9,8 +9,8 @@ import com.google.gson.JsonArray;
  */
 public abstract class BaseController {
 	
-	private static int SUCESS_RETURN_COCE=0;
-	private static String SUCESS_RETURN_MESSAGE="请求成功!";
+	protected static int SUCESS_RETURN_COCE=0;
+	protected static String SUCESS_RETURN_MESSAGE="请求成功!";
 	
 	/**
 	 * 构造调用成功的返回头信息,{"returnCode":0,"message":"请求成功!"}
@@ -42,7 +42,7 @@ public abstract class BaseController {
 		JsonObject retMsg=buildHeader();
 		JsonObject result=dataModel.toJsonObject();
 		retMsg.add("result", result);
-		return retMsg.getAsString();
+		return retMsg.toString();
 	}
 	/**
 	 * 构造调用成功的返回信息json字符串，包括头信息及返回对象
@@ -56,7 +56,7 @@ public abstract class BaseController {
 		JsonObject retMsg=buildHeader(SUCESS_RETURN_COCE,message);
 		JsonObject result=dataModel.toJsonObject();
 		retMsg.add("result", result);
-		return retMsg.getAsString();
+		return retMsg.toString();
 	}
 
 	/**
@@ -75,7 +75,7 @@ public abstract class BaseController {
 		}
 		
 		retMsg.add("result", result);
-		return retMsg.getAsString();
+		return retMsg.toString();
 	}
 	/**
 	 * 构造调用成功的返回信息json字符串，包括头信息及返回对象数组
@@ -93,7 +93,7 @@ public abstract class BaseController {
 		}
 		
 		retMsg.add("result", result);
-		return retMsg.getAsString();
+		return retMsg.toString();
 	}
 	
 	/**
@@ -103,7 +103,7 @@ public abstract class BaseController {
 	 * @return
 	 */
 	public String buildFailResponse(int code,String message){
-		return buildHeader(code,message).getAsString();
+		return buildHeader(code,message).toString();
 	}
 			
 }

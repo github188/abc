@@ -8,7 +8,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.jd.pims.comm.BaseController;
+import com.jd.pims.comm.aop.user.Verify;
 import com.jd.pims.user.model.Employee;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -23,7 +23,7 @@ import com.google.gson.JsonObject;
 @Controller
 @RequestMapping("/jdemws")
 public class AppController extends BaseController{
-	@Value("${app.address}")  
+	//@Value("${app.address}")  
     private String appAddress;
 	
 	/**
@@ -89,6 +89,7 @@ public class AppController extends BaseController{
 	 */
 	@RequestMapping(value = "/getNumberOnDuty", method = RequestMethod.POST)
 	@ResponseBody
+	@Verify(name="getNumberOnDuty")
 	public String getNumberOnDuty(HttpServletRequest request,HttpServletResponse response){
 		String usr= request.getParameter("empId");
 		String pwd= request.getParameter("orgCode");

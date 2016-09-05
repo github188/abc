@@ -27,7 +27,7 @@ public class BizController extends BaseController{
 	@Autowired
 	private BizServiceImpl bizServiceImpl;
 
-	@Value("${jsis.address}")  
+	//@Value("${jsis.address}")  
     private String jsisAddress;
 
 	/**

@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/as")
 public class JsisController {
-	@Value("${jsif.address}")  
+	//@Value("${jsif.address}")  
     private String jsifAddress;
 
 	public String getJsifAddress() {
