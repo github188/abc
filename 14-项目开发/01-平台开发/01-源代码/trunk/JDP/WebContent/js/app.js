@@ -57,10 +57,11 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 		console.log($scope.usr+':'+$scope.pwd);
 		var url = "user/login.do?";
 		
-		$http.post(url+"empId="+$scope.usr+"&orgCode="+$scope.pwd+"").success(function(response) {
-			console.log('123:'+$cookieStore.get('showornot'));
+		$http.post(url+"account="+$scope.usr+"&password="+$scope.pwd+"").success(function(response) {
 			console.log(response);
-			if(response=="success"){
+			console.log(angular.fromJson(angular.fromJson(response)).returnCode);
+			console.log('123:'+$cookieStore.get('showornot'));
+			if(angular.fromJson(angular.fromJson(response)).returnCode=="0"){
 				$scope.showornot='false';
 				$cookieStore.put('showornot', 'true');
 //				location.href = "index.html";

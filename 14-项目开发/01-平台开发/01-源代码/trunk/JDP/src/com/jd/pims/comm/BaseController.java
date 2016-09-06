@@ -42,7 +42,7 @@ public abstract class BaseController {
 		JsonObject retMsg=buildHeader();
 		JsonObject result=dataModel.toJsonObject();
 		retMsg.add("result", result);
-		return retMsg.getAsString();
+		return retMsg.toString();
 	}
 	/**
 	 * 构造调用成功的返回信息json字符串，包括头信息及返回对象

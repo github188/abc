@@ -42,6 +42,8 @@ public class UserController extends BaseController{
 			//InputStream ins = request.getInputStream();
 			//String a = StringUtil.ConvertStream2Json(ins);
 		
+			System.out.println("返回值："+this.buildSuccessResponse(emp));
+			
 			return this.buildSuccessResponse(emp);
 		
 		} catch (PIMSException e) {
