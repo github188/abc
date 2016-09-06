@@ -1,19 +1,22 @@
-//angular.module('app', []).controller('ctrl', ['$scope','$location','$http', function($scope,$location,$http){
-//	$scope.usr='';
-//	$scope.pwd='';
-//	$scope.cc = function(){
-//		console.log($scope.usr+':'+$scope.pwd);
-//		$scope.data={'name': '哦', 'age': '28'}//测试Django后台是否可以读取数据
-//		var url = "as/login.do?";
-//		
-//		$http.post(url+"usr="+$scope.usr+"&pwd="+$scope.pwd+"").success(function(response) {
-//			console.log(response);
-//			if(response=="success"){
-//				location.href = "index.html";
-//			}
-//		});
-//	}
-//}]);
+angular.module('app', ['ngCookies']).controller('ctrl', ['$scope','$location','$http','$cookieStore', function($scope,$location,$http,$cookieStore){
+	console.log("123456:"+$cookieStore.get('showornot'));
+	
+	if($cookieStore.get('showornot')!='true'){
+		window.history.back();
+	}
+	
+	$scope.cc = function(){
+		$scope.data={'name': '哦', 'age': '28'}//测试Django后台是否可以读取数据
+		var url = "as/login.do?";
+		
+		$http.post(url+"usr="+$scope.usr+"&pwd="+$scope.pwd+"").success(function(response) {
+			console.log(response);
+			if(response=="success"){
+				location.href = "index.html";
+			}
+		});
+	}
+}]);
 var app = angular.module('jsywp', ['ui.bootstrap','ui.router','chart.js','ngFileUpload','ngCookies']);
 
 app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',function($scope,$rootScope,$http,$cookieStore){
@@ -64,7 +67,7 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 			if(angular.fromJson(angular.fromJson(response)).returnCode=="0"){
 				$scope.showornot='false';
 				$cookieStore.put('showornot', 'true');
-//				location.href = "index.html";
+				location.href = "index2.html";
 			}
 		});
 	}

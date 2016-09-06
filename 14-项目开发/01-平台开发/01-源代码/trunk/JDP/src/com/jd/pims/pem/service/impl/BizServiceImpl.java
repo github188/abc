@@ -14,7 +14,7 @@ import com.jd.pims.pem.model.LabourEfficiencyHour;
 import com.jd.pims.pem.model.LabourOndutyState;
 import com.jd.pims.pem.service.IBizService;
 
-@Service("bizServiceImpl")
+@Service("bizService")
 public class BizServiceImpl implements IBizService {
 
 	@Autowired
@@ -25,8 +25,7 @@ public class BizServiceImpl implements IBizService {
 	private OrderQuantityDao orderQuantityDao;
 	@Override
 	public LinkedList<LabourOndutyState> getNumberOnDuty(String cuId) {
-		// TODO Auto-generated method stub
-		return null;
+		return labourOndutyDao.getNumberOnDuty(cuId);
 	}
 	@Override
 	public LinkedList<LabourOndutyState> getNumberHistory(String cuId,

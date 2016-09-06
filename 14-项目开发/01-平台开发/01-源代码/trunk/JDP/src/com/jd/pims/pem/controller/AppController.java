@@ -1,10 +1,8 @@
 package com.jd.pims.pem.controller;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,17 +11,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.jd.pims.comm.BaseController;
-import com.jd.pims.comm.aop.user.Verify;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.jd.pims.comm.BaseController;
+import com.jd.pims.comm.aop.user.Verify;
+import com.jd.pims.pem.model.LabourOndutyState;
+import com.jd.pims.pem.service.IBizService;
 
 @Controller
 @RequestMapping("/jdemws")
 public class AppController extends BaseController{
 	//@Value("${app.address}")  
     private String appAddress;
-	
+    
+    @Resource
+	private IBizService bizService;
+    
 	/**
 	 * 业务接口
 	 * @param request
@@ -33,8 +36,10 @@ public class AppController extends BaseController{
 	@ResponseBody
 	@Verify(name="getNumberOnDuty")
 	public String getNumberOnDuty(HttpServletRequest request,HttpServletResponse response){
-		String usr= request.getParameter("empId");
+		String empId= request.getParameter("empId");
 		String cuId= request.getParameter("cuId");
+		
+		LinkedList<LabourOndutyState> labourOndutyStates = bizService.getNumberOnDuty(cuId);
 		
 		JsonObject jsonResponse = new JsonObject();
 		jsonResponse.addProperty("returnCode", "");
