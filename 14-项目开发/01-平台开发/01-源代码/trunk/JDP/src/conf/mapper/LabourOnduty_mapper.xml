@@ -12,4 +12,4 @@
     <result column="create_time" property="createTime"  />
     <result column="last_update_time" property="lastUpdateTime"  />
   </resultMap>
-</mapper>  
+</mapper>

@@ -6,7 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
 	<script src="js/common/jquery.min.js"></script>
+	<script src="js/common/angular-1.3.0.js"></script>
+	<script src="js/common/angular-cookies.js"></script>
     <script src="js/common/bootstrap.min.js"></script>
+    <script src="js/common/templatemo_script.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controller.js"></script>
+    <script src="js/services.js"></script>
   	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
   	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -17,7 +23,7 @@
 <style type="text/css">
 body{
 	 background:url(images/京东平台4.png)no-repeat;
-	 background-size: 300% 300%;
+	 background-size: 100% 100%;
 	 font: 63% Arial, Helvetica, sans-serif;
 	 margin:0;
 	 padding:0;
@@ -39,9 +45,9 @@ body{
     font-style: normal;
 }
 
-.title {height: 8%; margin:0 auto;padding-top:0.5em;padding-bottom:0.5em; color:#46d7ff;background:url(images/切图_36.png)no-repeat; background-size: 100% 100%;}
+.title {height: 10%; margin:0 auto;padding-top:0.5em;padding-bottom:0.5em; color:#46d7ff;background:url(images/顶部.png)no-repeat; background-size: 100% 100%;}
 #world {width:69%;left:16%;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif; font-size:5.5em; text-align:center; text-shadow:0 0 5px #00c6ff;}
-.clock {width:31%;height: 5%; margin:0 auto;margin-bottom: 2em; padding-top:0.5em;padding-bottom:0.5em;color:#46d7ff; background:url(images/切图_31.png)no-repeat;  background-size: 100% 100%;}
+.clock {width:31%;height: 7%; margin:0 auto;margin-bottom: 2em; padding-top:0.5em;padding-bottom:0.5em;color:#46d7ff; background:url(images/切图_31.png)no-repeat;  background-size: 100% 100%;}
 #Date { font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-align:center; text-shadow:0 0 5px #00c6ff;font-weight:10 }
 ul {  margin:0 auto; padding:0px; list-style:none; text-align:center; }
 ul li { display:inline; font-size:5.5em; text-align:center; font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
@@ -86,7 +92,7 @@ setInterval( function() {
 }); */
 </script>
 </head>
-<body>
+<body ng-app="app" ng-controller="ctrl">
 		<div class="title">
 			<div id="world">京东集团分拣中心管理部全国在岗人员管理平台</div>	
 		</div>
@@ -105,14 +111,14 @@ setInterval( function() {
 			    <li id="sec"> </li>
 			</ul>
 		</div>
-		<div style="height: 75%;width: 92%;position: relative; MARGIN-RIGHT: 0; MARGIN-LEFT: 11em;">
+		<div style="height: 75%;width: 89%;position: relative; MARGIN-RIGHT: 0; MARGIN-LEFT: 11em;">
 			<div class="row">
-				<input type="button" id="return" class="col-md-1 col-sm-1" style="height:5%;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;background:url(images/返回.png)no-repeat;background-size: 100% 100% ;border:none;margin-left: 0.5em;padding-top: 0.5em;padding-bottom: 0.5em;font-size: 3.5em;text-align: center;" value="返回"></input>
+				<input type="button" id="return" class="col-md-1 col-sm-1" style="font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;background:url(images/返回.png)no-repeat;background-size: 100% 100% ;border:none;margin-left: 1.0em;padding-top: 0.5em;padding-bottom: 0.5em;font-size: 2.5em;text-align: center;" value="返回"></input>
 			</div>
-			<div class="col-md-7 col-sm-7" style="-webkit-box-shadow:inset 0 0 5px #00c6ff;-moz-box-shadow:inset 0 0 5px #00c6ff ;box-shadow:inset 0 0 5px #00c6ff ;height: 99%;border: 1px solid #00C6FF; box-shadow:0 0 5px #00c6ff;border-bottom-left-radius: 5%;margin-right: 2em; ">
+			<div class="col-md-7 col-sm-7" style="background:url(images/栏目1.png)no-repeat;background-size: 100% 100% ;height: 98%;margin-right: 2em; ">
 				<div class="col-md-12 col-sm-12" id="map" style="height: 60%;width: 90%;position:absolute;top:4em;"></div>
-				<div id="bar" style="width:70%;height: 38%;position:absolute;top:36em;left:0;"></div>
-				<div id="pie" style="width:30%;height: 30%;position:absolute;bottom:20em;right:2em;"></div>
+				<div id="bar" style="width:70%;height: 38%;position:absolute;top:25em;left:0;"></div>
+				<div id="pie" style="width:30%;height: 30%;position:absolute;bottom:13em;right:2em;"></div>
 				<div id="areaTip" style="padding:1em;position:absolute;right:5em;top:5em;color:#32bbec;font-size: 2em;font-family:'微软雅黑', Arial, Helvetica, sans-serif;border: 1px solid #00C6FF;box-shadow:0 0 5px #00C6FF;">XX区</div>
 				<div id="orderCount" style="width:15%;height: 10%;position:absolute;bottom:8em;right:0;text-align: left;">
 					<div style="color:#32bbec;font-size: 3em;font-family:'微软雅黑', Arial, Helvetica, sans-serif;">平均人效</div>
@@ -122,441 +128,26 @@ setInterval( function() {
 					<div style="color:#32bbec;font-size: 3em;font-family:'微软雅黑', Arial, Helvetica, sans-serif;">订单量</div>
 					<div style="color:#fedd1b;font-size: 6em;font-family:'digital-7__mono', Arial, Helvetica, sans-serif;">222222</div>
 				</div>
-				<div id="mapTopLeft" style="width:60%;position:absolute;top:0;left:0;font-family: '黑体', Arial, Helvetica, sans-serif;background:url(images/标题.9.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;text-align: left;">实时人力构成</div>
+				<div id="mapTopLeft" style="width:60%;position:absolute;top:0;left:0;font-family: '黑体', Arial, Helvetica, sans-serif;background:url(images/左上角1.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;padding-left: 0.5em;font-size: 3.0em;z-index: 10000;text-align: left;">实时人力构成</div>
 				<input type="button" id="mapTopRight" style="width:6%;height:6%;position:absolute;border:none;top:0;right:0;background:url(images/放大.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;"></input>
 				<div id="mapBottomRight" style="width:12%;height:8%;position:absolute;bottom:0;right:0;background:url(images/右边角.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;z-index: 10000;"></div>
 			</div>
-			<div class="col-md-4 col-sm-4" style="-webkit-box-shadow: 0 0 5px #00c6ff inset;-moz-box-shadow: 0 0 5px #00c6ff inset;box-shadow:0 0 5px #00c6ff inset;height: 48%;border: 1px solid #00C6FF; box-shadow:0 0 5px #00c6ff;border-bottom-left-radius: 5%; margin-bottom: 2em;">
+			<div class="col-md-4 col-sm-4" style="background:url(images/栏目2.png)no-repeat;background-size: 100% 100% ;height: 46%;margin-bottom: 2em;">
 				<div id="effect" style="height: 98%;"></div>
-				<div id="effectTopLeft" style="width:60%;position:absolute;top:0;left:0;font-family:'黑体', Arial, Helvetica, sans-serif;background:url(images/标题.9.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;text-align: left;">一周人效走势图</div>
+				<div id="effectTopLeft" style="width:60%;position:absolute;top:0;left:0;font-family:'黑体', Arial, Helvetica, sans-serif;background:url(images/左上角2.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;padding-left: 0.5em;font-size: 3.0em;z-index: 10000;text-align: left;">一周人效走势图</div>
 				<input type="button" style="width:6%;height:6%;border:none;position:absolute;top:0;right:0;background:url(images/放大.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;"></input>
 				<div id="effectBottomRight" style="width:12%;height:8%;position:absolute;bottom:0;right:0;background:url(images/右边角.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;z-index: 10000;"></div>
 			</div>
-			<div class="col-md-4 col-sm-4" style="-webkit-box-shadow: 0 0 5px #00c6ff inset;-moz-box-shadow: 0 0 5px #00c6ff #00C6FF inset;box-shadow: 0 0 5px #00c6ff #00C6FF inset;height: 48%;border: 1px solid #00C6FF; box-shadow:0 0 5px #00c6ff;border-bottom-left-radius: 5%;">
+			<div class="col-md-4 col-sm-4" style="background:url(images/栏目3.png)no-repeat;background-size: 100% 100% ;height: 46%; ">
 			 	<div id="count" style="height: 98%;"></div>	
-			 	<div id="countTopLeft" style="width:60%;position:absolute;top:0;left:0;font-family:'黑体', Arial, Helvetica, sans-serif;background:url(images/标题.9.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;text-align: left;">一周在岗正式员工占比</div>
+			 	<div id="countTopLeft" style="width:70%;position:absolute;top:0;left:0;font-family:'黑体', Arial, Helvetica, sans-serif;background:url(images/左上角3.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;padding-left: 0.5em;font-size: 3.0em;z-index: 10000;text-align: left;">一周在岗正式员工占比</div>
 			 	<input type="button" id="countTopRight" style="border:none;width:6%;height:6%;position:absolute;top:0;right:0;background:url(images/放大.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;"></input>
 			 	<div id="countBottomRight" style="width:12%;height:8%;position:absolute;bottom:0;right:0;background:url(images/右边角.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;z-index: 10000;"></div>
 			</div>
 		</div>
 	<script type="text/javascript" src="echarts.js" ></script>
 	<script>
-	option = null;
-function randomData() {
-    return Math.round(Math.random()*1000);
-}
-option = {
-    title: {
-        text: '在岗总人数',
-        subtext: randomData(),
-/*        borderColor:'#7ab8f9',
-        borderWidth:2,*/
-        left: 'left',
-        textStyle:{
-		    color:'#7ab8f9'
-		},
-		subtextStyle:{
-		    color:'#1bff2f',
-		    fontFamily:'digital-7__mono',
-		    fontSize:'50'
-		}
-    },
-    tooltip: {
-        trigger: 'item',
-        textStyle:{
-		    color:'#33bced'
-		}
-    },
-    legend: {
-    	show:false,
-        orient: 'vertical',
-        left: 'left',
-        data:['人数'],
-        textStyle:{
-		    color:'#fff'
-		}
-    },
-    grid:{
-    	top:'50%',
-    	height:'20%',
-    	containLabel:true
-    },
-    series: [
-        {
-            name: '人数',
-            type: 'map',
-            mapType: 'area',
-            roam: false,
-            label: {
-                normal: {
-                    show: true
-                },
-                emphasis: {
-                    show: true
-                }
-            },
-            data:[
-                {name: '东北地区',value: randomData() },
-                {name: '华北地区',value: randomData() },
-                {name: '华东地区',value: randomData() },
-                {name: '西北地区',value: randomData() },
-                {name: '西南地区',value: randomData() },
-                {name: '华中地区',value: randomData() },
-                {name: '华南地区',value: randomData() }
-            ]
-        }
-    ]
-};
-
-		var barOption = {
-			title: {
-	            text: '',
-	            left: 'left',
-		        top: 5,
-	        },
-			legend:{
-				data:['员工数量','总订单数量','人效'],
-				bottom:5,
-				textStyle:{
-		        	color:'#7ab8f9'
-		        },
-		        right:0
-			},
-		    tooltip : {
-		        trigger: 'item',
-		        textStyle:{
-		        	color:'#7ab8f9'
-		        }
-		    },
-		    xAxis: {
-		    	type:'category',
-		    	data:['周一','周二','周三','周四','周五','周六','周日'],
-		    	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
-		        },
-		       	splitLine:{  
-                    show:false  
-                }
-	        },
-	        grid:{
-	        	width:'85%',
-	        	left:'10%',
-	        	top:'30%',
-	        	containLabel:true
-	        },
-	        yAxis: [
-	        {
-	        	type:'value',
-	        	name: '数量（个）',
-	        	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
-		        } ,
-		        splitLine:{  
-                    show:false  
-                }
-	        },{
-	        	type:'value',
-	        	name: '百分比（%）',
-	        	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
-		        } ,
-		        splitLine:{  
-                    show:false  
-                }
-	        	 
-	        }
-	        ],
-            color: ['#32bbec','#9035B1',  '#11d320'],
-	        series: [
-	            {
-		            name: '员工数量',type: 'bar',
-		            label:{
-		            	normal:{
-		            		show:true,
-		            		position:'top'
-		            	},
-		            },
-		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-	        	},
-	        	{
-		            name: '总订单数量',type: 'bar',
-		            label:{
-		            	normal:{
-		            		show:true,
-		            		position:'top'
-		            	},
-		            },
-		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-	        	},
-	        	{
-		            name: '人效',type: 'line',
-		            label:{
-		            	normal:{
-		            		show:true,
-		            		position:'top'
-		            	},
-		            },
-		            symbol:'circle',
-		            yAxisIndex:1,
-		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-	        	},
-	        ]
-		};
-
-	    var barOption1 = {
-			title: {
-	            text: '',
-	            left: 'center',
-		        top: 5,
-	        },
-			legend:{
-				data:['正式员工','非正式员工','占比'],
-				bottom:5,
-				textStyle:{
-		        	color:'#7ab8f9'
-		        },
-				right:0
-			},
-		    tooltip : {
-		        trigger: 'item',
-		        textStyle:{
-		        	color:'#7ab8f9'
-		        }
-		    },
-		    xAxis: {
-		    	type:'category',
-		    	data:['周一','周二','周三','周四','周五','周六','周日'],
-		    	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
-		       },
-		       	splitLine:{  
-                    show:false  
-                }
-	        },
-	        grid:{
-	        	width:'85%',
-	        	left:'10%',
-	        	top:'30%',
-	        	containLabel:true
-	        },
-	        yAxis: [
-	        {
-	        	type:'value',
-	        	name: '数量（个）',
-	        	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
-		        },
-		        splitLine:{  
-                    show:false  
-                }
-	        },{
-	        	type:'value',
-	        	name: '百分比（%）',
-	        	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
-		        },
-		        splitLine:{  
-                    show:false  
-                }
-	        }
-	        ],
-            color: ['#32bbec','#9035B1',  '#11d320'],
-	       	series: [
-	            {
-		            name: '正式员工',type: 'bar',
-		            label:{
-		            	normal:{
-		            		show:true,
-		            		position:'top'
-		            	},
-		            },
-		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-	        	},
-	        	{
-		            name: '非正式员工',type: 'bar',
-		            label:{
-		            	normal:{
-		            		show:true,
-		            		position:'top'
-		            	},
-		            },
-		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-	        	},
-	        	{
-		            name: '占比',type: 'line',
-		            label:{
-		            	normal:{
-		            		show:true,
-		            		position:'top'
-		            	},
-		            },
-		            symbol:'circle',
-		            yAxisIndex:1,
-		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-	        	},
-	        ]
-		};
-		
-		var barOption2 = {
-			title: {
-	            text: '实时人效监控',
-	            left: 'left',
-		        top: 5,
-		        textStyle:{
-		        	color:'#33bced'
-		        }
-	        },
-			legend:{
-				data:['平均人效'],
-				bottom:5,
-				textStyle:{
-		        	color:'#fff'
-		      	},
-		     	show:false
-			},
-		    tooltip : {
-				trigger: 'axis',
-		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-		        }
-		    },
-	        grid:{
-	        	width:'85%',
-	        	left:'10%',
-	        	bottom:0,
-	        	containLabel:true
-	        },
-		    xAxis: {
-		    	type:'value',
-		    	left:'10%',
-		    	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
-		     	},
-		    	show:false
-	       },
-	        yAxis: [
-	        {
-	        	type:'category',
-	        	data:['xx分拣中心','xx分拣中心','xx分拣中心','xx分拣中心','xx分拣中心'],
-		    	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
-		       },
-	        }
-	        ],
-          	series: [
-	            {
-		            name: '平均人效',
-		            type: 'bar',
-		            label:{
-		            	normal:{
-		            		show:true,
-		            		position:'right'
-		            	},
-		            },
-		            itemStyle: {
-		                normal: {
-		                    color: function(params) {
-		                        // build a color map as your need.
-		                        var colorList = [
-		                          '#7ab8f9','#fedd1b'
-		                        ];
-		                        return colorList[params.dataIndex%2]
-		                    }
-		                }
-	               },
-	               data: [randomData(),randomData(),randomData(),randomData(),randomData()]
-            }
-	        ]
-		};
-		
-		var pieOption = {
-			title: {
-	            text: '',
-	            left: 'center',
-		        top: 5,
-	        },
-		    tooltip : {
-		        trigger: 'item'
-		    },
-			legend:{
-				data:['正式员工','非正式员工'],
-				bottom:0,
-				right:0,
-				textStyle:{
-		        	color:'#fff'
-		      	}
-			},
-		    series : [
-		        {
-		            name:'',
-		            type:'pie',
-		            selectedMode: 'single',
-		            radius: [0, '45%'],
-		            center: ['65%', '50%'],
-		            label: {
-		                normal: {
-		                    position: 'outside',
-		                    show:false
-		                },
-		                
-		            },
-		            //因为有visualMap这个是无效的
-		            color: ['#FE8C02',  '#9035B1'],
-		            labelLine: {
-		                normal: {
-		                    show: true
-		                }
-		            },
-//		            roseType: 'area',
-		            data:[
-			            {
-			            	name:'正式员工',
-			            	value:randomData()
-			            },
-			            {
-			            	name:'非正式员工',
-			            	value:randomData()
-			            }
-		            ]
-		        }
-		    ]
-		};
-		
-		$(document).ready(function(){
-			var mapchart = echarts.init(document.getElementById('map'));
-			var barchart = echarts.init(document.getElementById('effect'));
-			var barchart1 = echarts.init(document.getElementById('count'));
-			var barchart2 = echarts.init(document.getElementById('bar'));
-			var piechart = echarts.init(document.getElementById('pie'));
-			$.get('geoJson/area.geo.json', function (chinaJson) {
-			    echarts.registerMap('area', chinaJson);
-				mapchart.setOption(option, true);  
-			});
-			barchart.setOption(barOption, true);  
-			barchart1.setOption(barOption1, true);  
-			barchart2.setOption(barOption2, true);  
-			piechart.setOption(pieOption, true);  
-		});
-/*		alert($(document.body).height());
-		alert($(document.body).width());*/
+	
 	</script>
 </body>
 </html>
-
-
