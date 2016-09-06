@@ -1,7 +1,6 @@
 package com.jd.pims.comm.aop.user;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -12,16 +11,19 @@ import org.springframework.stereotype.Component;
 import com.google.gson.JsonObject;
 import com.jd.pims.comm.LoginInfo;
 
+/**
+ * App接口访问拦截器，判断访问是否已经登录过 
+ * 规则：请求是否包含 empId参数，empId是否已经存在缓存，如果是正常调用，否则返回异常信息。
+ */
 @Component
 @Aspect
-public class AppLoginVerifyService {
+public class AppLoginVerifier {
 	private static final Logger logger = Logger
-			.getLogger(AppLoginVerifyService.class.getName());
+			.getLogger(AppLoginVerifier.class.getName());
 
 	@Around("execution(* com.jd.pims.pem.controller.*.* (..))")
 	public Object process(ProceedingJoinPoint joinPoint) throws Throwable {
 
-		logger.debug("拦截方法,判断是否登录!");
 		
 		Object[] args = joinPoint.getArgs();
 		HttpServletRequest request = null;

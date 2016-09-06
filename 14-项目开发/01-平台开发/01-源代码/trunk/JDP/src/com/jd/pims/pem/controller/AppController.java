@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jd.pims.comm.BaseController;
-import com.jd.pims.comm.aop.user.Verify;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -31,7 +30,6 @@ public class AppController extends BaseController{
 	 */
 	@RequestMapping(value = "/getNumberOnDuty", method = RequestMethod.POST)
 	@ResponseBody
-	@Verify(name="getNumberOnDuty")
 	public String getNumberOnDuty(HttpServletRequest request,HttpServletResponse response){
 		String usr= request.getParameter("empId");
 		String cuId= request.getParameter("cuId");
@@ -71,7 +69,6 @@ public class AppController extends BaseController{
 	 */
 	@RequestMapping(value = "/getEfficiency", method = RequestMethod.POST)
 	@ResponseBody
-	@Verify(name="getEfficiency")
 	public String getEfficiency(HttpServletRequest request,HttpServletResponse response){
 		String usr= request.getParameter("empId");
 		String pwd= request.getParameter("orgCode");
