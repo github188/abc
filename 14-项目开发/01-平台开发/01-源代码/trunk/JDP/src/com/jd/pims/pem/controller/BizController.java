@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jd.pims.comm.BaseController;
+import com.jd.pims.pem.service.IBizService;
 import com.jd.pims.pem.service.impl.BizServiceImpl;
 import com.jd.pims.util.StringUtil;
 
@@ -25,7 +26,7 @@ import com.jd.pims.util.StringUtil;
 @RequestMapping("/as")
 public class BizController extends BaseController{
 	@Autowired
-	private BizServiceImpl bizServiceImpl;
+	private IBizService bizServiceImpl;
 
 	//@Value("${jsis.address}")  
     private String jsisAddress;
