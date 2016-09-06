@@ -17,5 +17,5 @@ public interface IUserService {
 	 * @param empId 员工ID
 	 * @return 返回json字符串，包括用户退出平台的信息提示
 	 */
-	String logout(String empId);
+	void logout(String empId);
 }

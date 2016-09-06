@@ -4,6 +4,7 @@ package com.jd.pims.user.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jd.pims.comm.LoginInfo;
 import com.jd.pims.comm.PIMSException;
 import com.jd.pims.user.dao.UserDao;
 import com.jd.pims.user.model.Employee;
@@ -26,13 +27,15 @@ public class UserServiceImpl implements IUserService{
 		if(!user.getPassword().equals(password)){
 			throw new PIMSException(2,"用户密码不正确");
 		}
-		return userDao.getEmployeeById(user.getPersonId());
+		Employee emp = userDao.getEmployeeById(user.getPersonId());
+		LoginInfo.add(user, emp);
+		return emp;
 	}
 
 	@Override
-	public String logout(String empId) {
+	public void logout(String empId) {
 		// TODO Auto-generated method stub
-		return null;
+		LoginInfo.remove(empId);
 	}
 
 }

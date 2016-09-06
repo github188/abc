@@ -17,57 +17,53 @@ import com.jd.pims.user.model.Employee;
 import com.jd.pims.user.service.IUserService;
 import com.jd.pims.util.StringUtil;
 
-
 @Controller
 @RequestMapping("/user")
-public class UserController extends BaseController{
-	
+public class UserController extends BaseController {
 
 	@Resource
 	private IUserService userService;
+
 	/**
-	 * 用户登录 
+	 * 用户登录
+	 * 
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public String login(HttpServletRequest request){
+	public String login(HttpServletRequest request) {
 		try {
-			String account=request.getParameter("account");
-			String password=request.getParameter("password");
-			
-			Employee emp=userService.login(account, password);
-			
-			//InputStream ins = request.getInputStream();
-			//String a = StringUtil.ConvertStream2Json(ins);
-		
-			System.out.println("返回值："+this.buildSuccessResponse(emp));
-			
+			String account = request.getParameter("account");
+			String password = request.getParameter("password");
+
+			Employee emp = userService.login(account, password);
+
+			// InputStream ins = request.getInputStream();
+			// String a = StringUtil.ConvertStream2Json(ins);
+
 			return this.buildSuccessResponse(emp);
-		
+
 		} catch (PIMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return this.buildFailResponse(e.getCode(), e.getMessage());
 		}
 	}
-	
+
 	/**
-	 * 用户登录 
+	 * 用户登录
+	 * 
 	 * @param request
 	 * @return
 	 */
 	@RequestMapping(value = "/logout", method = RequestMethod.POST)
 	@ResponseBody
-	public String logout(HttpServletRequest request){
-		try {
-			InputStream ins = request.getInputStream();
-			String a = StringUtil.ConvertStream2Json(ins);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return "SUCCESS";
+	public String logout(HttpServletRequest request) {
+		String empId = request.getParameter("empId");
+		userService.logout(empId);
+		return this
+				.buildFailResponse(SUCESS_RETURN_COCE, SUCESS_RETURN_MESSAGE);
+
 	}
 }
