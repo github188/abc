@@ -1,5 +1,7 @@
 package com.jd.pims.user.controller;
 
+import static org.junit.Assert.fail;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,4 +56,10 @@ public class UserControllerTest extends
 			Assert.assertTrue(msg, true);
 		}
 	}
+	
+	@Test
+	public void testGetOrganization(){
+		fail("Not yet implemented");
+	}
+	
 }
