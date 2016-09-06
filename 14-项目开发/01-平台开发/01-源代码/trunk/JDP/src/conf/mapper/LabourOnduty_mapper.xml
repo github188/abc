@@ -12,14 +12,4 @@
     <result column="create_time" property="createTime"  />
     <result column="last_update_time" property="lastUpdateTime"  />
   </resultMap>
-  
-  <select id="getNumberOnDuty" resultMap="labourOnduty" parameterType="String">
-	SELECT
-		lo.CU_ID,
-		lo.person_type,
-		lo.QUANITY_ONDUTY
-	FROM
-		JD_LE_LABOUR_ONDUTY lo
-	WHERE lo.CU_ID=#{CU_ID}
-  </select>
-</mapper>  
+</mapper>

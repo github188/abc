@@ -1,8 +1,5 @@
 package com.jd.pims.user.controller;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,7 +12,6 @@ import com.jd.pims.comm.BaseController;
 import com.jd.pims.comm.PIMSException;
 import com.jd.pims.user.model.Employee;
 import com.jd.pims.user.service.IUserService;
-import com.jd.pims.util.StringUtil;
 
 @Controller
 @RequestMapping("/user")
