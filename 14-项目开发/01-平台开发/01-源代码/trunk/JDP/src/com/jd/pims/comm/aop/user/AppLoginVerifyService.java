@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -22,14 +23,12 @@ public class AppLoginVerifyService {
 	private static final Logger logger = Logger
 			.getLogger(AppLoginVerifyService.class.getName());
 
-	public AppLoginVerifyService() {
-		logger.info("AOP: "+AppLoginVerifyService.class.getName()+" initialized!");
-	}
-	
 	
 	//@Before("@annotation(com.jd.pims.comm.aop.user.Verify)")
-	@Around("execution(* com.jd.pims.pem.*.*(..))")
-	public Object  LoginVerifyAccess(ProceedingJoinPoint joinPoint)
+	//@Around("execution(* com.jd.pims.pem.controller.*.*(..))")
+	//@Around(value="@annotation(com.jd.pims.comm.aop.user.Verify)")
+	 @Around("execution(* com.jd.pims.pem.controller.AppController.* (..))") //all  
+	public Object  process(ProceedingJoinPoint joinPoint)
 			throws Throwable {
 		ServletWebRequest servletContainer = (ServletWebRequest) RequestContextHolder
 				.getRequestAttributes();
@@ -47,7 +46,6 @@ public class AppLoginVerifyService {
 			response.getWriter().print(retMsg.toString());
 			return null;
 		}
-		
 		Object object = joinPoint.proceed();
 		return object;
 	}

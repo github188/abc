@@ -1,12 +1,15 @@
 package com.jd.pims.user.service.impl;
 
 
+import java.util.LinkedList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jd.pims.comm.LoginInfo;
 import com.jd.pims.comm.PIMSException;
 import com.jd.pims.user.dao.UserDao;
+import com.jd.pims.user.model.ControlUnit;
 import com.jd.pims.user.model.Employee;
 import com.jd.pims.user.model.User;
 import com.jd.pims.user.service.IUserService;
@@ -34,8 +37,13 @@ public class UserServiceImpl implements IUserService{
 
 	@Override
 	public void logout(String empId) {
-		// TODO Auto-generated method stub
 		LoginInfo.remove(empId);
+	}
+
+	@Override
+	public LinkedList<ControlUnit> getOrganization() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

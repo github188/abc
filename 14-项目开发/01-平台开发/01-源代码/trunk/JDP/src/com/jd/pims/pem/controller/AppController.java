@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
 import com.jd.pims.comm.BaseController;
 import com.jd.pims.comm.aop.user.Verify;
-import com.jd.pims.user.model.Employee;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -31,68 +29,12 @@ public class AppController extends BaseController{
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	@ResponseBody
-	public void login(HttpServletRequest request,HttpServletResponse response){
-		try {
-			String usr= request.getParameter("account");
-			String pwd= request.getParameter("password");
-			Employee dto = new Employee();
-			dto.setId("wangwangwang");
-			//dto.setOrgCode("wangwangwang");
-			//dto.setOrgName("wangwangwang");
-			dto.setSex("18");
-		    String msg=JSON.toJSONString(dto);
-		    Map<String,String>map = new HashMap<String,String>();
-		    map.put("result", msg);
-		    map.put("message", "wangwangwang");
-		    map.put("returnCode", "0");
-		    String result=JSON.toJSONString(map);
-		    PrintWriter out = response.getWriter();  
-		    out.println(result);  
-		    out.flush();  
-		    out.close();  
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * 业务接口
-	 * @param request
-	 * @return
-	 */
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	@ResponseBody
-	public void logout(HttpServletRequest request,HttpServletResponse response){
-		try {
-			String empId= request.getParameter("empId");
-		    Map<String,String>map = new HashMap<String,String>();
-		    map.put("message", "wangwangwang");
-		    map.put("returnCode", "0");
-		    String result=JSON.toJSONString(map);
-		    PrintWriter out = response.getWriter();  
-		    out.println(result);  
-		    out.flush();  
-		    out.close();  
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * 业务接口
-	 * @param request
-	 * @return
-	 */
 	@RequestMapping(value = "/getNumberOnDuty", method = RequestMethod.POST)
 	@ResponseBody
 	@Verify(name="getNumberOnDuty")
 	public String getNumberOnDuty(HttpServletRequest request,HttpServletResponse response){
 		String usr= request.getParameter("empId");
-		String pwd= request.getParameter("orgCode");
+		String cuId= request.getParameter("cuId");
 		
 		JsonObject jsonResponse = new JsonObject();
 		jsonResponse.addProperty("returnCode", "");
@@ -129,6 +71,7 @@ public class AppController extends BaseController{
 	 */
 	@RequestMapping(value = "/getEfficiency", method = RequestMethod.POST)
 	@ResponseBody
+	@Verify(name="getEfficiency")
 	public String getEfficiency(HttpServletRequest request,HttpServletResponse response){
 		String usr= request.getParameter("empId");
 		String pwd= request.getParameter("orgCode");
