@@ -24,9 +24,9 @@ public class BizServiceImpl implements IBizService {
 	@Autowired
 	private OrderQuantityDao orderQuantityDao;
 	@Override
-	public LinkedList<LabourOndutyState> getNumberOnDuty(String cuId) {
+	public LabourOndutyState getNumberOnDuty(String cuId) {
 		// TODO Auto-generated method stub
-		return null;
+		return new LabourOndutyState();
 	}
 	@Override
 	public LinkedList<LabourOndutyState> getNumberHistory(String cuId,

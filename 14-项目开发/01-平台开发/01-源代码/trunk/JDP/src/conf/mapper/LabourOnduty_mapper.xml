@@ -8,8 +8,33 @@
     <result column="biz_date" property="bizDate"  />
     <result column="timing" property="timing"  />
     <result column="person_type" property="personType"  />
-    <result column="quantity_onduty" property="quantityOnduty"  />
+    <result column="quanity_onduty" property="quantityOnduty"  />
     <result column="create_time" property="createTime"  />
     <result column="last_update_time" property="lastUpdateTime"  />
   </resultMap>
+  
+  <select id="getNumberOnDuty" resultType="java.util.Map" parameterType="String">
+  		SELECT
+			lo.ID as id,
+			lo.CU_ID as cu_id,
+			lo.BIZ_DATE as biz_date,
+			lo.TIMING as timing,
+			lo.PERSON_TYPE as person_type,
+			lo.QUANITY_ONDUTY as quanity_onduty,
+			lo.CREATE_TIME as create_time,
+			lo.LAST_UPDATE_TIME as last_update_time
+		FROM
+			JD_LE_LABOUR_ONDUTY lo
+		WHERE
+			lo.CU_ID = #{CU_ID}
+  </select>
+  <select id="getBranches" resultType="String" parameterType="String">
+  		SELECT
+			c.id
+		FROM
+			NP_SYS_CONTROLUNIT c
+		WHERE
+			c.PARENTID = #{PARENTID}
+  </select>
+  
 </mapper>
