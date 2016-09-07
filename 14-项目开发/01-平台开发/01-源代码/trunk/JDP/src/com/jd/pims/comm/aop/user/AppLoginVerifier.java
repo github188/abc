@@ -9,7 +9,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.JsonObject;
-import com.jd.pims.comm.LoginInfo;
+import com.jd.pims.comm.LoginInfoCache;
 
 /**
  * App接口访问拦截器，判断访问是否已经登录过 
@@ -36,7 +36,7 @@ public class AppLoginVerifier {
 		}
 		if (request != null ) {
 			String empId = request.getParameter("empId");
-			if (empId == null || !LoginInfo.isLogin(empId)) {
+			if (empId == null || !LoginInfoCache.isLogin(empId)) {
 				String tmp = joinPoint.getSignature().toString();
 				logger.debug("您没有得到授权！" + tmp);
 				JsonObject retMsg = new JsonObject();
@@ -44,6 +44,11 @@ public class AppLoginVerifier {
 				retMsg.addProperty("message", "您没有得到授权！");
 				return retMsg.toString();
 			}
+		}else{
+			JsonObject retMsg = new JsonObject();
+			retMsg.addProperty("returnCode", -2);
+			retMsg.addProperty("message", "您的请求无效！");
+			return retMsg.toString();
 		}
 
 		Object object = joinPoint.proceed();

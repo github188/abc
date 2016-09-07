@@ -224,13 +224,6 @@ public class Employee extends BaseDataModel{
 		this.cuName = cuName;
 	}
 	
-
 	
-	/**
-	 * 转成json字符串
-	 */
-	public String toString(){
-		return new Gson().toJson(this);
-	}
 
 }

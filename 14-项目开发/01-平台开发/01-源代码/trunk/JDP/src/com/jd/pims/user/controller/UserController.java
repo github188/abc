@@ -38,12 +38,13 @@ public class UserController extends BaseController {
 			// InputStream ins = request.getInputStream();
 			// String a = StringUtil.ConvertStream2Json(ins);
 
-			return this.buildSuccessResponse(emp);
+			return this.buildSuccessResponse(emp).toString();
 
 		} catch (PIMSException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return this.buildFailResponse(e.getCode(), e.getMessage());
+			return this.buildFailResponse(e.getCode(), e.getMessage())
+					.toString();
 		}
 	}
 
@@ -59,7 +60,8 @@ public class UserController extends BaseController {
 		String empId = request.getParameter("empId");
 		userService.logout(empId);
 		return this
-				.buildFailResponse(SUCESS_RETURN_COCE, SUCESS_RETURN_MESSAGE);
+				.buildFailResponse(SUCESS_RETURN_COCE, SUCESS_RETURN_MESSAGE)
+				.toString();
 
 	}
 }

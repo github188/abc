@@ -66,10 +66,4 @@ public class LabourEfficiencyHour extends BaseDataModel {
 		this.lastUpdateTime = lastUpdateTime;
 	}
 	
-	/**
-	 * 转成json字符串
-	 */
-	public String toString(){
-		return new Gson().toJson(this);
-	}
 }

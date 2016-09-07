@@ -24,6 +24,17 @@
     <result column="cu_name" property="cuName"  />
   </resultMap>
   
+  <resultMap id="controlUnit" type="com.jd.pims.user.model.ControlUnit" >
+    <id column="id" property="id" />
+    <result column="code" property="cuCode"  />
+    <result column="name" property="cuName"  />
+    <result column="parentid" property="parentId"  />
+    <result column="status" property="status"  />
+    <result column="order_no" property="orderNo"  />
+    <result column="type" property="cuType"  />
+    <result column="full_path" property="fullPath"  />
+  </resultMap>
+  
   <select id="getUserByAccount" resultMap="user" parameterType="String">
   	 	select id,user_name,password,person_id,user_type,status 
   	 	from NP_AU_USER where user_name=#{account}
@@ -127,4 +138,13 @@
   		WHERE E.IS_CLERK=1 AND E.ID= #{id}
   </select>
   
+  <select id="getOrganizations" resultMap="controlUnit" >
+  	SELECT ID,CODE,NAME,STATUS,TYPE,FULL_PATH,PARENTID,ORDER_NO 
+  	FROM NP_SYS_CONTROLUNIT WHERE STATUS='NORMAL'
+  </select>
+  
+  <select id="getSubOrganizations" resultMap="controlUnit" parameterType="String">
+  	SELECT ID,CODE,NAME,STATUS,TYPE,FULL_PATH,PARENTID,ORDER_NO 
+  	FROM NP_SYS_CONTROLUNIT WHERE STATUS='NORMAL' AND PARENTID=#{parentId}
+  </select>
 </mapper>
