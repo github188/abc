@@ -84,10 +84,4 @@ public class User extends BaseDataModel{
 		this.controlunitid = controlunitid;
 	}
 
-	/**
-	 * 转成json字符串数组
-	 */
-	public String toString() {
-		return new Gson().toJson(this);
-	}
 }

@@ -16,7 +16,7 @@ public interface IBizService {
 	 * @param cuId 控制单元（组织架构)id
 	 * @return
 	 */
-	public LinkedList<LabourOndutyState> getNumberOnDuty(String cuId);
+	public LabourOndutyState getNumberOnDuty(String cuId);
 	
 	/**
 	 * 取历史在岗人数(当天的平均值)

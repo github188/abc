@@ -1,6 +1,6 @@
 package com.jd.pims.user.service;
 
-import java.util.LinkedList;
+import java.util.List;
 
 import com.jd.pims.comm.PIMSException;
 import com.jd.pims.user.model.ControlUnit;
@@ -26,5 +26,11 @@ public interface IUserService {
 	 * 获取控制单元（组织架构）列表
 	 * @return
 	 */
-	public LinkedList<ControlUnit> getOrganization();
+	public List<ControlUnit> getOrganizations();
+	
+	/**
+	 * 获取子控制单元（组织架构）列表
+	 * @return
+	 */
+	public List<ControlUnit> getSubOrganizations(String parentId);
 }

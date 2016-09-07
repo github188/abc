@@ -11,9 +11,9 @@ import com.jd.pims.user.model.User;
  * 用户登录信息缓存
  *
  */
-public class LoginInfo {
+public class LoginInfoCache {
 	private static final Logger logger = Logger
-			.getLogger(LoginInfo.class.getName());
+			.getLogger(LoginInfoCache.class.getName());
 	private static Map<String,User> users=new HashMap<String,User>();
 	private static Map<String,Employee> emplopyees=new HashMap<String,Employee>();
 	
@@ -49,5 +49,12 @@ public class LoginInfo {
 		}
 		return false;
 	}
-		
+	/**
+	 * 根据员工ID取得登录员工的信息 
+	 * @param empId
+	 * @return
+	 */
+	public static Employee getLoginEmployee(String empId){
+		return emplopyees.get(empId);
+	}
 }

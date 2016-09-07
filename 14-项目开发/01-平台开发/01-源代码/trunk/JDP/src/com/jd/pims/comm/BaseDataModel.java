@@ -16,8 +16,15 @@ public abstract class BaseDataModel  implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	protected JsonObject toJsonObject(){
+	public JsonObject toJsonObject(){
 		Gson gson=new Gson();
 		return gson.toJsonTree(this).getAsJsonObject();
+	}
+	
+	/**
+	 * 转成json字符串
+	 */
+	public String toString(){
+		return new Gson().toJson(this);
 	}
 }
