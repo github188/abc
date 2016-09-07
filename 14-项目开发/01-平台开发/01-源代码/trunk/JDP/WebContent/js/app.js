@@ -2,20 +2,10 @@ angular.module('app', ['ngCookies']).controller('ctrl', ['$scope','$location','$
 	console.log("123456:"+$cookieStore.get('showornot'));
 	
 	if($cookieStore.get('showornot')!='true'){
-		window.history.back();
+//		window.history.back();
+		location.href = "index.html";
 	}
 	
-	$scope.cc = function(){
-		$scope.data={'name': '哦', 'age': '28'}//测试Django后台是否可以读取数据
-		var url = "as/login.do?";
-		
-		$http.post(url+"usr="+$scope.usr+"&pwd="+$scope.pwd+"").success(function(response) {
-			console.log(response);
-			if(response=="success"){
-				location.href = "index.html";
-			}
-		});
-	}
 }]);
 var app = angular.module('jsywp', ['ui.bootstrap','ui.router','chart.js','ngFileUpload','ngCookies']);
 
@@ -46,12 +36,13 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 		isoneopen : true ,
 		isonedisable : false
 	}
+	$scope.showornot='true';
 	console.log($cookieStore.get('showornot'));
 	  // Setting a cookie
 	if($cookieStore.get('showornot')=='true'){
-		$scope.showornot='false';
+//		$scope.showornot='false';
 	}else{
-		$scope.showornot='true';
+//		$scope.showornot='true';
 	}
 	$scope.usr='';
 	$scope.pwd='';
@@ -65,7 +56,7 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 			console.log(angular.fromJson(angular.fromJson(response)).returnCode);
 			console.log('123:'+$cookieStore.get('showornot'));
 			if(angular.fromJson(angular.fromJson(response)).returnCode=="0"){
-				$scope.showornot='false';
+//				$scope.showornot='false';
 				$cookieStore.put('showornot', 'true');
 				location.href = "index2.html";
 			}
