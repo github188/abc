@@ -3,7 +3,12 @@ angular.module('app', ['ngCookies']).controller('ctrl', ['$scope','$location','$
 	
 	if($cookieStore.get('showornot')!='true'){
 //		window.history.back();
-		location.href = "index.html";
+		location.href = "login.html";
+	}
+	
+	$scope.logout = function(){
+		$cookieStore.put('showornot', 'false');
+		location.href = "login.html";
 	}
 	
 }]);
@@ -58,7 +63,7 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 			if(angular.fromJson(angular.fromJson(response)).returnCode=="0"){
 //				$scope.showornot='false';
 				$cookieStore.put('showornot', 'true');
-				location.href = "index2.html";
+				location.href = "main.html";
 			}
 		});
 	}
