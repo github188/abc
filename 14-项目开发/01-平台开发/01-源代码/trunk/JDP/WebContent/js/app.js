@@ -11,6 +11,39 @@ angular.module('app', ['ngCookies']).controller('ctrl', ['$scope','$location','$
 		location.href = "login.html";
 	}
 	
+	$scope.c=['col-md-7 col-sm-7','col-md-5 col-sm-5','col-md-5 col-sm-5'];
+	$scope.h=['false','false','false'];
+	$scope.s=['height: 98%;','height: 49%;','height: 49%;'];
+	$scope.islarge=false;
+	$scope.large = function(index){
+		console.log(index);
+		if($scope.islarge==false){
+			if(index==0){
+				$scope.c[0]='col-md-12 col-sm-12';
+				$scope.h[1]='true';
+				$scope.h[2]='true';
+				$scope.islarge=true;
+			}else if(index==1){
+				$scope.h[0]='true';
+				$scope.c[1]='col-md-12 col-sm-12';
+				$scope.s[1]='height: 98%;';
+				$scope.h[2]='true';
+				$scope.islarge=true;
+			}else if(index==2){
+				$scope.h[0]='true';
+				$scope.h[1]='true';
+				$scope.c[2]='col-md-12 col-sm-12';
+				$scope.s[2]='height: 98%;';
+				$scope.islarge=true;
+			}
+		}else{
+			$scope.c=['col-md-7 col-sm-7','col-md-5 col-sm-5','col-md-5 col-sm-5'];
+			$scope.h=['false','false','false'];
+			$scope.s=['height: 98%;','height: 49%;','height: 49%;'];
+			$scope.islarge=false;
+		}
+	}
+	
 }]);
 var app = angular.module('jsywp', ['ui.bootstrap','ui.router','chart.js','ngFileUpload','ngCookies']);
 
