@@ -19,6 +19,14 @@ public interface IBizService {
 	public LabourOndutyState getNumberOnDuty(String cuId);
 	
 	/**
+	 * 取指定日期的在岗人数
+	 * @param cuId
+	 * @param date
+	 * @return
+	 */
+	public LabourOndutyState getNumberOnDuty(String cuId,Date date);
+	
+	/**
 	 * 取历史在岗人数(当天的平均值)
 	 * @param cuId 控制单元（组织架构)id
 	 * @param startDate 统计开始日期，日期类型

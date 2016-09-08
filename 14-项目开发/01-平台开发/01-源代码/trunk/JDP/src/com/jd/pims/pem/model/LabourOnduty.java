@@ -5,13 +5,24 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
-import com.google.gson.Gson;
 import com.jd.pims.comm.BaseDataModel;
 
 @Entity
 public class LabourOnduty extends BaseDataModel{
-
 	
+	/*
+	 * 1 正式工
+	 * 2 长期派遣工
+	 * 3 外包工
+	 * 4 小时工
+	 * 5 其它
+	 */
+
+	public static String TYPE_EMP="EMP";
+	
+	public static String TYPE_TEMP="TEMP";
+	
+	public static String TYPE_OTEH="OTEH";
 	/**
 	 * 
 	 */

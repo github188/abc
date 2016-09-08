@@ -36,4 +36,11 @@ public interface UserDao extends IBaseDao{
 	 */
 	List<ControlUnit> getSubOrganizations(String parentId);
 	
+	/**
+	 * 获取控制单元 
+	 * @param cuId
+	 * @return
+	 */
+	ControlUnit findOrganization(String cuId);
+	
 }

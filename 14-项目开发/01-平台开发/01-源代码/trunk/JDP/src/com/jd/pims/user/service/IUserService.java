@@ -33,4 +33,11 @@ public interface IUserService {
 	 * @return
 	 */
 	public List<ControlUnit> getSubOrganizations(String parentId);
+	
+	/**
+	 * 获取控制单元
+	 * @param cuId
+	 * @return
+	 */
+	public ControlUnit findOrganization(String cuId);
 }

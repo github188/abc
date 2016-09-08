@@ -12,4 +12,16 @@
     <result column="create_time" property="createTime"  />
     <result column="last_update_time" property="lastUpdateTime"  />
   </resultMap>
+  
+  <select id="getCurrentTimeLabourOnduty" resultMap="labourOnduty">
+  	select RS.BIZ_DATE,RS.PERSON_TYPE,sum(RS.QUANTITY_ONDUTY) QUANTITY_ONDUTY from 
+		(SELECT LO.BIZ_DATE,LO.PERSON_TYPE,LO.QUANTITY_ONDUTY
+		  	FROM JD_LE_LABOUR_ONDUTY LO
+		  	LEFT JOIN NP_SYS_CONTROLUNIT CU ON LO.CU_ID=CU.ID
+		  	WHERE LO.BIZ_DATE=#{currentDate}
+		  		and CU.FULL_PATH like CONCAT(#{fullPath},'%' )
+		  	ORDER BY TIMING DESC
+		  	LIMIT 0,5
+		) RS GROUP BY RS.BIZ_DATE,RS.PERSON_TYPE
+  </select>
 </mapper>

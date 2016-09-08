@@ -147,4 +147,9 @@
   	SELECT ID,CODE,NAME,STATUS,TYPE,FULL_PATH,PARENTID,ORDER_NO 
   	FROM NP_SYS_CONTROLUNIT WHERE STATUS='NORMAL' AND PARENTID=#{parentId}
   </select>
+  
+  <select id="findOrganization" resultMap="controlUnit" parameterType="String">
+  	SELECT ID,CODE,NAME,STATUS,TYPE,FULL_PATH,PARENTID,ORDER_NO 
+  	FROM NP_SYS_CONTROLUNIT WHERE STATUS='NORMAL' AND ID=#{cuId}
+  </select>
 </mapper>
