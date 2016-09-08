@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jd.pims.pem.dao.LabourEfficiencyDao">
-	<!-- 人效 .小时 -->
-	<resultMap id="labourEfficiencyHour" type="com.jd.pims.pem.model.LabourEfficiencyHour">
+	<!-- 人效 -->
+	<resultMap id="labourEfficiency" type="com.jd.pims.pem.model.LabourEfficiency">
 		<id column="id" property="id" />
 		<result column="cu_id" property="cuId" />
 		<result column="biz_date" property="bizDate" />
 		<result column="time_period" property="timePeriod" />
-		<result column="labour_efficiency" property="labourEfficiency" />
+		<result column="period_efficiency" property="periodEfficiency" />
+		<result column="avg_efficiency" property="avgEfficiency" />
 		<result column="create_time" property="createTime" />
 		<result column="last_update_time" property="lastUpdateTime" />
 	</resultMap>
 
-	<!-- 人效 .天 -->
-	<resultMap id="labourEfficiencyDay" type="com.jd.pims.pem.model.LabourEfficiencyDay">
-		<id column="id" property="id" />
-		<result column="cu_id" property="cuId" />
-		<result column="biz_date" property="bizDate" />
-		<result column="labour_efficiency" property="labourEfficiency" />
-		<result column="create_time" property="createTime" />
-		<result column="last_update_time" property="lastUpdateTime" />
-	</resultMap>
+	
 
+	<select id="getLabourEfficiency" resultMap="labourEfficiency">
+		<![CDATA[
+		SELECT LE.ID,LE.CU_ID,LE.BIZ_DATE,LE.TIME_PERIOD,LE.PERIOD_EFFICIENCY,LE.AVG_EFFICIENCY
+		FROM JD_LE_LABOUR_EFFICIENCY LE
+		INNER JOIN NP_SYS_CONTROLUNIT CU ON LE.CU_ID=CU.ID
+		WHERE LE.BIZ_DATE=#{bizDate} AND LE.TIME_PERIOD=#{timePeriod} 
+			AND CU.FULL_PATH LIKE CONCAT(#{fullPath},'%' )
+		]]>
+	</select>
 </mapper>  

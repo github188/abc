@@ -1,25 +1,22 @@
 package com.jd.pims.pem.model;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
 
-import com.google.gson.Gson;
 import com.jd.pims.comm.BaseDataModel;
 
 @Entity
-public class LabourEfficiencyHour extends BaseDataModel {
+public class LabourEfficiency extends BaseDataModel{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8655069140825578351L;
-	
+	private static final long serialVersionUID = -6644930771146714269L;
 	private String id;
 	private String cuId;
 	private Date bizDate;
-	private Integer timePeriod;
-	private Double labourEfficiency;
+	private Double periodEfficiency;
+	private Double avgEfficiency;
 	private Date createTime;
 	private Date lastUpdateTime;
 	
@@ -41,17 +38,17 @@ public class LabourEfficiencyHour extends BaseDataModel {
 	public void setBizDate(Date bizDate) {
 		this.bizDate = bizDate;
 	}
-	public Integer getTimePeriod() {
-		return timePeriod;
+	public Double getPeriodEfficiency() {
+		return periodEfficiency;
 	}
-	public void setTimePeriod(Integer timePeriod) {
-		this.timePeriod = timePeriod;
+	public void setPeriodEfficiency(Double periodEfficiency) {
+		this.periodEfficiency = periodEfficiency;
 	}
-	public Double getLabourEfficiency() {
-		return labourEfficiency;
+	public Double getAvgEfficiency() {
+		return avgEfficiency;
 	}
-	public void setLabourEfficiency(Double labourEfficiency) {
-		this.labourEfficiency = labourEfficiency;
+	public void setAvgEfficiency(Double avgEfficiency) {
+		this.avgEfficiency = avgEfficiency;
 	}
 	public Date getCreateTime() {
 		return createTime;
@@ -66,4 +63,6 @@ public class LabourEfficiencyHour extends BaseDataModel {
 		this.lastUpdateTime = lastUpdateTime;
 	}
 	
+	
+
 }
