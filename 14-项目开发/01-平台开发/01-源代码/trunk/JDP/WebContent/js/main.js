@@ -396,13 +396,22 @@ option = {
 		        }
 		    ]
 		};
-		
+
+
+		var mapchart;
+		var barchart;
+		var barchart1;
+		var barchart2;
+		var piechart;
 		$(document).ready(function(){
-			var mapchart = echarts.init(document.getElementById('map'));
-			var barchart = echarts.init(document.getElementById('effect'));
-			var barchart1 = echarts.init(document.getElementById('count'));
-			var barchart2 = echarts.init(document.getElementById('bar'));
-			var piechart = echarts.init(document.getElementById('pie'));
+			init ();
+		});
+		function init (){
+		    mapchart = echarts.init(document.getElementById('map'));
+			barchart = echarts.init(document.getElementById('effect'));
+			barchart1 = echarts.init(document.getElementById('count'));
+			barchart2 = echarts.init(document.getElementById('bar'));
+			piechart = echarts.init(document.getElementById('pie'));
 			$.get('geoJson/area.geo.json', function (chinaJson) {
 			    echarts.registerMap('area', chinaJson);
 				mapchart.setOption(option, true);  
@@ -411,14 +420,100 @@ option = {
 			barchart1.setOption(barOption1, true);  
 			barchart2.setOption(barOption2, true);  
 			piechart.setOption(pieOption, true);  
-			window.onresize = function(){    
-				mapchart.resize();
-				barchart.resize();
-				barchart1.resize();
-				barchart2.resize();
-				piechart.resize();
-			};
-		});
+
+		}
+/*		window.onresize=function(){resize();}*/
+		function resize(index){
+			var a = $('#a');
+			var b = $('#b');
+			var c = $('#c');
+			switch(index){
+				case 0 :
+					b.hide();
+					c.hide();
+					a.attr("class", "col-md-12");
+					var mapTopRight = $('#mapTopRight');
+					mapTopRight.removeAttr("onclick");
+					var mapTopRight = $('#mapTopRight');
+					mapTopRight.bind("click", function() { back(0);});
+					mapchart.resize();
+					barchart2.resize();
+					piechart.resize();
+					break;
+				case 1 :
+					a.hide();
+					c.hide();
+					b.attr("class", "col-md-12");
+					b.css({
+						"height":'98%'
+					});
+					var effectTopRight = $('#effectTopRight');
+					effectTopRight.removeAttr("onclick");
+					var effectTopRight = $('#effectTopRight');
+					effectTopRight.bind("click", function() { back(1);});
+					barchart.resize();
+					break;
+				case 2 :
+					a.hide();
+					b.hide();
+					c.css({
+						"height":'98%'
+					});
+					c.attr("class", "col-md-12");
+					var countTopRight = $('#countTopRight');
+					countTopRight.removeAttr("onclick");
+					var countTopRight = $('#countTopRight');
+					countTopRight.bind("click", function() { back(2);});
+					barchart1.resize();
+					break;	
+			}	
+		}
+		function back(index){
+			var a = $('#a');
+			var b = $('#b');
+			var c = $('#c');
+			switch(index){
+				case 0 :
+					b.show();
+					c.show();
+					a.attr("class", "col-md-7");
+					var mapTopRight = $('#mapTopRight');
+					mapTopRight.removeAttr("onclick");
+					var mapTopRight = $('#mapTopRight');
+					mapTopRight.bind("click", function() { resize(0);});
+					mapchart.resize();
+					barchart2.resize();
+					piechart.resize();
+					break;
+				case 1 :
+					a.show();
+					c.show();
+					b.css({
+						"height":'49%'
+					});
+					b.attr("class", "col-md-5");
+					var effectTopRight = $('#effectTopRight');
+					effectTopRight.removeAttr("onclick");
+					var effectTopRight = $('#effectTopRight');
+					effectTopRight.bind("click", function() { resize(1);});
+					barchart.resize();
+					break;
+				case 2 :
+					a.show();
+					b.show();
+					c.css({
+						"height":'49%'
+					});
+					c.attr("class", "col-md-5");
+					var countTopRight = $('#countTopRight');
+					countTopRight.removeAttr("onclick");
+					var countTopRight = $('#countTopRight');
+					countTopRight.bind("click", function() { resize(2);});
+					barchart1.resize();
+					break;
+					
+			}	
+		}
 /*		alert($(document.body).height());
 		alert($(document.body).width());*/
 		function searchMap() {
