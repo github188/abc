@@ -16,6 +16,7 @@ import com.jd.pims.pem.dao.OrderQuantityDao;
 import com.jd.pims.pem.model.LabourEfficiencyDay;
 import com.jd.pims.pem.model.LabourEfficiencyHour;
 import com.jd.pims.pem.model.LabourOnduty;
+import com.jd.pims.pem.model.LabourOndutyDayState;
 import com.jd.pims.pem.model.LabourOndutyState;
 import com.jd.pims.pem.service.IBizService;
 import com.jd.pims.user.dao.UserDao;
@@ -75,10 +76,11 @@ public class BizServiceImpl implements IBizService {
 	}
 
 	@Override
-	public LinkedList<LabourOndutyState> getNumberHistory(String cuId,
+	public List<LabourOndutyDayState> getNumberHistory(String cuId,
 			Date startDate, Date endDate, String interval) {
 		// TODO Auto-generated method stub
-		return null;
+		ControlUnit cu = userDao.findOrganization(cuId);
+		return labourOndutyDao.getHistoryLabourOnduty(startDate, endDate, cu.getFullPath());
 	}
 
 	@Override

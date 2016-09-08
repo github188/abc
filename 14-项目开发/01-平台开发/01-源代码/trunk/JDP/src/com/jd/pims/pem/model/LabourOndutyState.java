@@ -3,22 +3,21 @@ package com.jd.pims.pem.model;
 import com.jd.pims.comm.BaseDataModel;
 
 /**
- * 在岗人数统计领域对象
+ * 在岗人数分类统计领域对象
  *
  */
 public class LabourOndutyState extends BaseDataModel{
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -8549857464663702188L;
 	
 	private String cuId;
-	
+	//员工数量
 	private Integer numEmp;
-	
+	//临时工数量
 	private Integer numTemp;
-	
+	//其他员工数量
 	private Integer numOther;
 
 	public String getCuId() {

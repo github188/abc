@@ -2,9 +2,11 @@ package com.jd.pims.pem.service;
 
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 import com.jd.pims.pem.model.LabourEfficiencyDay;
 import com.jd.pims.pem.model.LabourEfficiencyHour;
+import com.jd.pims.pem.model.LabourOndutyDayState;
 import com.jd.pims.pem.model.LabourOndutyState;
 /**
  * 人效业务类 
@@ -34,7 +36,7 @@ public interface IBizService {
 	 * @param interval 日期时间间隔，H：代表小时，D：代表天
 	 * @return
 	 */
-	public LinkedList<LabourOndutyState> getNumberHistory(String cuId,Date startDate,Date endDate,String interval);
+	public List<LabourOndutyDayState> getNumberHistory(String cuId,Date startDate,Date endDate,String interval);
 	
 	/**
 	 * 取按小时为单位人效统计

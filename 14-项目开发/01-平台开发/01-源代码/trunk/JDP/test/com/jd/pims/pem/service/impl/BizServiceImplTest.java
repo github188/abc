@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.junit.Assert;
@@ -14,6 +15,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.jd.pims.pem.model.LabourOndutyDayState;
 import com.jd.pims.pem.model.LabourOndutyState;
 import com.jd.pims.pem.service.IBizService;
 
@@ -40,7 +42,18 @@ public class BizServiceImplTest extends
 
 	@Test
 	public void testGetNumberHistory() {
-		fail("Not yet implemented");
+		Calendar c1 = Calendar.getInstance();
+		c1.setTime(new Date());
+		c1.set(2016, 8, 6);
+		Calendar c2 = Calendar.getInstance();
+		c2.setTime(new Date());
+		c2.set(2016, 8, 7);
+		List<LabourOndutyDayState> list = pemService
+				.getNumberHistory("11111111111111111111111111111111",c1.getTime(),c2.getTime(),"D");
+		Assert.assertTrue("返回记录数"+list.size(), list != null);
+		for(LabourOndutyDayState state:list){
+			logger.debug(state);
+		}
 	}
 
 	@Test

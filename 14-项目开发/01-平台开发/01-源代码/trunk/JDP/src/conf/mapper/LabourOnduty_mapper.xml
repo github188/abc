@@ -12,9 +12,21 @@
     <result column="create_time" property="createTime"  />
     <result column="last_update_time" property="lastUpdateTime"  />
   </resultMap>
+  
+  <resultMap id="labourOndutyDayState" type="com.jd.pims.pem.model.LabourOndutyDayState" >
+    <id column="id" property="id" />
+    <result column="cu_id" property="cuId"  />
+    <result column="biz_date" property="bizDate"  />
+    <result column="person_type" property="personType"  />
+    <result column="avg_quantity" property="avgQuantity"  />
+    <result column="max_quantity" property="maxQuantity"  />
+    <result column="min_quantity" property="minQuantity"  />
+    <result column="create_time" property="createTime"  />
+    <result column="last_update_time" property="lastUpdateTime"  />
+  </resultMap>
 
   <select id="getCurrentTimeLabourOnduty" resultMap="labourOnduty">
-  	select RS.BIZ_DATE,RS.PERSON_TYPE,sum(RS.QUANTITY_ONDUTY) QUANTITY_ONDUTY from 
+  	SELECT RS.BIZ_DATE,RS.PERSON_TYPE,sum(RS.QUANTITY_ONDUTY) QUANTITY_ONDUTY from 
 		(SELECT LO.BIZ_DATE,LO.PERSON_TYPE,LO.QUANTITY_ONDUTY
 		  	FROM JD_LE_LABOUR_ONDUTY LO
 		  	LEFT JOIN NP_SYS_CONTROLUNIT CU ON LO.CU_ID=CU.ID
@@ -25,13 +37,15 @@
 		) RS GROUP BY RS.BIZ_DATE,RS.PERSON_TYPE
   </select>
 
-  <select id="getBranches" resultType="String" parameterType="String">
-  		SELECT
-			c.id
-		FROM
-			NP_SYS_CONTROLUNIT c
-		WHERE
-			c.PARENTID = #{PARENTID}
+  <select id="getHistoryLabourOnduty" resultMap="labourOndutyDayState">
+  	<![CDATA[
+  	SELECT ST.ID, ST.CU_ID, ST.BIZ_DATE, ST.PERSON_TYPE, ST.AVG_QUANTITY, ST.MIN_QUANTITY, ST.MAX_QUANTITY
+	FROM  JD_LE_LABOUR_ONDUTY_DAY_ST ST
+	INNER JOIN NP_SYS_CONTROLUNIT CU ON ST.CU_ID=CU.ID
+	WHERE BIZ_DATE>=#{startDate} AND BIZ_DATE<=#{endDate} 
+		AND CU.FULL_PATH LIKE CONCAT(#{fullPath},'%' )
+
+  	]]>
   </select>
 
 </mapper>
