@@ -1,6 +1,7 @@
 package com.jd.pims.pem.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -17,6 +18,16 @@ public interface LabourEfficiencyDao extends IBaseDao {
 	 * @return
 	 */
 	LabourEfficiency getLabourEfficiency(@Param("bizDate")Date bizDate, @Param("timePeriod")Integer timePeriod,
+			@Param("fullPath")String fullPath);
+	
+	/**
+	 * 取历史人效
+	 * @param startDate 开始人效
+	 * @param endDate
+	 * @param fullPath
+	 * @return
+	 */
+	List<LabourEfficiency> getHistoryLabourEfficiency(@Param("startDate")Date startDate, @Param("endDate")Date endDate,
 			@Param("fullPath")String fullPath);
 
 }

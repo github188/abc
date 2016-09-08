@@ -70,7 +70,18 @@ public class BizServiceImplTest extends
 
 	@Test
 	public void testGetEfficiencyHistory() {
-		fail("Not yet implemented");
+		Calendar c1 = Calendar.getInstance();
+		c1.setTime(new Date());
+		c1.set(2016, 8, 6);
+		Calendar c2 = Calendar.getInstance();
+		c2.setTime(new Date());
+		c2.set(2016, 8, 7);
+		List<LabourEfficiency> list = pemService
+				.getEfficiencyHistory("11111111111111111111111111111111",c1.getTime(),c2.getTime());
+		Assert.assertTrue("返回记录数"+list.size(), list != null);
+		for(LabourEfficiency state:list){
+			logger.debug(state);
+		}
 	}
 
 }

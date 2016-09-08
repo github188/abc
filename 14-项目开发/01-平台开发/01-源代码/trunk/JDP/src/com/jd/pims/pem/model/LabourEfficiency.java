@@ -15,6 +15,8 @@ public class LabourEfficiency extends BaseDataModel{
 	private String id;
 	private String cuId;
 	private Date bizDate;
+	private Integer timePeriod;
+	private Double efficiency;
 	private Double periodEfficiency;
 	private Double avgEfficiency;
 	private Date createTime;
@@ -61,6 +63,18 @@ public class LabourEfficiency extends BaseDataModel{
 	}
 	public void setLastUpdateTime(Date lastUpdateTime) {
 		this.lastUpdateTime = lastUpdateTime;
+	}
+	public Integer getTimePeriod() {
+		return timePeriod;
+	}
+	public void setTimePeriod(Integer timePeriod) {
+		this.timePeriod = timePeriod;
+	}
+	public Double getEfficiency() {
+		return efficiency;
+	}
+	public void setEfficiency(Double efficiency) {
+		this.efficiency = efficiency;
 	}
 	
 	

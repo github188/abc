@@ -3,7 +3,6 @@ package com.jd.pims.pem.service.impl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -75,30 +74,35 @@ public class BizServiceImpl implements IBizService {
 	@Override
 	public List<LabourOndutyDayState> getNumberHistory(String cuId,
 			Date startDate, Date endDate, String interval) {
-		// TODO Auto-generated method stub
 		ControlUnit cu = userDao.findOrganization(cuId);
 		return labourOndutyDao.getHistoryLabourOnduty(startDate, endDate,
 				cu.getFullPath());
 	}
 
 	@Override
-	public LinkedList<LabourEfficiency> getEfficiencyHistory(String cuId,
-			Date startDate, Date endDate, String interval) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<LabourEfficiency> getEfficiencyHistory(String cuId,
+			Date startDate, Date endDate) {
+		ControlUnit cu = userDao.findOrganization(cuId);
+		try {
+			return labourEfficiencyDao.getHistoryLabourEfficiency(
+					sFormat.parse(sFormat.format(startDate)),
+					sFormat.parse(sFormat.format(endDate)), cu.getFullPath());
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			logger.debug("日期解释错误：", e);
+			return null;
+		}
 	}
 
 	@Override
 	public LabourEfficiency getTimePeriodEfficience(String cuId, Date bizDate,
 			Integer timePeriod) {
-		// TODO Auto-generated method stub
 		ControlUnit cu = userDao.findOrganization(cuId);
 		try {
 			return labourEfficiencyDao.getLabourEfficiency(
 					sFormat.parse(sFormat.format(bizDate)), timePeriod,
 					cu.getFullPath());
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			logger.debug("日期解释错误：", e);
 			return null;
 		}

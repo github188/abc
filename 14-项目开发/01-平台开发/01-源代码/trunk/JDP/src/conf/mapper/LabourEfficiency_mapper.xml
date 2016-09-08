@@ -13,15 +13,23 @@
 		<result column="last_update_time" property="lastUpdateTime" />
 	</resultMap>
 
-	
-
 	<select id="getLabourEfficiency" resultMap="labourEfficiency">
-		<![CDATA[
+	<![CDATA[
 		SELECT LE.ID,LE.CU_ID,LE.BIZ_DATE,LE.TIME_PERIOD,LE.PERIOD_EFFICIENCY,LE.AVG_EFFICIENCY
 		FROM JD_LE_LABOUR_EFFICIENCY LE
 		INNER JOIN NP_SYS_CONTROLUNIT CU ON LE.CU_ID=CU.ID
 		WHERE LE.BIZ_DATE=#{bizDate} AND LE.TIME_PERIOD=#{timePeriod} 
 			AND CU.FULL_PATH LIKE CONCAT(#{fullPath},'%' )
-		]]>
+	]]>
+	</select>
+	
+	<select id="getHistoryLabourEfficiency" resultMap="labourEfficiency">
+	<![CDATA[
+		SELECT LE.ID,LE.CU_ID,LE.BIZ_DATE,LE.TIME_PERIOD,LE.AVG_EFFICIENCY AS EFFICIENCY
+		FROM JD_LE_LABOUR_EFFICIENCY LE
+		INNER JOIN NP_SYS_CONTROLUNIT CU ON LE.CU_ID=CU.ID
+		WHERE LE.BIZ_DATE>=#{startDate} AND LE.BIZ_DATE<=#{endDate}  AND LE.TIME_PERIOD=24 
+			AND CU.FULL_PATH LIKE CONCAT(#{fullPath},'%' )
+	]]>
 	</select>
 </mapper>  

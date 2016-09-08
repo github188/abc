@@ -71,7 +71,7 @@ public interface IBizService {
 	 *            日期时间间隔，H：代表小时，D：代表天
 	 * @return
 	 */
-	public LinkedList<LabourEfficiency> getEfficiencyHistory(String cuId,
-			Date startDate, Date endDate, String interval);
+	public List<LabourEfficiency> getEfficiencyHistory(String cuId,
+			Date startDate, Date endDate);
 
 }
