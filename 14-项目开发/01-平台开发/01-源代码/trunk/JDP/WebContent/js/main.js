@@ -411,10 +411,13 @@ option = {
 			barchart1.setOption(barOption1, true);  
 			barchart2.setOption(barOption2, true);  
 			piechart.setOption(pieOption, true);  
-				window.onresize = function(){    
-		myChart.resize();
-		myChart2.resize();
-	};
+			window.onresize = function(){    
+				mapchart.resize();
+				barchart.resize();
+				barchart1.resize();
+				barchart2.resize();
+				piechart.resize();
+			};
 		});
 /*		alert($(document.body).height());
 		alert($(document.body).width());*/
