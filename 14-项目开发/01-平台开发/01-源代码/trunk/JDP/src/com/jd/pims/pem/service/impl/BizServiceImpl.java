@@ -61,7 +61,7 @@ public class BizServiceImpl implements IBizService {
 					state.setNumEmp(rec.getQuantityOnduty());
 				} else if (rec.getPersonType().equals("2")
 						|| rec.getPersonType().equals("3")) {
-					state.setNumEmp(state.getNumTemp()
+					state.setNumTemp((state.getNumTemp()==null?0:state.getNumTemp())
 							+ rec.getQuantityOnduty());
 				} else if (rec.getPersonType().equals("5")) {
 					state.setNumOther(rec.getQuantityOnduty());

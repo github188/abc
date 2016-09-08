@@ -12,7 +12,7 @@
     <result column="create_time" property="createTime"  />
     <result column="last_update_time" property="lastUpdateTime"  />
   </resultMap>
-  
+
   <select id="getCurrentTimeLabourOnduty" resultMap="labourOnduty">
   	select RS.BIZ_DATE,RS.PERSON_TYPE,sum(RS.QUANTITY_ONDUTY) QUANTITY_ONDUTY from 
 		(SELECT LO.BIZ_DATE,LO.PERSON_TYPE,LO.QUANTITY_ONDUTY
@@ -24,4 +24,14 @@
 		  	LIMIT 0,5
 		) RS GROUP BY RS.BIZ_DATE,RS.PERSON_TYPE
   </select>
+
+  <select id="getBranches" resultType="String" parameterType="String">
+  		SELECT
+			c.id
+		FROM
+			NP_SYS_CONTROLUNIT c
+		WHERE
+			c.PARENTID = #{PARENTID}
+  </select>
+
 </mapper>

@@ -32,7 +32,7 @@ public class BizServiceImplTest extends
 	public void testGetNumberOnDuty() {
 		Calendar c1 = Calendar.getInstance();
 		c1.setTime(new Date());
-		c1.set(2016, 9, 7);
+		c1.set(2016, 8, 7);
 		LabourOndutyState state = pemService
 				.getNumberOnDuty("11111111111111111111111111111111",c1.getTime());
 		Assert.assertTrue(state.toString(), state != null);
