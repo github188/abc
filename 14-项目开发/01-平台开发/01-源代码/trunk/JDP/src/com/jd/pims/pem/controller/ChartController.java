@@ -34,30 +34,64 @@ public class ChartController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/getNumberOnDuty", method = RequestMethod.POST)
+	@RequestMapping(value = "/getMapData", method = RequestMethod.POST)
 	@ResponseBody
-	public String getNumberOnDuty(HttpServletRequest request,
+	public void getMapData(HttpServletRequest request,
 			HttpServletResponse response) {
-		String cuId = request.getParameter("cuId");
-		if (cuId != null && !"".equals(cuId)) {
-			LabourOndutyState currentState = pemService
-					.getNumberOnDuty(cuId);
-			JsonObject result=currentState.toJsonObject();
-			List<ControlUnit> controlUnits=uesrService.getSubOrganizations(cuId);
-			if(controlUnits.size()>0){
-				JsonArray subItems = new JsonArray();
-				for(ControlUnit cu:controlUnits){
-					LabourOndutyState state=pemService.getNumberOnDuty(cu.getId()); 
-					subItems.add(state.toJsonObject());
-				}
-				result.add("subItems", subItems);
-			}
-			
-			return this.buildSuccessResponse(result).toString();
-		}
-		return this.buildFailResponse(1, "参数不能为空").toString();
-
-		
+		String type= request.getParameter("type");
+		String cuid= request.getParameter("cuid");
+	}
+	/**
+	 * 业务接口
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getBarData", method = RequestMethod.POST)
+	@ResponseBody
+	public void getBarData(HttpServletRequest request,
+			HttpServletResponse response) {
+		String type= request.getParameter("type");
+		String cuid= request.getParameter("cuid");
+	}
+	/**
+	 * 业务接口
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getBar1Data", method = RequestMethod.POST)
+	@ResponseBody
+	public void getBar1Data(HttpServletRequest request,
+			HttpServletResponse response) {
+		String type= request.getParameter("type");
+		String cuid= request.getParameter("cuid");
+	}
+	/**
+	 * 业务接口
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getBar2Data", method = RequestMethod.POST)
+	@ResponseBody
+	public void getBar2Data(HttpServletRequest request,
+			HttpServletResponse response) {
+		String type= request.getParameter("type");
+		String cuid= request.getParameter("cuid");
+	}
+	/**
+	 * 业务接口
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getEffectData", method = RequestMethod.POST)
+	@ResponseBody
+	public void getEffectData(HttpServletRequest request,
+			HttpServletResponse response) {
+		String type= request.getParameter("type");
+		String cuid= request.getParameter("cuid");
 	}
 
 }

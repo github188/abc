@@ -6,8 +6,6 @@ option = {
     title: {
         text: '在岗总人数',
         subtext: randomData(),
-/*        borderColor:'#7ab8f9',
-        borderWidth:2,*/
         left: 'left',
         textStyle:{
 		    color:'#7ab8f9'
@@ -24,34 +22,40 @@ option = {
 		    color:'#33bced'
 		}
     },
-    legend: {
-    	show:false,
-        orient: 'vertical',
-        left: 'left',
-        data:['人数'],
-        textStyle:{
-		    color:'#fff'
-		}
-    },
     grid:{
-    	top:'50%',
-    	height:'20%',
+    	top:0,
+    	height:'90%',
     	containLabel:true
     },
     series: [
         {
-            name: '人数',
+            name: '11',
             type: 'map',
-            mapType: 'area',
-            roam: false,
+            mapType: '全国',
             label: {
                 normal: {
-                    show: true
+                    formatter: '{b}',
+                    position: 'right',
+                    show: false
                 },
                 emphasis: {
-                    show: true
+                    show: false
                 }
             },
+            itemStyle: {
+                normal: {
+                    areaColor: '',
+                    borderColor: '#4c94ff',
+                    borderWidth: 1
+                },
+                emphasis: {
+                    areaColor: ''
+                }
+            },
+            left:'10%',
+            right:'10%',
+            top:0,
+            bottom:0,
             data:[
                 {name: '东北地区',value: randomData() },
                 {name: '华北地区',value: randomData() },
@@ -74,10 +78,10 @@ option = {
 			legend:{
 				data:['员工数量','总订单数量','人效'],
 				bottom:5,
+				right:30,
 				textStyle:{
 		        	color:'#7ab8f9'
-		        },
-		        right:0
+		        }
 			},
 		    tooltip : {
 		        trigger: 'item',
@@ -176,10 +180,10 @@ option = {
 			legend:{
 				data:['正式员工','非正式员工','占比'],
 				bottom:5,
+				right:30,
 				textStyle:{
 		        	color:'#7ab8f9'
-		        },
-				right:0
+		        }
 			},
 		    tooltip : {
 		        trigger: 'item',
@@ -403,26 +407,141 @@ option = {
 		var barchart1;
 		var barchart2;
 		var piechart;
+		var enlarged = false;
 		$(document).ready(function(){
-			init ();
+			init ('全国'); 
 		});
-		function init (){
+		function init (mapName){
 		    mapchart = echarts.init(document.getElementById('map'));
 			barchart = echarts.init(document.getElementById('effect'));
 			barchart1 = echarts.init(document.getElementById('count'));
 			barchart2 = echarts.init(document.getElementById('bar'));
 			piechart = echarts.init(document.getElementById('pie'));
-			$.get('geoJson/area.geo.json', function (chinaJson) {
-			    echarts.registerMap('area', chinaJson);
+/*			$.get('geoJson/'+mapName+'.json', function (chinaJson) {
+			    echarts.registerMap(mapName, chinaJson);   
+			    option.series[0].map= mapName;
 				mapchart.setOption(option, true);  
+			});*/
+			$.ajax({
+				url: 'geoJson/'+mapName+'.json',
+				type: "get",
+				dataType: "json",
+				success: function (chinaJson) {
+				    echarts.registerMap(mapName, chinaJson);   
+				    option.series[0].map= mapName;
+					mapchart.setOption(option, true);  
+				},statusCode: {404: function() {init ('全国');}}
 			});
 			barchart.setOption(barOption, true);  
 			barchart1.setOption(barOption1, true);  
 			barchart2.setOption(barOption2, true);  
-			piechart.setOption(pieOption, true);  
+			piechart.setOption(pieOption, true); 
+			mapchart.on('click', function (param){
+				var name=param.name;
+				//在中国地图上要去掉这几个地方的点击事件 直辖市 台湾 饼状图
+				if(!name.match(/^北京|^天津|^重庆|^上海|在线|离线|台湾/)||name!=""){
+				    var type=param.data.type;
+				    var fullPath=param.data.fullPath;
+				    //getData(type,fullPath,name);
+					$.ajax({
+						url: 'geoJson/'+name+'.json',
+						type: "get",
+						dataType: "json",
+						success: function (chinaJson) {
+						    echarts.registerMap(name, chinaJson);   
+						    option.series[0].map= name;
+							mapchart.setOption(option, true);  
+						},
+					  statusCode: {404: function() {init ('全国');}}
+					});
+					barchart.setOption(barOption, true);  
+					barchart1.setOption(barOption1, true);  
+					barchart2.setOption(barOption2, true);  
+					piechart.setOption(pieOption, true);  
+			    }
+			}); 
 
 		}
-/*		window.onresize=function(){resize();}*/
+/*		alert($(document.body).height());
+		alert($(document.body).width());*/
+		function getData(type,fullPath,name){
+			searchMap();
+			searchBar2();
+			searchEffect();
+			if(!enlarged){
+				searchBar();
+				searchBar1();
+			}
+		};
+		function setValue(name){
+			$("#areaTip").html(name||"全国");
+			mapOption.title.text = name?(name+"在岗总人数"):"在岗总人数";
+			mapOption.series[0].mapType= (name=="全国"?"area":name);
+		    barOption.title.text = name+"社区接入数量";
+		    barOption.yAxis.data = bardata[0];
+		    barOption.series[0].data = bardata[1];
+		    barOption.series[1].data = bardata[2];
+			mapOption.series[0].data = mapdata;
+			mapOption.series[1].data = piedata;
+		    mapChart.setOption(mapOption, true);
+		    barChart.setOption(barOption, true);
+		};
+		function searchMap() {
+			var url = "chart/getMapData.do";
+			$.ajax({
+				url: url,
+				type: "post",
+				dataType: "text",
+				success: function (data) {
+					createTopLeftChart(data);
+				}
+			});
+		};
+		function searchBar() {
+			var url = "chart/getBarData.do";
+			$.ajax({
+				url: url,
+				type: "post",
+				dataType: "text",
+				success: function (data) {
+					createTopLeftChart(data);
+				}
+			});
+		};
+		function searchBar1() {
+			var url = "chart/getBar1Data.do";
+			$.ajax({
+				url: url,
+				type: "post",
+				dataType: "text",
+				success: function (data) {
+					createTopLeftChart(data);
+				}
+			});
+		};
+		function searchBar2() {
+			var url = "chart/getBar2Data.do";
+			$.ajax({
+				url: url,
+				type: "post",
+				dataType: "text",
+				success: function (data) {
+					createTopLeftChart(data);
+				}
+			});
+		};
+		function searchEffect() {
+			var url = "chart/getEffectData.do";
+			$.ajax({
+				url: url,
+				type: "post",
+				dataType: "text",
+				success: function (data) {
+					createTopLeftChart(data);
+				}
+			});
+		};
+
 		function resize(index){
 			var a = $('#a');
 			var b = $('#b');
@@ -439,6 +558,7 @@ option = {
 					mapchart.resize();
 					barchart2.resize();
 					piechart.resize();
+					enlarged = true;
 					break;
 				case 1 :
 					a.hide();
@@ -484,6 +604,7 @@ option = {
 					mapchart.resize();
 					barchart2.resize();
 					piechart.resize();
+					enlarged = false;
 					break;
 				case 1 :
 					a.show();
@@ -514,33 +635,10 @@ option = {
 					
 			}	
 		}
-/*		alert($(document.body).height());
-		alert($(document.body).width());*/
-		function searchMap() {
-			var url = "chart/getMapData.do";
-			var currentCriterias=new Array();
-			currentCriterias.push({field:'currentYear',op:'=', value:currentYear});	
-			jht.ajax({
-				url: url,
-				type: "post",
-				data: {"criterias":jht.JSON2Str(getExportCriterias(currentCriterias))},
-				dataType: "text",
-				success: function (data) {
-					createTopLeftChart(data);
-				}
-			});
-		};
-		function searchMap() {
-			var url = "chart/getMapData.do";
-			var currentCriterias=new Array();
-			currentCriterias.push({field:'currentYear',op:'=', value:currentYear});	
-			jht.ajax({
-				url: url,
-				type: "post",
-				data: {"criterias":jht.JSON2Str(getExportCriterias(currentCriterias))},
-				dataType: "text",
-				success: function (data) {
-					createTopLeftChart(data);
-				}
-			});
+		window.onresize=function(){
+			mapchart.resize();
+			barchart.resize();
+			barchart1.resize();
+			barchart2.resize();
+			piechart.resize();
 		};
