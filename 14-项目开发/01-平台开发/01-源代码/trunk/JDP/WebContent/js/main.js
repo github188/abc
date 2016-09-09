@@ -63,7 +63,7 @@ option = {
             itemStyle: {
                 normal: {
                     areaColor: '#001F4D',
-                    borderColor: '#4c94ff',
+                    borderColor: '#85c7ff',
                     borderWidth: 2,
                     opacity:0.5
                 },
@@ -432,6 +432,7 @@ option = {
 			init ('全国'); 
 		});
 		function init (mapName){
+			$("#areaTip").html(mapName||"全国");
 		    mapchart = echarts.init(document.getElementById('map'));
 			barchart = echarts.init(document.getElementById('effect'));
 			barchart1 = echarts.init(document.getElementById('count'));
@@ -449,7 +450,8 @@ option = {
 				success: function (chinaJson) {
 				    echarts.registerMap(mapName, chinaJson);   
 				    option.series[0].map= mapName;
-					mapchart.setOption(option, true);  
+					mapchart.setOption(option, true); 
+
 				},statusCode: {404: function() {init ('全国');}}
 			});
 			barchart.setOption(barOption, true);  
@@ -458,8 +460,10 @@ option = {
 			piechart.setOption(pieOption, true); 
 			mapchart.on('click', function (param){
 				var name=param.name;
+
 				//在中国地图上要去掉这几个地方的点击事件 直辖市 台湾 饼状图
 				if(!name.match(/^北京|^天津|^重庆|^上海|在线|离线|台湾/)||name!=""){
+					$("#areaTip").html(name||"全国");
 				    var type=param.data.type;
 				    var fullPath=param.data.fullPath;
 				    //getData(type,fullPath,name);
