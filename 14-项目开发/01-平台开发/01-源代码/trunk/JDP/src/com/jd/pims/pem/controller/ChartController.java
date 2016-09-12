@@ -18,6 +18,7 @@ import com.jd.pims.comm.BaseController;
 import com.jd.pims.comm.ControlUnitCache;
 import com.jd.pims.pem.model.LabourOndutyState;
 import com.jd.pims.pem.service.IBizService;
+import com.jd.pims.pem.service.IChartService;
 import com.jd.pims.user.model.ControlUnit;
 import com.jd.pims.user.service.IUserService;
 
@@ -25,7 +26,7 @@ import com.jd.pims.user.service.IUserService;
 @RequestMapping("/chart")
 public class ChartController extends BaseController {
 	@Autowired
-	private IBizService pemService;
+	private IChartService chartService;
 	@Autowired
 	private IUserService uesrService;
 
@@ -37,30 +38,11 @@ public class ChartController extends BaseController {
 	 */
 	@RequestMapping(value = "/getMapData", method = RequestMethod.POST)
 	@ResponseBody
-	public String getMapData(HttpServletRequest request,
+	public List<LabourOndutyState> getMapData(HttpServletRequest request,
 			HttpServletResponse response) {
 		String cuId = request.getParameter("cuId");
-		if (cuId == null) {
-			ControlUnit root = uesrService.findRootOrganization();
-			cuId = root.getId();
-		}
-		ControlUnit cu=uesrService.findOrganization(cuId);
-		LabourOndutyState currentState = pemService.getNumberOnDuty(cuId);
-		currentState.setCuName(cu.getCuName());
-		JsonObject result = currentState.toJsonObject();
-		List<ControlUnit> controlUnits = uesrService.getSubOrganizations(cuId);
-		if (controlUnits.size() > 0) {
-			JsonArray subItems = new JsonArray();
-			for (ControlUnit subCu : controlUnits) {
-				LabourOndutyState state = pemService
-						.getNumberOnDuty(subCu.getId());
-				state.setCuName(subCu.getCuName());
-				subItems.add(state.toJsonObject());
-			}
-			result.add("subItems", subItems);
-		}
-
-		return this.buildSuccessResponse(result).toString();
+		 List<LabourOndutyState> list = chartService.getNumberOnDuty(cuId);
+		return list;
 	}
 	/**
 	 * 业务接口
@@ -73,7 +55,7 @@ public class ChartController extends BaseController {
 	public void getBarData(HttpServletRequest request,
 			HttpServletResponse response) {
 		String cuid= request.getParameter("id");
-		//pemService.getEfficiencyHistory(cuid);
+		//chartService.getEfficiencyHistory(cuid);
 	}
 	/**
 	 * 业务接口
@@ -86,7 +68,7 @@ public class ChartController extends BaseController {
 	public void getBar1Data(HttpServletRequest request,
 			HttpServletResponse response) {
 		String cuid= request.getParameter("id");
-		//pemService.getNumberHistory(cuid);
+		//chartService.getNumberHistory(cuid);
 	}
 	/**
 	 * 业务接口
@@ -99,7 +81,7 @@ public class ChartController extends BaseController {
 	public void getBar2Data(HttpServletRequest request,
 			HttpServletResponse response) {
 		String cuid= request.getParameter("id");
-		//pemService.getTimePeriodEfficience(cuid);
+		//chartService.getTimePeriodEfficience(cuid);
 	}
 	/**
 	 * 业务接口

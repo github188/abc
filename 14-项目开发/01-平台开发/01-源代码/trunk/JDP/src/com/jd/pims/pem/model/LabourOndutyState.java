@@ -13,7 +13,7 @@ public class LabourOndutyState extends BaseDataModel{
 	private static final long serialVersionUID = -8549857464663702188L;
 	
 	private String cuId;
-	
+	//区域名称
 	private String cuName;
 	//员工数量
 	private Integer numEmp;
