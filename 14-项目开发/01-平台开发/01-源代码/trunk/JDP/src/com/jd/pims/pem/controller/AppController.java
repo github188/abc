@@ -23,6 +23,7 @@ import com.jd.pims.pem.model.LabourOndutyDayState;
 import com.jd.pims.pem.model.LabourOndutyState;
 import com.jd.pims.pem.service.IBizService;
 import com.jd.pims.user.model.ControlUnit;
+import com.jd.pims.user.model.Employee;
 import com.jd.pims.user.service.IUserService;
 
 @Controller
@@ -192,25 +193,11 @@ public class AppController extends BaseController {
 	@ResponseBody
 	public String getEmployee(HttpServletRequest request,
 			HttpServletResponse response) {
-		String account = request.getParameter("account");
-		String password = request.getParameter("password");
+		String inputStr = request.getParameter("inputString");
+		
+		List<Employee> result=uesrService.searchEmployee(inputStr);
 
-		JsonObject jsonResponse = new JsonObject();
-		jsonResponse.addProperty("returnCode", "");
-		jsonResponse.addProperty("message", "");
-
-		JsonObject jsonResult = new JsonObject();
-		jsonResult.addProperty("id", "");
-		jsonResult.addProperty("empName", "");
-		jsonResult.addProperty("sex", "");
-		jsonResult.addProperty("orgCode", "");
-		jsonResult.addProperty("orgName", "");
-
-		jsonResponse.add("result", jsonResult);
-
-		System.out.println(jsonResponse.toString());
-
-		return jsonResponse.toString();
+		return this.buildSuccessResponse(new Employee[result.size()]).toString();
 	}
 
 }
