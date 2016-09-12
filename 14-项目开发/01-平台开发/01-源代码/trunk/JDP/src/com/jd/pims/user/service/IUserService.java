@@ -40,4 +40,11 @@ public interface IUserService {
 	 * @return
 	 */
 	public ControlUnit findOrganization(String cuId);
+	
+	/**
+	 * 根据人员相关查询查询相似人员列表 
+	 * @param inputStr
+	 * @return
+	 */
+	public List<Employee> searchEmployee(String inputStr);
 }

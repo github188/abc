@@ -2,6 +2,7 @@ package com.jd.pims.pem.service.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -99,6 +100,15 @@ public class BizServiceImpl implements IBizService {
 			Integer timePeriod) {
 		ControlUnit cu = userDao.findOrganization(cuId);
 		try {
+			//如果timePeriod为空，默认当前一小时
+			if(timePeriod==null){
+				Calendar currentTime = Calendar.getInstance();
+				currentTime.setTime(new Date());
+				timePeriod=currentTime.get(Calendar.HOUR)-1;
+				if(timePeriod<0){
+					timePeriod=24;
+				}
+			}
 			return labourEfficiencyDao.getLabourEfficiency(
 					sFormat.parse(sFormat.format(bizDate)), timePeriod,
 					cu.getFullPath());
