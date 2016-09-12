@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jd.pims.comm.BaseController;
+import com.jd.pims.comm.ControlUnitCache;
 import com.jd.pims.pem.model.LabourOndutyState;
 import com.jd.pims.pem.service.IBizService;
 import com.jd.pims.user.model.ControlUnit;
@@ -25,23 +26,42 @@ import com.jd.pims.user.service.IUserService;
 public class ChartController extends BaseController {
 	@Autowired
 	private IBizService pemService;
-/*	@Autowired
-	private IUserService uesrService;*/
+	@Autowired
+	private IUserService uesrService;
 
 	/**
-	 * 业务接口
+	 * 取在岗人数业务接口
 	 * 
 	 * @param request
 	 * @return
 	 */
-/*	@RequestMapping(value = "/getMapData", method = RequestMethod.POST)
+	@RequestMapping(value = "/getMapData", method = RequestMethod.POST)
 	@ResponseBody
-	public List getMapData(HttpServletRequest request,
+	public String getMapData(HttpServletRequest request,
 			HttpServletResponse response) {
-		String cuid= request.getParameter("id");
-		//List list = pemService.getNumberOnDuty(cuid);
-		return list;
-	}*/
+		String cuId = request.getParameter("cuId");
+		if (cuId == null) {
+			ControlUnit root = uesrService.findRootOrganization();
+			cuId = root.getId();
+		}
+		ControlUnit cu=uesrService.findOrganization(cuId);
+		LabourOndutyState currentState = pemService.getNumberOnDuty(cuId);
+		currentState.setCuName(cu.getCuName());
+		JsonObject result = currentState.toJsonObject();
+		List<ControlUnit> controlUnits = uesrService.getSubOrganizations(cuId);
+		if (controlUnits.size() > 0) {
+			JsonArray subItems = new JsonArray();
+			for (ControlUnit subCu : controlUnits) {
+				LabourOndutyState state = pemService
+						.getNumberOnDuty(subCu.getId());
+				state.setCuName(subCu.getCuName());
+				subItems.add(state.toJsonObject());
+			}
+			result.add("subItems", subItems);
+		}
+
+		return this.buildSuccessResponse(result).toString();
+	}
 	/**
 	 * 业务接口
 	 * 

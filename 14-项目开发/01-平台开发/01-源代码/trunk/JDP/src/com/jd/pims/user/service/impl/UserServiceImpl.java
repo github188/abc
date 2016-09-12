@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.jd.pims.comm.ControlUnitCache;
 import com.jd.pims.comm.LoginInfoCache;
 import com.jd.pims.comm.PIMSException;
 import com.jd.pims.user.dao.UserDao;
@@ -64,7 +65,14 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public ControlUnit findOrganization(String cuId) {
-		return userDao.findOrganization(cuId);
+		ControlUnit cu=ControlUnitCache.get(cuId);
+		if(cu==null){
+			cu=userDao.findOrganization(cuId);
+			if(cu!=null){
+				ControlUnitCache.add(cu);
+			}
+		}
+		return cu;
 	}
 
 	@Override

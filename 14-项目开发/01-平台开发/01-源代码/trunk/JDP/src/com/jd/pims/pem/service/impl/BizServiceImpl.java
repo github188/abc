@@ -49,6 +49,7 @@ public class BizServiceImpl implements IBizService {
 		LabourOndutyState state = new LabourOndutyState();
 		state.setCuId(cuId);
 		ControlUnit cu = userDao.findOrganization(cuId);
+		state.setCuName(cu.getCuName());
 		List<LabourOnduty> list;
 		try {
 			list = labourOndutyDao.getCurrentTimeLabourOnduty(

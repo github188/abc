@@ -13,6 +13,8 @@ public class LabourOndutyState extends BaseDataModel{
 	private static final long serialVersionUID = -8549857464663702188L;
 	
 	private String cuId;
+	
+	private String cuName;
 	//员工数量
 	private Integer numEmp;
 	//临时工数量
@@ -28,6 +30,14 @@ public class LabourOndutyState extends BaseDataModel{
 		this.cuId = cuId;
 	}
 
+	public String getCuName() {
+		return cuName;
+	}
+
+	public void setCuName(String cuName) {
+		this.cuName = cuName;
+	}
+	
 	public Integer getNumEmp() {
 		return numEmp;
 	}
@@ -51,7 +61,7 @@ public class LabourOndutyState extends BaseDataModel{
 	public void setNumOther(Integer numOther) {
 		this.numOther = numOther;
 	}
-	
+
 	
 
 }

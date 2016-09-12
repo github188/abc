@@ -16,6 +16,8 @@ public class LabourEfficiency extends BaseDataModel{
 	private String cuId;
 	private Date bizDate;
 	private Integer timePeriod;
+	private Integer numberOnduty;
+	private Integer orderQuantity;
 	private Double efficiency;
 	private Double periodEfficiency;
 	private Double avgEfficiency;
@@ -75,6 +77,18 @@ public class LabourEfficiency extends BaseDataModel{
 	}
 	public void setEfficiency(Double efficiency) {
 		this.efficiency = efficiency;
+	}
+	public Integer getNumberOnduty() {
+		return numberOnduty;
+	}
+	public void setNumberOnduty(Integer numberOnduty) {
+		this.numberOnduty = numberOnduty;
+	}
+	public Integer getOrderQuantity() {
+		return orderQuantity;
+	}
+	public void setOrderQuantity(Integer orderQuantity) {
+		this.orderQuantity = orderQuantity;
 	}
 	
 	
