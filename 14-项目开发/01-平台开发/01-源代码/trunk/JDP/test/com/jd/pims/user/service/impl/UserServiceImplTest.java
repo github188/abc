@@ -13,7 +13,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.jd.pims.comm.PIMSException;
 import com.jd.pims.user.model.ControlUnit;
+import com.jd.pims.user.model.Employee;
 import com.jd.pims.user.service.IUserService;
 
 @ContextConfiguration(locations = { "classpath:spring.xml",
@@ -30,7 +32,13 @@ AbstractTransactionalJUnit4SpringContextTests{
 	
 	@Test
 	public void testLogin() {
-		fail("Not yet implemented");
+		try {
+			Employee emp=userService.login("jd.cn", "123");
+			Assert.assertTrue("成功返回："+emp, emp!=null);
+		} catch (PIMSException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Test

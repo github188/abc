@@ -7,6 +7,7 @@ import java.util.List;
 import com.jd.pims.pem.model.LabourEfficiency;
 import com.jd.pims.pem.model.LabourOndutyDayState;
 import com.jd.pims.pem.model.LabourOndutyState;
+import com.jd.pims.user.model.ControlUnit;
 
 /**
  * 人效业务类
@@ -73,5 +74,7 @@ public interface IBizService {
 	 */
 	public List<LabourEfficiency> getEfficiencyHistory(String cuId,
 			Date startDate, Date endDate);
+	
+	
 
 }

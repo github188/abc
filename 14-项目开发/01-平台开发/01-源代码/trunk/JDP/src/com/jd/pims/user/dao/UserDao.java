@@ -44,6 +44,12 @@ public interface UserDao extends IBaseDao{
 	ControlUnit findOrganization(String cuId);
 	
 	/**
+	 * 取根节点的组织架构 
+	 * @return
+	 */
+	ControlUnit findRootOrganization();
+	
+	/**
 	 * 搜索相似人员档案信息
 	 * @param inputStr
 	 * @return

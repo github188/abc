@@ -33,6 +33,9 @@ public class UserServiceImpl implements IUserService {
 			throw new PIMSException(2, "用户密码不正确");
 		}
 		Employee emp = userDao.getEmployeeById(user.getPersonId());
+		if(emp==null){
+			throw new PIMSException(3,"用户绑定的员工不存在，请确认！");
+		}
 		LoginInfoCache.add(user, emp);
 		return emp;
 	}
@@ -69,4 +72,11 @@ public class UserServiceImpl implements IUserService {
 		// TODO Auto-generated method stub
 		return userDao.searchEmployee(inputStr);
 	}
+	
+	@Override
+	public ControlUnit findRootOrganization() {
+		// TODO Auto-generated method stub
+		return userDao.findRootOrganization();
+	}
+
 }

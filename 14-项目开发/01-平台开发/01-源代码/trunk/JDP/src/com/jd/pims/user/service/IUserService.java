@@ -42,6 +42,12 @@ public interface IUserService {
 	public ControlUnit findOrganization(String cuId);
 	
 	/**
+	 * 取根节点的组织架构
+	 * @return
+	 */
+	public ControlUnit findRootOrganization();
+	
+	/**
 	 * 根据人员相关查询查询相似人员列表 
 	 * @param inputStr
 	 * @return
