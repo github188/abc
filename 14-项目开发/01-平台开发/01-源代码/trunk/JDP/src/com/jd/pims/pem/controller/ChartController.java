@@ -25,8 +25,8 @@ import com.jd.pims.user.service.IUserService;
 public class ChartController extends BaseController {
 	@Autowired
 	private IBizService pemService;
-	@Autowired
-	private IUserService uesrService;
+/*	@Autowired
+	private IUserService uesrService;*/
 
 	/**
 	 * 业务接口
@@ -36,10 +36,11 @@ public class ChartController extends BaseController {
 	 */
 	@RequestMapping(value = "/getMapData", method = RequestMethod.POST)
 	@ResponseBody
-	public void getMapData(HttpServletRequest request,
+	public List getMapData(HttpServletRequest request,
 			HttpServletResponse response) {
-		String type= request.getParameter("type");
-		String cuid= request.getParameter("cuid");
+		String cuid= request.getParameter("id");
+		List list = pemService.getNumberOnDuty(cuid);
+		return list;
 	}
 	/**
 	 * 业务接口
@@ -51,8 +52,8 @@ public class ChartController extends BaseController {
 	@ResponseBody
 	public void getBarData(HttpServletRequest request,
 			HttpServletResponse response) {
-		String type= request.getParameter("type");
-		String cuid= request.getParameter("cuid");
+		String cuid= request.getParameter("id");
+		pemService.getEfficiencyHistory(cuid);
 	}
 	/**
 	 * 业务接口
@@ -64,8 +65,8 @@ public class ChartController extends BaseController {
 	@ResponseBody
 	public void getBar1Data(HttpServletRequest request,
 			HttpServletResponse response) {
-		String type= request.getParameter("type");
-		String cuid= request.getParameter("cuid");
+		String cuid= request.getParameter("id");
+		pemService.getNumberHistory(cuId);
 	}
 	/**
 	 * 业务接口
@@ -77,8 +78,8 @@ public class ChartController extends BaseController {
 	@ResponseBody
 	public void getBar2Data(HttpServletRequest request,
 			HttpServletResponse response) {
-		String type= request.getParameter("type");
-		String cuid= request.getParameter("cuid");
+		String cuid= request.getParameter("id");
+		pemService.getTimePeriodEfficience(cuId);
 	}
 	/**
 	 * 业务接口
@@ -86,12 +87,11 @@ public class ChartController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/getEffectData", method = RequestMethod.POST)
+	@RequestMapping(value = "/getOrderNumberData", method = RequestMethod.POST)
 	@ResponseBody
-	public void getEffectData(HttpServletRequest request,
+	public void getOrderNumberData(HttpServletRequest request,
 			HttpServletResponse response) {
-		String type= request.getParameter("type");
-		String cuid= request.getParameter("cuid");
+		String cuid= request.getParameter("id");
 	}
 
 }

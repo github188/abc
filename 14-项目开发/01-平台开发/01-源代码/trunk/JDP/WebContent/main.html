@@ -121,13 +121,13 @@ setInterval( function() {
 					<div id="bar" style="width:70%;height: 38%;position:absolute;top:61%;left:2%;"></div>
 					<div id="pie" style="width:30%;height: 30%;position:absolute;bottom:15em;right:5%;"></div>
 					<div id="areaTip" style="padding:1em;position:absolute;right:5em;top:5em;color:#32bbec;font-size: 2em;font-family:'微软雅黑', Arial, Helvetica, sans-serif;border: 1px solid #00C6FF;box-shadow:0 0 5px #00C6FF;">XX区</div>
-					<div id="orderCount" style="width:15%;height: 10%;position:absolute;bottom:8em;right:2%;text-align: left;">
-						<div style="color:#32bbec;font-size: 3em;font-family:'微软雅黑', Arial, Helvetica, sans-serif;">平均人效</div>
-						<div style="color:#fedd1b;font-size: 6em;font-family:'digital-7__mono', Arial, Helvetica, sans-serif;">111111</div>
+					<div style="width:15%;height: 10%;position:absolute;bottom:8em;right:2%;text-align: left;">
+						<div id="orderCountName" style="color:#32bbec;font-size: 3em;font-family:'微软雅黑', Arial, Helvetica, sans-serif;">平均人效</div>
+						<div id="orderCountNum" style="color:#fedd1b;font-size: 6em;font-family:'digital-7__mono', Arial, Helvetica, sans-serif;">111111</div>
 					</div>
-					<div id="averageEffect" style="width:15%;height: 10%;position:absolute;bottom:2em;right:2%;text-align: left;">
-						<div style="color:#32bbec;font-size: 3em;font-family:'微软雅黑', Arial, Helvetica, sans-serif;">订单量</div>
-						<div style="color:#fedd1b;font-size: 6em;font-family:'digital-7__mono', Arial, Helvetica, sans-serif;">222222</div>
+					<div  style="width:15%;height: 10%;position:absolute;bottom:2em;right:2%;text-align: left;">
+						<div id="averageEffectName" style="color:#32bbec;font-size: 3em;font-family:'微软雅黑', Arial, Helvetica, sans-serif;">订单量</div>
+						<div id="averageEffectNum"style="color:#fedd1b;font-size: 6em;font-family:'digital-7__mono', Arial, Helvetica, sans-serif;">222222</div>
 					</div>
 					<div id="mapTopLeft" style="width:60%;position:absolute;top:0;left:1.1%;font-family: '黑体', Arial, Helvetica, sans-serif;background:url(images/左上角1.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;padding-left: 0.5em;font-size: 3.0em;z-index: 10000;text-align: left;">实时人力构成</div>
 					<input type="button" id="mapTopRight" style="width:5%;height:4%;position:absolute;border:none;top:0;right:1.1%;background:url(images/放大.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;" onclick="resize(0)"></input>
