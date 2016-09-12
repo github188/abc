@@ -63,4 +63,10 @@ public class UserServiceImpl implements IUserService {
 	public ControlUnit findOrganization(String cuId) {
 		return userDao.findOrganization(cuId);
 	}
+
+	@Override
+	public List<Employee> searchEmployee(String inputStr) {
+		// TODO Auto-generated method stub
+		return userDao.searchEmployee(inputStr);
+	}
 }

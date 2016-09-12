@@ -25,8 +25,8 @@ import com.jd.pims.user.service.IUserService;
 public class ChartController extends BaseController {
 	@Autowired
 	private IBizService pemService;
-	@Autowired
-	private IUserService uesrService;
+/*	@Autowired
+	private IUserService uesrService;*/
 
 	/**
 	 * 业务接口
@@ -34,30 +34,64 @@ public class ChartController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/getNumberOnDuty", method = RequestMethod.POST)
+/*	@RequestMapping(value = "/getMapData", method = RequestMethod.POST)
 	@ResponseBody
-	public String getNumberOnDuty(HttpServletRequest request,
+	public List getMapData(HttpServletRequest request,
 			HttpServletResponse response) {
-		String cuId = request.getParameter("cuId");
-		if (cuId != null && !"".equals(cuId)) {
-			LabourOndutyState currentState = pemService
-					.getNumberOnDuty(cuId);
-			JsonObject result=currentState.toJsonObject();
-			List<ControlUnit> controlUnits=uesrService.getSubOrganizations(cuId);
-			if(controlUnits.size()>0){
-				JsonArray subItems = new JsonArray();
-				for(ControlUnit cu:controlUnits){
-					LabourOndutyState state=pemService.getNumberOnDuty(cu.getId()); 
-					subItems.add(state.toJsonObject());
-				}
-				result.add("subItems", subItems);
-			}
-			
-			return this.buildSuccessResponse(result).toString();
-		}
-		return this.buildFailResponse(1, "参数不能为空").toString();
-
-		
+		String cuid= request.getParameter("id");
+		//List list = pemService.getNumberOnDuty(cuid);
+		return list;
+	}*/
+	/**
+	 * 业务接口
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getBarData", method = RequestMethod.POST)
+	@ResponseBody
+	public void getBarData(HttpServletRequest request,
+			HttpServletResponse response) {
+		String cuid= request.getParameter("id");
+		//pemService.getEfficiencyHistory(cuid);
+	}
+	/**
+	 * 业务接口
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getBar1Data", method = RequestMethod.POST)
+	@ResponseBody
+	public void getBar1Data(HttpServletRequest request,
+			HttpServletResponse response) {
+		String cuid= request.getParameter("id");
+		//pemService.getNumberHistory(cuid);
+	}
+	/**
+	 * 业务接口
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getBar2Data", method = RequestMethod.POST)
+	@ResponseBody
+	public void getBar2Data(HttpServletRequest request,
+			HttpServletResponse response) {
+		String cuid= request.getParameter("id");
+		//pemService.getTimePeriodEfficience(cuid);
+	}
+	/**
+	 * 业务接口
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getOrderNumberData", method = RequestMethod.POST)
+	@ResponseBody
+	public void getOrderNumberData(HttpServletRequest request,
+			HttpServletResponse response) {
+		String cuid= request.getParameter("id");
 	}
 
 }

@@ -43,4 +43,11 @@ public interface UserDao extends IBaseDao{
 	 */
 	ControlUnit findOrganization(String cuId);
 	
+	/**
+	 * 搜索相似人员档案信息
+	 * @param inputStr
+	 * @return
+	 */
+	List<Employee> searchEmployee(String inputStr);
+	
 }

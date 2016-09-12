@@ -1,5 +1,8 @@
 package com.jd.pims.pem.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jd.pims.comm.BaseController;
+import com.jd.pims.pem.model.LabourEfficiency;
+import com.jd.pims.pem.model.LabourOndutyDayState;
 import com.jd.pims.pem.model.LabourOndutyState;
 import com.jd.pims.pem.service.IBizService;
 import com.jd.pims.user.model.ControlUnit;
@@ -28,6 +33,7 @@ public class AppController extends BaseController {
 	@Autowired
 	private IUserService uesrService;
 
+	private SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
 	/**
 	 * 业务接口
 	 * 
@@ -70,29 +76,27 @@ public class AppController extends BaseController {
 	@ResponseBody
 	public String getEfficiency(HttpServletRequest request,
 			HttpServletResponse response) {
-		String usr = request.getParameter("empId");
-		String pwd = request.getParameter("orgCode");
-
-		JsonObject jsonResponse = new JsonObject();
-		jsonResponse.addProperty("returnCode", "");
-		jsonResponse.addProperty("message", "");
-
-		JsonObject jsonResult = new JsonObject();
-		jsonResult.addProperty("orgCode", "");
-		jsonResult.addProperty("efficiency", "");
-
-		JsonArray jsonSubItems = new JsonArray();
-		JsonObject jsonElement = new JsonObject();
-		jsonElement.addProperty("orgCode", "");
-		jsonElement.addProperty("efficiency", "");
-
-		jsonSubItems.add(jsonElement);
-		jsonResult.add("subItems", jsonSubItems);
-		jsonResponse.add("result", jsonResult);
-
-		System.out.println(jsonResponse.toString());
-
-		return jsonResponse.toString();
+		
+		String cuId = request.getParameter("cuId");
+		
+		if (cuId != null && !"".equals(cuId)) {
+			//取上一个小时
+			LabourEfficiency parent=pemService.getTimePeriodEfficience(cuId, new Date(), null);
+			JsonObject result=parent.toJsonObject();
+			List<ControlUnit> controlUnits=uesrService.getSubOrganizations(cuId);
+			if(controlUnits.size()>0){
+				JsonArray subItems = new JsonArray();
+				for(ControlUnit cu:controlUnits){
+					LabourEfficiency state=pemService.getTimePeriodEfficience(cu.getId(),new Date(), null); 
+					subItems.add(state.toJsonObject());
+				}
+				result.add("subItems", subItems);
+			}
+			return this.buildSuccessResponse(result).toString();
+		}
+		return this.buildFailResponse(1, "参数不能为空").toString();
+		
+		
 	}
 
 	/**
@@ -105,28 +109,30 @@ public class AppController extends BaseController {
 	@ResponseBody
 	public String getNumberHistory(HttpServletRequest request,
 			HttpServletResponse response) {
-		String usr = request.getParameter("empId");
-		String pwd = request.getParameter("orgCode");
+		
+		String cuId = request.getParameter("cuId");
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
 		String interval = request.getParameter("interval");
-
-		JsonObject jsonResponse = new JsonObject();
-		jsonResponse.addProperty("returnCode", "");
-		jsonResponse.addProperty("message", "");
-
-		JsonObject jsonResult = new JsonObject();
-		jsonResult.addProperty("orgCode", "");
-		jsonResult.addProperty("dayTime", "");
-		jsonResult.addProperty("numEmp", "");
-		jsonResult.addProperty("numTemp", "");
-		jsonResult.addProperty("numOther", "");
-
-		jsonResponse.add("result", jsonResult);
-
-		System.out.println(jsonResponse.toString());
-
-		return jsonResponse.toString();
+		if(interval==null){
+			interval="D";
+		}else if(!(interval.equals("H") || interval.equals("D"))){
+			return this.buildFailResponse(2, "参数值不被支持:interval的值只能是H或者D").toString();
+		}
+		if (cuId != null && !"".equals(cuId)) {
+			
+			try {
+				List<LabourOndutyDayState> results=pemService.getNumberHistory(cuId, sFormat.parse(startDate), sFormat.parse(endDate), "D");
+				return this.buildSuccessResponse(results.toArray(new LabourOndutyDayState[results.size()])).toString();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return this.buildFailResponse(2, "参数值不被支持：startDate或者endDate的日期格式有误！").toString();
+			}
+			
+		}
+		
+		return this.buildFailResponse(1, "参数不能为空").toString();
 	}
 
 	/**
@@ -139,26 +145,25 @@ public class AppController extends BaseController {
 	@ResponseBody
 	public String getEfficiencyHistory(HttpServletRequest request,
 			HttpServletResponse response) {
-		String usr = request.getParameter("empId");
-		String pwd = request.getParameter("orgCode");
+		String cuId = request.getParameter("cuId");
 		String startDate = request.getParameter("startDate");
 		String endDate = request.getParameter("endDate");
-		String interval = request.getParameter("interval");
+		//String interval = request.getParameter("interval");
+		
+		if (cuId != null && !"".equals(cuId)) {
+			try {
+				List<LabourEfficiency> results=pemService.getEfficiencyHistory(cuId, sFormat.parse(startDate), sFormat.parse(endDate));
+				
+				return this.buildSuccessResponse(new LabourEfficiency[results.size()]).toString();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return this.buildFailResponse(2, "参数值不被支持：startDate或者endDate的日期格式有误！").toString();
+			}
+			
+		}
+		return this.buildFailResponse(1, "参数不能为空").toString();
 
-		JsonObject jsonResponse = new JsonObject();
-		jsonResponse.addProperty("returnCode", "");
-		jsonResponse.addProperty("message", "");
-
-		JsonObject jsonResult = new JsonObject();
-		jsonResult.addProperty("orgCode", "");
-		jsonResult.addProperty("dayTime", "");
-		jsonResult.addProperty("efficiency", "");
-
-		jsonResponse.add("result", jsonResult);
-
-		System.out.println(jsonResponse.toString());
-
-		return jsonResponse.toString();
 	}
 
 	/**
@@ -171,23 +176,10 @@ public class AppController extends BaseController {
 	@ResponseBody
 	public String getOrganization(HttpServletRequest request,
 			HttpServletResponse response) {
-		String usr = request.getParameter("empId");
 
-		JsonObject jsonResponse = new JsonObject();
-		jsonResponse.addProperty("returnCode", "");
-		jsonResponse.addProperty("message", "");
-
-		JsonObject jsonResult = new JsonObject();
-		jsonResult.addProperty("id", "");
-		jsonResult.addProperty("orgCode", "");
-		jsonResult.addProperty("orgName", "");
-		jsonResult.addProperty("parentId", "");
-
-		jsonResponse.add("result", jsonResult);
-
-		System.out.println(jsonResponse.toString());
-
-		return jsonResponse.toString();
+		List<ControlUnit> result=uesrService.getOrganizations();
+		
+		return this.buildSuccessResponse(new ControlUnit[result.size()]).toString();
 	}
 
 	/**
@@ -196,9 +188,9 @@ public class AppController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/verifyAccount", method = RequestMethod.POST)
+	@RequestMapping(value = "/getEmployee", method = RequestMethod.POST)
 	@ResponseBody
-	public String verifyAccount(HttpServletRequest request,
+	public String getEmployee(HttpServletRequest request,
 			HttpServletResponse response) {
 		String account = request.getParameter("account");
 		String password = request.getParameter("password");

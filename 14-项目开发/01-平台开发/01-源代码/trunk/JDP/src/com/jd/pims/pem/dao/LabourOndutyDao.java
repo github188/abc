@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Param;
 import com.jd.pims.comm.IBaseDao;
 import com.jd.pims.pem.model.LabourOnduty;
 import com.jd.pims.pem.model.LabourOndutyDayState;
-import com.jd.pims.pem.model.LabourOndutyState;
 
 public interface LabourOndutyDao extends IBaseDao {
 

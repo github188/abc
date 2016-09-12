@@ -1,3 +1,4 @@
+
 angular.module('app', ['ngCookies']).controller('ctrl', ['$scope','$location','$http','$cookieStore', function($scope,$location,$http,$cookieStore){
 	console.log("123456:"+$cookieStore.get('showornot'));
 	
@@ -35,7 +36,9 @@ angular.module('app', ['ngCookies']).controller('ctrl', ['$scope','$location','$
 				$scope.c[2]='col-md-12 col-sm-12';
 				$scope.s[2]='height: 98%;';
 				$scope.islarge=true;
+				
 			}
+			return $(window).resize();
 		}else{
 			$scope.c=['col-md-7 col-sm-7','col-md-5 col-sm-5','col-md-5 col-sm-5'];
 			$scope.h=['false','false','false'];
