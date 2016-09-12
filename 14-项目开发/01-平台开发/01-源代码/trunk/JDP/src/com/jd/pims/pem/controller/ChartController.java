@@ -34,14 +34,14 @@ public class ChartController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/getMapData", method = RequestMethod.POST)
+/*	@RequestMapping(value = "/getMapData", method = RequestMethod.POST)
 	@ResponseBody
 	public List getMapData(HttpServletRequest request,
 			HttpServletResponse response) {
 		String cuid= request.getParameter("id");
-		List list = pemService.getNumberOnDuty(cuid);
+		//List list = pemService.getNumberOnDuty(cuid);
 		return list;
-	}
+	}*/
 	/**
 	 * 业务接口
 	 * 
@@ -53,7 +53,7 @@ public class ChartController extends BaseController {
 	public void getBarData(HttpServletRequest request,
 			HttpServletResponse response) {
 		String cuid= request.getParameter("id");
-		pemService.getEfficiencyHistory(cuid);
+		//pemService.getEfficiencyHistory(cuid);
 	}
 	/**
 	 * 业务接口
@@ -66,7 +66,7 @@ public class ChartController extends BaseController {
 	public void getBar1Data(HttpServletRequest request,
 			HttpServletResponse response) {
 		String cuid= request.getParameter("id");
-		pemService.getNumberHistory(cuId);
+		//pemService.getNumberHistory(cuid);
 	}
 	/**
 	 * 业务接口
@@ -79,7 +79,7 @@ public class ChartController extends BaseController {
 	public void getBar2Data(HttpServletRequest request,
 			HttpServletResponse response) {
 		String cuid= request.getParameter("id");
-		pemService.getTimePeriodEfficience(cuId);
+		//pemService.getTimePeriodEfficience(cuid);
 	}
 	/**
 	 * 业务接口

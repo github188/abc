@@ -484,6 +484,7 @@ option = {
 			});
 		};
 		
+		//获取拼接地图数据
 		function makeMapData(data,name){
 			mapdata= new Array();
 			piedata= new Array();
@@ -498,8 +499,11 @@ option = {
 						row.name=data[i].name.substring(0,2);
 					}
 					mapdata.push({
+						//地区名称 取china area表
 						name:row.name,
+						//numEmp 正式员工数 numTemp 临时工数 numOther 其他员工数
 						value:row.numEmp+row.numTemp+row.numOther,
+						//地区的id 取china area表id
 				        id:row.id,
 				        selected:false
 				        //自定义特殊 itemStyle，仅对该数据项有效
@@ -545,16 +549,20 @@ option = {
 			});
 		};
 		
+		//获取拼接右上数据
 		function makebarData(data,name){
 			bardata= new Array();
 			bardata[0] = new Array();
 			bardata[1] = new Array();
 			bardata[2] = new Array();
+			bardata[3] = new Array();
 			if(data!=null){
 				$.each(data, function(index, row){
-					bardata[0].push(row.);
-					bardata[1].push(row.);
-					bardata[2].push(row.);
+					//clerkNum 员工数 orderNum 订单数  date 日期
+					bardata[0].push(row.clerkNum);
+					bardata[1].push(row.orderNum);
+					bardata[2].push(row.orderNum=='0'?'0':row.clerkNum/row.orderNum);
+					bardata[3].push(row.date);
 				});
 			}
 			setBarOption(bardata,name);
@@ -565,6 +573,7 @@ option = {
 		    barOption.series[0].data = bardata[0];
 		    barOption.series[1].data = bardata[1];
 		    barOption.series[2].data = bardata[2];
+		    barOption.xAxis[0].data = bardata[3];
 			barchart.setOption(barOption, true);  
 		}
 		
@@ -580,6 +589,7 @@ option = {
 			});
 		};
 		
+		//右下数据获取拼接
 		function makebar1Data(data,name){
 			bardata1= new Array();
 			bardata1[0] = new Array();
@@ -587,9 +597,11 @@ option = {
 			bardata1[2] = new Array();
 			if(data!=null){
 				$.each(data, function(index, row){
-					bardata1[0].push(row.name);
-					bardata1[1].push(row.num);
-					bardata1[2].push(row.order);
+					//date 时间  empNum 员工人数 otherClerkNum 其他员工数
+					bardata1[0].push(row.date);
+					bardata1[1].push(row.empNum);
+					bardata1[2].push(row.otherClerkNum);
+					bardata1[3].push(row.otherClerkNum=='0'?'0':row.empNum/(row.empNum+row.otherClerkNum));
 				});
 			}
 			setBar1Option(bardata1,name);
@@ -597,9 +609,10 @@ option = {
 		
 		function setBar1Option(bardata1,name){
 			$("#countTopLeft").html(name?name+'一周在岗正式员工占比':'全国一周在岗正式员工占比');
-		    bar1Option.series[0].data = bardata1[0];
-		    bar1Option.series[1].data = bardata1[1];
-		    bar1Option.series[2].data = bardata1[2];
+			barOption.xAxis[0].data = bardata[0];
+			bar1Option.series[0].data = bardata1[1];
+		    bar1Option.series[1].data = bardata1[2];
+		    bar1Option.series[2].data = bardata1[3];
 			bar1chart.setOption(bar1Option, true);  
 		}
 		
@@ -614,7 +627,7 @@ option = {
 				}
 			});
 		};
-		
+		//这是用来拼接坐下柱状图数据
 		function makebar2Data(data,name){
 			bardata2= new Array();
 			bardata2[0] = new Array();
@@ -622,6 +635,7 @@ option = {
 			var total = 0.0;
 			if(data!=null){
 				$.each(data, function(index, row){
+					//name 地区名 averageEffect 该地区平均人效
 					bardata2[0].push(row.name+'分拣中心');
 					bardata2[1].push(row.averageEffect);
 					total += row.averageEffect;
@@ -637,7 +651,7 @@ option = {
 		    bar2Option.series[1].data = bardata2[1];
 			bar2chart.setOption(bar2Option, true);  
 		}
-		
+		//获取左边右下 订单总量
 		function searchOrderNumber(id,name) {
 			var url = "chart/getOrderNumberData.do?id="+id;
 			$.ajax({
@@ -645,8 +659,9 @@ option = {
 				type: "post",
 				dataType: "text",
 				success: function (data) {
+					//num 是该地区的总订单量
 					$("#averageEffectName").html(name?name+'订单量':'全国订单量');
-					$("#averageEffectNum").html(num);
+					$("#averageEffectNum").html(data.num);
 				}
 			});
 		};

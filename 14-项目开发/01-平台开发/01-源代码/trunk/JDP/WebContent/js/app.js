@@ -4,12 +4,12 @@ angular.module('app', ['ngCookies']).controller('ctrl', ['$scope','$location','$
 	
 	if($cookieStore.get('showornot')!='true'){
 //		window.history.back();
-		location.href = "login.html";
+		$scope.location.url = "login.html";
 	}
 	
 	$scope.logout = function(){
 		$cookieStore.put('showornot', 'false');
-		location.href = "login.html";
+		$scope.location.url = "login.html";
 	}
 	
 	$scope.c=['col-md-7 col-sm-7','col-md-5 col-sm-5','col-md-5 col-sm-5'];
@@ -46,7 +46,7 @@ angular.module('app', ['ngCookies']).controller('ctrl', ['$scope','$location','$
 			$scope.islarge=false;
 		}
 	}
-	
+
 }]);
 var app = angular.module('jsywp', ['ui.bootstrap','ui.router','chart.js','ngFileUpload','ngCookies']);
 
@@ -92,8 +92,8 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 		console.log($scope.usr+':'+$scope.pwd);
 		var url = "user/login.do?";
 		$cookieStore.put('showornot', 'true');
-		location.href = "main.html";
-/*		$http.post(url+"account="+$scope.usr+"&password="+$scope.pwd+"").success(function(response) {
+//		location.href = "main.html";
+		$http.post(url+"account="+$scope.usr+"&password="+$scope.pwd+"").success(function(response) {
 			console.log(response);
 			console.log(angular.fromJson(angular.fromJson(response)).returnCode);
 			console.log('123:'+$cookieStore.get('showornot'));
@@ -102,7 +102,7 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 				$cookieStore.put('showornot', 'true');
 				location.href = "main.html";
 			}
-		});*/
+		});
 	}
 }]);
 

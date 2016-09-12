@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=1024" /> 
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7, IE=9" />
+	<link type="text/css" rel="stylesheet" href="css/pc_6_0.css" />
+</head>
+<body>
+
+	<div id="container" class="mpage">
+		<div id="anitOut" class="anitOut">
+
+		</div>
+		<center>
+		    <canvas id="404" height="400" width="800" style="z-index: 10001;position: absolute;margin-top: 10%;left: 20%;"></canvas>
+		</center>
+	</div>
+	
+	<!--E index page-->
+
+	<script type="text/javascript" src="js/common/jquery.min.js"></script>
+	<script type="text/javascript">$(function(){$.fn.bannerShow=function(g){g=jQuery.extend({wraper:"fshow",autotime:6000,isAuto:true,ind:0,changeColor:null},g||{});return this.each(function(){var o;var n=0;var i=this;var j=$("#bnav"),k=$("li",j);var h=[["#002c4a","#005584"],["#35ac03","#3f4303"],["#ac0908","#cd5726"],["18bbff","#00486b"]];$(this).hover(function(){g.isAuto=false},function(){g.isAuto=true});m(0);k.each(function(p,q){$(q).mouseover(function(){n=p;k.removeClass().eq(n).addClass("current");m(n)})});o=setInterval(function(){if(!g.isAuto){return false}k.each(function(p,q){if($(q).hasClass("current")){n=p}m(n)});if(n==k.size()-1){n=0;m(n);k.removeClass().eq(n).addClass("current")}else{n+=1;m(n);k.removeClass().eq(n).addClass("current")}},g.autotime);function m(p){$(".banners",i).hide();$(".banners",i).eq(p).show();if(g.changeColor){g.changeColor(h[p]).set()}}})};if(!!document.createElement("canvas").getContext){$.getScript("http://im-img.qq.com/pcqq/js/200/cav.js",function(){var t={width:1.5,height:1.5,depth:10,segments:12,slices:6,xRange:0.8,yRange:0.1,zRange:1,ambient:"#525252",diffuse:"#FFFFFF",speed:0.0002};var G={count:2,xyScalar:1,zOffset:100,ambient:"#002c4a",diffuse:"#005584",speed:0.001,gravity:1200,dampening:0.95,minLimit:10,maxLimit:null,minDistance:20,maxDistance:400,autopilot:false,draw:false,bounds:CAV.Vector3.create(),step:CAV.Vector3.create(Math.randomInRange(0.2,1),Math.randomInRange(0.2,1),Math.randomInRange(0.2,1))};var m="canvas";var E="svg";var x={renderer:m};var i,n=Date.now();var L=CAV.Vector3.create();var k=CAV.Vector3.create();var z=document.getElementById("container");var w=document.getElementById("anitOut");var D,I,h,q,y;var g;var r;function C(){F();p();s();B();v();K(z.offsetWidth,z.offsetHeight);o()}function F(){g=new CAV.CanvasRenderer();H(x.renderer)}function H(N){if(D){w.removeChild(D.element)}switch(N){case m:D=g;break}D.setSize(z.offsetWidth,z.offsetHeight);w.appendChild(D.element)}function p(){I=new CAV.Scene()}function s(){I.remove(h);D.clear();q=new CAV.Plane(t.width*D.width,t.height*D.height,t.segments,t.slices);y=new CAV.Material(t.ambient,t.diffuse);h=new CAV.Mesh(q,y);I.add(h);var N,O;for(N=q.vertices.length-1;N>=0;N--){O=q.vertices[N];O.anchor=CAV.Vector3.clone(O.position);O.step=CAV.Vector3.create(Math.randomInRange(0.2,1),Math.randomInRange(0.2,1),Math.randomInRange(0.2,1));O.time=Math.randomInRange(0,Math.PIM2)}}function B(){var O,N;for(O=I.lights.length-1;O>=0;O--){N=I.lights[O];I.remove(N)}D.clear();for(O=0;O<G.count;O++){N=new CAV.Light(G.ambient,G.diffuse);N.ambientHex=N.ambient.format();N.diffuseHex=N.diffuse.format();I.add(N);N.mass=Math.randomInRange(0.5,1);N.velocity=CAV.Vector3.create();N.acceleration=CAV.Vector3.create();N.force=CAV.Vector3.create()}}function K(O,N){D.setSize(O,N);CAV.Vector3.set(L,D.halfWidth,D.halfHeight);s()}function o(){i=Date.now()-n;u();M();requestAnimationFrame(o)}function u(){var Q,P,O,R,T,V,U,S=t.depth/2;CAV.Vector3.copy(G.bounds,L);CAV.Vector3.multiplyScalar(G.bounds,G.xyScalar);CAV.Vector3.setZ(k,G.zOffset);for(R=I.lights.length-1;R>=0;R--){T=I.lights[R];CAV.Vector3.setZ(T.position,G.zOffset);var N=Math.clamp(CAV.Vector3.distanceSquared(T.position,k),G.minDistance,G.maxDistance);var W=G.gravity*T.mass/N;CAV.Vector3.subtractVectors(T.force,k,T.position);CAV.Vector3.normalise(T.force);CAV.Vector3.multiplyScalar(T.force,W);CAV.Vector3.set(T.acceleration);CAV.Vector3.add(T.acceleration,T.force);CAV.Vector3.add(T.velocity,T.acceleration);CAV.Vector3.multiplyScalar(T.velocity,G.dampening);CAV.Vector3.limit(T.velocity,G.minLimit,G.maxLimit);CAV.Vector3.add(T.position,T.velocity)}for(V=q.vertices.length-1;V>=0;V--){U=q.vertices[V];Q=Math.sin(U.time+U.step[0]*i*t.speed);P=Math.cos(U.time+U.step[1]*i*t.speed);O=Math.sin(U.time+U.step[2]*i*t.speed);CAV.Vector3.set(U.position,t.xRange*q.segmentWidth*Q,t.yRange*q.sliceHeight*P,t.zRange*S*O-S);CAV.Vector3.add(U.position,U.anchor)}q.dirty=true}function M(){D.render(I)}function J(O){var Q,N,S=O;var P=function(T){for(Q=0,l=I.lights.length;Q<l;Q++){N=I.lights[Q];N.ambient.set(T);N.ambientHex=N.ambient.format()}};var R=function(T){for(Q=0,l=I.lights.length;Q<l;Q++){N=I.lights[Q];N.diffuse.set(T);N.diffuseHex=N.diffuse.format()}};return{set:function(){P(S[0]);R(S[1])}}}function v(){window.addEventListener("resize",j)}function A(N){CAV.Vector3.set(k,N.x,D.height-N.y);CAV.Vector3.subtract(k,L)}function j(N){K(z.offsetWidth,z.offsetHeight);M()}C();$("#fshow").bannerShow({changeColor:J})})}else{$("#fshow").bannerShow()}$("#copytime").html((new Date()).getFullYear());$("#ovpage").click(function(g){g.preventDefault();$("html, body").animate({scrollTop:$("#container").height()},1000)});var c=function(){};if(typeof(pgvMain)!="function"){var f="http://pingjs.qq.com/tcss.ping.js?v=1";$.getScript(f,function(){if(typeof(pgvMain)=="function"){pgvMain()}c=pgvSendClick;$(".forTcss").click(function(){var g=$(this).attr("name");var h=window.setTimeout(function(){c({hottag:g})},500)})})}window.online_resp=function(g){if(g&&g.c){$("#cur_online").text(g.c.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,"));$("#max_online").text(g.h.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g,"$1,"))}};	
+});
+	var c 	= document.getElementById("404");
+var ctx = c.getContext("2d");
+
+/* START CONFIG VARS */
+
+// What text should display?
+var displayText = '404';
+// What color should the text be?
+var textColor = '#262626';
+// What font should the text use?
+var textStyle = "normal normal bold 200px Arial";
+// How small should the circles get when away from the center?
+var minCircleRadius = 40;
+// How small should the circles get when close to the center?
+var maxCircleRadius = 140;
+// What should the coefficient be for size scaling?
+var circleRadiusProximity = 5;
+// How opaque should the circles get when away from the center?
+var minCircleOpacity = .2;
+// How opaque should the circles get when close to the center?
+var maxCircleOpacity = .9;
+// What should the coefficient be for opacity scaling?
+var circleOpacityProximity = 1000;
+// What colors should be used?  (Adding array pairs here adds beams)
+var colors = {
+	'beam1': '255,255,255',
+	'beam2': '255,255,255',
+	'beam3': '255,255,255',
+}
+
+/* END CONFIG VARS */
+
+// An array to hold our beam objects.
+beams = [];
+// Initialize counter
+i = 0;
+// Loop through our colors
+for (color in colors) {
+	// For each color, create a beam object.
+	beams[color] = {};
+	// Set fill color to specified color
+	beams[color].fillColor 	= colors[color];
+	// Initialize shiftX & moveX to the same random value (in relation to the center point)
+	beams[color].shiftX = beams[color].moveX = Math.random() * 2 > 1 ? parseInt(Math.random() * c.width / 2) - minCircleRadius : parseInt(Math.random() * c.width / -2) + minCircleRadius;
+	// Initialize shiftY & moveY to the same random value (in relation to the center point)
+	beams[color].shiftY = beams[color].moveY = Math.random() * 2 > 1 ? parseInt(Math.random() * c.height / 2) - minCircleRadius : parseInt(Math.random() * c.height / -2) + minCircleRadius;
+	// Increment counter
+	i++;
+}
+
+// Start our animation interval
+setInterval(function() {
+	// Clear our canvas
+	c.width = c.width;
+
+	// Loop through our beam array
+	for (beam in beams) {
+		// To make things more understandable, let's use "currentBeam"
+		currentBeam = beams[beam];
+		// If the beams shiftX coord is greater than the moveX coord, decrement shiftX (move it closer)
+		if (currentBeam.shiftX > currentBeam.moveX) { currentBeam.shiftX--; }
+		// If the beams shiftX coord is less than the moveX coord, increment shiftX (move it closer)
+		if (currentBeam.shiftX < currentBeam.moveX) { currentBeam.shiftX++; }
+		// If the beams shiftY coord is greater than the moveY coord, decrement shiftY (move it closer)
+		if (currentBeam.shiftY > currentBeam.moveY) { currentBeam.shiftY--; }
+		// If the beams shiftY coord is less than the moveY coord, increment shiftY (move it closer)
+		if (currentBeam.shiftY < currentBeam.moveY) { currentBeam.shiftY++; }
+		// If both the shiftX & shiftY are at the moveX & moveY, generate new moveX & moveY to move to.
+		if (currentBeam.shiftX == currentBeam.moveX && currentBeam.shiftY == currentBeam.moveY) {
+			// Regenerate moveX .. 50% chance of being positive, 50% chance of being negative.
+			// Take into account minCircleradius so it doesn't go off the side of the canvas
+			currentBeam.moveX 		= Math.random() * 2 > 1 ? parseInt(Math.random() * c.width / 2) - minCircleRadius : parseInt(Math.random() * c.width / -2) + minCircleRadius;
+			// Regenerate moveX .. 50% chance of being positive, 50% chance of being negative.
+			// Take into account minCircleradius so it doesn't go off the side of the canvas
+			currentBeam.moveY 		= Math.random() * 2 > 1 ? parseInt(Math.random() * c.height / 2) - minCircleRadius : parseInt(Math.random() * c.height / -2) + minCircleRadius;
+		}
+		// Calculate circleRadius by finding how far the shiftX & shiftY are from the center, and dividing by the proximity coefficient.
+		circleRadius = maxCircleRadius - ((Math.abs(currentBeam.shiftX) + Math.abs(currentBeam.shiftY)) / circleRadiusProximity);
+		// Make sure the circleRadius isn't under the minimum.
+		if (circleRadius < minCircleRadius) { circleRadius = minCircleRadius; }
+
+		// Calculate circleOpacity by finding how far the shiftX & shiftY are from the center, and dividing by the proximity coefficient.
+		circleOpacity = maxCircleOpacity - ((Math.abs(currentBeam.shiftX) + Math.abs(currentBeam.shiftY)) / circleOpacityProximity);
+		// Make sure the circleOpacity isn't under the minimum.
+		if (circleOpacity < minCircleOpacity) { circleOpacity = minCircleOpacity; }
+
+		// Set the fill style w/ opacity
+		ctx.fillStyle = 'rgba('+currentBeam.fillColor+', '+circleOpacity+')';
+		// Begin our drawing path
+		ctx.beginPath();
+		// Draw our circle
+		ctx.arc(c.width/2 + currentBeam.shiftX, c.height/2 + currentBeam.shiftY, circleRadius, 0, 2*Math.PI);
+		// Fill our circle
+		ctx.fill();
+	}
+
+	// Set our text fill style
+  	ctx.fillStyle = textColor;
+  	// Set our font
+  	ctx.font = textStyle;
+  	// Set our text align as center
+  	ctx.textAlign = 'center';
+	// All our circles are drawn, draw our text over it.
+	ctx.fillText(displayText, c.width/2, c.height/2 + 40);
+// Animate at 60 fps
+}, 1000/60);
+	</script>
+<!--[if lte IE 9]>
+    <script type="text/javascript" src="http://im-img.qq.com/home/js/20/css3-mediaqueries.js"></script>
+<![endif]-->
+</body>
+</html>
