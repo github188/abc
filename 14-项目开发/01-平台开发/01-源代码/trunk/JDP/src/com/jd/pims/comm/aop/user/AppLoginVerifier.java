@@ -21,7 +21,7 @@ public class AppLoginVerifier {
 	private static final Logger logger = Logger
 			.getLogger(AppLoginVerifier.class.getName());
 
-	@Around("execution(* com.jd.pims.pem.controller.*.* (..))")
+	/*@Around("execution(* com.jd.pims.pem.controller.*.* (..))")*/
 	public Object process(ProceedingJoinPoint joinPoint) throws Throwable {
 
 		

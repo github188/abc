@@ -2,12 +2,14 @@ package com.jd.pims.pem.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.jd.pims.comm.IBaseDao;
 import com.jd.pims.pem.model.LabourOnduty;
 import com.jd.pims.pem.model.LabourOndutyDayState;
+import com.jd.pims.pem.model.LabourOndutyState;
 
 public interface LabourOndutyDao extends IBaseDao {
 
@@ -20,6 +22,10 @@ public interface LabourOndutyDao extends IBaseDao {
 	List<LabourOnduty> getCurrentTimeLabourOnduty(
 			@Param("currentDate") Date currentDate, @Param("fullPath")String fullPath);
 
+	List<Map<String,Object>>getCurrentTimeLabourOndutyForChart(
+			@Param("currentDate") Date currentDate,@Param("id")String id);
+	List<Map<String,Object>> getHistoryLabourOndutyForChart(
+			@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("id")String id);
 	/**
 	 * 返回历史在岗人数
 	 * 

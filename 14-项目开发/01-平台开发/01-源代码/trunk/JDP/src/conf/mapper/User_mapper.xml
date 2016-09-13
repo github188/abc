@@ -169,4 +169,15 @@
   		OR EMP.TELEPHONE LIKE CONCAT('%',#{INPUTSTR},'%' )
   		OR EMP.OFFICETEL LIKE CONCAT('%',#{INPUTSTR},'%' )
   </select>
+  
+  <select id="getAreaList" resultType="java.util.HashMap">
+		select name,id from NP_SYS_CHINA_AREA 
+	<if test="id != null and id != ''" >
+        where PROVINCE_ID = #{id}
+    </if>
+  	<if test="null == id or '' == id " >
+        where PROVINCE_ID = '8ae5a2553c6f42be013c6f54661b0322'
+    </if>
+  </select>
+  
 </mapper>

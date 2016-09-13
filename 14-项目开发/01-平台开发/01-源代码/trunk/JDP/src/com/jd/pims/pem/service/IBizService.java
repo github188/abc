@@ -1,13 +1,11 @@
 package com.jd.pims.pem.service;
 
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 
 import com.jd.pims.pem.model.LabourEfficiency;
 import com.jd.pims.pem.model.LabourOndutyDayState;
 import com.jd.pims.pem.model.LabourOndutyState;
-import com.jd.pims.user.model.ControlUnit;
 
 /**
  * 人效业务类

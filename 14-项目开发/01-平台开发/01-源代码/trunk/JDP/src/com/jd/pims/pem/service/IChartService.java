@@ -3,12 +3,8 @@
  */
 package com.jd.pims.pem.service;
 
-import java.util.Date;
 import java.util.List;
-
-import com.jd.pims.pem.model.LabourEfficiency;
-import com.jd.pims.pem.model.LabourOndutyDayState;
-import com.jd.pims.pem.model.LabourOndutyState;
+import java.util.Map;
 
 /**
  * @author Administrator
@@ -22,16 +18,7 @@ public interface IChartService {
 	 *            控制单元（组织架构)id
 	 * @return
 	 */
-	public List<LabourOndutyState> getNumberOnDuty(String cuId);
-
-	/**
-	 * 取指定日期的在岗人数
-	 * 
-	 * @param cuId
-	 * @param date
-	 * @return
-	 */
-	public List<LabourOndutyState> getNumberOnDuty(String cuId, Date date);
+	public List<Map<String, Object>> getNumberOnDuty(String cuId);
 
 	/**
 	 * 取历史在岗人数(当天的平均值)
@@ -44,7 +31,7 @@ public interface IChartService {
 	 *            统计结束日期，日期类型
 	 * @return
 	 */
-	public List<LabourOndutyDayState> getNumberHistory(String cuId);
+	public List<Map<String, Object>> getNumberHistory(String cuId);
 
 	/**
 	 * 取按小时为单位人效统计
@@ -54,7 +41,7 @@ public interface IChartService {
 	 * @param timePeriod 时间点
 	 * @return
 	 */
-	public LabourEfficiency getTimePeriodEfficience(String cuId);
+	public List<Map<String, Object>> getEfficience(String cuId);
 
 	/**
 	 * 取历史人效
@@ -69,6 +56,6 @@ public interface IChartService {
 	 *            日期时间间隔，H：代表小时，D：代表天
 	 * @return
 	 */
-	public List<LabourEfficiency> getEfficiencyHistory(String cuId);
+	public List<Map<String, Object>> getEfficiencyHistory(String cuId);
 	
 }

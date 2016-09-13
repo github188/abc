@@ -1,6 +1,9 @@
 package com.jd.pims.user.dao;
 
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.jd.pims.comm.IBaseDao;
 import com.jd.pims.user.model.ControlUnit;
@@ -56,4 +59,5 @@ public interface UserDao extends IBaseDao{
 	 */
 	List<Employee> searchEmployee(String inputStr);
 	
+	List<Map<String,Object>> getAreaList(@Param("id")String id);
 }
