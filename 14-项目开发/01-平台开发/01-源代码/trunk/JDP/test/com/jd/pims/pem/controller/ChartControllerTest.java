@@ -2,6 +2,9 @@ package com.jd.pims.pem.controller;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,14 +50,14 @@ public class ChartControllerTest extends
 		//request.setRequestURI("/user/login");
 		request.setMethod(HttpMethod.POST.name());
 		request.addParameter("empId", "11111111111111111111111111111111");
-		request.addParameter("cuId", "11111111111111111111111111111111");
-		String msg = controller.getMapData(request, response);
-		System.out.println(msg);
+		request.addParameter("id", "11111111111111111111111111111111");
+		List<Map<String, Object>>list = controller.getMapData("11111111111111111111111111111111");
+		System.out.println(list);
 
-		if(msg.contains("result")){
-			Assert.assertTrue("成功返回："+msg, true);
+		if(list!=null){
+			Assert.assertTrue("成功返回："+list, true);
 		}else{
-			Assert.assertTrue("失败返回："+msg, true);
+			Assert.assertTrue("失败返回："+list, true);
 		}
 	}
 
