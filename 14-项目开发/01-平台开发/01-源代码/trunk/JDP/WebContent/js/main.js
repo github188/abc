@@ -28,7 +28,7 @@ option = {
         formatter: function (params,ticket,callback){
             var name = params.name;
             var value = params.value;
-            var res ='<div style="margin:0;background:url(images/地图浮框.9.png)no-repeat;background-size: 100% 100% ;text-align:center;padding:0;width:150%;padding-top:20%;box-shadow: 2px 2px 10px #32bbec">'
+            var res ='<div style="margin:0;background:url(images/tooltip.png)no-repeat;background-size: 100% 100% ;text-align:center;padding:0;width:150%;padding-top:20%;box-shadow: 2px 2px 10px #32bbec">'
             	+'<p style="background:#32bbec;color:black;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:"造字工房悦圆常规体", Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value+'</p></div>';
                     //设置自定义数据的模板，这里的模板是图片
             console.log(res);
@@ -439,7 +439,13 @@ option = {
 				dataType: "json",
 				success: function (chinaJson) {
 				    echarts.registerMap(mapName, chinaJson);   
-				    getData(null,'全国');
+				    getData('','全国');
+//				    option.series[0].mapType= (name||"全国");
+//				    mapchart.setOption(option, true);
+//				    barchart.setOption(barOption, true);
+//				    barchart1.setOption(barOption1, true);
+//				    barchart2.setOption(barOption2, true);
+//				    piechart.setOption(pieOption, true);
 				},statusCode: {404: function() {init ('全国');}}
 			});
 			mapchart.on('click', function (param){
@@ -447,14 +453,20 @@ option = {
 				//在中国地图上要去掉这几个地方的点击事件 直辖市 台湾 
 				if(!name.match(/^北京|^天津|^重庆|^上海|在线|离线|台湾/)||name!=""){
 					$("#areaTip").html(name||"全国");
-				    var id=param.data.id;
+				    var areaId=param.data.areaId;
 					$.ajax({
 						url: 'geoJson/'+name+'.json',
 						type: "get",
 						dataType: "json",
 						success: function (chinaJson) {
 						    echarts.registerMap(name, chinaJson);   
-						    getData(id,'全国');
+						    getData(areaId,name);
+//						    option.series[0].mapType= (name||"全国");
+//						    mapchart.setOption(option, true);
+//						    barchart.setOption(barOption, true);
+//						    barchart1.setOption(barOption1, true);
+//						    barchart2.setOption(barOption2, true);
+//						    piechart.setOption(pieOption, true);
 						},
 					  statusCode: {404: function() {init ('全国');}}
 					});
@@ -465,7 +477,6 @@ option = {
 		function getData(id,name){
 			searchMap(id,name);
 			searchBar2(id,name);
-			searchOrderNumber(id,name);
 			if(!enlarged){
 				searchBar(id,name);
 				searchBar1(id,name);
@@ -477,7 +488,6 @@ option = {
 			$.ajax({
 				url: url,
 				type: "post",
-				dataType: "text",
 				success: function (data) {
 					makeMapData(data,name);
 				}
@@ -488,53 +498,55 @@ option = {
 		function makeMapData(data,name){
 			mapdata= new Array();
 			piedata= new Array();
+			pieLegendData= new Array();
 			var data=eval(data);
 			var numEmp = 0.0;
 			var notNumEmp = 0.0;
 			if(data!=null){
 				$.each(data, function(index, row){
 					if(row.name.match(/^黑龙江|^内蒙古/)){
-						row.name=data[i].name.substring(0,3);
-					}else{
-						row.name=data[i].name.substring(0,2);
+						row.name=data[index].name.substring(0,3);
 					}
 					mapdata.push({
 						//地区名称 取china area表
 						name:row.name,
 						//numEmp 正式员工数 numTemp 临时工数 numOther 其他员工数
-						value:row.numEmp+row.numTemp+row.numOther,
+						value:row.EmpNum+row.NotEmpNum,
 						//地区的id 取china area表id
-				        id:row.id,
+				        'areaId':row.id,
 				        selected:false
 				        //自定义特殊 itemStyle，仅对该数据项有效
 					}); 
-					numEmp += row.numEmp;
-					notNumEmp += row.numTemp+row.numOther;
+					numEmp += row.EmpNum;
+					notNumEmp += row.NotEmpNum;
 				});
 			}
 			piedata.push(
 					{
-						name:'正式工  '+numEmp,
+						name:'正式员工  '+numEmp,
 						value:eval(numEmp/(numEmp+notNumEmp))*100+'%'
 					},
 					{
-						name:'非正式工  '+(numEmp+notNumEmp),
+						name:'非正式员工  '+(numEmp+notNumEmp),
 						value:eval(notNumEmp/(numEmp+notNumEmp))*100+'%'
 					}
 
 				); 
-			setMapOption(mapdata,piedata,name);
+			pieLegendData.push('正式员工  '+numEmp);
+			pieLegendData.push('非正式员工  '+(numEmp+notNumEmp));
+			setMapOption(mapdata,piedata,pieLegendData,name);
 		}
 
-		function setMapOption(mapdata){
+		function setMapOption(mapdata,piedata,pieLegendData,name){
 			$("#areaTip").html(name||"全国");
 			$("#mapTopLeft").html(name?name+'实时人力构成':'全国实时人力构成');
-			mapOption.title.text = name?(name+"在岗总人数"):"在岗总人数";
-			mapOption.series[0].mapType= (name||"全国");
-			mapOption.series[0].data = mapdata;
+			option.title.text = name?(name+"在岗总人数"):"在岗总人数";
+			option.series[0].mapType= (name||"全国");
+			option.series[0].data = mapdata;
 			pieOption.series[0].data = piedata;
-		    mapChart.setOption(mapOption, true);
-		    pieChart.setOption(pieOption, true);
+			pieOption.legend.data = pieLegendData;
+			mapchart.setOption(option, true);
+			piechart.setOption(pieOption, true);
 		}
 			
 		function searchBar(id,name) {
@@ -542,7 +554,6 @@ option = {
 			$.ajax({
 				url: url,
 				type: "post",
-				dataType: "text",
 				success: function (data) {
 					makebarData(data,name);
 				}
@@ -556,13 +567,14 @@ option = {
 			bardata[1] = new Array();
 			bardata[2] = new Array();
 			bardata[3] = new Array();
+			var data=eval(data);
 			if(data!=null){
 				$.each(data, function(index, row){
 					//clerkNum 员工数 orderNum 订单数  date 日期
 					bardata[0].push(row.clerkNum);
 					bardata[1].push(row.orderNum);
-					bardata[2].push(row.orderNum=='0'?'0':row.clerkNum/row.orderNum);
-					bardata[3].push(row.date);
+					bardata[2].push(row.effect);
+					bardata[3].push(row.name);
 				});
 			}
 			setBarOption(bardata,name);
@@ -573,7 +585,7 @@ option = {
 		    barOption.series[0].data = bardata[0];
 		    barOption.series[1].data = bardata[1];
 		    barOption.series[2].data = bardata[2];
-		    barOption.xAxis[0].data = bardata[3];
+		    barOption.xAxis.data = bardata[3];
 			barchart.setOption(barOption, true);  
 		}
 		
@@ -582,9 +594,8 @@ option = {
 			$.ajax({
 				url: url,
 				type: "post",
-				dataType: "text",
 				success: function (data) {
-					makebar1Data(data);
+					makebar1Data(data,name);
 				}
 			});
 		};
@@ -595,13 +606,14 @@ option = {
 			bardata1[0] = new Array();
 			bardata1[1] = new Array();
 			bardata1[2] = new Array();
+			var data=eval(data);
 			if(data!=null){
 				$.each(data, function(index, row){
 					//date 时间  empNum 员工人数 otherClerkNum 其他员工数
-					bardata1[0].push(row.date);
-					bardata1[1].push(row.empNum);
-					bardata1[2].push(row.otherClerkNum);
-					bardata1[3].push(row.otherClerkNum=='0'?'0':row.empNum/(row.empNum+row.otherClerkNum));
+					bardata1[0].push(row.name);
+					bardata1[1].push(row.EmpNum);
+					bardata1[2].push(row.NotEmpNum);
+					bardata1[3].push(row.NotEmpNum=='0'?'0':row.EmpNum/(row.EmpNum+row.NotEmpNum));
 				});
 			}
 			setBar1Option(bardata1,name);
@@ -609,11 +621,11 @@ option = {
 		
 		function setBar1Option(bardata1,name){
 			$("#countTopLeft").html(name?name+'一周在岗正式员工占比':'全国一周在岗正式员工占比');
-			barOption.xAxis[0].data = bardata[0];
-			bar1Option.series[0].data = bardata1[1];
-		    bar1Option.series[1].data = bardata1[2];
-		    bar1Option.series[2].data = bardata1[3];
-			bar1chart.setOption(bar1Option, true);  
+			barOption1.xAxis.data = bardata1[0];
+			barOption1.series[0].data = bardata1[1];
+			barOption1.series[1].data = bardata1[2];
+			barOption1.series[2].data = bardata1[3];
+			barchart1.setOption(barOption1, true);  
 		}
 		
 		function searchBar2(id,name) {
@@ -621,7 +633,6 @@ option = {
 			$.ajax({
 				url: url,
 				type: "post",
-				dataType: "text",
 				success: function (data) {
 					makebar2Data(data);
 				}
@@ -632,39 +643,30 @@ option = {
 			bardata2= new Array();
 			bardata2[0] = new Array();
 			bardata2[1] = new Array();
-			var total = 0.0;
+			var totalEffect = 0.0;
+			var totalOrderNum = 0.0;
+			var data=eval(data);
 			if(data!=null){
 				$.each(data, function(index, row){
 					//name 地区名 averageEffect 该地区平均人效
 					bardata2[0].push(row.name+'分拣中心');
-					bardata2[1].push(row.averageEffect);
-					total += row.averageEffect;
+					bardata2[1].push(row.effect);
+					totalEffect += row.effect;
+					totalOrderNum += row.orderNum;
 				});
 			}
-			setBar2Option(bardata2,total/data.length,name);
+			setBar2Option(bardata2,totalEffect/data.length,totalOrderNum,name);
 		}
 
-		function setBar2Option(bardata2,num,name){
+		function setBar2Option(bardata2,avgEffect,totalOrderNum,name){
 			$("#orderCountName").html(name?name+'平均人效':'全国平均人效');
-			$("#orderCountNum").html(num);
-		    bar2Option.yAxis[0].data = bardata2[0];
-		    bar2Option.series[1].data = bardata2[1];
-			bar2chart.setOption(bar2Option, true);  
+			$("#orderCountNum").html(avgEffect);
+			$("#averageEffectName").html(name?name+'订单量':'全国订单量');
+			$("#averageEffectNum").html(totalOrderNum);
+		    barOption2.yAxis[0].data = bardata2[0];
+		    barOption2.series[0].data = bardata2[1];
+			barchart2.setOption(barOption2, true);  
 		}
-		//获取左边右下 订单总量
-		function searchOrderNumber(id,name) {
-			var url = "chart/getOrderNumberData.do?id="+id;
-			$.ajax({
-				url: url,
-				type: "post",
-				dataType: "text",
-				success: function (data) {
-					//num 是该地区的总订单量
-					$("#averageEffectName").html(name?name+'订单量':'全国订单量');
-					$("#averageEffectNum").html(data.num);
-				}
-			});
-		};
 		
 		function resize(index){
 			var a = $('#a');
