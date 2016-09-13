@@ -51,13 +51,13 @@ public class ChartControllerTest extends
 		request.setMethod(HttpMethod.POST.name());
 		request.addParameter("empId", "11111111111111111111111111111111");
 		request.addParameter("id", "11111111111111111111111111111111");
-		List<Map<String, Object>>list = controller.getMapData("11111111111111111111111111111111");
-		System.out.println(list);
+		String msg = controller.getMapData(request,response);
+		System.out.println(msg);
 
-		if(list!=null){
-			Assert.assertTrue("成功返回："+list, true);
+		if(msg!=null){
+			Assert.assertTrue("成功返回："+msg, true);
 		}else{
-			Assert.assertTrue("失败返回："+list, true);
+			Assert.assertTrue("失败返回："+msg, true);
 		}
 	}
 
