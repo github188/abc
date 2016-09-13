@@ -207,7 +207,7 @@ public class AppController extends BaseController {
 
 		List<ControlUnit> result = uesrService.getOrganizations();
 
-		return this.buildSuccessResponse(new ControlUnit[result.size()])
+		return this.buildSuccessResponse(result.toArray(new ControlUnit[result.size()]))
 				.toString();
 	}
 
