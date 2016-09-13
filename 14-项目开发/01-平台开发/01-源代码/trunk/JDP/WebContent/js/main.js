@@ -28,7 +28,7 @@ option = {
         formatter: function (params,ticket,callback){
             var name = params.name;
             var value = params.value;
-            var res ='<div style="margin:0;background:url(images/地图浮框.9.png)no-repeat;background-size: 100% 100% ;text-align:center;padding:0;width:150%;padding-top:20%;box-shadow: 2px 2px 10px #32bbec">'
+            var res ='<div style="margin:0;background:url(images/tooltip.png)no-repeat;background-size: 100% 100% ;text-align:center;padding:0;width:150%;padding-top:20%;box-shadow: 2px 2px 10px #32bbec">'
             	+'<p style="background:#32bbec;color:black;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:"造字工房悦圆常规体", Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value+'</p></div>';
                     //设置自定义数据的模板，这里的模板是图片
             console.log(res);
@@ -440,6 +440,12 @@ option = {
 				success: function (chinaJson) {
 				    echarts.registerMap(mapName, chinaJson);   
 				    getData('','全国');
+//				    option.series[0].mapType= (name||"全国");
+//				    mapchart.setOption(option, true);
+//				    barchart.setOption(barOption, true);
+//				    barchart1.setOption(barOption1, true);
+//				    barchart2.setOption(barOption2, true);
+//				    piechart.setOption(pieOption, true);
 				},statusCode: {404: function() {init ('全国');}}
 			});
 			mapchart.on('click', function (param){
@@ -447,14 +453,20 @@ option = {
 				//在中国地图上要去掉这几个地方的点击事件 直辖市 台湾 
 				if(!name.match(/^北京|^天津|^重庆|^上海|在线|离线|台湾/)||name!=""){
 					$("#areaTip").html(name||"全国");
-				    var id=param.data.id;
+				    var areaId=param.data.areaId;
 					$.ajax({
 						url: 'geoJson/'+name+'.json',
 						type: "get",
 						dataType: "json",
 						success: function (chinaJson) {
 						    echarts.registerMap(name, chinaJson);   
-						    getData(id,name);
+						    getData(areaId,name);
+//						    option.series[0].mapType= (name||"全国");
+//						    mapchart.setOption(option, true);
+//						    barchart.setOption(barOption, true);
+//						    barchart1.setOption(barOption1, true);
+//						    barchart2.setOption(barOption2, true);
+//						    piechart.setOption(pieOption, true);
 						},
 					  statusCode: {404: function() {init ('全国');}}
 					});
@@ -493,9 +505,7 @@ option = {
 			if(data!=null){
 				$.each(data, function(index, row){
 					if(row.name.match(/^黑龙江|^内蒙古/)){
-						row.name=data[i].name.substring(0,3);
-					}else{
-						row.name=data[i].name.substring(0,2);
+						row.name=data[index].name.substring(0,3);
 					}
 					mapdata.push({
 						//地区名称 取china area表
@@ -503,7 +513,7 @@ option = {
 						//numEmp 正式员工数 numTemp 临时工数 numOther 其他员工数
 						value:row.EmpNum+row.NotEmpNum,
 						//地区的id 取china area表id
-				        id:row.id,
+				        'areaId':row.id,
 				        selected:false
 				        //自定义特殊 itemStyle，仅对该数据项有效
 					}); 
@@ -585,7 +595,7 @@ option = {
 				url: url,
 				type: "post",
 				success: function (data) {
-					makebar1Data(data);
+					makebar1Data(data,name);
 				}
 			});
 		};
