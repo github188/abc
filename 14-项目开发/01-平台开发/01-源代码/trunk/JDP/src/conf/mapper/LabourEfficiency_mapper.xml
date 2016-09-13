@@ -30,7 +30,7 @@
 		INNER JOIN NP_SYS_CONTROLUNIT CU ON LE.CU_ID=CU.ID
 		INNER JOIN JD_LE_ORDER_QUANTITY qu on qu.CU_ID=CU.ID and LE.BIZ_DATE = qu.BIZ_DATE
 		WHERE LE.BIZ_DATE=#{date} AND LE.TIME_PERIOD=#{timePeriod} 
-			AND CU.FULL_PATH LIKE CONCAT(select FULL_PATH from NP_SYS_CONTROLUNIT where id in(select CONTROLUNITID from NP_EQ_AREA where id = #{id}),'%' )
+			AND CU.FULL_PATH LIKE CONCAT((select FULL_PATH from NP_SYS_CONTROLUNIT where id in(select CONTROLUNITID from NP_EQ_AREA where id = #{id})),'%' )
 			GROUP by LE.CU_ID
 	]]>
 	</select>

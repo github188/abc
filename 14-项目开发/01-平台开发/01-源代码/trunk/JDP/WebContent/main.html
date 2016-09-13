@@ -21,7 +21,7 @@
     <![endif]-->
 <style type="text/css">
 body{
-	 background:url(images/京东平台4.png)no-repeat;
+	 background:url(images/mainBg.png)no-repeat;
 	 background-size: 100% 100%;
 	 font: 63% Arial, Helvetica, sans-serif;
 	 margin:0;
@@ -43,10 +43,10 @@ body{
     font-weight: normal;
     font-style: normal;
 }
-#logOutButton {border: none;height: 3%;width: 3%; margin:0 auto;background:url(images/登出按钮.png)no-repeat; background-size: 100% 100%;position:absolute;right:3%;top:6%}
+#logOutButton {border: none;height: 3%;width: 3%; margin:0 auto;background:url(images/logout.png)no-repeat; background-size: 100% 100%;position:absolute;right:3%;top:6%}
 .title {height: 8%; margin:0 auto;padding-top:0.5em;padding-bottom:0.5em; color:#46d7ff;background:url(images/顶部.png)no-repeat; background-size: 100% 100%;}
 #world {width:69%;left:16%;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif; font-size:5.5em; text-align:center; text-shadow:0 0 5px #00c6ff;}
-.clock {width:31%;height: 2%; margin-left:35%; padding-top:2%;position:absolute;padding-bottom:3%;color:#46d7ff; background:url(images/切图_31.png)no-repeat;  background-size: 100% 100%;top:5%}
+.clock {width:31%;height: 2%; margin-left:35%; padding-top:2%;position:absolute;padding-bottom:3%;color:#46d7ff; background:url(images/clock.png)no-repeat;  background-size: 100% 100%;top:5%}
 #Date { font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-align:center; text-shadow:0 0 5px #00c6ff;font-weight:10 }
 ul {  margin:0 auto; padding:0px; list-style:none; text-align:center; }
 ul li { display:inline; font-size:5.0em; text-align:center; font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
@@ -116,7 +116,7 @@ setInterval( function() {
 				<input type="button" id="return" ng-click="logout()" class="col-md-1 col-sm-1" style="height:5%;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;background:url(images/返回.png)no-repeat;background-size: 100% 100% ;border:none;padding-top: 0.5em;padding-bottom: 0.5em;font-size: 2.5em;text-align: center;" value="返回"></input>
 			</div> -->
 			<div id="a" class="col-md-7 col-sm-7" style="height: 98%;padding:0;">
-				<div style="MARGIN-LEFT: 1.1%;background:url(images/栏目1.png)no-repeat;background-size: 100% 100% ;height: 98%;margin-right: 1.1% ">
+				<div style="MARGIN-LEFT: 1.1%;background:url(images/column1.png)no-repeat;background-size: 100% 100% ;height: 98%;margin-right: 1.1% ">
 					<div class="col-md-12 col-sm-12" id="map" style="height: 60%;width: 90%;position:absolute;top:4em;"></div>
 					<div id="bar" style="width:70%;height: 38%;position:absolute;top:61%;left:2%;"></div>
 					<div id="pie" style="width:30%;height: 30%;position:absolute;bottom:15em;right:5%;"></div>
@@ -129,25 +129,25 @@ setInterval( function() {
 						<div id="averageEffectName" style="color:#32bbec;font-size: 3em;font-family:'微软雅黑', Arial, Helvetica, sans-serif;">订单量</div>
 						<div id="averageEffectNum"style="color:#fedd1b;font-size: 6em;font-family:'digital-7__mono', Arial, Helvetica, sans-serif;">222222</div>
 					</div>
-					<div id="mapTopLeft" style="width:60%;position:absolute;top:0;left:1.1%;font-family: '黑体', Arial, Helvetica, sans-serif;background:url(images/左上角1.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;padding-left: 0.5em;font-size: 3.0em;z-index: 10000;text-align: left;">实时人力构成</div>
-					<input type="button" id="mapTopRight" style="width:5%;height:4%;position:absolute;border:none;top:0;right:1.1%;background:url(images/放大.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;" onclick="resize(0)"></input>
-					<div id="mapBottomRight" style="width:12%;height:8%;position:absolute;bottom:2%;right:1.1%;background:url(images/右边角.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;z-index: 10000;"></div>
+					<div id="mapTopLeft" style="width:60%;position:absolute;top:0;left:1.1%;font-family: '黑体', Arial, Helvetica, sans-serif;background:url(images/TopLeft1.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;padding-left: 0.5em;font-size: 3.0em;z-index: 10000;text-align: left;">实时人力构成</div>
+					<input type="button" id="mapTopRight" style="width:5%;height:4%;position:absolute;border:none;top:0;right:1.1%;background:url(images/enlarge.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;" onclick="resize(0)"></input>
+					<div id="mapBottomRight" style="width:12%;height:8%;position:absolute;bottom:2%;right:1.1%;background:url(images/BottomRight.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;z-index: 10000;"></div>
 				</div>
 			</div>
 			<div id="b" class="col-md-5 col-sm-5" style="height: 49%;padding:0;" >
-				<div  style="MARGIN-LEFT: 1.1%;background:url(images/栏目2.png)no-repeat;background-size: 100% 100% ;height: 98%;margin-bottom: 2em;margin-right: 1.1%">
+				<div  style="MARGIN-LEFT: 1.1%;background:url(images/column2.png)no-repeat;background-size: 100% 100% ;height: 98%;margin-bottom: 2em;margin-right: 1.1%">
 					<div id="effect" style="height: 98%;"></div>
-					<div id="effectTopLeft" style="width:60%;position:absolute;top:0;font-family:'黑体', Arial, Helvetica, sans-serif;background:url(images/左上角2.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;padding-left: 0.5em;font-size: 3.0em;z-index: 10000;text-align: left;">一周人效走势图</div>
-					<input type="button" id="effectTopRight" style="width:5%;height:6%;border:none;position:absolute;top:0;right:1.1%;background:url(images/放大.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;"  onclick="resize(1)"></input>
-					<div id="effectBottomRight" style="width:12%;height:8%;position:absolute;bottom:2%;right:1.1%;background:url(images/右边角.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;z-index: 10000;"></div>
+					<div id="effectTopLeft" style="width:60%;position:absolute;top:0;font-family:'黑体', Arial, Helvetica, sans-serif;background:url(images/TopLeft2.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;padding-left: 0.5em;font-size: 3.0em;z-index: 10000;text-align: left;">一周人效走势图</div>
+					<input type="button" id="effectTopRight" style="width:5%;height:6%;border:none;position:absolute;top:0;right:1.1%;background:url(images/enlarge.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;"  onclick="resize(1)"></input>
+					<div id="effectBottomRight" style="width:12%;height:8%;position:absolute;bottom:2%;right:1.1%;background:url(images/BottomRight.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;z-index: 10000;"></div>
 				</div>
 			</div>
 			<div id="c" class="col-md-5 col-sm-5" style="height: 49%;padding:0;" >
-				<div style="margin-right: 1.1%;MARGIN-LEFT: 1.1%;background:url(images/栏目3.png)no-repeat;background-size: 100% 100% ;height: 98%; ">
+				<div style="margin-right: 1.1%;MARGIN-LEFT: 1.1%;background:url(images/column3.png)no-repeat;background-size: 100% 100% ;height: 98%; ">
 			 	<div id="count" style="height: 98%;"></div>	
-			 	<div id="countTopLeft" style="width:70%;position:absolute;top:0;font-family:'黑体', Arial, Helvetica, sans-serif;background:url(images/左上角3.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;padding-left: 0.5em;font-size: 3.0em;z-index: 10000;text-align: left;">一周在岗正式员工占比</div>
-			 	<input type="button" id="countTopRight" style="border:none;width:5%;height:6%;position:absolute;top:0;right:1.1%;background:url(images/放大.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;" onclick="resize(2)"></input>
-			 	<div id="countBottomRight" style="width:12%;height:8%;position:absolute;bottom:2%;right:1.1%;background:url(images/右边角.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;z-index: 10000;"></div>
+			 	<div id="countTopLeft" style="width:70%;position:absolute;top:0;font-family:'黑体', Arial, Helvetica, sans-serif;background:url(images/TopLeft3.png)no-repeat;background-size: 100% 100% ;padding-top: 0.5em;padding-left: 0.5em;font-size: 3.0em;z-index: 10000;text-align: left;">一周在岗正式员工占比</div>
+			 	<input type="button" id="countTopRight" style="border:none;width:5%;height:6%;position:absolute;top:0;right:1.1%;background:url(images/enlarge.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;font-size: 3.5em;z-index: 10000;" onclick="resize(2)"></input>
+			 	<div id="countBottomRight" style="width:12%;height:8%;position:absolute;bottom:2%;right:1.1%;background:url(images/BottomRight.png)no-repeat;background-size: 100% 100% ;margin-left: 0.5em;padding-top: 0.5em;z-index: 10000;"></div>
 				</div>
 			</div>
 		</div>
