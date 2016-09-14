@@ -334,7 +334,7 @@ option = {
 	        yAxis: [
 	        {
 	        	type:'category',
-	        	data:['xx分拣中心','xx分拣中心','xx分拣中心','xx分拣中心','xx分拣中心'],
+	        	data:['xx分拣中心','xx分拣中心','xx分拣中心','xx分拣中心','xx分拣中心','xx分拣中心','xx分拣中心'],
 		    	axisLine:{
 		    		lineStyle:{
 		    			color:'#7ab8f9'
@@ -439,13 +439,8 @@ option = {
 				dataType: "json",
 				success: function (chinaJson) {
 				    echarts.registerMap(mapName, chinaJson);   
-				    getData('','全国');
-//				    option.series[0].mapType= (name||"全国");
-//				    mapchart.setOption(option, true);
-//				    barchart.setOption(barOption, true);
-//				    barchart1.setOption(barOption1, true);
-//				    barchart2.setOption(barOption2, true);
-//				    piechart.setOption(pieOption, true);
+				    //getData('',mapName);
+				    loadDault(mapName);
 				},statusCode: {404: function() {init ('全国');}}
 			});
 			mapchart.on('click', function (param){
@@ -460,13 +455,8 @@ option = {
 						dataType: "json",
 						success: function (chinaJson) {
 						    echarts.registerMap(name, chinaJson);   
-						    getData(areaId,name);
-//						    option.series[0].mapType= (name||"全国");
-//						    mapchart.setOption(option, true);
-//						    barchart.setOption(barOption, true);
-//						    barchart1.setOption(barOption1, true);
-//						    barchart2.setOption(barOption2, true);
-//						    piechart.setOption(pieOption, true);
+						    //getData(areaId,name);
+						    loadDault(name);
 						},
 					  statusCode: {404: function() {init ('全国');}}
 					});
@@ -474,6 +464,51 @@ option = {
 			}); 
 		};
 
+		function loadDault(name){
+			
+			$("#areaTip").html(name||"全国");
+			$("#mapTopLeft").html(name?name+'实时人力构成':'全国实时人力构成');
+			option.title.text = name?(name+"在岗总人数"):"在岗总人数";
+			option.series[0].mapType= (name||"全国");
+			option.series[0].data = [randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
+			pieOption.series[0].data = [
+			    			            {
+			    			            	name:'正式员工',
+			    			            	value:randomData()
+			    			            },
+			    			            {
+			    			            	name:'非正式员工',
+			    			            	value:randomData()
+			    			            }
+			    		            ];
+			//pieOption.legend.data = pieLegendData;
+
+			
+			$("#effectTopLeft").html(name?name+'一周人效走势图':'全国一周人效走势图');
+		    barOption.series[0].data =[randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
+		    barOption.series[1].data =[randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
+		    barOption.series[2].data =[randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
+		   // barOption.xAxis.data = bardata[3];
+		    
+			$("#countTopLeft").html(name?name+'一周在岗正式员工占比':'全国一周在岗正式员工占比');
+			//barOption1.xAxis.data = bardata1[0];
+			barOption1.series[0].data = [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
+			barOption1.series[1].data = [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
+			barOption1.series[2].data = [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
+			
+			$("#orderCountName").html(name?name+'平均人效':'全国平均人效');
+			$("#orderCountNum").html(randomData());
+			$("#averageEffectName").html(name?name+'订单量':'全国订单量');
+			$("#averageEffectNum").html(randomData());
+		    //barOption2.yAxis[0].data = bardata2[0];
+		    barOption2.series[0].data = [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
+		    
+			mapchart.setOption(option, true);
+		    barchart.setOption(barOption, true);
+		    barchart1.setOption(barOption1, true);
+		    barchart2.setOption(barOption2, true);
+		    piechart.setOption(pieOption, true);
+		}
 		function getData(id,name){
 			searchMap(id,name);
 			searchBar2(id,name);
