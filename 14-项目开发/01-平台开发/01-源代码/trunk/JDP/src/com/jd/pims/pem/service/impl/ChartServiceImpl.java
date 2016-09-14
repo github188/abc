@@ -48,17 +48,17 @@ public class ChartServiceImpl implements IChartService {
 		List<Map<String,Object>>areaList = userDao.getAreaList(id);
 		Date dt = new Date(); 
 		String temp_str=sdf.format(dt);  
-	    try {
+/*	    try {
 			dt = sdf.parse(temp_str);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		for(Map<String,Object>map:areaList){
 			Map<String,Object>tempMap = new HashMap<String,Object>();
 			tempMap.put("id",map.get("id"));
 			tempMap.put("name",map.get("name"));
-			List<Map<String,Object>> templist=labourOndutyDao.getCurrentTimeLabourOndutyForChart(dt, map.get("id").toString());
+			List<Map<String,Object>> templist=labourOndutyDao.getCurrentTimeLabourOndutyForChart(temp_str, map.get("id").toString());
 			if(null!=templist&&!templist.isEmpty()&&templist.size()>0){
 				tempMap.put("EmpNum",templist.get(0).get("EmpNum"));
 				tempMap.put("NotEmpNum",templist.get(0).get("NotEmpNum"));
@@ -83,9 +83,11 @@ public class ChartServiceImpl implements IChartService {
 		cal.setTime(new Date());   
 		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 1);
 		Date startDate = cal.getTime();
+		String starttime =sdf.format(startDate);
 		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 7);
 		Date endDate = cal.getTime();
-		list=labourOndutyDao.getHistoryLabourOndutyForChart(startDate, endDate, id);	
+		String endtime =sdf.format(endDate);
+		list=labourOndutyDao.getHistoryLabourOndutyForChart(endtime,starttime, id);	
 		return list;
 	}
 
@@ -95,8 +97,10 @@ public class ChartServiceImpl implements IChartService {
 		List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
 		List<Map<String,Object>>areaList = userDao.getAreaList(id);
 		int timePeriod = 0;
+		String time =sdf.format(new Date());
 		try {
 			//如果timePeriod为空，默认当前一小时
+			//Date d = sdf.parse(time);
 				Calendar currentTime = Calendar.getInstance();
 				currentTime.setTime(new Date());
 				 timePeriod=currentTime.get(Calendar.HOUR)-1;
@@ -108,8 +112,7 @@ public class ChartServiceImpl implements IChartService {
 					tempMap.put("id",map.get("id"));
 					tempMap.put("name",map.get("name"));
 					List<Map<String,Object>> templist=labourEfficiencyDao.getEfficiencyForChart(
-							sdf.parse(sdf.format(new Date())), timePeriod,
-							id);
+							time, timePeriod,map.get("id").toString());
 					if(null!=templist&&!templist.isEmpty()&&templist.size()>0){
 						tempMap.put("effect",templist.get(0).get("effect"));
 						tempMap.put("orderNum",templist.get(0).get("orderNum"));
@@ -120,7 +123,7 @@ public class ChartServiceImpl implements IChartService {
 					list.add(tempMap);
 				}
 				return list;
-		} catch (ParseException e) {
+		} catch (Exception e) {
 			logger.debug("日期解释错误：", e);
 			return null;
 		}
@@ -137,9 +140,11 @@ public class ChartServiceImpl implements IChartService {
 		cal.setTime(new Date());   
 		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 1);
 		Date startDate = cal.getTime();
+		String starttime =sdf.format(startDate);
 		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 7);
 		Date endDate = cal.getTime();
-		list = labourEfficiencyDao.getHistoryEfficiencyForChart(startDate, endDate, id);
+		String endtime =sdf.format(endDate);
+		list = labourEfficiencyDao.getHistoryEfficiencyForChart(endtime,starttime,24, id);
 		return list;
 	}
 

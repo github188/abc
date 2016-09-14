@@ -32,9 +32,9 @@ public interface LabourEfficiencyDao extends IBaseDao {
 			@Param("fullPath")String fullPath);
 
 	List<Map<String, Object>> getEfficiencyForChart(
-			@Param("date")Date date, @Param("timePeriod")int timePeriod, @Param("id")String id);
+			@Param("date")String time, @Param("timePeriod")int timePeriod, @Param("id")String id);
 	
 	List<Map<String, Object>> getHistoryEfficiencyForChart(
-			@Param("startDate")Date startDate, @Param("endDate")Date endDate, @Param("id")String id);
+			@Param("startDate")String startDate, @Param("endDate")String endDate, @Param("timePeriod")int timePeriod, @Param("id")String id);
 
 }

@@ -608,7 +608,7 @@ option = {
 					//clerkNum 员工数 orderNum 订单数  date 日期
 					bardata[0].push(row.clerkNum);
 					bardata[1].push(row.orderNum);
-					bardata[2].push(row.effect);
+					bardata[2].push(Math.ceil(row.effect));
 					bardata[3].push(row.name);
 				});
 			}
@@ -641,6 +641,7 @@ option = {
 			bardata1[0] = new Array();
 			bardata1[1] = new Array();
 			bardata1[2] = new Array();
+			bardata1[3] = new Array();
 			var data=eval(data);
 			if(data!=null){
 				$.each(data, function(index, row){
@@ -648,7 +649,7 @@ option = {
 					bardata1[0].push(row.name);
 					bardata1[1].push(row.EmpNum);
 					bardata1[2].push(row.NotEmpNum);
-					bardata1[3].push(row.NotEmpNum=='0'?'0':row.EmpNum/(row.EmpNum+row.NotEmpNum));
+					bardata1[3].push(row.NotEmpNum=='0'?'0':(row.EmpNum/(row.EmpNum+row.NotEmpNum)).toFixed(2));
 				});
 			}
 			setBar1Option(bardata1,name);
@@ -690,7 +691,7 @@ option = {
 					totalOrderNum += row.orderNum;
 				});
 			}
-			setBar2Option(bardata2,totalEffect/data.length,totalOrderNum,name);
+			setBar2Option(bardata2,(totalEffect/data.length).toFixed(2),totalOrderNum,name);
 		}
 
 		function setBar2Option(bardata2,avgEffect,totalOrderNum,name){

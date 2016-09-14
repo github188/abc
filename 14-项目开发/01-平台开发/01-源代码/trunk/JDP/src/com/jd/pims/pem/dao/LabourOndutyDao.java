@@ -23,9 +23,9 @@ public interface LabourOndutyDao extends IBaseDao {
 			@Param("currentDate") Date currentDate, @Param("fullPath")String fullPath);
 
 	List<Map<String,Object>>getCurrentTimeLabourOndutyForChart(
-			@Param("currentDate") Date currentDate,@Param("id")String id);
+			@Param("currentDate") String currentDate,@Param("id")String id);
 	List<Map<String,Object>> getHistoryLabourOndutyForChart(
-			@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("id")String id);
+			@Param("startDate") String startDate,@Param("endDate") String endDate,@Param("id")String id);
 	/**
 	 * 返回历史在岗人数
 	 * 
