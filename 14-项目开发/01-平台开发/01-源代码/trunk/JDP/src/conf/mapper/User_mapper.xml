@@ -14,7 +14,7 @@
   <!-- 员工信息，包括组织架构 -->
   <resultMap id="employee" type="com.jd.pims.user.model.Employee" >
     <id column="id" property="id" />
-    <result column="person_name" property="personName"  />
+    <result column="person_name" property="empName"  />
     <result column="sex" property="sex"  />
     <result column="org_id" property="orgId"  />
     <result column="org_code" property="orgCode"  />

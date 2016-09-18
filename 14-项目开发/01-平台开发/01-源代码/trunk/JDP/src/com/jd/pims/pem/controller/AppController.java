@@ -221,8 +221,8 @@ public class AppController extends BaseController {
 						.getEfficiencyHistory(cuId, sFormat.parse(startDate),
 								sFormat.parse(endDate));
 				if(null!=results&&results.size()>0&&!results.isEmpty()){
-				return this.buildSuccessResponse(
-						new LabourEfficiency[results.size()]).toString();				
+				return this.buildSuccessResponse(results.toArray(
+						new LabourEfficiency[results.size()])).toString();				
 				}		
 				JsonObject retMsg = new JsonObject();
 				retMsg.addProperty("returnCode", 0);

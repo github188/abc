@@ -46,7 +46,7 @@ public class UserServiceImpl implements IUserService {
 
 		Employee emp = LoginInfoCache.getLoginEmployee(empId);
 		if (emp != null) {
-			logger.debug("员工" + emp.getPersonName() + "退出APP登录！");
+			logger.debug("员工" + emp.getEmpName() + "退出APP登录！");
 		}
 		LoginInfoCache.remove(empId);
 	}

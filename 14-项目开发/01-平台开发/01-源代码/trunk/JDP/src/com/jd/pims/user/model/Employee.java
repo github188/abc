@@ -15,9 +15,9 @@ public class Employee extends BaseDataModel{
 
 	private String id;
 	
-	private String personCode;
+	private String empCode;
 	
-	private String personName;
+	private String empName;
 	
 	private String sex;
 	
@@ -59,25 +59,25 @@ public class Employee extends BaseDataModel{
 
 
 	public String getPersonCode() {
-		return personCode;
+		return empCode;
 	}
 
 
 
 	public void setPersonCode(String personCode) {
-		this.personCode = personCode;
+		this.empCode = personCode;
 	}
 
 
 
-	public String getPersonName() {
-		return personName;
+	public String getEmpName() {
+		return empName;
 	}
 
 
 
-	public void setPersonName(String personName) {
-		this.personName = personName;
+	public void setEmpame(String empName) {
+		this.empName = empName;
 	}
 
 
