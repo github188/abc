@@ -569,13 +569,14 @@ option = {
 				); 
 			pieLegendData.push('正式员工  '+numEmp);
 			pieLegendData.push('非正式员工  '+(numEmp+notNumEmp));
-			setMapOption(mapdata,piedata,pieLegendData,name);
+			setMapOption(mapdata,piedata,pieLegendData,numEmp+numEmp+notNumEmp,name);
 		}
 
-		function setMapOption(mapdata,piedata,pieLegendData,name){
+		function setMapOption(mapdata,piedata,pieLegendData,total,name){
 			$("#areaTip").html(name||"全国");
 			$("#mapTopLeft").html(name?name+'实时人力构成':'全国实时人力构成');
 			option.title.text = name?(name+"在岗总人数"):"在岗总人数";
+			option.title.subtext =(total?"'"+total+"'":'0');
 			option.series[0].mapType= (name||"全国");
 			option.series[0].data = mapdata;
 			pieOption.series[0].data = piedata;
