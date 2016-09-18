@@ -562,14 +562,14 @@ option = {
 						value:eval(numEmp/(numEmp+notNumEmp))*100+'%'
 					},
 					{
-						name:'非正式员工  '+(numEmp+notNumEmp),
+						name:'非正式员工  '+(notNumEmp),
 						value:eval(notNumEmp/(numEmp+notNumEmp))*100+'%'
 					}
 
 				); 
 			pieLegendData.push('正式员工  '+numEmp);
-			pieLegendData.push('非正式员工  '+(numEmp+notNumEmp));
-			setMapOption(mapdata,piedata,pieLegendData,numEmp+numEmp+notNumEmp,name);
+			pieLegendData.push('非正式员工  '+notNumEmp);
+			setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp,name);
 		}
 
 		function setMapOption(mapdata,piedata,pieLegendData,total,name){
