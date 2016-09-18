@@ -16,11 +16,11 @@ public class LabourOndutyState extends BaseDataModel{
 	//区域名称
 	private String cuName;
 	//员工数量
-	private Integer numEmp;
+	private Integer numEmp=0;
 	//临时工数量
-	private Integer numTemp;
+	private Integer numTemp=0;
 	//其他员工数量
-	private Integer numOther;
+	private Integer numOther=0;
 
 	public String getCuId() {
 		return cuId;
