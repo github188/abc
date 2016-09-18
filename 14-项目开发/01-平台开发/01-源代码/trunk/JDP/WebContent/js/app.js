@@ -3,14 +3,13 @@ angular.module('app', ['ngCookies']).controller('ctrl', ['$scope','$location','$
 	console.log("123456:"+$cookieStore.get('showornot'));
 	
 	if($cookieStore.get('showornot')!='true'){
-//		window.history.back();
-		$scope.location.url = "login.html";
+		window.location.href = "login.html";
 	}
 	
-	$scope.logout = function(){
+/*	$scope.logout = function(){
 		$cookieStore.put('showornot', 'false');
-		$scope.location.url = "login.html";
-	}
+		window.href = "login.html";
+	}*/
 	
 	$scope.c=['col-md-7 col-sm-7','col-md-5 col-sm-5','col-md-5 col-sm-5'];
 	$scope.h=['false','false','false'];

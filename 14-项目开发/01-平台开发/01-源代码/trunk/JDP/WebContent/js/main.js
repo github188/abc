@@ -439,8 +439,8 @@ option = {
 				dataType: "json",
 				success: function (chinaJson) {
 				    echarts.registerMap(mapName, chinaJson);   
-				    //getData('',mapName);
-				    loadDault(mapName);
+				    getData('',mapName);
+				    //loadDault(mapName);
 				},statusCode: {404: function() {init ('全国');}}
 			});
 			mapchart.on('click', function (param){
@@ -455,8 +455,8 @@ option = {
 						dataType: "json",
 						success: function (chinaJson) {
 						    echarts.registerMap(name, chinaJson);   
-						    //getData(areaId,name);
-						    loadDault(name);
+						    getData(areaId,name);
+						    //loadDault(name);
 						},
 					  statusCode: {404: function() {init ('全国');}}
 					});
@@ -804,3 +804,6 @@ option = {
 			barchart2.resize();
 			piechart.resize();
 		};
+		function logout(){
+			window.location.href = "login.html";
+		}

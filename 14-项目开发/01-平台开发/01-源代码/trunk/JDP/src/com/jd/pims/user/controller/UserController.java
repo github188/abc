@@ -49,7 +49,7 @@ public class UserController extends BaseController {
 	}
 
 	/**
-	 * 用户登录
+	 * 用户登出
 	 * 
 	 * @param request
 	 * @return
