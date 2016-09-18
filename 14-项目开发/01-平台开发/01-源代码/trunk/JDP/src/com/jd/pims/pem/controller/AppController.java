@@ -177,9 +177,9 @@ public class AppController extends BaseController {
 						cuId, sFormat.parse(startDate), sFormat.parse(endDate),
 						"D");
 				if (null != results && results.size() > 0 && !results.isEmpty()) {
-					return this.buildSuccessResponse(
-							results.toArray(new LabourOndutyDayState[results
-									.size()])).toString();
+					LabourOndutyState[] LabourOndutyState =new LabourOndutyState[results.size()];
+					LabourOndutyState=results.toArray(LabourOndutyState);
+					return this.buildSuccessResponse(LabourOndutyState).toString();
 				}
 				JsonObject retMsg = new JsonObject();
 				retMsg.addProperty("returnCode", 0);
@@ -235,6 +235,7 @@ public class AppController extends BaseController {
 							nle=new LabourEfficiency();
 							nle.setCuId(cuId);
 							nle.setCuName(cu.getCuName());
+							map.put(sFormat.format(le.getBizDate()), nle);
 						}
 					}
 					return this
