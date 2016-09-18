@@ -43,7 +43,7 @@ public interface IBizService {
 	 *            日期时间间隔，H：代表小时，D：代表天
 	 * @return
 	 */
-	public List<LabourOndutyDayState> getNumberHistory(String cuId,
+	public List<LabourOndutyState> getNumberHistory(String cuId,
 			Date startDate, Date endDate, String interval);
 
 	/**

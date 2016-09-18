@@ -13,6 +13,8 @@ public class LabourOndutyState extends BaseDataModel{
 	private static final long serialVersionUID = -8549857464663702188L;
 	
 	private String cuId;
+	
+	private String dayTime;
 	//区域名称
 	private String cuName;
 	//员工数量
@@ -60,6 +62,14 @@ public class LabourOndutyState extends BaseDataModel{
 
 	public void setNumOther(Integer numOther) {
 		this.numOther = numOther;
+	}
+
+	public String getDayTime() {
+		return dayTime;
+	}
+
+	public void setDayTime(String dayTime) {
+		this.dayTime = dayTime;
 	}
 
 	

@@ -2,9 +2,12 @@ package com.jd.pims.pem.service.impl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,11 +77,38 @@ public class BizServiceImpl implements IBizService {
 	}
 
 	@Override
-	public List<LabourOndutyDayState> getNumberHistory(String cuId,
+	public List<LabourOndutyState> getNumberHistory(String cuId,
 			Date startDate, Date endDate, String interval) {
 		ControlUnit cu = userDao.findOrganization(cuId);
-		return labourOndutyDao.getHistoryLabourOnduty(startDate, endDate,
+		
+		
+		List<LabourOndutyDayState> list= labourOndutyDao.getHistoryLabourOnduty(startDate, endDate,
 				cu.getFullPath());
+		Map<String,LabourOndutyState> map=new HashMap<String,LabourOndutyState>();
+		for (LabourOndutyDayState rec : list) {
+			LabourOndutyState state =  null;
+			if(map.containsKey(sFormat.format(rec.getBizDate()))){
+				state=map.get(sFormat.format(rec.getBizDate()));
+			}else{
+				state=new LabourOndutyState();
+				state.setCuId(cuId);
+				state.setCuName(cu.getCuName());
+				state.setDayTime(sFormat.format(rec.getBizDate()));
+				map.put(sFormat.format(rec.getBizDate()), state);
+			}
+			
+			if (rec.getPersonType().equals("1")
+					&& state.getNumEmp() == null) {
+				state.setNumEmp(rec.getAvgQuantity());
+			} else if (rec.getPersonType().equals("2")
+					|| rec.getPersonType().equals("3")) {
+				state.setNumTemp((state.getNumTemp() == null ? 0 : state
+						.getNumTemp()) + rec.getAvgQuantity());
+			} else if (rec.getPersonType().equals("5")) {
+				state.setNumOther(rec.getAvgQuantity());
+			}
+		}
+		return new ArrayList<LabourOndutyState>(map.values());
 	}
 
 	@Override
@@ -105,7 +135,7 @@ public class BizServiceImpl implements IBizService {
 			if(timePeriod==null){
 				Calendar currentTime = Calendar.getInstance();
 				currentTime.setTime(new Date());
-				timePeriod=currentTime.get(Calendar.HOUR)-1;
+				timePeriod=currentTime.get(Calendar.HOUR_OF_DAY)-1;
 				if(timePeriod<0){
 					timePeriod=24;
 				}

@@ -169,7 +169,7 @@ public class AppController extends BaseController {
 				&& !"".equals(endDate)) {
 
 			try {
-				List<LabourOndutyDayState> results = pemService
+				List<LabourOndutyState> results = pemService
 						.getNumberHistory(cuId, sFormat.parse(startDate),
 								sFormat.parse(endDate), "D");
 				if(null!=results&&results.size()>0&&!results.isEmpty()){

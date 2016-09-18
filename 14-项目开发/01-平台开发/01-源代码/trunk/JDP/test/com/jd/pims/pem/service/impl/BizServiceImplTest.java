@@ -48,11 +48,11 @@ public class BizServiceImplTest extends
 		c1.set(2016, 8, 6);
 		Calendar c2 = Calendar.getInstance();
 		c2.setTime(new Date());
-		c2.set(2016, 8, 7);
-		List<LabourOndutyDayState> list = pemService
+		c2.set(2016, 8, 13);
+		List<LabourOndutyState> list = pemService
 				.getNumberHistory("11111111111111111111111111111111",c1.getTime(),c2.getTime(),"D");
 		Assert.assertTrue("返回记录数"+list.size(), list != null);
-		for(LabourOndutyDayState state:list){
+		for(LabourOndutyState state:list){
 			logger.debug(state);
 		}
 	}
