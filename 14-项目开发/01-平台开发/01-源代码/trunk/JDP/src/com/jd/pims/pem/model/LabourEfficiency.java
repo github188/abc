@@ -14,13 +14,14 @@ public class LabourEfficiency extends BaseDataModel{
 	private static final long serialVersionUID = -6644930771146714269L;
 	private String id;
 	private String cuId;
+	private String cuName;
 	private Date bizDate;
 	private Integer timePeriod;
 	private Integer numberOnduty;
 	private Integer orderQuantity;
-	private Double efficiency;
-	private Double periodEfficiency;
-	private Double avgEfficiency;
+	private Double efficiency=0.0;
+	private Double periodEfficiency=0.0;
+	private Double avgEfficiency=0.0;
 	private Date createTime;
 	private Date lastUpdateTime;
 	
@@ -36,6 +37,14 @@ public class LabourEfficiency extends BaseDataModel{
 	public void setCuId(String cuId) {
 		this.cuId = cuId;
 	}
+	public String getCuName() {
+		return cuName;
+	}
+	public void setCuName(String cuName) {
+		this.cuName = cuName;
+	}
+	
+	
 	public Date getBizDate() {
 		return bizDate;
 	}
@@ -90,7 +99,6 @@ public class LabourEfficiency extends BaseDataModel{
 	public void setOrderQuantity(Integer orderQuantity) {
 		this.orderQuantity = orderQuantity;
 	}
-	
 	
 
 }

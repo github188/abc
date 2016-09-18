@@ -5,6 +5,7 @@
 	<resultMap id="labourEfficiency" type="com.jd.pims.pem.model.LabourEfficiency">
 		<id column="id" property="id" />
 		<result column="cu_id" property="cuId" />
+		<result column="cu_name" property="cuName" />
 		<result column="biz_date" property="bizDate" />
 		<result column="time_period" property="timePeriod" />
 		<result column="period_efficiency" property="periodEfficiency" />
@@ -15,7 +16,7 @@
 
 	<select id="getLabourEfficiency" resultMap="labourEfficiency">
 	<![CDATA[
-		SELECT LE.ID,LE.CU_ID,LE.BIZ_DATE,LE.TIME_PERIOD,LE.PERIOD_EFFICIENCY,LE.AVG_EFFICIENCY
+		SELECT LE.ID,LE.CU_ID,CU.NAME AS CU_NAME,LE.BIZ_DATE,LE.TIME_PERIOD,LE.PERIOD_EFFICIENCY,LE.AVG_EFFICIENCY
 		FROM JD_LE_LABOUR_EFFICIENCY LE
 		INNER JOIN NP_SYS_CONTROLUNIT CU ON LE.CU_ID=CU.ID
 		WHERE LE.BIZ_DATE=#{bizDate} AND LE.TIME_PERIOD=#{timePeriod} 
@@ -36,7 +37,7 @@
 	
 	<select id="getHistoryLabourEfficiency" resultMap="labourEfficiency">
 	<![CDATA[
-		SELECT LE.ID,LE.CU_ID,LE.BIZ_DATE,LE.AVG_EFFICIENCY AS EFFICIENCY,
+		SELECT LE.ID,LE.CU_ID,CU.NAME AS CU_NAME,LE.BIZ_DATE,LE.AVG_EFFICIENCY AS EFFICIENCY,
 		LAB.QUANTITY_ONDUTY AS NUMBER_ONDUTY,ORD.TOTAL_QUANTITY AS ORDER_QUANTITY
 		FROM JD_LE_LABOUR_EFFICIENCY LE
 		INNER JOIN NP_SYS_CONTROLUNIT CU ON LE.CU_ID=CU.ID

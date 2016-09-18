@@ -102,8 +102,8 @@ public class AppControllerTest extends
 		request.setMethod(HttpMethod.POST.name());
 		request.addParameter("empId", "11111111111111111111111111111111");
 		request.addParameter("cuId", "11111111111111111111111111111111");
-		request.addParameter("startDate", "2016-09-01");
-		request.addParameter("endDate", "2016-09-07");
+		request.addParameter("startDate", "2016-09-06");
+		request.addParameter("endDate", "2016-09-13");
 		request.addParameter("interval", "D");
 		String msg = controller.getEfficiencyHistory(request, response);
 		System.out.println(msg);

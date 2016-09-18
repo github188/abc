@@ -3,7 +3,9 @@ package com.jd.pims.pem.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,9 +50,9 @@ public class AppController extends BaseController {
 		String cuId = request.getParameter("cuId");
 		if (cuId == null) {
 			ControlUnit root = uesrService.findRootOrganization();
-			if(null!=root){
+			if (null != root) {
 				cuId = root.getId();
-			}else{
+			} else {
 				JsonObject retMsg = new JsonObject();
 				retMsg.addProperty("returnCode", 0);
 				retMsg.addProperty("message", "无组织结构数据");
@@ -59,9 +61,9 @@ public class AppController extends BaseController {
 		}
 		LabourOndutyState currentState = pemService.getNumberOnDuty(cuId);
 		JsonObject result = new JsonObject();
-		if(null!=currentState){
+		if (null != currentState) {
 			result = currentState.toJsonObject();
-		}else{
+		} else {
 			JsonObject retMsg = new JsonObject();
 			retMsg.addProperty("returnCode", 0);
 			retMsg.addProperty("message", "无在岗人数统计数据");
@@ -69,12 +71,12 @@ public class AppController extends BaseController {
 		}
 
 		List<ControlUnit> controlUnits = uesrService.getSubOrganizations(cuId);
-		if (null!=controlUnits&&controlUnits.size() > 0) {
+		if (null != controlUnits && controlUnits.size() > 0) {
 			JsonArray subItems = new JsonArray();
 			for (ControlUnit cu : controlUnits) {
 				LabourOndutyState state = pemService
 						.getNumberOnDuty(cu.getId());
-				if(null!=state){
+				if (null != state) {
 					subItems.add(state.toJsonObject());
 				}
 			}
@@ -101,9 +103,9 @@ public class AppController extends BaseController {
 		String cuId = request.getParameter("cuId");
 		if (cuId == null) {
 			ControlUnit root = uesrService.findRootOrganization();
-			if(null!=root){
+			if (null != root) {
 				cuId = root.getId();
-			}else{
+			} else {
 				JsonObject retMsg = new JsonObject();
 				retMsg.addProperty("returnCode", 0);
 				retMsg.addProperty("message", "无组织结构数据");
@@ -114,15 +116,17 @@ public class AppController extends BaseController {
 		// 取上一个小时
 		LabourEfficiency parent = pemService.getTimePeriodEfficience(cuId,
 				new Date(), null);
-		if (null!=parent){
+		if (null != parent) {
 			JsonObject result = parent.toJsonObject();
-			List<ControlUnit> controlUnits = uesrService.getSubOrganizations(cuId);
-			if (null!=controlUnits&&controlUnits.size() > 0) {
+			List<ControlUnit> controlUnits = uesrService
+					.getSubOrganizations(cuId);
+			if (null != controlUnits && controlUnits.size() > 0) {
 				JsonArray subItems = new JsonArray();
 				for (ControlUnit cu : controlUnits) {
-					LabourEfficiency state = pemService.getTimePeriodEfficience(
-							cu.getId(), new Date(), null);
-					if(null!=state){
+					LabourEfficiency state = pemService
+							.getTimePeriodEfficience(cu.getId(), new Date(),
+									null);
+					if (null != state) {
 						subItems.add(state.toJsonObject());
 					}
 				}
@@ -134,7 +138,7 @@ public class AppController extends BaseController {
 		retMsg.addProperty("returnCode", 0);
 		retMsg.addProperty("message", "无实时人效数据");
 		return retMsg.toString();
-		
+
 	}
 
 	/**
@@ -160,8 +164,8 @@ public class AppController extends BaseController {
 		}
 		if (cuId == null) {
 			ControlUnit root = uesrService.findRootOrganization();
-			if(null!=root){
-				cuId = root.getId();			
+			if (null != root) {
+				cuId = root.getId();
 			}
 		}
 
@@ -169,15 +173,14 @@ public class AppController extends BaseController {
 				&& !"".equals(endDate)) {
 
 			try {
-				List<LabourOndutyState> results = pemService
-						.getNumberHistory(cuId, sFormat.parse(startDate),
-								sFormat.parse(endDate), "D");
-				if(null!=results&&results.size()>0&&!results.isEmpty()){
-				return this
-						.buildSuccessResponse(
-								results.toArray(new LabourOndutyDayState[results
-										.size()])).toString();
-				}		
+				List<LabourOndutyState> results = pemService.getNumberHistory(
+						cuId, sFormat.parse(startDate), sFormat.parse(endDate),
+						"D");
+				if (null != results && results.size() > 0 && !results.isEmpty()) {
+					return this.buildSuccessResponse(
+							results.toArray(new LabourOndutyDayState[results
+									.size()])).toString();
+				}
 				JsonObject retMsg = new JsonObject();
 				retMsg.addProperty("returnCode", 0);
 				retMsg.addProperty("message", "无历史在岗人数数据");
@@ -210,20 +213,35 @@ public class AppController extends BaseController {
 		// String interval = request.getParameter("interval");
 		if (cuId == null) {
 			ControlUnit root = uesrService.findRootOrganization();
-			if(null!=root){
+			if (null != root) {
 				cuId = root.getId();
 			}
 		}
+		ControlUnit cu=uesrService.findOrganization(cuId);
+		
 		if (startDate != null && !"".equals(startDate) && endDate != null
 				&& !"".equals(endDate)) {
 			try {
 				List<LabourEfficiency> results = pemService
 						.getEfficiencyHistory(cuId, sFormat.parse(startDate),
 								sFormat.parse(endDate));
-				if(null!=results&&results.size()>0&&!results.isEmpty()){
-				return this.buildSuccessResponse(results.toArray(
-						new LabourEfficiency[results.size()])).toString();				
-				}		
+				if (null != results && results.size() > 0 && !results.isEmpty()) {
+					Map<String,LabourEfficiency> map=new HashMap<String,LabourEfficiency>();
+					LabourEfficiency nle=null;
+					for(LabourEfficiency le:results){
+						if(map.containsKey(sFormat.format(le.getBizDate()))){
+							nle=map.get(sFormat.format(le.getBizDate()));
+						}else{
+							nle=new LabourEfficiency();
+							nle.setCuId(cuId);
+							nle.setCuName(cu.getCuName());
+						}
+					}
+					return this
+							.buildSuccessResponse(
+									map.values().toArray(new LabourEfficiency[results
+											.size()])).toString();
+				}
 				JsonObject retMsg = new JsonObject();
 				retMsg.addProperty("returnCode", 0);
 				retMsg.addProperty("message", "无历史在岗人数数据");
@@ -252,10 +270,10 @@ public class AppController extends BaseController {
 			HttpServletResponse response) {
 
 		List<ControlUnit> result = uesrService.getOrganizations();
-		if(null!=result&&result.size()>0&&!result.isEmpty()){
-		return this.buildSuccessResponse(result.toArray(new ControlUnit[result.size()]))
-				.toString();				
-		}		
+		if (null != result && result.size() > 0 && !result.isEmpty()) {
+			return this.buildSuccessResponse(
+					result.toArray(new ControlUnit[result.size()])).toString();
+		}
 		JsonObject retMsg = new JsonObject();
 		retMsg.addProperty("returnCode", 0);
 		retMsg.addProperty("message", "无组织结构数据");
@@ -275,10 +293,10 @@ public class AppController extends BaseController {
 		String inputStr = request.getParameter("inputString");
 
 		List<Employee> result = uesrService.searchEmployee(inputStr);
-		if(null!=result&&result.size()>0&&!result.isEmpty()){
+		if (null != result && result.size() > 0 && !result.isEmpty()) {
 			return this.buildSuccessResponse(new Employee[result.size()])
-					.toString();		
-		}		
+					.toString();
+		}
 		JsonObject retMsg = new JsonObject();
 		retMsg.addProperty("returnCode", 0);
 		retMsg.addProperty("message", "无组织结构数据");
