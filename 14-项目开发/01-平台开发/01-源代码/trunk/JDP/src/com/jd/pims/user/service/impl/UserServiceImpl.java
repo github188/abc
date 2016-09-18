@@ -1,5 +1,7 @@
 package com.jd.pims.user.service.impl;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -14,6 +16,7 @@ import com.jd.pims.user.model.ControlUnit;
 import com.jd.pims.user.model.Employee;
 import com.jd.pims.user.model.User;
 import com.jd.pims.user.service.IUserService;
+import com.jd.pims.util.StringUtil;
 
 @Service("userService")
 public class UserServiceImpl implements IUserService {
@@ -30,7 +33,8 @@ public class UserServiceImpl implements IUserService {
 		if (user == null) {
 			throw new PIMSException(1, "系统不存在用户：" + account);
 		}
-		if (!user.getPassword().equals(password)) {
+
+		if (!StringUtil.md5(password).equals(user.getPassword())) {
 			throw new PIMSException(2, "用户密码不正确");
 		}
 		Employee emp = userDao.getEmployeeById(user.getPersonId());
