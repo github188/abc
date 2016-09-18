@@ -17,8 +17,8 @@ public class LabourEfficiency extends BaseDataModel{
 	private String cuName;
 	private Date bizDate;
 	private Integer timePeriod;
-	private Integer numberOnduty;
-	private Integer orderQuantity;
+	private Integer numberOnduty=0;
+	private Integer orderQuantity=0;
 	private Double efficiency=0.0;
 	private Double periodEfficiency=0.0;
 	private Double avgEfficiency=0.0;

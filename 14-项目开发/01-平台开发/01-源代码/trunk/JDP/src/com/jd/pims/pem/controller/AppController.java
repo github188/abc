@@ -235,8 +235,18 @@ public class AppController extends BaseController {
 							nle=new LabourEfficiency();
 							nle.setCuId(cuId);
 							nle.setCuName(cu.getCuName());
+							nle.setBizDate(le.getBizDate());
 							map.put(sFormat.format(le.getBizDate()), nle);
 						}
+						Double efficiency=nle.getEfficiency();
+						efficiency+=le.getEfficiency();
+						int numberOnduty=nle.getNumberOnduty()+le.getNumberOnduty();
+						int orderQuantity=nle.getOrderQuantity()+le.getOrderQuantity();
+						nle.setAvgEfficiency(efficiency/2);
+						nle.setEfficiency(efficiency/2);
+						nle.setNumberOnduty(numberOnduty/2);
+						nle.setOrderQuantity(orderQuantity/2);
+						
 					}
 					return this
 							.buildSuccessResponse(
