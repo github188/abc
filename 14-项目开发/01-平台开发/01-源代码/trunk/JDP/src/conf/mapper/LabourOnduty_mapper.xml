@@ -44,7 +44,6 @@
 	INNER JOIN NP_SYS_CONTROLUNIT CU ON ST.CU_ID=CU.ID
 	WHERE BIZ_DATE>=#{startDate} AND BIZ_DATE<=#{endDate} 
 		AND CU.FULL_PATH LIKE CONCAT(#{fullPath},'%' )
-
   	]]>
   </select>
 
@@ -53,17 +52,18 @@
 		SELECT sum(case when LO.PERSON_TYPE='1' THEN LO.QUANTITY_ONDUTY ELSE 0 END) as EmpNum,sum(case when LO.PERSON_TYPE!='1' THEN LO.QUANTITY_ONDUTY ELSE 0 END) as NotEmpNum
 		  	FROM JD_LE_LABOUR_ONDUTY LO
 		  	WHERE LO.BIZ_DATE=#{currentDate}
-			AND LO.CU_ID in(select CONTROLUNITID from NP_EQ_AREA where FULL_PATH like CONCAT((select FULL_PATH from NP_SYS_CONTROLUNIT where id =(select CONTROLUNITID from NP_EQ_AREA where id = #{id})),'%' ))
+			AND LO.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='DC' and areaFULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where id = #{id}),'%' ))
 		 GROUP BY LO.CU_ID
 	]]>
   </select>
+
   
   <select id="getHistoryLabourOndutyForChart" resultType="java.util.HashMap">
 	<![CDATA[	
 		SELECT concat(concat((date_format(LO.BIZ_DATE,'%m')),'月'),concat((date_format(LO.BIZ_DATE,'%d')),'日')) as name,sum(case when LO.PERSON_TYPE='1' THEN LO.AVG_QUANTITY ELSE 0 END) as EmpNum,sum(case when LO.PERSON_TYPE!='1' THEN LO.AVG_QUANTITY ELSE 0 END) as NotEmpNum
 		  	FROM JD_LE_LABOUR_ONDUTY_DAY_ST LO
 		  	WHERE LO.BIZ_DATE>=#{startDate} AND LO.BIZ_DATE<#{endDate}
-			AND LO.CU_ID in(select CONTROLUNITID from NP_EQ_AREA where FULL_PATH like CONCAT((select FULL_PATH from NP_SYS_CONTROLUNIT where id =(select CONTROLUNITID from NP_EQ_AREA where id = #{id})),'%' ))
+			AND LO.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where id = #{id}),'%' ))
 		 GROUP BY LO.BIZ_DATE
 	]]>
   </select>

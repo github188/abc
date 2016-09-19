@@ -45,19 +45,43 @@ option = {
     	height:'90%',
     	containLabel:true
     },
+    geo: {
+        name: '11',
+        type: 'scatter',
+        map: 'china',
+        label: {
+            emphasis: {
+                show: false
+            }
+        },
+        itemStyle: {
+            normal: {
+                areaColor: '#323c48',
+                borderColor: '#111'
+            },
+            emphasis: {
+                areaColor: '#2a333d'
+            }
+        }
+    },
     series: [
         {
             name: '11',
-            type: 'map',
-            mapType: '全国',
+            type: 'scatter',
+            coordinateSystem: 'geo',
+            symbolSize: 1,
+            large: true,
+            roam: true,
             label: {
                 normal: {
                     formatter: '{b}',
                     position: 'right',
-                    show: false
+                    show: true,
+                    textStyle:{color:'#FFFFFF',fontFamily:'造字工房悦圆常规体'}
                 },
                 emphasis: {
-                    show: false
+                    show: true,
+                    textStyle:{color:'#46D7FF',fontFamily:'造字工房悦圆常规体',fontSize:20}
                 }
             },
             itemStyle: {
@@ -317,7 +341,7 @@ option = {
 		    },
 	        grid:{
 	        	width:'85%',
-	        	left:'10%',
+	        	left:'4%',
 	        	bottom:0,
 	        	containLabel:true
 	        },
@@ -576,7 +600,7 @@ option = {
 			$("#areaTip").html(name||"全国");
 			$("#mapTopLeft").html(name?name+'实时人力构成':'全国实时人力构成');
 			option.title.text = name?(name+"在岗总人数"):"在岗总人数";
-			option.title.subtext =(total?"'"+total+"'":'0');
+			option.title.subtext =(total?""+total+"":'0');
 			option.series[0].mapType= (name||"全国");
 			option.series[0].data = mapdata;
 			pieOption.series[0].data = piedata;

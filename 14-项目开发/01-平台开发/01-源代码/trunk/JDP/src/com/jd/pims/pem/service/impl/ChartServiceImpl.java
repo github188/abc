@@ -47,12 +47,6 @@ public class ChartServiceImpl implements IChartService {
 		List<Map<String,Object>>areaList = userDao.getAreaList(id);
 		Date dt = new Date(); 
 		String temp_str=sdf.format(dt);  
-/*	    try {
-			dt = sdf.parse(temp_str);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		for(Map<String,Object>map:areaList){
 			Map<String,Object>tempMap = new HashMap<String,Object>();
 			tempMap.put("id",map.get("id"));
@@ -80,7 +74,7 @@ public class ChartServiceImpl implements IChartService {
 		List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());   
-		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 1);
+		//cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 1);
 		Date startDate = cal.getTime();
 		String starttime =sdf.format(startDate);
 		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 7);
@@ -137,7 +131,7 @@ public class ChartServiceImpl implements IChartService {
 		List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());   
-		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 1);
+		//cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 1);
 		Date startDate = cal.getTime();
 		String starttime =sdf.format(startDate);
 		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 7);
