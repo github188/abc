@@ -305,12 +305,12 @@ public class AppController extends BaseController {
 
 		List<Employee> result = uesrService.searchEmployee(inputStr);
 		if (null != result && result.size() > 0 && !result.isEmpty()) {
-			return this.buildSuccessResponse(new Employee[result.size()])
+			return this.buildSuccessResponse(result.toArray(new Employee[result.size()]))
 					.toString();
 		}
 		JsonObject retMsg = new JsonObject();
-		retMsg.addProperty("returnCode", 0);
-		retMsg.addProperty("message", "无组织结构数据");
+		retMsg.addProperty("returnCode", -1);
+		retMsg.addProperty("message", "无匹配的人员数据");
 		return retMsg.toString();
 	}
 

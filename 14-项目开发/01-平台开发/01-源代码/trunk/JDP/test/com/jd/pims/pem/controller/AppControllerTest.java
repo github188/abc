@@ -31,7 +31,7 @@ public class AppControllerTest extends
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setRequestURI("/user/login");
 		request.setMethod(HttpMethod.POST.name());
-		request.addParameter("account", "jd.cn");
+		request.addParameter("account", "admin");
 		request.addParameter("password", "123");
 		String msg=userController.login(request);
 		System.out.println(msg);

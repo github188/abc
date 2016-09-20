@@ -20,7 +20,7 @@ public interface LabourOndutyDao extends IBaseDao {
 	 * @return 以人员分类为分组，返回多条记录
 	 */
 	List<LabourOnduty> getCurrentTimeLabourOnduty(
-			@Param("currentDate") Date currentDate, @Param("fullPath")String fullPath);
+			@Param("currentDate") String currentDate, @Param("fullPath")String fullPath);
 
 	List<Map<String,Object>>getCurrentTimeLabourOndutyForChart(
 			@Param("currentDate") String currentDate,@Param("id")String id);
@@ -35,8 +35,8 @@ public interface LabourOndutyDao extends IBaseDao {
 	 * @return
 	 */
 	List<LabourOndutyDayState> getHistoryLabourOnduty(
-			@Param("startDate") Date startDate,
-			@Param("endDate") Date endDate,
+			@Param("startDate") String startDate,
+			@Param("endDate") String endDate,
 			@Param("fullPath") String fullPath);
 
 }
