@@ -1,6 +1,5 @@
 package com.jd.pims.pem.service.impl;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -54,23 +53,18 @@ public class BizServiceImpl implements IBizService {
 		ControlUnit cu = userDao.findOrganization(cuId);
 		state.setCuName(cu.getCuName());
 		List<LabourOnduty> list;
-		try {
-			list = labourOndutyDao.getCurrentTimeLabourOnduty(
-					sFormat.parse(sFormat.format(date)), cu.getFullPath());
-			for (LabourOnduty rec : list) {
-				if (rec.getPersonType().equals("1")
-						&& state.getNumEmp() == null) {
-					state.setNumEmp(rec.getQuantityOnduty());
-				} else if (rec.getPersonType().equals("2")
-						|| rec.getPersonType().equals("3")) {
-					state.setNumTemp((state.getNumTemp() == null ? 0 : state
-							.getNumTemp()) + rec.getQuantityOnduty());
-				} else if (rec.getPersonType().equals("5")) {
-					state.setNumOther(rec.getQuantityOnduty());
-				}
+		list = labourOndutyDao.getCurrentTimeLabourOnduty(sFormat.format(date),
+				cu.getFullPath());
+		for (LabourOnduty rec : list) {
+			if (rec.getPersonType().equals("1") && state.getNumEmp() == null) {
+				state.setNumEmp(rec.getQuantityOnduty());
+			} else if (rec.getPersonType().equals("2")
+					|| rec.getPersonType().equals("3")) {
+				state.setNumTemp((state.getNumTemp() == null ? 0 : state
+						.getNumTemp()) + rec.getQuantityOnduty());
+			} else if (rec.getPersonType().equals("5")) {
+				state.setNumOther(rec.getQuantityOnduty());
 			}
-		} catch (ParseException e) {
-			logger.debug("日期解释错误：", e);
 		}
 
 		return state;
@@ -80,25 +74,24 @@ public class BizServiceImpl implements IBizService {
 	public List<LabourOndutyState> getNumberHistory(String cuId,
 			Date startDate, Date endDate, String interval) {
 		ControlUnit cu = userDao.findOrganization(cuId);
-		
-		
-		List<LabourOndutyDayState> list= labourOndutyDao.getHistoryLabourOnduty(startDate, endDate,
-				cu.getFullPath());
-		Map<String,LabourOndutyState> map=new HashMap<String,LabourOndutyState>();
+
+		List<LabourOndutyDayState> list = labourOndutyDao
+				.getHistoryLabourOnduty(sFormat.format(startDate),
+						sFormat.format(endDate), cu.getFullPath());
+		Map<String, LabourOndutyState> map = new HashMap<String, LabourOndutyState>();
 		for (LabourOndutyDayState rec : list) {
-			LabourOndutyState state =  null;
-			if(map.containsKey(sFormat.format(rec.getBizDate()))){
-				state=map.get(sFormat.format(rec.getBizDate()));
-			}else{
-				state=new LabourOndutyState();
+			LabourOndutyState state = null;
+			if (map.containsKey(sFormat.format(rec.getBizDate()))) {
+				state = map.get(sFormat.format(rec.getBizDate()));
+			} else {
+				state = new LabourOndutyState();
 				state.setCuId(cuId);
 				state.setCuName(cu.getCuName());
 				state.setDayTime(sFormat.format(rec.getBizDate()));
 				map.put(sFormat.format(rec.getBizDate()), state);
 			}
-			
-			if (rec.getPersonType().equals("1")
-					&& state.getNumEmp() == null) {
+
+			if (rec.getPersonType().equals("1") && state.getNumEmp() == null) {
 				state.setNumEmp(rec.getAvgQuantity());
 			} else if (rec.getPersonType().equals("2")
 					|| rec.getPersonType().equals("3")) {
@@ -115,39 +108,32 @@ public class BizServiceImpl implements IBizService {
 	public List<LabourEfficiency> getEfficiencyHistory(String cuId,
 			Date startDate, Date endDate) {
 		ControlUnit cu = userDao.findOrganization(cuId);
-		try {
-			return labourEfficiencyDao.getHistoryLabourEfficiency(
-					sFormat.parse(sFormat.format(startDate)),
-					sFormat.parse(sFormat.format(endDate)), cu.getFullPath());
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			logger.debug("日期解释错误：", e);
-			return null;
-		}
+		return labourEfficiencyDao.getHistoryLabourEfficiency(
+				sFormat.format(startDate), sFormat.format(endDate),
+				cu.getFullPath());
+
 	}
 
 	@Override
 	public LabourEfficiency getTimePeriodEfficience(String cuId, Date bizDate,
 			Integer timePeriod) {
 		ControlUnit cu = userDao.findOrganization(cuId);
-		try {
-			//如果timePeriod为空，默认当前一小时
-			if(timePeriod==null){
-				Calendar currentTime = Calendar.getInstance();
-				currentTime.setTime(new Date());
-				timePeriod=currentTime.get(Calendar.HOUR_OF_DAY)-1;
-				if(timePeriod<0){
-					timePeriod=24;
-				}
+		// 如果timePeriod为空，默认当前一小时
+		if (timePeriod == null) {
+			Calendar currentTime = Calendar.getInstance();
+			currentTime.setTime(new Date());
+			timePeriod = currentTime.get(Calendar.HOUR_OF_DAY) - 1;
+			if (timePeriod < 0) {
+				timePeriod = 24;
 			}
-			return labourEfficiencyDao.getLabourEfficiency(
-					sFormat.parse(sFormat.format(bizDate)), timePeriod,
-					cu.getFullPath());
-		} catch (ParseException e) {
-			logger.debug("日期解释错误：", e);
-			return null;
 		}
+		LabourEfficiency le = labourEfficiencyDao.getLabourEfficiency(
+				sFormat.format(bizDate), timePeriod, cu.getFullPath());
+		if (le != null) {
+			le.setEfficiency(le.getPeriodEfficiency());
+			le.setCuName(cu.getCuName());
+		}
+		return le;
 	}
 
-	
 }

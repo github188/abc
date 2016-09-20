@@ -8,6 +8,9 @@
 		<result column="cu_name" property="cuName" />
 		<result column="biz_date" property="bizDate" />
 		<result column="time_period" property="timePeriod" />
+		<result column="efficiency" property="efficiency" />
+		<result column="number_onduty" property="numberOnduty" />
+		<result column="order_quantity" property="orderQuantity" />
 		<result column="period_efficiency" property="periodEfficiency" />
 		<result column="avg_efficiency" property="avgEfficiency" />
 		<result column="create_time" property="createTime" />

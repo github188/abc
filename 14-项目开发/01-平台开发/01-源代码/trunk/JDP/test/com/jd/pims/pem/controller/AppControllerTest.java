@@ -31,7 +31,7 @@ public class AppControllerTest extends
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setRequestURI("/user/login");
 		request.setMethod(HttpMethod.POST.name());
-		request.addParameter("account", "jd.cn");
+		request.addParameter("account", "admin");
 		request.addParameter("password", "123");
 		String msg=userController.login(request);
 		System.out.println(msg);
@@ -41,7 +41,6 @@ public class AppControllerTest extends
 	public void testGetNumberOnDuty() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		MockHttpServletResponse response = new MockHttpServletResponse();
-		//request.setRequestURI("/user/login");
 		request.setMethod(HttpMethod.POST.name());
 		request.addParameter("empId", "11111111111111111111111111111111");
 		request.addParameter("cuId", "11111111111111111111111111111111");
@@ -59,7 +58,6 @@ public class AppControllerTest extends
 	public void testGetEfficiency() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		MockHttpServletResponse response = new MockHttpServletResponse();
-		//request.setRequestURI("/user/login");
 		request.setMethod(HttpMethod.POST.name());
 		request.addParameter("empId", "11111111111111111111111111111111");
 		request.addParameter("cuId", "11111111111111111111111111111111");
@@ -77,7 +75,6 @@ public class AppControllerTest extends
 	public void testGetNumberHistory() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		MockHttpServletResponse response = new MockHttpServletResponse();
-		//request.setRequestURI("/user/login");
 		request.setMethod(HttpMethod.POST.name());
 		request.addParameter("empId", "11111111111111111111111111111111");
 		request.addParameter("cuId", "11111111111111111111111111111111");
@@ -98,7 +95,6 @@ public class AppControllerTest extends
 	public void testGetEfficiencyHistory() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		MockHttpServletResponse response = new MockHttpServletResponse();
-		//request.setRequestURI("/user/login");
 		request.setMethod(HttpMethod.POST.name());
 		request.addParameter("empId", "11111111111111111111111111111111");
 		request.addParameter("cuId", "11111111111111111111111111111111");
@@ -119,7 +115,6 @@ public class AppControllerTest extends
 	public void testGetOrganization() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		MockHttpServletResponse response = new MockHttpServletResponse();
-		//request.setRequestURI("/user/login");
 		request.setMethod(HttpMethod.POST.name());
 		request.addParameter("empId", "11111111111111111111111111111111");
 		
@@ -137,11 +132,11 @@ public class AppControllerTest extends
 	public void testGetEmployee() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		MockHttpServletResponse response = new MockHttpServletResponse();
-		//request.setRequestURI("/user/login");
 		request.setMethod(HttpMethod.POST.name());
 		request.addParameter("empId", "11111111111111111111111111111111");
+		request.addParameter("inputStr", "东");
 		
-		String msg = controller.getOrganization(request, response);
+		String msg = controller.getEmployee(request, response);
 		System.out.println(msg);
 
 		if(msg.contains("result")){

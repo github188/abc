@@ -167,7 +167,7 @@
   	WHERE EMP.PERSON_CODE LIKE CONCAT('%',#{INPUTSTR},'%' )
   		OR EMP.PERSON_NAME LIKE CONCAT('%',#{INPUTSTR},'%' )
   		OR EMP.TELEPHONE LIKE CONCAT('%',#{INPUTSTR},'%' )
-  		OR EMP.OFFICETEL LIKE CONCAT('%',#{INPUTSTR},'%' )
+  		OR EMP.OFFICE_TEL LIKE CONCAT('%',#{INPUTSTR},'%' )
   </select>
   
   <select id="getAreaList" resultType="java.util.HashMap">

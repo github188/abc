@@ -1,6 +1,5 @@
 package com.jd.pims.pem.dao;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +17,7 @@ public interface LabourEfficiencyDao extends IBaseDao {
 	 * @param fullPath
 	 * @return
 	 */
-	LabourEfficiency getLabourEfficiency(@Param("bizDate")Date bizDate, @Param("timePeriod")Integer timePeriod,
+	LabourEfficiency getLabourEfficiency(@Param("bizDate")String bizDate, @Param("timePeriod")Integer timePeriod,
 			@Param("fullPath")String fullPath);
 	
 	/**
@@ -28,7 +27,7 @@ public interface LabourEfficiencyDao extends IBaseDao {
 	 * @param fullPath
 	 * @return
 	 */
-	List<LabourEfficiency> getHistoryLabourEfficiency(@Param("startDate")Date startDate, @Param("endDate")Date endDate,
+	List<LabourEfficiency> getHistoryLabourEfficiency(@Param("startDate")String startDate, @Param("endDate")String endDate,
 			@Param("fullPath")String fullPath);
 
 	List<Map<String, Object>> getEfficiencyForChart(

@@ -64,8 +64,9 @@ public class BizServiceImplTest extends
 		c1.setTime(new Date());
 		c1.set(2016, 8, 7);
 		LabourEfficiency le = pemService
-				.getTimePeriodEfficience("11111111111111111111111111111111",c1.getTime(),24);
+				.getTimePeriodEfficience("11111111111111111111111111111111",c1.getTime(),10);
 		Assert.assertTrue("人效信息："+le, le != null);
+		logger.debug(le);
 	}
 
 	@Test
