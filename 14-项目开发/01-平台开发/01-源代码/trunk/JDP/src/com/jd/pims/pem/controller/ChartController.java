@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
@@ -32,8 +31,8 @@ public class ChartController extends BaseController {
 	@RequestMapping(value = "/getMapData", method = RequestMethod.POST)
 	@ResponseBody
 	public String getMapData(HttpServletRequest request,HttpServletResponse response) {
-		String id = request.getParameter("id");
-		List<Map<String, Object>> list = chartService.getNumberOnDuty(id);
+		String name = request.getParameter("name");
+		List<Map<String, Object>> list = chartService.getNumberOnDuty(name);
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}
@@ -48,8 +47,8 @@ public class ChartController extends BaseController {
 	@RequestMapping(value = "/getBarData", method = RequestMethod.POST)
 	@ResponseBody
 	public String getBarData(HttpServletRequest request,HttpServletResponse response) {
-		String id = request.getParameter("id");
-		List<Map<String, Object>> list=chartService.getEfficiencyHistory(id);
+		String name = request.getParameter("name");
+		List<Map<String, Object>> list=chartService.getEfficiencyHistory(name);
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}
@@ -62,8 +61,8 @@ public class ChartController extends BaseController {
 	@RequestMapping(value = "/getBar1Data", method = RequestMethod.POST)
 	@ResponseBody
 	public String getBar1Data(HttpServletRequest request,HttpServletResponse response) {
-		String id = request.getParameter("id");
-		List<Map<String, Object>> list=chartService.getNumberHistory(id);
+		String name = request.getParameter("name");
+		List<Map<String, Object>> list=chartService.getNumberHistory(name);
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}
@@ -76,8 +75,8 @@ public class ChartController extends BaseController {
 	@RequestMapping(value = "/getBar2Data", method = RequestMethod.POST)
 	@ResponseBody
 	public String getBar2Data(HttpServletRequest request,HttpServletResponse response) {
-		String id = request.getParameter("id");
-		List<Map<String, Object>> list=chartService.getEfficience(id);
+		String name = request.getParameter("name");
+		List<Map<String, Object>> list=chartService.getEfficience(name);
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}

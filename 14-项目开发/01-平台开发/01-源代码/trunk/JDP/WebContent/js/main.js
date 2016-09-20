@@ -29,7 +29,7 @@ option = {
             var name = params.name;
             var value = params.value;
             var res ='<div style="margin:0;background:url(images/tooltip.png)no-repeat;background-size: 100% 100% ;text-align:center;padding:0;width:150%;padding-top:20%;box-shadow: 2px 2px 10px #32bbec">'
-            	+'<p style="background:#32bbec;color:black;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:"造字工房悦圆常规体", Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value+'</p></div>';
+            	+'<p style="background:#32bbec;color:black;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:"造字工房悦圆常规体", Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value[2].toFixed(0)+'</p></div>';
                     //设置自定义数据的模板，这里的模板是图片
             console.log(res);
 /*            setTimeout(function (){
@@ -38,76 +38,88 @@ option = {
             }, 1000)
             return 'loading';*/
             return res;
-        },alwaysShowContent:true
+        },alwaysShowContent:false
     },
     grid:{
     	top:0,
-    	height:'90%',
+    	height:'100%',
+    	left:0,
+    	bottom:0,
+    	right:0,
     	containLabel:true
     },
     geo: {
-        name: '11',
-        type: 'scatter',
-        map: 'china',
-        label: {
-            emphasis: {
-                show: false
-            }
-        },
-        itemStyle: {
-            normal: {
-                areaColor: '#323c48',
-                borderColor: '#111'
-            },
-            emphasis: {
-                areaColor: '#2a333d'
-            }
-        }
+    	 map: '全国',
+         label: {
+        	 normal: {
+                 position: 'right',
+                 show: true,
+                 textStyle:{color:'#FFFFFF',fontFamily:'造字工房悦圆常规体'}
+             }
+         },
+         left:0,
+         right:0,
+         top:0,
+         bottom:0,
+         roam: true,
+         itemStyle: {
+             normal: {
+            	 areaColor: '#001F4D',
+                 borderColor: '#85c7ff',
+                 borderWidth: 2,
+                 opacity:0.5,
+             },
+             emphasis: {
+                 areaColor: '#003A92',
+                 opacity:0.5,
+             }
+         }
     },
     series: [
         {
             name: '11',
-            type: 'scatter',
+            type: 'effectScatter',
             coordinateSystem: 'geo',
-            symbolSize: 1,
-            large: true,
-            roam: true,
+            symbolSize: function (val) {
+                return val[2] / 20;
+            },
             label: {
                 normal: {
                     formatter: '{b}',
                     position: 'right',
-                    show: true,
+                    show: false,
                     textStyle:{color:'#FFFFFF',fontFamily:'造字工房悦圆常规体'}
                 },
-                emphasis: {
+/*                emphasis: {
                     show: true,
                     textStyle:{color:'#46D7FF',fontFamily:'造字工房悦圆常规体',fontSize:20}
-                }
+                }*/
             },
             itemStyle: {
                 normal: {
-                    areaColor: '#001F4D',
-                    borderColor: '#85c7ff',
-                    borderWidth: 2,
-                    opacity:0.5
+                    color: '#f4e925',
+                    shadowBlur: 10,
+                    shadowColor: '#333'
                 },
                 emphasis: {
-                    areaColor: '#003A92',
-                    opacity:0.5
+                    color: '#f4e925',
+                    shadowBlur: 10,
+                    shadowColor: '#333'
                 }
             },
-            left:'10%',
-            right:'10%',
-            top:0,
-            bottom:0,
+            showEffectOn: 'render',
+            rippleEffect: {
+                brushType: 'stroke'
+            },
+            hoverAnimation: true,
             data:[
-                {name: '东北地区',value: randomData() },
-                {name: '华北地区',value: randomData() },
-                {name: '华东地区',value: randomData() },
-                {name: '西北地区',value: randomData() },
-                {name: '西南地区',value: randomData() },
-                {name: '华中地区',value: randomData() },
-                {name: '华南地区',value: randomData() }
+                {name: '东北地区',value: [123.38,41.8,randomData()] },
+                {name: '华北地区',value: [114.48,38.03,randomData()] },
+                {name: '华东地区',value: [122.207216,29.985295,randomData()] },
+                {name: '西北地区',value: [87.68,43.77,randomData()] },
+                {name: '西南地区',value: [91.11,29.97,randomData(),randomData()] },
+                {name: '华中地区',value: [113,28.21,randomData()] },
+                {name: '华南地区',value: [113.23,23.16,randomData()] }
             ]
         }
     ]
@@ -358,7 +370,7 @@ option = {
 	        yAxis: [
 	        {
 	        	type:'category',
-	        	data:['xx分拣中心','xx分拣中心','xx分拣中心','xx分拣中心','xx分拣中心','xx分拣中心','xx分拣中心'],
+	        	data:['东北地区','华北地区','华东地区','西北地区','西南地区','华中地区','华南地区'],
 		    	axisLine:{
 		    		lineStyle:{
 		    			color:'#7ab8f9'
@@ -463,8 +475,8 @@ option = {
 				dataType: "json",
 				success: function (chinaJson) {
 				    echarts.registerMap(mapName, chinaJson);   
-				    getData('',mapName);
-				    //loadDault(mapName);
+				    //getData(mapName);
+				    loadDault(mapName);
 				},statusCode: {404: function() {init ('全国');}}
 			});
 			mapchart.on('click', function (param){
@@ -472,15 +484,14 @@ option = {
 				//在中国地图上要去掉这几个地方的点击事件 直辖市 台湾 
 				if(!name.match(/^北京|^天津|^重庆|^上海|在线|离线|台湾/)||name!=""){
 					$("#areaTip").html(name||"全国");
-				    var areaId=param.data.areaId;
 					$.ajax({
 						url: 'geoJson/'+name+'.json',
 						type: "get",
 						dataType: "json",
 						success: function (chinaJson) {
 						    echarts.registerMap(name, chinaJson);   
-						    getData(areaId,name);
-						    //loadDault(name);
+						    //getData(name);
+						    loadDault(name);
 						},
 					  statusCode: {404: function() {init ('全国');}}
 					});
@@ -489,12 +500,93 @@ option = {
 		};
 
 		function loadDault(name){
-			
+			var data = [
+			            {name: '海门分拣中心', value: randomData()},
+			            {name: '鄂尔多斯分拣中心', value: randomData()},
+			            {name: '招远分拣中心', value: randomData()},
+			            {name: '舟山分拣中心', value: randomData()},
+			            {name: '齐齐哈尔分拣中心', value: randomData()},
+			            {name: '盐城分拣中心', value: randomData()},
+			            {name: '赤峰分拣中心', value: randomData()},
+			            {name: '青岛分拣中心', value: randomData()},
+			            {name: '乳山分拣中心', value: randomData()},
+			            {name: '金昌分拣中心', value: randomData()},
+			            {name: '泉州分拣中心', value: randomData()},
+			            {name: '莱西分拣中心', value: randomData()},
+			            {name: '日照分拣中心', value: randomData()},
+			            {name: '胶南分拣中心', value: randomData()},
+			            {name: '南通分拣中心', value: randomData()},
+			            {name: '拉萨分拣中心', value: randomData()},
+			            {name: '云浮分拣中心', value: randomData()},
+			            {name: '梅州分拣中心', value: randomData()},
+			            {name: '文登分拣中心', value: randomData()},
+			            {name: '上海分拣中心', value: randomData()},
+			            {name: '攀枝花分拣中心', value: randomData()},
+			            {name: '威海分拣中心', value: randomData()},
+			            {name: '承德分拣中心', value: randomData()},
+			            {name: '厦门分拣中心', value: randomData()},
+			            {name: '汕尾分拣中心', value: randomData()},
+			            {name: '潮州分拣中心', value: randomData()},
+			            {name: '丹东分拣中心', value: randomData()},
+			            {name: '太仓分拣中心', value: randomData()},
+			            {name: '曲靖分拣中心', value: randomData()},
+			            {name: '烟台分拣中心', value: randomData()},
+			            {name: '福州分拣中心', value: randomData()}
+			            
+			       ];
+			       var geoCoordMap = {
+			           '海门分拣中心':[121.15,31.89],
+			           '鄂尔多斯分拣中心':[109.781327,39.608266],
+			           '招远分拣中心':[120.38,37.35],
+			           '舟山分拣中心':[122.207216,29.985295],
+			           '齐齐哈尔分拣中心':[123.97,47.33],
+			           '盐城分拣中心':[120.13,33.38],
+			           '赤峰分拣中心':[118.87,42.28],
+			           '青岛分拣中心':[120.33,36.07],
+			           '乳山分拣中心':[121.52,36.89],
+			           '金昌分拣中心':[102.188043,38.520089],
+			           '泉州分拣中心':[118.58,24.93],
+			           '莱西分拣中心':[120.53,36.86],
+			           '日照分拣中心':[119.46,35.42],
+			           '胶南分拣中心':[119.97,35.88],
+			           '南通分拣中心':[121.05,32.08],
+			           '拉萨分拣中心':[91.11,29.97],
+			           '云浮分拣中心':[112.02,22.93],
+			           '梅州分拣中心':[116.1,24.55],
+			           '文登分拣中心':[122.05,37.2],
+			           '上海分拣中心':[121.48,31.22],
+			           '攀枝花分拣中心':[101.718637,26.582347],
+			           '威海分拣中心':[122.1,37.5],
+			           '承德分拣中心':[117.93,40.97],
+			           '厦门分拣中心':[118.1,24.46],
+			           '汕尾分拣中心':[115.375279,22.786211],
+			           '潮州分拣中心':[116.63,23.68],
+			           '丹东分拣中心':[124.37,40.13],
+			           '太仓分拣中心':[121.1,31.45],
+			           '曲靖分拣中心':[103.79,25.51],
+			           '烟台分拣中心':[121.39,37.52],
+			           '福州分拣中心':[119.3,26.08],
+			       };
+
+			       var convertData = function (data) {
+			           var res = [];
+			           for (var i = 0; i < data.length; i++) {
+			               var geoCoord = geoCoordMap[data[i].name];
+			               if (geoCoord) {
+			                   res.push({
+			                       name: data[i].name,
+			                       value: geoCoord.concat(data[i].value)
+			                   });
+			               }
+			           }
+			           return res;
+			       };
+
 			$("#areaTip").html(name||"全国");
 			$("#mapTopLeft").html(name?name+'实时人力构成':'全国实时人力构成');
 			option.title.text = name?(name+"在岗总人数"):"在岗总人数";
-			option.series[0].mapType= (name||"全国");
-			option.series[0].data = [randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
+			option.geo.map= (name||"全国");
+			option.series[0].data =convertData(data);
 			pieOption.series[0].data = [
 			    			            {
 			    			            	name:'正式员工',
@@ -533,17 +625,17 @@ option = {
 		    barchart2.setOption(barOption2, true);
 		    piechart.setOption(pieOption, true);
 		}
-		function getData(id,name){
-			searchMap(id,name);
-			searchBar2(id,name);
+		function getData(name){
+			searchMap(name);
+			searchBar2(name);
 			if(!enlarged){
-				searchBar(id,name);
-				searchBar1(id,name);
+				searchBar(name);
+				searchBar1(name);
 			}
 		};
 		
-		function searchMap(id,name) {
-			var url = "chart/getMapData.do?id="+id;
+		function searchMap(name) {
+			var url = "chart/getMapData.do?name="+name;
 			$.ajax({
 				url: url,
 				type: "post",
@@ -570,9 +662,8 @@ option = {
 						//地区名称 取china area表
 						name:row.name,
 						//numEmp 正式员工数 numTemp 临时工数 numOther 其他员工数
-						value:row.EmpNum+row.NotEmpNum,
+						value:[row.x,row.y,row.EmpNum+row.NotEmpNum],
 						//地区的id 取china area表id
-				        'areaId':row.id,
 				        selected:false
 				        //自定义特殊 itemStyle，仅对该数据项有效
 					}); 
@@ -601,7 +692,7 @@ option = {
 			$("#mapTopLeft").html(name?name+'实时人力构成':'全国实时人力构成');
 			option.title.text = name?(name+"在岗总人数"):"在岗总人数";
 			option.title.subtext =(total?""+total+"":'0');
-			option.series[0].mapType= (name||"全国");
+			option.geo.map= (name||"全国");
 			option.series[0].data = mapdata;
 			pieOption.series[0].data = piedata;
 			pieOption.legend.data = pieLegendData;
@@ -609,8 +700,8 @@ option = {
 			piechart.setOption(pieOption, true);
 		}
 			
-		function searchBar(id,name) {
-			var url = "chart/getBarData.do?id="+id;
+		function searchBar(name) {
+			var url = "chart/getBarData.do?name="+name;
 			$.ajax({
 				url: url,
 				type: "post",
@@ -649,8 +740,8 @@ option = {
 			barchart.setOption(barOption, true);  
 		}
 		
-		function searchBar1(id,name) {
-			var url = "chart/getBar1Data.do?id="+id;
+		function searchBar1(name) {
+			var url = "chart/getBar1Data.do?name="+name;
 			$.ajax({
 				url: url,
 				type: "post",
@@ -689,8 +780,8 @@ option = {
 			barchart1.setOption(barOption1, true);  
 		}
 		
-		function searchBar2(id,name) {
-			var url = "chart/getBar2Data.do?id="+id;
+		function searchBar2(name) {
+			var url = "chart/getBar2Data.do?name="+name;
 			$.ajax({
 				url: url,
 				type: "post",

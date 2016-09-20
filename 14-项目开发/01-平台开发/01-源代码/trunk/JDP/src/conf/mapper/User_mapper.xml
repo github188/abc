@@ -171,12 +171,12 @@
   </select>
   
   <select id="getAreaList" resultType="java.util.HashMap">
-		select name,id,AREA_CLASS as type from NP_EQ_AREA 
-	<if test="id != null and id != ''" >
-        where PARENT_ID = #{id}
+		select AREA_NAME as name from NP_EQ_AREA 
+	<if test="name != '全国'" >
+        where PARENT_ID = (select id from NP_EQ_AREA where AREA_NAME = #{name})
     </if>
-  	<if test="null == id or '' == id " >
-        where PARENT_ID = '8ae5a2553c6f42be013c6f54661b0322'
+  	<if test="name ='全国' " >
+        where PARENT_ID = (select id from NP_EQ_AREA where AREA_NAME = '京东集团')
     </if>
   </select>
   

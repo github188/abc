@@ -58,6 +58,6 @@ public interface UserDao extends IBaseDao{
 	 * @return
 	 */
 	List<Employee> searchEmployee(String inputStr);
-	
-	List<Map<String,Object>> getAreaList(@Param("id")String id);
+
+	List<Map<String, Object>> getAreaList(@Param("name")String name);
 }
