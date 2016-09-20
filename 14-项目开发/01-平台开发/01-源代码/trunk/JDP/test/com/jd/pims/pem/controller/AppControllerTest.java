@@ -60,7 +60,7 @@ public class AppControllerTest extends
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		request.setMethod(HttpMethod.POST.name());
 		request.addParameter("empId", "11111111111111111111111111111111");
-		request.addParameter("cuId", "11111111111111111111111111111111");
+		request.addParameter("cuId", "12cad8e307844dcc8525c9357f0692f0");
 		String msg = controller.getEfficiency(request, response);
 		System.out.println(msg);
 
@@ -97,7 +97,7 @@ public class AppControllerTest extends
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		request.setMethod(HttpMethod.POST.name());
 		request.addParameter("empId", "11111111111111111111111111111111");
-		request.addParameter("cuId", "11111111111111111111111111111111");
+		request.addParameter("cuId", "12cad8e307844dcc8525c9357f0692f0");
 		request.addParameter("startDate", "2016-09-06");
 		request.addParameter("endDate", "2016-09-13");
 		request.addParameter("interval", "D");
@@ -137,6 +137,23 @@ public class AppControllerTest extends
 		request.addParameter("inputStr", "东");
 		
 		String msg = controller.getEmployee(request, response);
+		System.out.println(msg);
+
+		if(msg.contains("result")){
+			Assert.assertTrue("成功返回："+msg, true);
+		}else{
+			Assert.assertTrue("失败返回："+msg, true);
+		}
+	}
+	
+	@Test
+	public void testGetLabourAndEfficiencyOfGroup(){
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletResponse response = new MockHttpServletResponse();
+		request.setMethod(HttpMethod.POST.name());
+		request.addParameter("empId", "11111111111111111111111111111111");
+		
+		String msg = controller.getLabourAndEfficiencyOfGroup(request, response);
 		System.out.println(msg);
 
 		if(msg.contains("result")){

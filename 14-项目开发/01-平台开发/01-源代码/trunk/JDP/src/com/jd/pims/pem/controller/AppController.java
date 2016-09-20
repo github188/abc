@@ -314,4 +314,25 @@ public class AppController extends BaseController {
 		return retMsg.toString();
 	}
 
+	/**
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/getLabourAndEfficiencyOfGroup", method = RequestMethod.POST)
+	@ResponseBody
+	public String getLabourAndEfficiencyOfGroup(HttpServletRequest request,
+			HttpServletResponse response){
+		ControlUnit root = uesrService.findRootOrganization();
+		
+		LabourEfficiency parent = pemService.getTimePeriodEfficience(root.getId(),
+				new Date(), null);
+		LabourOndutyState currentLabour = pemService.getNumberOnDuty(root.getId());
+		JsonObject result = new JsonObject();
+		int totalLabour=currentLabour.getNumEmp()+currentLabour.getNumTemp()+currentLabour.getNumOther();
+		result.addProperty("totalLabour", totalLabour);
+		result.addProperty("avgEfficiency", parent.getAvgEfficiency());
+		return this.buildSuccessResponse(result).toString();
+	}
 }
