@@ -225,7 +225,7 @@ public class AppController extends BaseController {
 				List<LabourEfficiency> results = pemService
 						.getEfficiencyHistory(cuId, sFormat.parse(startDate),
 								sFormat.parse(endDate));
-				if (null != results && results.size() > 0 && !results.isEmpty()) {
+				if (null != results  && !results.isEmpty()) {
 					Map<String,LabourEfficiency> map=new HashMap<String,LabourEfficiency>();
 					LabourEfficiency nle=null;
 					for(LabourEfficiency le:results){
