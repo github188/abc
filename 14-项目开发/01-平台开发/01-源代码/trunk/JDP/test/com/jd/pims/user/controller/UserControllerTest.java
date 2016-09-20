@@ -57,9 +57,5 @@ public class UserControllerTest extends
 		}
 	}
 	
-	@Test
-	public void testGetOrganization(){
-		fail("Not yet implemented");
-	}
 	
 }

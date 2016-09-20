@@ -301,7 +301,7 @@ public class AppController extends BaseController {
 	@ResponseBody
 	public String getEmployee(HttpServletRequest request,
 			HttpServletResponse response) {
-		String inputStr = request.getParameter("inputString");
+		String inputStr = request.getParameter("inputStr");
 
 		List<Employee> result = uesrService.searchEmployee(inputStr);
 		if (null != result && result.size() > 0 && !result.isEmpty()) {
