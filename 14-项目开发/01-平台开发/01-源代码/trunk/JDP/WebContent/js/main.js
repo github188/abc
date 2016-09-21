@@ -1,6 +1,6 @@
 option = null;
 function randomData() {
-    return Math.round(Math.random()*1000);
+    return Math.round(Math.random()*100)+100;
 }
 option = {
     title: {
@@ -55,7 +55,11 @@ option = {
                  position: 'right',
                  show: true,
                  textStyle:{color:'#FFFFFF',fontFamily:'造字工房悦圆常规体'}
-             }
+             },
+             emphasis: {
+            	 show: true,
+			     textStyle:{color:'#46D7FF',fontFamily:'造字工房悦圆常规体',fontSize:20}
+			 }
          },
          left:0,
          right:0,
@@ -81,7 +85,7 @@ option = {
             type: 'effectScatter',
             coordinateSystem: 'geo',
             symbolSize: function (val) {
-                return val[2] / 20;
+                return val[2] / 7;
             },
             label: {
                 normal: {
@@ -357,6 +361,7 @@ option = {
 	        	bottom:0,
 	        	containLabel:true
 	        },
+	        barWidth:20,
 		    xAxis: {
 		    	type:'value',
 		    	left:'10%',
@@ -370,7 +375,7 @@ option = {
 	        yAxis: [
 	        {
 	        	type:'category',
-	        	data:['东北地区','华北地区','华东地区','西北地区','西南地区','华中地区','华南地区'],
+	        	data:['哈尔滨分拨中心'],
 		    	axisLine:{
 		    		lineStyle:{
 		    			color:'#7ab8f9'
@@ -396,7 +401,8 @@ option = {
 		                          '#7ab8f9','#fedd1b'
 		                        ];
 		                        return colorList[params.dataIndex%2]
-		                    }
+		                    },
+		                    barBorderRadius:[5, 5, 5, 5]
 		                }
 	               },
 	               data: [randomData(),randomData(),randomData(),randomData(),randomData()]
@@ -419,7 +425,7 @@ option = {
 				right:0,
 				textStyle:{
 		        	color:'#fff'
-		      	}
+		      	},zlevel:1
 			},
 		    series : [
 		        {
@@ -501,71 +507,71 @@ option = {
 
 		function loadDault(name){
 			var data = [
-			            {name: '海门分拣中心', value: randomData()},
-			            {name: '鄂尔多斯分拣中心', value: randomData()},
-			            {name: '招远分拣中心', value: randomData()},
-			            {name: '舟山分拣中心', value: randomData()},
-			            {name: '齐齐哈尔分拣中心', value: randomData()},
-			            {name: '盐城分拣中心', value: randomData()},
-			            {name: '赤峰分拣中心', value: randomData()},
-			            {name: '青岛分拣中心', value: randomData()},
-			            {name: '乳山分拣中心', value: randomData()},
-			            {name: '金昌分拣中心', value: randomData()},
-			            {name: '泉州分拣中心', value: randomData()},
-			            {name: '莱西分拣中心', value: randomData()},
-			            {name: '日照分拣中心', value: randomData()},
-			            {name: '胶南分拣中心', value: randomData()},
-			            {name: '南通分拣中心', value: randomData()},
-			            {name: '拉萨分拣中心', value: randomData()},
-			            {name: '云浮分拣中心', value: randomData()},
-			            {name: '梅州分拣中心', value: randomData()},
-			            {name: '文登分拣中心', value: randomData()},
-			            {name: '上海分拣中心', value: randomData()},
-			            {name: '攀枝花分拣中心', value: randomData()},
-			            {name: '威海分拣中心', value: randomData()},
-			            {name: '承德分拣中心', value: randomData()},
-			            {name: '厦门分拣中心', value: randomData()},
-			            {name: '汕尾分拣中心', value: randomData()},
-			            {name: '潮州分拣中心', value: randomData()},
-			            {name: '丹东分拣中心', value: randomData()},
-			            {name: '太仓分拣中心', value: randomData()},
-			            {name: '曲靖分拣中心', value: randomData()},
-			            {name: '烟台分拣中心', value: randomData()},
-			            {name: '福州分拣中心', value: randomData()}
+			            {name: '天津京滨分拨中心', value: randomData()},
+			            {name: '呼和浩特分拨中心', value: randomData()},
+			            {name: '天津分拨中心', value: randomData()},
+			            {name: '济南分拨中心', value: randomData()},
+			            {name: '青岛分拨中心', value: randomData()},
+			            {name: '浦东分拨中心', value: randomData()},
+			            {name: '台州分拨中心', value: randomData()},
+			            {name: '南京分拨中心', value: randomData()},
+			            {name: '宿迁分拨中心', value: randomData()},
+			            {name: '金华分拨中心', value: randomData()},
+			            {name: '广州太和分拨中心 ', value: randomData()},
+			            {name: '深圳清湖分拨中心', value: randomData()},
+			            {name: '深圳松岗分拨中心', value: randomData()},
+			            {name: '厦门分拨中心', value: randomData()},
+			            {name: '泉州分拨中心', value: randomData()},
+			            {name: '南宁分拨中心', value: randomData()},
+			            {name: '海口分拨中心', value: randomData()},
+			            {name: '茂名分拨中心', value: randomData()},
+			            {name: '佛山分拨中心', value: randomData()},
+			            {name: '中山分拨中心', value: randomData()},
+			            {name: '贵阳亚一分拨中心', value: randomData()},
+			            {name: '昆明分拨中心', value: randomData()},
+			            {name: '南昌分拨中心', value: randomData()},
+			            {name: '郑州分拨中心', value: randomData()},
+			            {name: '长沙分拨中心', value: randomData()},
+			            {name: '哈尔滨分拨中心', value: randomData()},
+			            {name: '大连分拨中心', value: randomData()},
+			            {name: '沈阳沈北分拣中心', value: randomData()},
+			            {name: '长春分拨中心', value: randomData()},
+			            {name: '兰州分拨中心', value: randomData()},
+			            {name: '银川分拨中心', value: randomData()}
 			            
 			       ];
 			       var geoCoordMap = {
-			           '海门分拣中心':[121.15,31.89],
-			           '鄂尔多斯分拣中心':[109.781327,39.608266],
-			           '招远分拣中心':[120.38,37.35],
-			           '舟山分拣中心':[122.207216,29.985295],
-			           '齐齐哈尔分拣中心':[123.97,47.33],
-			           '盐城分拣中心':[120.13,33.38],
-			           '赤峰分拣中心':[118.87,42.28],
-			           '青岛分拣中心':[120.33,36.07],
-			           '乳山分拣中心':[121.52,36.89],
-			           '金昌分拣中心':[102.188043,38.520089],
-			           '泉州分拣中心':[118.58,24.93],
-			           '莱西分拣中心':[120.53,36.86],
-			           '日照分拣中心':[119.46,35.42],
-			           '胶南分拣中心':[119.97,35.88],
-			           '南通分拣中心':[121.05,32.08],
-			           '拉萨分拣中心':[91.11,29.97],
-			           '云浮分拣中心':[112.02,22.93],
-			           '梅州分拣中心':[116.1,24.55],
-			           '文登分拣中心':[122.05,37.2],
-			           '上海分拣中心':[121.48,31.22],
-			           '攀枝花分拣中心':[101.718637,26.582347],
-			           '威海分拣中心':[122.1,37.5],
-			           '承德分拣中心':[117.93,40.97],
-			           '厦门分拣中心':[118.1,24.46],
-			           '汕尾分拣中心':[115.375279,22.786211],
-			           '潮州分拣中心':[116.63,23.68],
-			           '丹东分拣中心':[124.37,40.13],
-			           '太仓分拣中心':[121.1,31.45],
-			           '曲靖分拣中心':[103.79,25.51],
-			           '烟台分拣中心':[121.39,37.52],
-			           '福州分拣中心':[119.3,26.08],
+			           '天津京滨分拨中心':[117.2,39.13],
+			           '呼和浩特分拨中心':[111.65,40.82],
+			           '天津分拨中心':[117.4,39.16],
+			           '济南分拨中心':[117,36.65],
+			           '青岛分拨中心':[120.33,36.07],
+			           '浦东分拨中心':[121.48,31.22],
+			           '台州分拨中心':[121.421,28.6564],
+			           '南京分拨中心':[118.78,32.04],
+			           '宿迁分拨中心':[118.3,33.96],
+			           '金华分拨中心':[119.64,29.12],
+			           '广州太和分拨中心':[113.23,23.16],
+			           '深圳清湖分拨中心':[114.07,22.62],
+			           '深圳松岗分拨中心':[114.04,22.6],
+			           '厦门分拨中心':[118.1,24.46],
+			           '泉州分拨中心':[118.58,24.93],
+			           '南宁分拨中心':[108.33,22.84],
+			           '海口分拨中心':[110.35,20.02],
+			           '茂名分拨中心':[110.88,21.68],
+			           '佛山分拨中心':[113.11,23.05],
+			           '中山分拨中心':[113.38,22.52],
+			           '贵阳亚一分拨中心':[106.71,26.57],
+			           '昆明分拨中心':[102.73,25.04],
+			           '南昌分拨中心':[115.89,28.68],
+			           '郑州分拨中心':[113.65,34.76],
+			           '长沙分拨中心':[113,28.21],
+			           '哈尔滨分拨中心':[126.63,45.75],
+			           '大连分拨中心':[121.62,38.92],
+			           '沈阳沈北分拣中心':[123.38,41.8],
+			           '长春分拨中心':[125.35,43.88],
+			           '兰州分拨中心':[103.73,36.03],
+			           '银川分拨中心':[106.27,38.47]
 			       };
 
 			       var convertData = function (data) {
@@ -585,40 +591,40 @@ option = {
 			$("#areaTip").html(name||"全国");
 			$("#mapTopLeft").html(name?name+'实时人力构成':'全国实时人力构成');
 			option.title.text = name?(name+"在岗总人数"):"在岗总人数";
+			option.title.subtext =10821;
 			option.geo.map= (name||"全国");
 			option.series[0].data =convertData(data);
 			pieOption.series[0].data = [
 			    			            {
 			    			            	name:'正式员工',
-			    			            	value:randomData()
+			    			            	value:7035
 			    			            },
 			    			            {
 			    			            	name:'非正式员工',
-			    			            	value:randomData()
+			    			            	value:3786
 			    			            }
 			    		            ];
 			//pieOption.legend.data = pieLegendData;
 
 			
 			$("#effectTopLeft").html(name?name+'一周人效走势图':'全国一周人效走势图');
-		    barOption.series[0].data =[randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
-		    barOption.series[1].data =[randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
-		    barOption.series[2].data =[randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
+		    barOption.series[0].data =[10823,11375,10315,10008,11027,9875,9763];
+		    barOption.series[1].data =[8019843,8679125,7756880,7315848,8248196,7119875,7126990];
+		    barOption.series[2].data =[741,763,752,731,748,721,730];
 		   // barOption.xAxis.data = bardata[3];
 		    
 			$("#countTopLeft").html(name?name+'一周在岗正式员工占比':'全国一周在岗正式员工占比');
 			//barOption1.xAxis.data = bardata1[0];
-			barOption1.series[0].data = [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
-			barOption1.series[1].data = [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
-			barOption1.series[2].data = [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
+			barOption1.series[0].data = [7035,7394,6704,6505,7167,6418,6346];
+			barOption1.series[1].data = [3788,3981,3611,3503,3859,3457,3417];
+			barOption1.series[2].data = [0.61,0.62,0.65,0.63,0.64,0.62,0.65];
 			
 			$("#orderCountName").html(name?name+'平均人效':'全国平均人效');
-			$("#orderCountNum").html(randomData());
+			$("#orderCountNum").html(763);
 			$("#averageEffectName").html(name?name+'订单量':'全国订单量');
-			$("#averageEffectNum").html(randomData());
-		    //barOption2.yAxis[0].data = bardata2[0];
-		    barOption2.series[0].data = [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()];
-		    
+			$("#averageEffectNum").html(7488742);
+		    barOption2.yAxis[0].data = ['东北地区','华北地区','华东地区','西北地区','西南地区','华中地区','华南地区'];
+		    barOption2.series[0].data = [812,788,747,727,702,698,710];
 			mapchart.setOption(option, true);
 		    barchart.setOption(barOption, true);
 		    barchart1.setOption(barOption1, true);
