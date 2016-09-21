@@ -417,11 +417,11 @@ option = {
 		        top: 5,
 	        },
 		    tooltip : {
-		        trigger: 'item'
+		        trigger: 'item',
 		    },
 			legend:{
 				data:['正式员工','非正式员工'],
-				bottom:0,
+				bottom:30,
 				right:0,
 				textStyle:{
 		        	color:'#fff'
@@ -433,41 +433,91 @@ option = {
 		            type:'pie',
 		            selectedMode: 'single',
 		            radius: [0, '45%'],
-		            center: ['65%', '50%'],
-		            label: {
-		                normal: {
-		                    position: 'outside',
-		                    show:false
-		                },
-		                
-		            },
+		            center: ['50%', '50%'],
+
 		            //因为有visualMap这个是无效的
 		            color: ['#FE8C02',  '#9035B1'],
 		            labelLine: {
 		                normal: {
-		                    show: true
+		                    show: false
 		                }
 		            },
-//		            roseType: 'area',
+		            label: {
+		                normal: {
+		                    position: 'inside',
+		                    show:false
+		                },
+		                
+		            },
+		            //roseType: 'radius',
 		            data:[
 			            {
 			            	name:'正式员工',
-			            	value:randomData()
+			            	value:randomData(),
+				            label: {
+				                normal: {
+				                    position: 'inside',
+				                    show:true
+				                },
+				                
+				            },
 			            },
 			            {
 			            	name:'非正式员工',
-			            	value:randomData()
+			            	value:randomData(),
+				            label: {
+				                normal: {
+				                    position: 'inside',
+				                    show:true
+				                },
+				                
+				            },
 			            }
 		            ]
 		        }
 		    ]
 		};
+		$(document).ready(function () {
+			var newDate = new Date();
+			/*newDate.setDate(newDate.getDate());*/
 
-		var enlarged = false;
-		$(document).ready(function(){
-			init ('全国'); 
+			setInterval( function() {
+				var year = newDate.getFullYear();
+				var month = newDate.getMonth()+1;
+				var day = newDate.getDate();
+				var seconds = new Date().getSeconds();
+				var minutes = new Date().getMinutes();
+				var hours = new Date().getHours();
+				$("#year").html(year);
+				$("#month").html(( month < 10 ? "0" : "" ) + month);
+				$("#day").html(( day < 10 ? "0" : "" ) + day);
+				$("#hours").html(( hours < 10 ? "0" : "" ) + hours);
+				$("#min").html(( minutes < 10 ? "0" : "" ) + minutes);
+				$("#sec").html(( seconds < 10 ? "0" : "" ) + seconds);
+				},1000);
+		    var stars = 800;
+		    var $stars = $('.stars');
+		    var r = 800;
+		    for (var i = 0; i < stars; i++) {
+		        if (window.CP.shouldStopExecution(1)) {
+		            break;
+		        }
+		        var $star = $('<div/>').addClass('star');
+		        $stars.append($star);
+		    }
+		    window.CP.exitedLoop(1);
+		    $('.star').each(function () {
+		        var cur = $(this);
+		        var s = 0.2 + Math.random() * 1;
+		        var curR = r + Math.random() * 300;
+		        cur.css({
+		            transformOrigin: '0 0 ' + curR + 'px',
+		            transform: ' translate3d(0,0,-' + curR + 'px) rotateY(' + Math.random() * 360 + 'deg) rotateX(' + Math.random() * -50 + 'deg) scale(' + s + ',' + s + ')'
+		        });
+		    });
+		    init ('全国'); 
 		});
-		
+		var enlarged = false;
 		function init (mapName){
 			$("#areaTip").html(mapName||"全国");
 		    mapchart = echarts.init(document.getElementById('map'));
@@ -596,17 +646,30 @@ option = {
 			option.series[0].data =convertData(data);
 			pieOption.series[0].data = [
 			    			            {
-			    			            	name:'正式员工',
-			    			            	value:7035
+			    			            	name:'正式员工'+eval(7035/10821).toFixed(2)*100+'%',
+			    			            	value:7035,
+			    				            label: {
+			    				                normal: {
+			    				                    position: 'inside',
+			    				                    show:true
+			    				                },
+			    				                
+			    				            },
 			    			            },
 			    			            {
-			    			            	name:'非正式员工',
-			    			            	value:3786
+			    			            	name:'非正式员工'+eval(3786/10821).toFixed(2)*100+'%',
+			    			            	value:3786,
+			    				            label: {
+			    				                normal: {
+			    				                    position: 'inside',
+			    				                    show:true
+			    				                },
+			    				                
+			    				            },
 			    			            }
 			    		            ];
 			//pieOption.legend.data = pieLegendData;
-
-			
+			pieOption.legend.data = ['正式员工'+eval(7035/10821).toFixed(2)*100+'%','非正式员工'+eval(3786/10821).toFixed(2)*100+'%'];
 			$("#effectTopLeft").html(name?name+'一周人效走势图':'全国一周人效走势图');
 		    barOption.series[0].data =[10823,11375,10315,10008,11027,9875,9763];
 		    barOption.series[1].data =[8019843,8679125,7756880,7315848,8248196,7119875,7126990];
@@ -679,17 +742,31 @@ option = {
 			}
 			piedata.push(
 					{
-						name:'正式员工  '+numEmp,
-						value:eval(numEmp/(numEmp+notNumEmp))*100+'%'
+						name:'正式员工  '+eval(numEmp/(numEmp+notNumEmp))*100+'%',
+						value:numEmp,
+			            label: {
+			                normal: {
+			                    position: 'inside',
+			                    show:true
+			                },
+			                
+			            },
 					},
 					{
-						name:'非正式员工  '+(notNumEmp),
-						value:eval(notNumEmp/(numEmp+notNumEmp))*100+'%'
+						name:'非正式员工  '+eval(notNumEmp/(numEmp+notNumEmp))*100+'%',
+						value:notNumEmp,
+			            label: {
+			                normal: {
+			                    position: 'inside',
+			                    show:true
+			                },
+			                
+			            },
 					}
 
 				); 
-			pieLegendData.push('正式员工  '+numEmp);
-			pieLegendData.push('非正式员工  '+notNumEmp);
+			pieLegendData.push('正式员工  '+eval(numEmp/(numEmp+notNumEmp))*100+'%');
+			pieLegendData.push('非正式员工  '+eval(notNumEmp/(numEmp+notNumEmp))*100+'%');
 			setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp,name);
 		}
 
