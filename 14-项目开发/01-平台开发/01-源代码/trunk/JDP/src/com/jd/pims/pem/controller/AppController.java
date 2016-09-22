@@ -330,9 +330,12 @@ public class AppController extends BaseController {
 				new Date(), null);
 		LabourOndutyState currentLabour = pemService.getNumberOnDuty(root.getId());
 		JsonObject result = new JsonObject();
-		int totalLabour=currentLabour.getNumEmp()+currentLabour.getNumTemp()+currentLabour.getNumOther();
+		int totalLabour=0;
+		if(currentLabour!=null){
+			totalLabour=currentLabour.getNumEmp()+currentLabour.getNumTemp()+currentLabour.getNumOther();
+		}
 		result.addProperty("totalLabour", totalLabour);
-		result.addProperty("avgEfficiency", parent.getAvgEfficiency());
+		result.addProperty("avgEfficiency", parent!=null?parent.getAvgEfficiency():0);
 		return this.buildSuccessResponse(result).toString();
 	}
 }
