@@ -34,7 +34,7 @@
 		LEFT JOIN JD_LE_ORDER_QUANTITY qu on qu.CU_ID=LE.CU_ID and LE.BIZ_DATE = qu.BIZ_DATE
 		WHERE LE.BIZ_DATE=#{date} AND LE.TIME_PERIOD=#{timePeriod} 
 		AND LE.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%'))
-		GROUP by BIZ_DATE
+		GROUP by LE.BIZ_DATE
 	]]>
 	</select>
 	

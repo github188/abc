@@ -41,12 +41,14 @@ public class ChartServiceImpl implements IChartService {
 	@Override
 	public List<Map<String,Object>> getNumberOnDuty(String name) {
 		// TODO Auto-generated method stub
-		List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
+		if("全国".equals(name)){
+			name="京东集团";
+		}
 		Date dt = new Date(); 
 		String temp_str=sdf.format(dt);  
 			List<Map<String,Object>> templist=labourOndutyDao.getCurrentTimeLabourOndutyForChart(temp_str, name);
 			if(null!=templist&&!templist.isEmpty()&&templist.size()>0){
-				return list;
+				return templist;
 			}else{
 				return null;
 			}
@@ -91,7 +93,7 @@ public class ChartServiceImpl implements IChartService {
 		        Map<String,Object>tempMap = new HashMap<String,Object>();
 		        tempMap.put("name",map.get("name"));
 				List<Map<String,Object>> templist=labourEfficiencyDao.getEfficiencyForChart(
-						time, timePeriod,name);
+						time, timePeriod,map.get("name").toString());
 				if(null!=templist&&!templist.isEmpty()&&templist.size()>0){
 	                tempMap.put("effect",templist.get(0).get("effect"));
 	                tempMap.put("orderNum",templist.get(0).get("orderNum"));

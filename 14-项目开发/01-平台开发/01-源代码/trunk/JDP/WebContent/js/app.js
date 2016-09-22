@@ -63,6 +63,8 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 //				$scope.showornot='false';
 				$cookieStore.put('showornot', 'true');
 				location.href = "main.html";
+			}else{
+				$("#alert-user").attr("class","alert alert-danger");
 			}
 		});
 	}
@@ -207,4 +209,3 @@ app.config(function($stateProvider, $urlRouterProvider) {
         controller : 'AutomationCtrl'
     });
 });
-

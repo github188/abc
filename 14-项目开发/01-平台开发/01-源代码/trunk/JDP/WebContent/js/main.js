@@ -85,7 +85,7 @@ option = {
             type: 'effectScatter',
             coordinateSystem: 'geo',
             symbolSize: function (val) {
-                return val[2] / 7;
+                return val[2] / 60;
             },
             label: {
                 normal: {
@@ -488,6 +488,9 @@ option = {
 				var seconds = new Date().getSeconds();
 				var minutes = new Date().getMinutes();
 				var hours = new Date().getHours();
+				if(seconds=='0'&&minutes=='0'){
+					location.reload(true);
+				}
 				$("#year").html(year);
 				$("#month").html(( month < 10 ? "0" : "" ) + month);
 				$("#day").html(( day < 10 ? "0" : "" ) + day);
@@ -531,8 +534,8 @@ option = {
 				dataType: "json",
 				success: function (chinaJson) {
 				    echarts.registerMap(mapName, chinaJson);   
-				    //getData(mapName);
-				    loadDault(mapName);
+				    getData(mapName);
+				    //loadDault(mapName);
 				},statusCode: {404: function() {init ('全国');}}
 			});
 			mapchart.on('click', function (param){
@@ -546,8 +549,8 @@ option = {
 						dataType: "json",
 						success: function (chinaJson) {
 						    echarts.registerMap(name, chinaJson);   
-						    //getData(name);
-						    loadDault(name);
+						    getData(name);
+						    //loadDault(name);
 						},
 					  statusCode: {404: function() {init ('全国');}}
 					});
@@ -716,6 +719,7 @@ option = {
 		
 		//获取拼接地图数据
 		function makeMapData(data,name){
+			debugger;
 			mapdata= new Array();
 			piedata= new Array();
 			pieLegendData= new Array();
@@ -731,7 +735,7 @@ option = {
 						//地区名称 取china area表
 						name:row.name,
 						//numEmp 正式员工数 numTemp 临时工数 numOther 其他员工数
-						value:[row.x,row.y,row.EmpNum+row.NotEmpNum],
+						value:[row.x,row.y,eval(row.EmpNum+row.NotEmpNum)],
 						//地区的id 取china area表id
 				        selected:false
 				        //自定义特殊 itemStyle，仅对该数据项有效
@@ -742,7 +746,7 @@ option = {
 			}
 			piedata.push(
 					{
-						name:'正式员工  '+eval(numEmp/(numEmp+notNumEmp))*100+'%',
+						name:'正式员工  '+eval(numEmp/(numEmp+notNumEmp)).toFixed(2)*100+'%',
 						value:numEmp,
 			            label: {
 			                normal: {
@@ -753,7 +757,7 @@ option = {
 			            },
 					},
 					{
-						name:'非正式员工  '+eval(notNumEmp/(numEmp+notNumEmp))*100+'%',
+						name:'非正式员工  '+eval(notNumEmp/(numEmp+notNumEmp)).toFixed(2)*100+'%',
 						value:notNumEmp,
 			            label: {
 			                normal: {
@@ -765,8 +769,8 @@ option = {
 					}
 
 				); 
-			pieLegendData.push('正式员工  '+eval(numEmp/(numEmp+notNumEmp))*100+'%');
-			pieLegendData.push('非正式员工  '+eval(notNumEmp/(numEmp+notNumEmp))*100+'%');
+			pieLegendData.push('正式员工  '+eval(numEmp/(numEmp+notNumEmp)).toFixed(2)*100+'%');
+			pieLegendData.push('非正式员工  '+eval(notNumEmp/(numEmp+notNumEmp)).toFixed(2)*100+'%');
 			setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp,name);
 		}
 

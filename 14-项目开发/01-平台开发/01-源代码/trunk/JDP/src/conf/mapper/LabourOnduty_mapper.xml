@@ -50,11 +50,12 @@
   <select id="getCurrentTimeLabourOndutyForChart" resultType="java.util.HashMap">
 	<![CDATA[	
 		SELECT AREA.AREA_NAME as name,AREA.COORD1_X as x,AREA.COORD1_Y as y,sum(case when LO.PERSON_TYPE='1' THEN LO.QUANTITY_ONDUTY ELSE 0 END) as EmpNum,sum(case when LO.PERSON_TYPE!='1' THEN LO.QUANTITY_ONDUTY ELSE 0 END) as NotEmpNum
-		  	FROM JD_LE_LABOUR_ONDUTY LO
+		  	FROM  (
+				select PERSON_TYPE,QUANTITY_ONDUTY,CU_ID from JD_LE_LABOUR_ONDUTY WHERE BIZ_DATE=#{currentDate} ORDER BY TIMING desc limit 5
+			) LO 
 		  	LEFT JOIN NP_CF_SUBSYSTEM SUB ON LO.CU_ID = SUB.MANAGE_ID
 		  	LEFT JOIN NP_EQ_AREA AREA ON SUB.AREA_ID = AREA.ID
-		  	WHERE LO.BIZ_DATE=#{currentDate}
-			AND  AREA.AREA_CLASS='DC' and AREA.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+		  	WHERE  AREA.AREA_CLASS='BROUGH' and AREA.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' )
 		 GROUP BY AREA.AREA_NAME,AREA.COORD1_X,AREA.COORD1_Y
 	]]>
   </select>
