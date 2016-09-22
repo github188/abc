@@ -56,7 +56,7 @@ public class BizServiceImpl implements IBizService {
 		list = labourOndutyDao.getCurrentTimeLabourOnduty(sFormat.format(date),
 				cu.getFullPath());
 		for (LabourOnduty rec : list) {
-			if (rec.getPersonType().equals("1") && state.getNumEmp() == null) {
+			if (rec.getPersonType().equals("1") ) {
 				state.setNumEmp(rec.getQuantityOnduty());
 			} else if (rec.getPersonType().equals("2")
 					|| rec.getPersonType().equals("3")
@@ -92,7 +92,7 @@ public class BizServiceImpl implements IBizService {
 				map.put(sFormat.format(rec.getBizDate()), state);
 			}
 
-			if (rec.getPersonType().equals("1") && state.getNumEmp() == null) {
+			if (rec.getPersonType().equals("1")) {
 				state.setNumEmp(rec.getAvgQuantity());
 			} else if (rec.getPersonType().equals("2")
 					|| rec.getPersonType().equals("3")
