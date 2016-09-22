@@ -29,11 +29,11 @@ public class APIRemoteTest {
 	private static final Logger logger = Logger.getLogger(APIRemoteTest.class
 			.getName());
 
-	//private String login_url = "http://112.74.166.167:8080/JDP/user";
-	//private String as_url = "http://112.74.166.167:8080/JDP/app";
+	private String login_url = "http://112.74.166.167:8080/JDP/user";
+	private String as_url = "http://112.74.166.167:8080/JDP/app";
 	
-	private String login_url = "http://localhost:7000/JDP/user";
-	private String as_url = "http://localhost:7000/JDP/app";
+	//private String login_url = "http://localhost:7000/JDP/user";
+	//private String as_url = "http://localhost:7000/JDP/app";
 
 	@Before
 	public void login() throws UnsupportedEncodingException {
@@ -53,7 +53,7 @@ public class APIRemoteTest {
 		String action = as_url+"/getEfficiency.do";
 		ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
 		list.add(new BasicNameValuePair("empId",
-				"11111111111111111111111111111111"));
+				"11111111111111111111111111111112"));
 		list.add(new BasicNameValuePair("cuId",
 				"12cad8e307844dcc8525c9357f0692f0"));
 		HttpEntity en = new UrlEncodedFormEntity(list, "UTF-8");
@@ -66,12 +66,23 @@ public class APIRemoteTest {
 		String action = as_url+"/getEfficiencyHistory.do";
 		ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
 		list.add(new BasicNameValuePair("empId",
-				"11111111111111111111111111111111"));
+				"11111111111111111111111111111112"));
 		list.add(new BasicNameValuePair("cuId",
 				"12cad8e307844dcc8525c9357f0692f0"));
 		list.add(new BasicNameValuePair("startDate", "2016-09-06"));
 		list.add(new BasicNameValuePair("endDate", "2016-09-13"));
 		list.add(new BasicNameValuePair("interval", "D"));
+
+		HttpEntity en = new UrlEncodedFormEntity(list, "UTF-8");
+		execute(en, action);
+	}
+	
+	@Test
+	public void testGetLabourAndEfficiencyOfGroup() throws UnsupportedEncodingException{
+		String action = as_url+"/getLabourAndEfficiencyOfGroup.do";
+		ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+		list.add(new BasicNameValuePair("empId",
+				"11111111111111111111111111111112"));
 
 		HttpEntity en = new UrlEncodedFormEntity(list, "UTF-8");
 		execute(en, action);

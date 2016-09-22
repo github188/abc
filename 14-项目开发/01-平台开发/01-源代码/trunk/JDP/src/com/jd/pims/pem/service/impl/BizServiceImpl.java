@@ -59,7 +59,8 @@ public class BizServiceImpl implements IBizService {
 			if (rec.getPersonType().equals("1") && state.getNumEmp() == null) {
 				state.setNumEmp(rec.getQuantityOnduty());
 			} else if (rec.getPersonType().equals("2")
-					|| rec.getPersonType().equals("3")) {
+					|| rec.getPersonType().equals("3")
+					|| rec.getPersonType().equals("4")) {
 				state.setNumTemp((state.getNumTemp() == null ? 0 : state
 						.getNumTemp()) + rec.getQuantityOnduty());
 			} else if (rec.getPersonType().equals("5")) {
@@ -94,7 +95,8 @@ public class BizServiceImpl implements IBizService {
 			if (rec.getPersonType().equals("1") && state.getNumEmp() == null) {
 				state.setNumEmp(rec.getAvgQuantity());
 			} else if (rec.getPersonType().equals("2")
-					|| rec.getPersonType().equals("3")) {
+					|| rec.getPersonType().equals("3")
+					|| rec.getPersonType().equals("4")) {
 				state.setNumTemp((state.getNumTemp() == null ? 0 : state
 						.getNumTemp()) + rec.getAvgQuantity());
 			} else if (rec.getPersonType().equals("5")) {
