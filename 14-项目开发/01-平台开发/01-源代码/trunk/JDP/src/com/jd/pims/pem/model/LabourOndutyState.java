@@ -1,12 +1,16 @@
 package com.jd.pims.pem.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import com.jd.pims.comm.BaseDataModel;
 
 /**
  * 在岗人数分类统计领域对象
  *
  */
-public class LabourOndutyState extends BaseDataModel{
+public class LabourOndutyState extends BaseDataModel implements Comparable<LabourOndutyState> {
 	/**
 	 * 
 	 */
@@ -23,6 +27,8 @@ public class LabourOndutyState extends BaseDataModel{
 	private Integer numTemp=0;
 	//其他员工数量
 	private Integer numOther=0;
+	
+	private SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 	public String getCuId() {
 		return cuId;
@@ -70,6 +76,25 @@ public class LabourOndutyState extends BaseDataModel{
 
 	public void setDayTime(String dayTime) {
 		this.dayTime = dayTime;
+	}
+
+	@Override
+	public int compareTo(LabourOndutyState o) {
+		// TODO Auto-generated method stub
+		try {
+			Date otherTime = sFormat.parse(o.getDayTime());
+			Date thisTime=sFormat.parse(this.getDayTime());
+			if(thisTime.getTime()>otherTime.getTime()){
+				return 1;
+			}else if(thisTime.getTime()<otherTime.getTime()){
+				return -1;
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return 0;
 	}
 
 	

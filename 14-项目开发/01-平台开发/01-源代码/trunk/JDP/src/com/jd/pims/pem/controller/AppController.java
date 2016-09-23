@@ -2,6 +2,7 @@ package com.jd.pims.pem.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -177,9 +178,12 @@ public class AppController extends BaseController {
 						cuId, sFormat.parse(startDate), sFormat.parse(endDate),
 						"D");
 				if (null != results && results.size() > 0 && !results.isEmpty()) {
-					LabourOndutyState[] LabourOndutyState =new LabourOndutyState[results.size()];
-					LabourOndutyState=results.toArray(LabourOndutyState);
-					return this.buildSuccessResponse(LabourOndutyState).toString();
+					LabourOndutyState[] LabourOndutyState = new LabourOndutyState[results
+							.size()];
+					LabourOndutyState = results.toArray(LabourOndutyState);
+					Arrays.sort(LabourOndutyState);
+					return this.buildSuccessResponse(LabourOndutyState)
+							.toString();
 				}
 				JsonObject retMsg = new JsonObject();
 				retMsg.addProperty("returnCode", 0);
@@ -217,48 +221,49 @@ public class AppController extends BaseController {
 				cuId = root.getId();
 			}
 		}
-		ControlUnit cu=uesrService.findOrganization(cuId);
-		
+		ControlUnit cu = uesrService.findOrganization(cuId);
+
 		if (startDate != null && !"".equals(startDate) && endDate != null
 				&& !"".equals(endDate)) {
 			try {
 				List<LabourEfficiency> results = pemService
 						.getEfficiencyHistory(cuId, sFormat.parse(startDate),
 								sFormat.parse(endDate));
-				if (null != results  && !results.isEmpty()) {
-					Map<String,LabourEfficiency> map=new HashMap<String,LabourEfficiency>();
-					LabourEfficiency nle=null;
-					for(LabourEfficiency le:results){
-						if(map.containsKey(sFormat.format(le.getBizDate()))){
-							nle=map.get(sFormat.format(le.getBizDate()));
-						}else{
-							nle=new LabourEfficiency();
+				if (null != results && !results.isEmpty()) {
+					Map<String, LabourEfficiency> map = new HashMap<String, LabourEfficiency>();
+					LabourEfficiency nle = null;
+					for (LabourEfficiency le : results) {
+						if (map.containsKey(sFormat.format(le.getBizDate()))) {
+							nle = map.get(sFormat.format(le.getBizDate()));
+						} else {
+							nle = new LabourEfficiency();
 							nle.setCuId(cuId);
 							nle.setCuName(cu.getCuName());
 							nle.setBizDate(le.getBizDate());
 							map.put(sFormat.format(le.getBizDate()), nle);
 						}
-						Double efficiency=nle.getEfficiency();
-						efficiency+=le.getEfficiency();
-						int numberOnduty=nle.getNumberOnduty()+le.getNumberOnduty();
-						int orderQuantity=nle.getOrderQuantity()+le.getOrderQuantity();
-						nle.setAvgEfficiency(efficiency/2);
-						nle.setEfficiency(efficiency/2);
-						nle.setNumberOnduty(numberOnduty/2);
-						nle.setOrderQuantity(orderQuantity/2);
-						
+						Double efficiency = nle.getEfficiency();
+						efficiency += le.getEfficiency();
+						int numberOnduty = nle.getNumberOnduty()
+								+ le.getNumberOnduty();
+						int orderQuantity = nle.getOrderQuantity()
+								+ le.getOrderQuantity();
+						nle.setAvgEfficiency(efficiency / 2);
+						nle.setEfficiency(efficiency / 2);
+						nle.setNumberOnduty(numberOnduty / 2);
+						nle.setOrderQuantity(orderQuantity / 2);
+
 					}
-					return this
-							.buildSuccessResponse(
-									map.values().toArray(new LabourEfficiency[results
-											.size()])).toString();
+					LabourEfficiency[] arr = map.values().toArray(
+							new LabourEfficiency[results.size()]);
+					Arrays.sort(arr);
+					return this.buildSuccessResponse(arr).toString();
 				}
 				JsonObject retMsg = new JsonObject();
 				retMsg.addProperty("returnCode", 0);
 				retMsg.addProperty("message", "无历史在岗人数数据");
 				return retMsg.toString();
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return this.buildFailResponse(2,
 						"参数值不被支持：startDate或者endDate的日期格式有误！").toString();
@@ -305,8 +310,8 @@ public class AppController extends BaseController {
 
 		List<Employee> result = uesrService.searchEmployee(inputStr);
 		if (null != result && result.size() > 0 && !result.isEmpty()) {
-			return this.buildSuccessResponse(result.toArray(new Employee[result.size()]))
-					.toString();
+			return this.buildSuccessResponse(
+					result.toArray(new Employee[result.size()])).toString();
 		}
 		JsonObject retMsg = new JsonObject();
 		retMsg.addProperty("returnCode", 1);
@@ -323,19 +328,22 @@ public class AppController extends BaseController {
 	@RequestMapping(value = "/getLabourAndEfficiencyOfGroup", method = RequestMethod.POST)
 	@ResponseBody
 	public String getLabourAndEfficiencyOfGroup(HttpServletRequest request,
-			HttpServletResponse response){
+			HttpServletResponse response) {
 		ControlUnit root = uesrService.findRootOrganization();
-		
-		LabourEfficiency parent = pemService.getTimePeriodEfficience(root.getId(),
-				new Date(), null);
-		LabourOndutyState currentLabour = pemService.getNumberOnDuty(root.getId());
+
+		LabourEfficiency parent = pemService.getTimePeriodEfficience(
+				root.getId(), new Date(), null);
+		LabourOndutyState currentLabour = pemService.getNumberOnDuty(root
+				.getId());
 		JsonObject result = new JsonObject();
-		int totalLabour=0;
-		if(currentLabour!=null){
-			totalLabour=currentLabour.getNumEmp()+currentLabour.getNumTemp()+currentLabour.getNumOther();
+		int totalLabour = 0;
+		if (currentLabour != null) {
+			totalLabour = currentLabour.getNumEmp()
+					+ currentLabour.getNumTemp() + currentLabour.getNumOther();
 		}
 		result.addProperty("totalLabour", totalLabour);
-		result.addProperty("avgEfficiency", parent!=null?parent.getAvgEfficiency():0);
+		result.addProperty("avgEfficiency",
+				parent != null ? parent.getAvgEfficiency() : 0);
 		return this.buildSuccessResponse(result).toString();
 	}
 }
