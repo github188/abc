@@ -14,8 +14,15 @@
   <!-- 员工信息，包括组织架构 -->
   <resultMap id="employee" type="com.jd.pims.user.model.Employee" >
     <id column="id" property="id" />
+    <result column="person_code" property="empCode"  />
     <result column="person_name" property="empName"  />
+    <result column="card_no" property="IDCardNo"  />
     <result column="sex" property="sex"  />
+    <result column="age" property="age"  />
+    <result column="telephone" property="telephone"  />
+    <result column="office_Tel" property="officeTel"  />
+    <result column="address" property="address"  />
+    <result column="native_place" property="nativePlace"  />
     <result column="org_id" property="orgId"  />
     <result column="org_code" property="orgCode"  />
     <result column="org_name" property="orgName"  />
@@ -130,7 +137,7 @@
   
   <!-- 根据员工ID取员工基本信息 -->
   <select id="getEmployeeById" resultMap="employee" parameterType="String">
-  		SELECT E.ID,E.PERSON_NAME,E.SEX,O.ID AS ORG_ID,O.ORG_CODE,O.ORG_NAME,
+  		SELECT E.ID,E.PERSON_CODE,E.PERSON_NAME,E.SEX,O.ID AS ORG_ID,O.ORG_CODE,O.ORG_NAME,
   			C.ID AS CU_ID,C.CODE AS CU_CODE,C.NAME AS CU_NAME
   		FROM NP_SYS_PERSON E 
   			INNER JOIN NP_SYS_ORGANIZE O ON E.ORG_ID=O.ID
@@ -159,7 +166,7 @@
   </select>
   
   <select id="searchEmployee" resultMap="employee" parameterType="String">
-  	SELECT EMP.ID,EMP.PERSON_CODE,EMP.PERSON_NAME,EMP.SEX,EMP.AGE,EMP.TELEPHONE,EMP.OFFICE_TEL,
+  	SELECT EMP.ID,EMP.PERSON_CODE,EMP.PERSON_NAME,EMP.SEX,EMP.AGE,EMP.TELEPHONE,EMP.OFFICE_TEL,EMP.CARD_NO,
   		EMP.ADDRESS,EMP.NATIVE_PLACE,ORG.ORG_CODE,ORG.ORG_NAME,CU.CODE AS CU_CODE,CU.NAME AS CU_NAME
   	FROM NP_SYS_PERSON EMP
   	LEFT OUTER JOIN NP_SYS_ORGANIZE ORG ON ORG.ID=EMP.ORG_ID

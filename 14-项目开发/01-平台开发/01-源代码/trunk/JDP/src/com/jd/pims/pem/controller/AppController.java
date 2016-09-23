@@ -309,7 +309,7 @@ public class AppController extends BaseController {
 					.toString();
 		}
 		JsonObject retMsg = new JsonObject();
-		retMsg.addProperty("returnCode", -1);
+		retMsg.addProperty("returnCode", 1);
 		retMsg.addProperty("message", "无匹配的人员数据");
 		return retMsg.toString();
 	}
