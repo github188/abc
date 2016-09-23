@@ -84,9 +84,6 @@ option = {
             name: '11',
             type: 'effectScatter',
             coordinateSystem: 'geo',
-            symbolSize: function (val) {
-                return val[2] / 60;
-            },
             label: {
                 normal: {
                     formatter: '{b}',
@@ -162,10 +159,10 @@ option = {
                 }
 	        },
 	        grid:{
-	        	width:'85%',
-	        	left:'10%',
-	        	top:'30%',
-	        	bottom:'15%',
+	        	left:10,
+	        	right:10,
+	        	bottom:'10%',
+	        	top:'20%',
 	        	containLabel:true
 	        },
 	        yAxis: [
@@ -180,8 +177,9 @@ option = {
 		        splitLine:{  
                     show:false  
                 },
-                min:500,splitNumber:6
-	        },{
+                //position:'right',
+	        },	        
+	        {
 	        	type:'value',
 	        	name: '百分比（%）',
 	        	axisLine:{
@@ -191,23 +189,13 @@ option = {
 		        } ,
 		        splitLine:{  
                     show:false  
-                }
+                },//position:'right',
 	        }
 	        ],
-            color: ['#32bbec','#9035B1',  '#11d320'],
+            color: ['#32bbec','#11d320','#9035B1'],
 	        series: [
 	            {
 		            name: '员工数量',type: 'bar',
-		            label:{
-		            	normal:{
-		            		show:true,
-		            		position:'top'
-		            	},
-		            },
-		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-	        	},
-	        	{
-		            name: '总订单数量',type: 'bar',
 		            label:{
 		            	normal:{
 		            		show:true,
@@ -226,6 +214,17 @@ option = {
 		            },
 		            symbol:'circle',
 		            yAxisIndex:1,
+		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
+	        	},
+	        	{
+		            name: '总订单数量',type: 'bar',
+		            label:{
+		            	normal:{
+		            		show:true,
+		            		position:'top'
+		            	},
+		            },
+
 		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
 	        	},
 	        ]
@@ -266,8 +265,8 @@ option = {
 	        grid:{
 	        	width:'85%',
 	        	left:'10%',
-	        	top:'30%',
-	        	bottom:'15%',
+	        	top:'20%',
+	        	bottom:'10%',
 	        	containLabel:true
 	        },
 	        yAxis: [
@@ -727,17 +726,20 @@ option = {
 			var data=eval(data);
 			var numEmp = 0.0;
 			var notNumEmp = 0.0;
+			var a = 0.00;
+			var b = 0.00;
 			if(data!=null){
 				$.each(data, function(index, row){
 /*					if(row.name.match(/^黑龙江|^内蒙古/)){
 						row.name=data[index].name.substring(0,3);
 					}*/
-					if(eval(row.EmpNum+row.NotEmpNum)<1){
+					var c = eval(row.EmpNum+row.NotEmpNum);
+					if(c<1){
 						mapdata.push({
 							//地区名称 取china area表
 							name:row.name,
 							//numEmp 正式员工数 numTemp 临时工数 numOther 其他员工数
-							value:[row.x,row.y,eval(row.EmpNum+row.NotEmpNum)],
+							value:[row.x,row.y,c],
 							//地区的id 取china area表id
 					        selected:false,
 					        //自定义特殊 itemStyle，仅对该数据项有效
@@ -758,15 +760,52 @@ option = {
 				            },
 				            
 						}); 
-					}else{
+					}else if(c>=1&&c<100){
 						mapdata.push({
 							//地区名称 取china area表
 							name:row.name,
 							//numEmp 正式员工数 numTemp 临时工数 numOther 其他员工数
-							value:[row.x,row.y,eval(row.EmpNum+row.NotEmpNum)],
+							value:[row.x,row.y,c],
 							//地区的id 取china area表id
-					        selected:false
+					        selected:false,
 					        //自定义特殊 itemStyle，仅对该数据项有效
+					        symbolSize:5,
+				            itemStyle: {
+				                normal: {
+				                    color: '#f4e925',
+				                    shadowBlur: 10,
+				                    shadowColor: '#333'
+				                },
+				                emphasis: {
+				                    color: '#f4e925',
+				                    shadowBlur: 10,
+				                    shadowColor: '#333'
+				                }
+				            },
+						}); 
+					}else if(c>=100){
+						var size = Math.round(c / 80);
+						mapdata.push({
+							//地区名称 取china area表
+							name:row.name,
+							//numEmp 正式员工数 numTemp 临时工数 numOther 其他员工数
+							value:[row.x,row.y,c],
+							//地区的id 取china area表id
+					        selected:false,
+					        //自定义特殊 itemStyle，仅对该数据项有效
+				            symbolSize: size,
+				            itemStyle: {
+				                normal: {
+				                    color: '#f4e925',
+				                    shadowBlur: 10,
+				                    shadowColor: '#333'
+				                },
+				                emphasis: {
+				                    color: '#f4e925',
+				                    shadowBlur: 10,
+				                    shadowColor: '#333'
+				                }
+				            },
 						}); 
 					}
 
@@ -774,9 +813,11 @@ option = {
 					notNumEmp += row.NotEmpNum;
 				});
 			}
+			a=eval(numEmp/(numEmp+notNumEmp)).toFixed(2);
+			b=eval(notNumEmp/(numEmp+notNumEmp)).toFixed(2);
 			piedata.push(
 					{
-						name:'正式员工  '+eval(numEmp/(numEmp+notNumEmp)).toFixed(2)*100+'%',
+						name:'正式员工  '+a*100+'%',
 						value:numEmp,
 			            label: {
 			                normal: {
@@ -787,7 +828,7 @@ option = {
 			            },
 					},
 					{
-						name:'非正式员工  '+eval(notNumEmp/(numEmp+notNumEmp)).toFixed(2)*100+'%',
+						name:'非正式员工  '+b*100+'%',
 						value:notNumEmp,
 			            label: {
 			                normal: {
@@ -799,8 +840,8 @@ option = {
 					}
 
 				); 
-			pieLegendData.push('正式员工  '+eval(numEmp/(numEmp+notNumEmp)).toFixed(2)*100+'%');
-			pieLegendData.push('非正式员工  '+eval(notNumEmp/(numEmp+notNumEmp)).toFixed(2)*100+'%');
+			pieLegendData.push('正式员工  '+a*100+'%');
+			pieLegendData.push('非正式员工  '+b*100+'%');
 			setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp,name);
 		}
 
@@ -840,8 +881,8 @@ option = {
 				$.each(data, function(index, row){
 					//clerkNum 员工数 orderNum 订单数  date 日期
 					bardata[0].push(row.clerkNum);
-					bardata[1].push(row.orderNum);
-					bardata[2].push(Math.ceil(row.effect));
+					bardata[2].push(row.orderNum);
+					bardata[1].push(Math.ceil(row.effect));
 					bardata[3].push(row.name);
 				});
 			}
@@ -924,7 +965,7 @@ option = {
 					totalOrderNum += row.orderNum;
 				});
 			}
-			setBar2Option(bardata2,(data.length>0?(totalEffect/data.length):0).toFixed(2),totalOrderNum,name);
+			setBar2Option(bardata2,((data&&data.length>0)?(totalEffect/data.length).toFixed(2):'0'),totalOrderNum,name);
 		}
 
 		function setBar2Option(bardata2,avgEffect,totalOrderNum,name){
