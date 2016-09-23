@@ -16,20 +16,28 @@
   <link rel="stylesheet" type="text/css" href="css/ngDialog-theme-plain.min.css">
   <style type="text/css">
 	body{
-	 	 background:url(images/indexBg.png)no-repeat;
-		 background-size: 100% 100%;
 		 font: 63% Arial, Helvetica, sans-serif;
 		 margin:0;
 		 padding:0;
-		 color:#0F0F0F; 
 		 height: 100%;
 		 TEXT-ALIGN: center;
+		 
 	}
 	canvas{
 	display:block;
 	vertical-align:bottom;
 	}
-
+	#blur{
+		width:100%;
+		height:100%;
+		position:absolute;
+		z-index:1;
+		margin:0;
+		padding:0;
+		top:0;
+		background:url(images/indexBg.png)no-repeat;
+		background-size: 100% 100%;
+	}
 	#particles-js{
 		width:100%;
 		height:90%;
@@ -49,8 +57,8 @@
 	    font-style: normal;
 	}
 .template-page-wrapper{font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif; font-size:2em;color:#46d7ff;}
-.title {height: 8%; margin:0 auto;padding-top:0.5em;padding-bottom:2em; color:#FFFFFF;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
-#world {width:69%;left:16%;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif; font-size:5.5em; text-align:center; text-shadow:0 0 5px #00c6ff;font-weight:10 }
+.title {height: 8%; margin:0 auto;padding-top:0.5em;padding-bottom:2em; color:#FFFFFF;}
+#world {width:100%;margin:0 auto;padding-bottom:0.5em;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif; font-size:5.5em; text-align:center; text-shadow:0 0 5px #00c6ff;z-index:3;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
   </style>
 <!-- 
 Dashboard Template 
@@ -61,8 +69,9 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
 	<div class="title">
 		<div id="world">京东集团分拣中心管理部全国在岗人员监控平台</div>	
 	</div>
+	<div id="blur"></div>
 	<div id="particles-js"></div>
-	<div id="logo" class="col-md-4 col-md-push-4" style="z-index:2;height:13em;background: url(images/JDlogo.png); background-size: 100% 100%;margin-top: 11em;"> </div>
+	<div id="logo" class="col-md-4 col-md-push-4" style="z-index:3;height:13em;background: url(images/JDlogo.png); background-size: 100% 100%;margin-top: 11em;"> </div>
     <div  style="margin-top:23% ;" ng-show='showornot'>
       <form class="form-horizontal templatemo-signin-form" role="form" action="index.html" method="get">
         <div class="form-group">
@@ -130,6 +139,33 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
     	$("#close").click(function(){
     		$("#alert-user").attr("class","alert alert-danger hidden");
     	});
+    	var i=0;
+    	var up=true;
+		setInterval( function() {
+			
+			if(i<10&&up){
+				i+=1;
+				$("#blur").css({
+					'-webkit-filter': 'blur('+i+'px)', /* Chrome, Opera */
+			      	'-moz-filter': 'blur('+i+'px)',
+			        '-ms-filter': 'blur('+i+'px)',   
+			        'filter': 'blur('+i+'px)'
+				});
+		    }else{
+		    	up=false;
+		    	i=i-1;
+		    	if(i>=0){
+					$("#blur").css({
+						'-webkit-filter': 'blur('+i+'px)', /* Chrome, Opera */
+				      	'-moz-filter': 'blur('+i+'px)',
+				        '-ms-filter': 'blur('+i+'px)',   
+				        'filter': 'blur('+i+'px)'
+					});
+		    	}else{
+		    		up=true;
+		    	}
+		    }
+    	},1000);
     });
     </script>
 </html>
