@@ -281,7 +281,7 @@ option = {
 		        splitLine:{  
                     show:false  
                 },
-                min:500,splitNumber:6
+                splitNumber:6
 	        },{
 	        	type:'value',
 	        	name: '百分比（%）',
@@ -726,6 +726,7 @@ option = {
 			var data=eval(data);
 			var numEmp = 0.0;
 			var notNumEmp = 0.0;
+			var otherNumEmp = 0.0;
 			var a = 0.00;
 			var b = 0.00;
 			if(data!=null){
@@ -733,7 +734,7 @@ option = {
 /*					if(row.name.match(/^黑龙江|^内蒙古/)){
 						row.name=data[index].name.substring(0,3);
 					}*/
-					var c = eval(row.EmpNum+row.NotEmpNum);
+					var c = eval(row.EmpNum+row.NotEmpNum+row.otherNumEmp);
 					if(c<1){
 						mapdata.push({
 							//地区名称 取china area表
@@ -808,16 +809,16 @@ option = {
 				            },
 						}); 
 					}
-
+					otherNumEmp += row.otherNumEmp;
 					numEmp += row.EmpNum;
 					notNumEmp += row.NotEmpNum;
 				});
 			}
-			a=eval(numEmp/(numEmp+notNumEmp)).toFixed(2);
-			b=eval(notNumEmp/(numEmp+notNumEmp)).toFixed(2);
+			a=numEmp+notNumEmp==0?0:((numEmp/(numEmp+notNumEmp)).toFixed(2));
+			b=numEmp+notNumEmp==0?0:((notNumEmp/(numEmp+notNumEmp)).toFixed(2));
 			piedata.push(
 					{
-						name:'正式员工  '+a*100+'%',
+						name:'正式员工  '+parseInt(a*100)+'%',
 						value:numEmp,
 			            label: {
 			                normal: {
@@ -828,7 +829,7 @@ option = {
 			            },
 					},
 					{
-						name:'非正式员工  '+b*100+'%',
+						name:'非正式员工  '+parseInt(b*100)+'%',
 						value:notNumEmp,
 			            label: {
 			                normal: {
@@ -840,9 +841,9 @@ option = {
 					}
 
 				); 
-			pieLegendData.push('正式员工  '+a*100+'%');
-			pieLegendData.push('非正式员工  '+b*100+'%');
-			setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp,name);
+			pieLegendData.push('正式员工  '+parseInt(a*100)+'%');
+			pieLegendData.push('非正式员工  '+parseInt(b*100)+'%');
+			setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
 		}
 
 		function setMapOption(mapdata,piedata,pieLegendData,total,name){

@@ -49,7 +49,14 @@
 
   <select id="getCurrentTimeLabourOndutyForChart" resultType="java.util.HashMap">
 	<![CDATA[	
-		SELECT AREA.AREA_NAME as name,AREA.COORD1_X as x,AREA.COORD1_Y as y,sum(case when LO.PERSON_TYPE='1' THEN LO.QUANTITY_ONDUTY ELSE 0 END) as EmpNum,sum(case when LO.PERSON_TYPE!='1' THEN LO.QUANTITY_ONDUTY ELSE 0 END) as NotEmpNum
+		SELECT AREA.AREA_NAME as name,
+		AREA.COORD1_X as x,
+		AREA.COORD1_Y as y,
+		sum(case when LO.PERSON_TYPE='1' THEN LO.QUANTITY_ONDUTY ELSE 0 END) as EmpNum,
+		sum(case when LO.PERSON_TYPE='2' THEN LO.QUANTITY_ONDUTY
+ 				 when LO.PERSON_TYPE='3' THEN LO.QUANTITY_ONDUTY
+                 when LO.PERSON_TYPE='4' THEN LO.QUANTITY_ONDUTY ELSE 0 END) as NotEmpNum,
+        sum(case when LO.PERSON_TYPE='5' THEN LO.QUANTITY_ONDUTY ELSE 0 END) as otherNumEmp
 		  	FROM  NP_EQ_AREA AREA 
 		  	LEFT JOIN NP_CF_SUBSYSTEM SUB ON SUB.AREA_ID = AREA.ID
 		  	LEFT JOIN (
@@ -63,7 +70,9 @@
   
   <select id="getHistoryLabourOndutyForChart" resultType="java.util.HashMap">
 	<![CDATA[	
-		SELECT concat(concat((date_format(LO.BIZ_DATE,'%m')),'月'),concat((date_format(LO.BIZ_DATE,'%d')),'日')) as name,sum(case when LO.PERSON_TYPE='1' THEN LO.AVG_QUANTITY ELSE 0 END) as EmpNum,sum(case when LO.PERSON_TYPE!='1' THEN LO.AVG_QUANTITY ELSE 0 END) as NotEmpNum
+		SELECT concat(concat((date_format(LO.BIZ_DATE,'%m')),'月'),concat((date_format(LO.BIZ_DATE,'%d')),'日')) as name,sum(case when LO.PERSON_TYPE='1' THEN LO.AVG_QUANTITY ELSE 0 END) as EmpNum,sum(case when LO.PERSON_TYPE='2' THEN LO.AVG_QUANTITY
+ 				 when LO.PERSON_TYPE='3' THEN LO.AVG_QUANTITY
+                 when LO.PERSON_TYPE='4' THEN LO.AVG_QUANTITY ELSE 0 END) as NotEmpNum
 		  	FROM JD_LE_LABOUR_ONDUTY_DAY_ST LO
 		  	WHERE LO.BIZ_DATE>=#{startDate} AND LO.BIZ_DATE<#{endDate}
 			AND LO.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
