@@ -133,6 +133,7 @@ public class BizServiceImpl implements IBizService {
 				sFormat.format(bizDate), timePeriod, cu.getFullPath());
 		if (le != null) {
 			le.setEfficiency(le.getPeriodEfficiency());
+			le.setCuId(cuId);
 			le.setCuName(cu.getCuName());
 		}
 		return le;
