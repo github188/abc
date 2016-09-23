@@ -179,7 +179,8 @@ option = {
 		        } ,
 		        splitLine:{  
                     show:false  
-                }
+                },
+                min:500,splitNumber:6
 	        },{
 	        	type:'value',
 	        	name: '百分比（%）',
@@ -191,7 +192,6 @@ option = {
 		        splitLine:{  
                     show:false  
                 }
-	        	 
 	        }
 	        ],
             color: ['#32bbec','#9035B1',  '#11d320'],
@@ -281,7 +281,8 @@ option = {
 		        },
 		        splitLine:{  
                     show:false  
-                }
+                },
+                min:500,splitNumber:6
 	        },{
 	        	type:'value',
 	        	name: '百分比（%）',
@@ -421,7 +422,7 @@ option = {
 		    },
 			legend:{
 				data:['正式员工','非正式员工'],
-				bottom:30,
+				bottom:10,
 				right:0,
 				textStyle:{
 		        	color:'#fff'
@@ -457,7 +458,7 @@ option = {
 				            label: {
 				                normal: {
 				                    position: 'inside',
-				                    show:true
+				                    show:false
 				                },
 				                
 				            },
@@ -468,7 +469,7 @@ option = {
 				            label: {
 				                normal: {
 				                    position: 'inside',
-				                    show:true
+				                    show:false
 				                },
 				                
 				            },
@@ -728,18 +729,47 @@ option = {
 			var notNumEmp = 0.0;
 			if(data!=null){
 				$.each(data, function(index, row){
-					if(row.name.match(/^黑龙江|^内蒙古/)){
+/*					if(row.name.match(/^黑龙江|^内蒙古/)){
 						row.name=data[index].name.substring(0,3);
+					}*/
+					if(eval(row.EmpNum+row.NotEmpNum)<1){
+						mapdata.push({
+							//地区名称 取china area表
+							name:row.name,
+							//numEmp 正式员工数 numTemp 临时工数 numOther 其他员工数
+							value:[row.x,row.y,eval(row.EmpNum+row.NotEmpNum)],
+							//地区的id 取china area表id
+					        selected:false,
+					        //自定义特殊 itemStyle，仅对该数据项有效
+					        symbol:'diamond',
+					        symbolSize:5,
+					        zlevel:2,
+				            itemStyle: {
+				                normal: {
+				                    color: '#ED1C24',
+				                    shadowBlur: 20,
+				                    shadowColor: '#333'
+				                },
+				                emphasis: {
+				                    color: '#ED1C24',
+				                    shadowBlur: 20,
+				                    shadowColor: '#333'
+				                },
+				            },
+				            
+						}); 
+					}else{
+						mapdata.push({
+							//地区名称 取china area表
+							name:row.name,
+							//numEmp 正式员工数 numTemp 临时工数 numOther 其他员工数
+							value:[row.x,row.y,eval(row.EmpNum+row.NotEmpNum)],
+							//地区的id 取china area表id
+					        selected:false
+					        //自定义特殊 itemStyle，仅对该数据项有效
+						}); 
 					}
-					mapdata.push({
-						//地区名称 取china area表
-						name:row.name,
-						//numEmp 正式员工数 numTemp 临时工数 numOther 其他员工数
-						value:[row.x,row.y,eval(row.EmpNum+row.NotEmpNum)],
-						//地区的id 取china area表id
-				        selected:false
-				        //自定义特殊 itemStyle，仅对该数据项有效
-					}); 
+
 					numEmp += row.EmpNum;
 					notNumEmp += row.NotEmpNum;
 				});
@@ -751,7 +781,7 @@ option = {
 			            label: {
 			                normal: {
 			                    position: 'inside',
-			                    show:true
+			                    show:false
 			                },
 			                
 			            },
@@ -762,7 +792,7 @@ option = {
 			            label: {
 			                normal: {
 			                    position: 'inside',
-			                    show:true
+			                    show:false
 			                },
 			                
 			            },
@@ -894,7 +924,7 @@ option = {
 					totalOrderNum += row.orderNum;
 				});
 			}
-			setBar2Option(bardata2,(totalEffect/data.length).toFixed(2),totalOrderNum,name);
+			setBar2Option(bardata2,(data.length>0?(totalEffect/data.length):0).toFixed(2),totalOrderNum,name);
 		}
 
 		function setBar2Option(bardata2,avgEffect,totalOrderNum,name){
