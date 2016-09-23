@@ -84,7 +84,7 @@ public class ChartServiceImpl implements IChartService {
 			//Date d = sdf.parse(time);
 			Calendar currentTime = Calendar.getInstance();
 			currentTime.setTime(new Date());
-			 timePeriod=currentTime.get(Calendar.HOUR_OF_DAY)-1;
+			 timePeriod=currentTime.get(Calendar.HOUR_OF_DAY);
 			if(timePeriod<0){
 				timePeriod=24;
 			}

@@ -960,7 +960,7 @@ option = {
 			if(data!=null){
 				$.each(data, function(index, row){
 					//name 地区名 averageEffect 该地区平均人效
-					bardata2[0].push(row.name+'分拣中心');
+					bardata2[0].push(row.name);
 					bardata2[1].push(row.effect);
 					totalEffect += row.effect;
 					totalOrderNum += row.orderNum;
