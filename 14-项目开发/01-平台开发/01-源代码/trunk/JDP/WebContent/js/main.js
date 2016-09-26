@@ -719,7 +719,6 @@ option = {
 		
 		//获取拼接地图数据
 		function makeMapData(data,name){
-			debugger;
 			mapdata= new Array();
 			piedata= new Array();
 			pieLegendData= new Array();
@@ -818,8 +817,8 @@ option = {
 			b=numEmp+notNumEmp==0?0:((notNumEmp/(numEmp+notNumEmp)).toFixed(2));
 			piedata.push(
 					{
-						name:'正式员工  '+parseInt(a*100)+'%',
-						value:numEmp,
+						name:'正式员工  '+Math.ceil(a*100)+'%',
+						value: Math.ceil(numEmp),
 			            label: {
 			                normal: {
 			                    position: 'inside',
@@ -829,8 +828,8 @@ option = {
 			            },
 					},
 					{
-						name:'非正式员工  '+parseInt(b*100)+'%',
-						value:notNumEmp,
+						name:'非正式员工  '+Math.ceil(b*100)+'%',
+						value:Math.ceil(notNumEmp),
 			            label: {
 			                normal: {
 			                    position: 'inside',
@@ -841,8 +840,8 @@ option = {
 					}
 
 				); 
-			pieLegendData.push('正式员工  '+parseInt(a*100)+'%');
-			pieLegendData.push('非正式员工  '+parseInt(b*100)+'%');
+			pieLegendData.push('正式员工  '+Math.ceil(a*100)+'%');
+			pieLegendData.push('非正式员工  '+Math.ceil(b*100)+'%');
 			setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
 		}
 
@@ -850,7 +849,7 @@ option = {
 			$("#areaTip").html(name||"全国");
 			$("#mapTopLeft").html(name?name+'实时人力构成':'全国实时人力构成');
 			option.title.text = name?(name+"在岗总人数"):"在岗总人数";
-			option.title.subtext =(total?""+total+"":'0');
+			option.title.subtext =(total?""+Math.ceil(total)+"":'0');
 			option.geo.map= (name||"全国");
 			option.series[0].data = mapdata;
 			pieOption.series[0].data = piedata;
@@ -945,7 +944,7 @@ option = {
 				url: url,
 				type: "post",
 				success: function (data) {
-					makebar2Data(data);
+					makebar2Data(data,name);
 				}
 			});
 		};
@@ -961,7 +960,7 @@ option = {
 				$.each(data, function(index, row){
 					//name 地区名 averageEffect 该地区平均人效
 					bardata2[0].push(row.name);
-					bardata2[1].push(row.effect);
+					bardata2[1].push(eval(row.effect).toFixed(2));
 					totalEffect += row.effect;
 					totalOrderNum += row.orderNum;
 				});
