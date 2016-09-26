@@ -1,6 +1,5 @@
 package com.jd.pims.pem.dao;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -20,9 +19,8 @@ public interface LabourOndutyDao extends IBaseDao {
 	 */
 	List<LabourOnduty> getCurrentTimeLabourOnduty(
 			@Param("currentDate") String currentDate, @Param("fullPath")String fullPath);
-
 	List<Map<String,Object>>getCurrentTimeLabourOndutyForChart(
-			@Param("currentDate") String currentDate,@Param("name")String name);
+			@Param("currentDate") String currentDate,@Param("begin") String begin, @Param("end")String end,@Param("name")String name);
 	List<Map<String,Object>> getHistoryLabourOndutyForChart(
 			@Param("startDate") String startDate,@Param("endDate") String endDate,@Param("name")String name);
 	/**
@@ -37,5 +35,4 @@ public interface LabourOndutyDao extends IBaseDao {
 			@Param("startDate") String startDate,
 			@Param("endDate") String endDate,
 			@Param("fullPath") String fullPath);
-
 }

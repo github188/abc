@@ -44,9 +44,14 @@ public class ChartServiceImpl implements IChartService {
 		if("全国".equals(name)){
 			name="京东集团";
 		}
-		Date dt = new Date(); 
-		String temp_str=sdf.format(dt);  
-			List<Map<String,Object>> templist=labourOndutyDao.getCurrentTimeLabourOndutyForChart(temp_str, name);
+		Calendar calendar = Calendar.getInstance();
+		String temp_str=sdf.format(calendar.getTime()); 
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+		calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
+		String end = df.format(calendar.getTime());
+		calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) - 1);
+		String begin = df.format(calendar.getTime());
+			List<Map<String,Object>> templist=labourOndutyDao.getCurrentTimeLabourOndutyForChart(temp_str,begin,end, name);
 			if(null!=templist&&!templist.isEmpty()&&templist.size()>0){
 				return templist;
 			}else{
