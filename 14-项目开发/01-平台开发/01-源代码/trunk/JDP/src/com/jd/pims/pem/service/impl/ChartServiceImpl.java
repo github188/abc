@@ -75,7 +75,7 @@ public class ChartServiceImpl implements IChartService {
 		Date endDate = cal.getTime();
 		String endtime =sdf.format(endDate);
 		list=labourOndutyDao.getHistoryLabourOndutyForChart(endtime,starttime, name);	
-		return list;
+		return getData(list,"LabourOndutyHistory");
 	}
 
 	@Override
@@ -131,7 +131,45 @@ public class ChartServiceImpl implements IChartService {
 		Date endDate = cal.getTime();
 		String endtime =sdf.format(endDate);
 		list = labourEfficiencyDao.getHistoryEfficiencyForChart(endtime,starttime,24, name);
-		return list;
+		return getData(list,"EfficiencyHistory");
 	}
+	public List<Map<String,Object>> getData(List<Map<String,Object>> list,String type){
+		Calendar cal = Calendar.getInstance();
+		List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
+		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 8);
+		for(int i=1;i<=7;i++){
+			cal.set(Calendar.DATE, cal.get(Calendar.DATE) + 1);
+			String month = (cal.get(Calendar.MONTH)+1)<11?("0"+(cal.get(Calendar.MONTH)+1)+"月"):((cal.get(Calendar.MONTH)+1)+"月");
+			String day = cal.get(Calendar.DAY_OF_MONTH)<11?("0"+cal.get(Calendar.DAY_OF_MONTH)+"日"):(cal.get(Calendar.DAY_OF_MONTH)+"日");
+			String date = month+day;
+			boolean flag = false;
+			if(null!=list&&!list.isEmpty()&&list.size()>0){
+				for(Map<String,Object>map:list){
+					if(map.get("name").equals(date)){
+						result.add(map);
+						flag = true;
+						break;
+					}
+				}
+			}
+			if(!flag){
+				if("EfficiencyHistory".equals(type)){
+					Map<String,Object>temp = new HashMap<String,Object>();
+					temp.put("name",date);
+					temp.put("effect",0);
+					temp.put("orderNum",0);
+					temp.put("clerkNum",0);
+					result.add(temp);
+				}else{
+					Map<String,Object>temp = new HashMap<String,Object>();
+					temp.put("name",date);
+					temp.put("EmpNum",0);
+					temp.put("NotEmpNum",0);
+					result.add(temp);
+				}
 
+			}
+		}
+		return result;
+	}
 }

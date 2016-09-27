@@ -181,7 +181,7 @@ option = {
 	        },	        
 	        {
 	        	type:'value',
-	        	name: '百分比（%）',
+	        	name: '人效（单/每人）',
 	        	axisLine:{
 		    		lineStyle:{
 		    			color:'#7ab8f9'
@@ -263,10 +263,10 @@ option = {
                 }
 	        },
 	        grid:{
-	        	width:'85%',
-	        	left:'10%',
-	        	top:'20%',
+	        	left:10,
+	        	right:10,
 	        	bottom:'10%',
+	        	top:'20%',
 	        	containLabel:true
 	        },
 	        yAxis: [
@@ -442,6 +442,7 @@ option = {
 		                    show: false
 		                }
 		            },
+		            selectedOffset:0,
 		            label: {
 		                normal: {
 		                    position: 'inside',
@@ -700,10 +701,10 @@ option = {
 		function getData(name){
 			searchMap(name);
 			searchBar2(name);
-			if(!enlarged){
+		/*	if(!enlarged){*/
 				searchBar(name);
 				searchBar1(name);
-			}
+/*			}*/
 		};
 		
 		function searchMap(name) {
