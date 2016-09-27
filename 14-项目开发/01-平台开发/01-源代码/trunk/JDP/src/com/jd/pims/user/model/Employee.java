@@ -3,7 +3,6 @@ package com.jd.pims.user.model;
 
 import javax.persistence.Entity;
 
-import com.google.gson.Gson;
 import com.jd.pims.comm.BaseDataModel;
 
 @Entity
@@ -31,6 +30,8 @@ public class Employee extends BaseDataModel{
 	
 	private String nativePlace;//户籍
 	
+	private String IDCardNo;
+	
 	private String orgId;
 
 	private String orgCode;
@@ -43,7 +44,7 @@ public class Employee extends BaseDataModel{
 	
 	private String cuName;
 
-	
+	private String personType;
 
 
 	public String getId() {
@@ -222,6 +223,30 @@ public class Employee extends BaseDataModel{
 
 	public void setCuName(String cuName) {
 		this.cuName = cuName;
+	}
+
+
+
+	public String getIDCardNo() {
+		return IDCardNo;
+	}
+
+
+
+	public void setIDCardNo(String IDCardNo) {
+		this.IDCardNo = IDCardNo;
+	}
+
+
+
+	public String getPersonType() {
+		return personType;
+	}
+
+
+
+	public void setPersonType(String personType) {
+		this.personType = personType;
 	}
 	
 	

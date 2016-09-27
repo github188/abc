@@ -129,14 +129,20 @@ public class BizServiceImpl implements IBizService {
 				timePeriod = 24;
 			}
 		}
-		LabourEfficiency le = labourEfficiencyDao.getLabourEfficiency(
+		List<LabourEfficiency> list = labourEfficiencyDao.getLabourEfficiency(
 				sFormat.format(bizDate), timePeriod, cu.getFullPath());
-		if (le != null) {
-			le.setEfficiency(le.getPeriodEfficiency());
-			le.setCuId(cuId);
-			le.setCuName(cu.getCuName());
+		LabourEfficiency result=new LabourEfficiency();
+		result.setCuId(cuId);
+		result.setCuName(cu.getCuName());
+		double efficiency=0.0;
+		if (list != null && list.size()>0) {
+			for(LabourEfficiency le:list){
+				efficiency+=le.getPeriodEfficiency();
+			}
+			efficiency=efficiency/list.size();
 		}
-		return le;
+		result.setEfficiency(efficiency);
+		return result;
 	}
 
 }
