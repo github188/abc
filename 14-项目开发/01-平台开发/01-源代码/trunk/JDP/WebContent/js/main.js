@@ -160,7 +160,7 @@ option = {
 	        },
 	        grid:{
 	        	left:10,
-	        	right:10,
+	        	right:12,
 	        	bottom:'10%',
 	        	top:'20%',
 	        	containLabel:true
@@ -168,7 +168,7 @@ option = {
 	        yAxis: [
 	        {
 	        	type:'value',
-	        	name: '数量（个）',
+	        	name: '数量(个)',
 	        	axisLine:{
 		    		lineStyle:{
 		    			color:'#7ab8f9'
@@ -181,7 +181,7 @@ option = {
 	        },	        
 	        {
 	        	type:'value',
-	        	name: '人效（单/每人）',
+	        	name: '人效(单/每人)',
 	        	axisLine:{
 		    		lineStyle:{
 		    			color:'#7ab8f9'
@@ -272,7 +272,7 @@ option = {
 	        yAxis: [
 	        {
 	        	type:'value',
-	        	name: '数量（个）',
+	        	name: '数量(个)',
 	        	axisLine:{
 		    		lineStyle:{
 		    			color:'#7ab8f9'
@@ -284,7 +284,7 @@ option = {
                 splitNumber:6
 	        },{
 	        	type:'value',
-	        	name: '百分比（%）',
+	        	name: '百分比(%)',
 	        	axisLine:{
 		    		lineStyle:{
 		    			color:'#7ab8f9'
@@ -993,6 +993,8 @@ option = {
 					var mapTopRight = $('#mapTopRight');
 					mapTopRight.bind("click", function() { back(0);});
 					mapchart.resize();
+					barchart.resize();
+					barchart1.resize();
 					barchart2.resize();
 					piechart.resize();
 					enlarged = true;
@@ -1008,7 +1010,11 @@ option = {
 					effectTopRight.removeAttr("onclick");
 					var effectTopRight = $('#effectTopRight');
 					effectTopRight.bind("click", function() { back(1);});
+					mapchart.resize();
 					barchart.resize();
+					barchart1.resize();
+					barchart2.resize();
+					piechart.resize();
 					break;
 				case 2 :
 					a.hide();
@@ -1021,7 +1027,11 @@ option = {
 					countTopRight.removeAttr("onclick");
 					var countTopRight = $('#countTopRight');
 					countTopRight.bind("click", function() { back(2);});
+					mapchart.resize();
+					barchart.resize();
 					barchart1.resize();
+					barchart2.resize();
+					piechart.resize();
 					break;	
 			}	
 		}
@@ -1039,6 +1049,8 @@ option = {
 					var mapTopRight = $('#mapTopRight');
 					mapTopRight.bind("click", function() { resize(0);});
 					mapchart.resize();
+					barchart.resize();
+					barchart1.resize();
 					barchart2.resize();
 					piechart.resize();
 					enlarged = false;
@@ -1054,7 +1066,11 @@ option = {
 					effectTopRight.removeAttr("onclick");
 					var effectTopRight = $('#effectTopRight');
 					effectTopRight.bind("click", function() { resize(1);});
+					mapchart.resize();
 					barchart.resize();
+					barchart1.resize();
+					barchart2.resize();
+					piechart.resize();
 					break;
 				case 2 :
 					a.show();
@@ -1067,7 +1083,11 @@ option = {
 					countTopRight.removeAttr("onclick");
 					var countTopRight = $('#countTopRight');
 					countTopRight.bind("click", function() { resize(2);});
+					mapchart.resize();
+					barchart.resize();
 					barchart1.resize();
+					barchart2.resize();
+					piechart.resize();
 					break;
 					
 			}	
