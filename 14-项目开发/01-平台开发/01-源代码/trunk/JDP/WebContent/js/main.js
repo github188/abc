@@ -409,7 +409,7 @@ option = {
             }
 	        ]
 		};
-		
+
 		var pieOption = {
 			title: {
 	            text: '',
@@ -425,7 +425,7 @@ option = {
 				right:0,
 				textStyle:{
 		        	color:'#fff'
-		      	},zlevel:1
+		      	},zlevel:1,orient:'horizontal'
 			},
 		    series : [
 		        {
@@ -999,11 +999,29 @@ option = {
 					mapTopRight.removeAttr("onclick");
 					var mapTopRight = $('#mapTopRight');
 					mapTopRight.bind("click", function() { back(0);});
+					var map = $('#map');
+					map.css({"height":"93%","width":"60%"});
+					var bar = $('#bar');
+					bar.css({"height":"50%","width":"40%","bottom":"4%","top":"auto","left":"auto","right":"0"});
+					var pie = $('#pie');
+					pie.css({"height":"40%","width":"30%","bottom":"auto","top":"4%","right":"18%"});
+					pieOption.legend.right='20%';
+					pieOption.legend.bottom=20;
+					pieOption.legend.orient='horizontal';
+					pieOption.grid={
+						width:'100%',
+						hight:'100%',
+			        	containLabel:true
+			        };
+					pieOption.series[0].radius=[0, '60%'];
+					piechart.setOption(pieOption, true);
 					mapchart.resize();
 					barchart.resize();
 					barchart1.resize();
 					barchart2.resize();
 					piechart.resize();
+					$('.text1 ').css({"bottom":"44rem","right":"10%"});
+					$('.text2 ').css({"bottom":"36rem","right":"10%"});
 					enlarged = true;
 					break;
 				case 1 :
@@ -1055,6 +1073,17 @@ option = {
 					mapTopRight.removeAttr("onclick");
 					var mapTopRight = $('#mapTopRight');
 					mapTopRight.bind("click", function() { resize(0);});
+					var map = $('#map');
+					map.css({"height":"65%","width":"90%"});
+					var bar = $('#bar');
+					bar.css({"height":"38%","width":"70%","top":"61%","left":"2%"});
+					var pie = $('#pie');
+					pie.css({"height":"30%","width":"30%","top":"auto","bottom":"15rem","right":"1%"});
+					pieOption.legend.right=0;pieOption.legend.bottom=10;
+					pieOption.series[0].radius=[0, '45%'];
+					piechart.setOption(pieOption, true);
+					$('.text1 ').css({"bottom":"8rem","right":"2%"});
+					$('.text2 ').css({"bottom":"2rem","right":"2%"});
 					mapchart.resize();
 					barchart.resize();
 					barchart1.resize();
