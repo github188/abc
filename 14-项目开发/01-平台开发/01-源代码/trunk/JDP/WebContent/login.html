@@ -77,16 +77,16 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
         <div class="form-group">
           <div class="col-md-12">
             <!--<label for="username" class="col-sm-2 control-label">用户</label>-->
-            <div class="col-sm-6 col-sm-push-3" style="z-index:3;">
-              <input type="text" id="username" placeholder="请输入用户名" rel="popover" data-container="body" data-content="请输入用户名" style="background:url(images/input.png)no-repeat; background-size: 100% 100%;color: #46d7ff;border: none;" class="form-control" ng-model="usr"/>
+            <div class="col-sm-6 col-sm-push-3" style="z-index:3;" id="username" rel="popover">
+              <input type="text"  placeholder="请输入用户名"  style="background:url(images/input.png)no-repeat; background-size: 100% 100%;color: #46d7ff;border: none;" class="form-control" ng-model="usr"/>
             </div>
           </div>
         </div>
         <div class="form-group">
           <div class="col-md-12">
             <!--<label for="password" class="col-sm-2 control-label">密码</label>-->
-            <div class="col-sm-6 col-sm-push-3"style="z-index:3;" >
-              <input type="password"  id="password" placeholder="请输入密码" rel="popover" data-container="body" data-content="请输入密码" style="background:url(images/input.png)no-repeat; background-size: 100% 100%;color: #46d7ff;border: none;" class="form-control" ng-model="pwd"/>
+            <div class="col-sm-6 col-sm-push-3"style="z-index:3;"id="password" rel="popover"  >
+              <input type="password"  placeholder="请输入密码"style="background:url(images/input.png)no-repeat; background-size: 100% 100%;color: #46d7ff;border: none;" class="form-control" ng-model="pwd"/>
             </div>
           </div>
         </div>
@@ -134,8 +134,8 @@ http://www.templatemo.com/preview/templatemo_415_dashboard
 	<script src="js/app1.js"></script>
     <script>
     $(document).ready(function () {
-    	$("#username").popover();
-    	$("#password").popover();
+    	$("#username").popover({trigger: 'focus',content: "请输入用户名"});
+    	$("#password").popover({trigger: 'focus',content: "请输入密码"});
     	$("#alert-user").click(function(){
     		$("#alert-user").attr("class","alert alert-danger hidden");
     	});
