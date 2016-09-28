@@ -180,16 +180,21 @@ public class AppController extends BaseController {
 				List<LabourOndutyState> results = pemService.getNumberHistory(
 						cuId, sFormat.parse(startDate), sFormat.parse(endDate),
 						"D");
-				if (null != results && results.size() > 0 && !results.isEmpty()) {
+				if (null != results  && !results.isEmpty()) {
 					// 如果返回的记录数少于7天，自动补全
 					LabourOndutyState[] array = new LabourOndutyState[7];
 					if (results.size() < 7) {
 						Date stDate = sFormat.parse(startDate);
 						for (int i = 0; i < 7; i++) {
 							LabourOndutyState match = null;
+							Calendar currentTime = Calendar.getInstance();
+							currentTime.setTime(stDate);
+							currentTime.add(Calendar.DAY_OF_MONTH, i);
+							
+							
 							for (LabourOndutyState state : results) {
 								if (state.getDayTime().equals(
-										sFormat.format(stDate))) {
+										sFormat.format(currentTime.getTime()))) {
 									match = state;
 									break;
 								}
@@ -200,20 +205,12 @@ public class AppController extends BaseController {
 								array[i] = new LabourOndutyState();
 								array[i].setCuId(cuId);
 								array[i].setCuName(cu.getCuName());
-								Calendar currentTime = Calendar.getInstance();
-								currentTime.setTime(stDate);
-								currentTime.add(Calendar.DAY_OF_MONTH, i);
 								array[i].setDayTime(sFormat.format(currentTime
 										.getTime()));
 							}
 						}
 					}
-
-					// LabourOndutyState[] LabourOndutyState = new
-					// LabourOndutyState[results
-					// .size()];
-
-					// LabourOndutyState = results.toArray(LabourOndutyState);
+					
 					Arrays.sort(array);
 					return this.buildSuccessResponse(array).toString();
 				}

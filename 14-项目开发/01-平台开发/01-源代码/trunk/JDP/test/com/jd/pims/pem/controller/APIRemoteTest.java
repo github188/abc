@@ -61,6 +61,21 @@ public class APIRemoteTest {
 	}
 	
 	@Test
+	public void testGetNumberHistory() throws UnsupportedEncodingException {
+		String action = as_url+"/getNumberHistory.do";
+		ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+		list.add(new BasicNameValuePair("empId",
+				"11111111111111111111111111111112"));
+		list.add(new BasicNameValuePair("cuId",
+				"11111111111111111111111111111111"));
+		list.add(new BasicNameValuePair("startDate", "2016-09-21"));
+		list.add(new BasicNameValuePair("endDate", "2016-09-27"));
+		list.add(new BasicNameValuePair("interval", "D"));
+		HttpEntity en = new UrlEncodedFormEntity(list, "UTF-8");
+		execute(en, action);
+	}
+	
+	@Test
 	public void testGetEfficiency() throws UnsupportedEncodingException {
 		String action = as_url+"/getEfficiency.do";
 		ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();

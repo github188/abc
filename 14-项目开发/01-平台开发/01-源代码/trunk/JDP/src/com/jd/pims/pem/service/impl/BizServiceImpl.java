@@ -131,6 +131,7 @@ public class BizServiceImpl implements IBizService {
 				timePeriod = 24;
 			}
 		}
+		//取符合条件的人效记录（每个分拣中心一条记录）
 		List<LabourEfficiency> list = labourEfficiencyDao.getLabourEfficiency(
 				sFormat.format(bizDate), timePeriod, cu.getFullPath());
 		LabourEfficiency result=new LabourEfficiency();
