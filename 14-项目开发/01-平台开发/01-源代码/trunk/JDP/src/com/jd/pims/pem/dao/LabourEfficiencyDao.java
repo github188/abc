@@ -17,7 +17,7 @@ public interface LabourEfficiencyDao extends IBaseDao {
 	 * @param fullPath
 	 * @return
 	 */
-	LabourEfficiency getLabourEfficiency(@Param("bizDate")String bizDate, @Param("timePeriod")Integer timePeriod,
+	List<LabourEfficiency> getLabourEfficiency(@Param("bizDate")String bizDate, @Param("timePeriod")Integer timePeriod,
 			@Param("fullPath")String fullPath);
 	
 	/**

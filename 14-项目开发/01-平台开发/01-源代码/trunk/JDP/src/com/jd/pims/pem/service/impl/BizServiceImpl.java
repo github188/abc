@@ -53,8 +53,10 @@ public class BizServiceImpl implements IBizService {
 		ControlUnit cu = userDao.findOrganization(cuId);
 		state.setCuName(cu.getCuName());
 		List<LabourOnduty> list;
+		int beginTime=getBeginTime();
+		int endTime=beginTime+1;
 		list = labourOndutyDao.getCurrentTimeLabourOnduty(sFormat.format(date),
-				cu.getFullPath());
+				(beginTime<10?"0":"")+beginTime+":00:00",(endTime<10?"0":"")+endTime+":00:00",cu.getFullPath());
 		for (LabourOnduty rec : list) {
 			if (rec.getPersonType().equals("1") ) {
 				state.setNumEmp(rec.getQuantityOnduty());
@@ -129,14 +131,29 @@ public class BizServiceImpl implements IBizService {
 				timePeriod = 24;
 			}
 		}
-		LabourEfficiency le = labourEfficiencyDao.getLabourEfficiency(
+		List<LabourEfficiency> list = labourEfficiencyDao.getLabourEfficiency(
 				sFormat.format(bizDate), timePeriod, cu.getFullPath());
-		if (le != null) {
-			le.setEfficiency(le.getPeriodEfficiency());
-			le.setCuId(cuId);
-			le.setCuName(cu.getCuName());
+		LabourEfficiency result=new LabourEfficiency();
+		result.setCuId(cuId);
+		result.setCuName(cu.getCuName());
+		double efficiency=0.0;
+		if (list != null && list.size()>0) {
+			for(LabourEfficiency le:list){
+				efficiency+=le.getPeriodEfficiency();
+			}
+			efficiency=efficiency/list.size();
 		}
-		return le;
+		result.setEfficiency(efficiency);
+		return result;
 	}
 
+	private int getBeginTime(){
+		Calendar currentTime = Calendar.getInstance();
+		currentTime.setTime(new Date());
+		int timePeriod = currentTime.get(Calendar.HOUR_OF_DAY) - 1;
+		if (timePeriod < 0) {
+			timePeriod = 24;
+		}
+		return timePeriod;
+	}
 }

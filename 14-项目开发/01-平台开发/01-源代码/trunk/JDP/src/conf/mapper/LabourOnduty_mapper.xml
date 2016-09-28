@@ -26,15 +26,14 @@
   </resultMap>
 
   <select id="getCurrentTimeLabourOnduty" resultMap="labourOnduty">
-  	SELECT RS.BIZ_DATE,RS.PERSON_TYPE,sum(RS.QUANTITY_ONDUTY) QUANTITY_ONDUTY from 
-		(SELECT LO.BIZ_DATE,LO.PERSON_TYPE,LO.QUANTITY_ONDUTY
-		  	FROM JD_LE_LABOUR_ONDUTY LO
+   <![CDATA[	
+  	SELECT LO.BIZ_DATE,LO.PERSON_TYPE,ROUND(AVG(LO.QUANTITY_ONDUTY)) AS QUANTITY_ONDUTY
+	FROM JD_LE_LABOUR_ONDUTY LO
 		  	LEFT JOIN NP_SYS_CONTROLUNIT CU ON LO.CU_ID=CU.ID
-		  	WHERE LO.BIZ_DATE=#{currentDate}
+	WHERE LO.BIZ_DATE=#{currentDate} AND TIMING>=#{beginTime} AND TIMING<#{endTime}
 		  		and CU.FULL_PATH like CONCAT(#{fullPath},'%' )
-		  	ORDER BY TIMING DESC
-		  	LIMIT 0,5
-		) RS GROUP BY RS.BIZ_DATE,RS.PERSON_TYPE
+	GROUP BY LO.BIZ_DATE,LO.PERSON_TYPE 	  	
+	]]>	
   </select>
 
   <select id="getHistoryLabourOnduty" resultMap="labourOndutyDayState">
