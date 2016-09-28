@@ -852,6 +852,13 @@ option = {
 			option.title.text = name?(name+"在岗总人数"):"在岗总人数";
 			option.title.subtext =(total?""+Math.ceil(total)+"":'0');
 			option.geo.map= (name||"全国");
+			if(name=='海南'){
+				option.geo.center = [109.8,19];
+				option.geo.zoom = 4;
+			}else{
+				option.geo.center = [];
+				option.geo.zoom = 1;
+			}
 			option.series[0].data = mapdata;
 			pieOption.series[0].data = piedata;
 			pieOption.legend.data = pieLegendData;
