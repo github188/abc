@@ -3,6 +3,7 @@ package com.jd.pims.pem.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.jd.pims.comm.BaseController;
 import com.jd.pims.pem.model.LabourEfficiency;
-import com.jd.pims.pem.model.LabourOndutyDayState;
 import com.jd.pims.pem.model.LabourOndutyState;
 import com.jd.pims.pem.service.IBizService;
 import com.jd.pims.user.model.ControlUnit;
@@ -163,11 +163,14 @@ public class AppController extends BaseController {
 			return this.buildFailResponse(2, "参数值不被支持:interval的值只能是H或者D")
 					.toString();
 		}
+		ControlUnit cu = null;
 		if (cuId == null) {
-			ControlUnit root = uesrService.findRootOrganization();
-			if (null != root) {
-				cuId = root.getId();
+			cu = uesrService.findRootOrganization();
+			if (null != cu) {
+				cuId = cu.getId();
 			}
+		} else {
+			cu = uesrService.findOrganization(cuId);
 		}
 
 		if (startDate != null && !"".equals(startDate) && endDate != null
@@ -178,12 +181,41 @@ public class AppController extends BaseController {
 						cuId, sFormat.parse(startDate), sFormat.parse(endDate),
 						"D");
 				if (null != results && results.size() > 0 && !results.isEmpty()) {
-					LabourOndutyState[] LabourOndutyState = new LabourOndutyState[results
-							.size()];
-					LabourOndutyState = results.toArray(LabourOndutyState);
-					Arrays.sort(LabourOndutyState);
-					return this.buildSuccessResponse(LabourOndutyState)
-							.toString();
+					// 如果返回的记录数少于7天，自动补全
+					LabourOndutyState[] array = new LabourOndutyState[7];
+					if (results.size() < 7) {
+						Date stDate = sFormat.parse(startDate);
+						for (int i = 0; i < 7; i++) {
+							LabourOndutyState match = null;
+							for (LabourOndutyState state : results) {
+								if (state.getDayTime().equals(
+										sFormat.format(stDate))) {
+									match = state;
+									break;
+								}
+							}
+							if (match != null) {
+								array[i] = match;
+							} else {
+								array[i] = new LabourOndutyState();
+								array[i].setCuId(cuId);
+								array[i].setCuName(cu.getCuName());
+								Calendar currentTime = Calendar.getInstance();
+								currentTime.setTime(stDate);
+								currentTime.add(Calendar.DAY_OF_MONTH, i);
+								array[i].setDayTime(sFormat.format(currentTime
+										.getTime()));
+							}
+						}
+					}
+
+					// LabourOndutyState[] LabourOndutyState = new
+					// LabourOndutyState[results
+					// .size()];
+
+					// LabourOndutyState = results.toArray(LabourOndutyState);
+					Arrays.sort(array);
+					return this.buildSuccessResponse(array).toString();
 				}
 				JsonObject retMsg = new JsonObject();
 				retMsg.addProperty("returnCode", 0);
@@ -237,8 +269,6 @@ public class AppController extends BaseController {
 							nle = map.get(sFormat.format(le.getBizDate()));
 						} else {
 							nle = new LabourEfficiency();
-							nle.setCuId(cuId);
-							nle.setCuName(cu.getCuName());
 							nle.setBizDate(le.getBizDate());
 							map.put(sFormat.format(le.getBizDate()), nle);
 						}
@@ -256,8 +286,15 @@ public class AppController extends BaseController {
 					}
 					LabourEfficiency[] arr = map.values().toArray(
 							new LabourEfficiency[results.size()]);
-					Arrays.sort(arr);
-					return this.buildSuccessResponse(arr).toString();
+					//补充缺失日期数据
+					LabourEfficiency[] array=patchMissEfficiencyHistoryDateData(arr,startDate);
+					for(LabourEfficiency le:array){
+						le.setCuId(cuId);
+						le.setCuName(cu.getCuName());
+					}
+					Arrays.sort(array);
+
+					return this.buildSuccessResponse(array).toString();
 				}
 				JsonObject retMsg = new JsonObject();
 				retMsg.addProperty("returnCode", 0);
@@ -272,6 +309,40 @@ public class AppController extends BaseController {
 		}
 		return this.buildFailResponse(1, "参数不能为空").toString();
 
+	}
+
+	/**
+	 * 补全历史人效数据
+	 * 
+	 * @param arr
+	 * @throws ParseException 
+	 */
+	private LabourEfficiency[] patchMissEfficiencyHistoryDateData(
+			LabourEfficiency[] arr,String startDate) throws ParseException {
+		if (arr.length == 7) {
+			return arr;
+		}
+		LabourEfficiency[] array=new LabourEfficiency[7];
+		Date stDate = sFormat.parse(startDate);
+		for (int i = 0; i < 7; i++) {
+			LabourEfficiency match = null;
+			for (LabourEfficiency le : arr) {
+				if (sFormat.format(le.getBizDate()).equals(sFormat.format(stDate))) {
+					match = le;
+					break;
+				}
+			}
+			if (match != null) {
+				array[i] = match;
+			} else {
+				array[i] = new LabourEfficiency();
+				Calendar currentTime = Calendar.getInstance();
+				currentTime.setTime(stDate);
+				currentTime.add(Calendar.DAY_OF_MONTH, i);
+				array[i].setBizDate(currentTime.getTime());
+			}
+		}
+		return array;
 	}
 
 	/**

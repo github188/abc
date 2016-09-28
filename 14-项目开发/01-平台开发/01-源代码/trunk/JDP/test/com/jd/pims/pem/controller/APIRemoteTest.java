@@ -49,6 +49,18 @@ public class APIRemoteTest {
 	}
 	
 	@Test
+	public void testGetNumberOnduty() throws UnsupportedEncodingException {
+		String action = as_url+"/getNumberOnDuty.do";
+		ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();
+		list.add(new BasicNameValuePair("empId",
+				"11111111111111111111111111111112"));
+		list.add(new BasicNameValuePair("cuId",
+				"11111111111111111111111111111111"));
+		HttpEntity en = new UrlEncodedFormEntity(list, "UTF-8");
+		execute(en, action);
+	}
+	
+	@Test
 	public void testGetEfficiency() throws UnsupportedEncodingException {
 		String action = as_url+"/getEfficiency.do";
 		ArrayList<NameValuePair> list = new ArrayList<NameValuePair>();

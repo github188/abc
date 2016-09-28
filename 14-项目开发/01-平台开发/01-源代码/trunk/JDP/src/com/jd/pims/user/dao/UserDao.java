@@ -57,7 +57,7 @@ public interface UserDao extends IBaseDao{
 	 * @param inputStr
 	 * @return
 	 */
-	List<Employee> searchEmployee(String inputStr);
+	List<Employee> searchEmployee(@Param("inputStr")String inputStr);
 
 	List<Map<String, Object>> getAreaList(@Param("name")String name);
 }

@@ -28,7 +28,7 @@ public class LabourOndutyState extends BaseDataModel implements Comparable<Labou
 	//其他员工数量
 	private Integer numOther=0;
 	
-	private SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
+	private static SimpleDateFormat sFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 	public String getCuId() {
 		return cuId;
