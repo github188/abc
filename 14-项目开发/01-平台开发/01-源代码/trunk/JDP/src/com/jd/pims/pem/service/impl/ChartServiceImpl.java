@@ -46,7 +46,7 @@ public class ChartServiceImpl implements IChartService {
 		}
 		Calendar calendar = Calendar.getInstance();
 		String temp_str=sdf.format(calendar.getTime()); 
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+		SimpleDateFormat df = new SimpleDateFormat("HH:00:00");
 		calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
 		String end = df.format(calendar.getTime());
 		calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) - 1);
@@ -93,7 +93,7 @@ public class ChartServiceImpl implements IChartService {
 			if(timePeriod<0){
 				timePeriod=24;
 			}
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+			SimpleDateFormat df = new SimpleDateFormat("HH:00:00");
 			currentTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY));
 			String end = df.format(currentTime.getTime());
 			currentTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY) - 1);
