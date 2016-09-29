@@ -142,9 +142,13 @@ public class BizServiceImpl implements IBizService {
 		double efficiency=0.0;
 		if (list != null && list.size()>0) {
 			for(LabourEfficiency le:list){
-				efficiency+=le.getPeriodEfficiency();
+				efficiency+=le.getPeriodEfficiency();//累计时段的人效值
 			}
-			efficiency=efficiency/list.size();
+			
+		}
+		int size=userDao.getSubOrganizationSize(cuId);
+		if(size>0){
+			efficiency=efficiency/size;//求平均
 		}
 		result.setEfficiency(efficiency);
 		return result;

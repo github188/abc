@@ -60,4 +60,6 @@ public interface UserDao extends IBaseDao{
 	List<Employee> searchEmployee(@Param("inputStr")String inputStr);
 
 	List<Map<String, Object>> getAreaList(@Param("name")String name);
+	
+	Integer getSubOrganizationSize(@Param("parentId")String parentId);
 }

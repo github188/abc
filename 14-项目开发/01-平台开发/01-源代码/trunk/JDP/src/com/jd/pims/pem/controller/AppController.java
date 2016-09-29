@@ -114,13 +114,14 @@ public class AppController extends BaseController {
 			}
 		}
 
-		// 取上一个小时
+		// 取指定控制单元上一个小时人效
 		LabourEfficiency parent = pemService.getTimePeriodEfficience(cuId,
 				new Date(), null);
 		if (null != parent) {
 			JsonObject result = parent.toJsonObject();
 			List<ControlUnit> controlUnits = uesrService
 					.getSubOrganizations(cuId);
+			//取所有子控制单元上一个小时的人效
 			if (null != controlUnits && controlUnits.size() > 0) {
 				JsonArray subItems = new JsonArray();
 				for (ControlUnit cu : controlUnits) {
@@ -131,8 +132,16 @@ public class AppController extends BaseController {
 						subItems.add(state.toJsonObject());
 					}
 				}
+				//构造返回的数据结构
 				result.add("subItems", subItems);
+				
+				//求指定控制单元的平均人效
+				
+				double avgEfficiency=parent.getEfficiency()/controlUnits.size();
 			}
+			
+			
+			
 			return this.buildSuccessResponse(result).toString();
 		}
 		JsonObject retMsg = new JsonObject();
