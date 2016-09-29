@@ -59,14 +59,16 @@ public class BizServiceImpl implements IBizService {
 				(beginTime<10?"0":"")+beginTime+":00:00",(endTime<10?"0":"")+endTime+":00:00",cu.getFullPath());
 		for (LabourOnduty rec : list) {
 			if (rec.getPersonType().equals("1") ) {
-				state.setNumEmp(rec.getQuantityOnduty());
+				state.setNumEmp((state.getNumEmp() == null ? 0 : state
+						.getNumEmp()) + rec.getQuantityOnduty());
 			} else if (rec.getPersonType().equals("2")
 					|| rec.getPersonType().equals("3")
 					|| rec.getPersonType().equals("4")) {
 				state.setNumTemp((state.getNumTemp() == null ? 0 : state
 						.getNumTemp()) + rec.getQuantityOnduty());
 			} else if (rec.getPersonType().equals("5")) {
-				state.setNumOther(rec.getQuantityOnduty());
+				state.setNumOther((state.getNumOther() == null ? 0 : state
+						.getNumOther()) +rec.getQuantityOnduty());
 			}
 		}
 
@@ -126,8 +128,8 @@ public class BizServiceImpl implements IBizService {
 		if (timePeriod == null) {
 			Calendar currentTime = Calendar.getInstance();
 			currentTime.setTime(new Date());
-			timePeriod = currentTime.get(Calendar.HOUR_OF_DAY) - 1;
-			if (timePeriod < 0) {
+			timePeriod = currentTime.get(Calendar.HOUR_OF_DAY);
+			if (timePeriod ==0) {
 				timePeriod = 24;
 			}
 		}
@@ -151,8 +153,8 @@ public class BizServiceImpl implements IBizService {
 	private int getBeginTime(){
 		Calendar currentTime = Calendar.getInstance();
 		currentTime.setTime(new Date());
-		int timePeriod = currentTime.get(Calendar.HOUR_OF_DAY) - 1;
-		if (timePeriod < 0) {
+		int timePeriod = currentTime.get(Calendar.HOUR_OF_DAY) ;
+		if (timePeriod ==0) {
 			timePeriod = 24;
 		}
 		return timePeriod;

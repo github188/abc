@@ -60,7 +60,7 @@ public class AppControllerTest extends
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		request.setMethod(HttpMethod.POST.name());
 		request.addParameter("empId", "11111111111111111111111111111111");
-		request.addParameter("cuId", "12cad8e307844dcc8525c9357f0692f0");
+		request.addParameter("cuId", "11111111111111111111111111111111");
 		String msg = controller.getEfficiency(request, response);
 		System.out.println(msg);
 

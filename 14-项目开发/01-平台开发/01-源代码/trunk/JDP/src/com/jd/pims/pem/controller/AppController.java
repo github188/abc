@@ -411,7 +411,7 @@ public class AppController extends BaseController {
 		}
 		result.addProperty("totalLabour", totalLabour);
 		result.addProperty("avgEfficiency",
-				parent != null ? parent.getAvgEfficiency() : 0);
+				parent != null ? parent.getEfficiency() : 0);
 		return this.buildSuccessResponse(result).toString();
 	}
 }
