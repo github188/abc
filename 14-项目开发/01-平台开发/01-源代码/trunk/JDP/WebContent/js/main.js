@@ -961,19 +961,19 @@ option = {
 			bardata2= new Array();
 			bardata2[0] = new Array();
 			bardata2[1] = new Array();
-			var totalEffect = 0.0;
+			var totalClerkNum = 0.0;
 			var totalOrderNum = 0.0;
 			var data=eval(data);
 			if(data!=null){
 				$.each(data, function(index, row){
 					//name 地区名 averageEffect 该地区平均人效
 					bardata2[0].push(row.name);
-					bardata2[1].push(eval(row.effect).toFixed(2));
-					totalEffect += row.effect;
+					bardata2[1].push(row.clerkNum>0?(eval(row.orderNum/row.clerkNum)*100).toFixed(2):0);
+					totalClerkNum += row.clerkNum;
 					totalOrderNum += row.orderNum;
 				});
 			}
-			setBar2Option(bardata2,((data&&data.length>0)?(totalEffect/data.length).toFixed(2):'0'),totalOrderNum,name);
+			setBar2Option(bardata2,((data&&data.length>0&&totalClerkNum>0)?(totalOrderNum/totalClerkNum).toFixed(2):'0'),totalOrderNum,name);
 		}
 
 		function setBar2Option(bardata2,avgEffect,totalOrderNum,name){

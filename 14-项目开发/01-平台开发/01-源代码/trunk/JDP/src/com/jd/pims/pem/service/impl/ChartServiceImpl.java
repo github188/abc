@@ -93,17 +93,22 @@ public class ChartServiceImpl implements IChartService {
 			if(timePeriod<0){
 				timePeriod=24;
 			}
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
+			currentTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY));
+			String end = df.format(currentTime.getTime());
+			currentTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY) - 1);
+			String begin = df.format(currentTime.getTime());
 	        List<Map<String,Object>>areaList = userDao.getAreaList(name);
 	        for(Map<String,Object>map:areaList){
 		        Map<String,Object>tempMap = new HashMap<String,Object>();
 		        tempMap.put("name",map.get("name"));
 				List<Map<String,Object>> templist=labourEfficiencyDao.getEfficiencyForChart(
-						time, timePeriod,map.get("name").toString());
+						time, timePeriod,begin,end,map.get("name").toString());
 				if(null!=templist&&!templist.isEmpty()&&templist.size()>0){
-	                tempMap.put("effect",templist.get(0).get("effect"));
+	                tempMap.put("clerkNum",templist.get(0).get("clerkNum"));
 	                tempMap.put("orderNum",templist.get(0).get("orderNum"));
 				}else{
-	                tempMap.put("effect",0);
+	                tempMap.put("clerkNum",0);
 	                tempMap.put("orderNum",0);
 				}
 	            list.add(tempMap);	
