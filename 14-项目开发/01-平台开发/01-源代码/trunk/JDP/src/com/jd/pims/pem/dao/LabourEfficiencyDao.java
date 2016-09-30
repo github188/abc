@@ -35,5 +35,7 @@ public interface LabourEfficiencyDao extends IBaseDao {
 	
 	List<Map<String, Object>> getHistoryEfficiencyForChart(
 			@Param("startDate")String startDate, @Param("endDate")String endDate, @Param("timePeriod")int timePeriod, @Param("name")String name);
-
+	List<Map<String, Object>> getHistoryEfficiencyOrderForChart(
+			@Param("startDate")String startDate, @Param("endDate")String endDate, @Param("timePeriod")int timePeriod, @Param("name")String name);
+	
 }

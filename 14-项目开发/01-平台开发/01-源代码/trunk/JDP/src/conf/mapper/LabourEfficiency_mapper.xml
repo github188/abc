@@ -64,13 +64,22 @@
 	
 	<select id="getHistoryEfficiencyForChart" resultType="java.util.HashMap">
 	<![CDATA[
-		SELECT concat(concat((date_format(LE.BIZ_DATE,'%m')),'月'),concat((date_format(LE.BIZ_DATE,'%d')),'日')) as name,sum(IFNULL(LE.AVG_EFFICIENCY,0)) as effect, sum(IFNULL(qu.TOTAL_QUANTITY,0)) as orderNum,sum(IFNULL(ond.AVG_QUANTITY,0)) as clerkNum
+		SELECT concat(concat((date_format(LE.BIZ_DATE,'%m')),'月'),concat((date_format(LE.BIZ_DATE,'%d')),'日')) as name,sum(IFNULL(LE.AVG_EFFICIENCY,0)) as effect,sum(IFNULL(ond.AVG_QUANTITY,0)) as clerkNum
 		FROM JD_LE_LABOUR_EFFICIENCY LE
-		LEFT JOIN JD_LE_ORDER_QUANTITY qu on qu.CU_ID=LE.CU_ID and LE.BIZ_DATE = qu.BIZ_DATE
 		LEFT JOIN JD_LE_LABOUR_ONDUTY_DAY_ST ond on ond.CU_ID=LE.CU_ID and LE.BIZ_DATE = ond.BIZ_DATE
-		WHERE LE.BIZ_DATE>=#{startDate} AND LE.BIZ_DATE<#{endDate} AND LE.TIME_PERIOD='24' AND qu.TIME_PERIOD='24' AND ond.PERSON_TYPE != 5
+		WHERE LE.BIZ_DATE>=#{startDate} AND LE.BIZ_DATE<#{endDate} AND LE.TIME_PERIOD='24' AND ond.PERSON_TYPE != 5
 		AND LE.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
 		GROUP by LE.BIZ_DATE
+	]]>
+	</select>
+	
+	<select id="getHistoryEfficiencyOrderForChart" resultType="java.util.HashMap">
+	<![CDATA[
+		SELECT concat(concat((date_format(qu.BIZ_DATE,'%m')),'月'),concat((date_format(qu.BIZ_DATE,'%d')),'日')) as name,sum(IFNULL(qu.TOTAL_QUANTITY,0)) as orderNum
+		FROM JD_LE_ORDER_QUANTITY qu 
+		WHERE qu.BIZ_DATE>=#{startDate} AND qu.BIZ_DATE<#{endDate} AND qu.TIME_PERIOD='24'
+		AND qu.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+		GROUP by qu.BIZ_DATE
 	]]>
 	</select>
 </mapper>  

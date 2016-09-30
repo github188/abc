@@ -157,7 +157,7 @@ public class ChartServiceImpl implements IChartService {
 		if("全国".equals(name)){
 			name="京东集团";
 		}
-		List<Map<String,Object>> list= new ArrayList<Map<String,Object>>();
+		List<Map<String,Object>> result= new ArrayList<Map<String,Object>>();
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(new Date());   
 		//cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 1);
@@ -166,8 +166,28 @@ public class ChartServiceImpl implements IChartService {
 		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 7);
 		Date endDate = cal.getTime();
 		String endtime =sdf.format(endDate);
-		list = labourEfficiencyDao.getHistoryEfficiencyForChart(endtime,starttime,24, name);
-		return getData(list,"EfficiencyHistory");
+		List<Map<String,Object>> list = labourEfficiencyDao.getHistoryEfficiencyForChart(endtime,starttime,24, name);
+		List<Map<String,Object>> OrderList = labourEfficiencyDao.getHistoryEfficiencyOrderForChart(endtime,starttime,24, name);
+		if(null!=list&&!list.isEmpty()&&list.size()>0){
+			Map<String,Object>tempMap = new HashMap<String,Object>();
+			for(Map<String,Object>map:list){
+				tempMap.put("name", map.get("name"));
+				tempMap.put("effect", map.get("effect"));
+				tempMap.put("clerkNum", map.get("clerkNum"));
+				if(null!=OrderList&&!OrderList.isEmpty()&&OrderList.size()>0){
+					for(Map<String,Object>orderMap:OrderList){
+						if(map.get("name").equals(orderMap.get("name"))){
+							tempMap.put("orderNum", orderMap.get("orderNum"));
+						}
+					}
+				}else{
+					tempMap.put("orderNum",0);
+				}
+
+			}
+			result.add(tempMap);
+		}
+		return getData(result,"EfficiencyHistory");
 	}
 	public List<Map<String,Object>> getData(List<Map<String,Object>> list,String type){
 		Calendar cal = Calendar.getInstance();

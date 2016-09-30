@@ -889,8 +889,8 @@ option = {
 				$.each(data, function(index, row){
 					//clerkNum 员工数 orderNum 订单数  date 日期
 					bardata[0].push(row.clerkNum);
-					bardata[2].push(eval(row.orderNum/4));
-					bardata[1].push(Math.ceil(row.effect/4));
+					bardata[2].push(eval(row.orderNum));
+					bardata[1].push(Math.ceil(row.effect));
 					bardata[3].push(row.name);
 				});
 			}
