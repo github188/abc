@@ -699,11 +699,11 @@ option = {
 		    piechart.setOption(pieOption, true);
 		}
 		function getData(name){
-			searchMap(name);
-			searchBar2(name);
+			setTimeout(searchMap(name),1);
+			setTimeout(searchBar2(name),1);
 		/*	if(!enlarged){*/
-				searchBar(name);
-				searchBar1(name);
+			setTimeout(searchBar(name),1);
+			setTimeout(searchBar1(name),1);
 /*			}*/
 		};
 		
