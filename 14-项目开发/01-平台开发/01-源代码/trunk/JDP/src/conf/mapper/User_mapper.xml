@@ -47,7 +47,7 @@
   
   <select id="getUserByAccount" resultMap="user" parameterType="String">
   	 	select id,user_name,password,person_id,user_type,status 
-  	 	from NP_AU_USER where user_name=#{account}
+  	 	from NP_AU_USER where user_name=#{account} and STATUS='NORMAL'
   </select>
 
   <insert id="insert" parameterType="com.jd.pims.user.model.User" >
