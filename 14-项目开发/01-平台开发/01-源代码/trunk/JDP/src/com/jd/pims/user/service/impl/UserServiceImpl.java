@@ -38,7 +38,7 @@ public class UserServiceImpl implements IUserService {
 			throw new PIMSException(2, "用户密码不正确");
 		}
 		Employee emp = userDao.getEmployeeById(user.getPersonId());
-		if(emp==null){
+		if(emp==null || !emp.getStatus().equals("NORMAL")){
 			throw new PIMSException(3,"用户绑定的员工不存在，请确认！");
 		}
 		LoginInfoCache.add(user, emp);

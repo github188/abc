@@ -108,8 +108,8 @@ public class APIRemoteTest {
 				"11111111111111111111111111111112"));
 		list.add(new BasicNameValuePair("cuId",
 				"12cad8e307844dcc8525c9357f0692f0"));
-		list.add(new BasicNameValuePair("startDate", "2016-09-06"));
-		list.add(new BasicNameValuePair("endDate", "2016-09-13"));
+		list.add(new BasicNameValuePair("startDate", "2016-09-23"));
+		list.add(new BasicNameValuePair("endDate", "2016-09-29"));
 		list.add(new BasicNameValuePair("interval", "D"));
 
 		HttpEntity en = new UrlEncodedFormEntity(list, "UTF-8");

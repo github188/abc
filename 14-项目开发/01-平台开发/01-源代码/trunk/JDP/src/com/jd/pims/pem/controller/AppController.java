@@ -200,7 +200,6 @@ public class AppController extends BaseController {
 							currentTime.setTime(stDate);
 							currentTime.add(Calendar.DAY_OF_MONTH, i);
 							
-							
 							for (LabourOndutyState state : results) {
 								if (state.getDayTime().equals(
 										sFormat.format(currentTime.getTime()))) {
@@ -268,29 +267,13 @@ public class AppController extends BaseController {
 						.getEfficiencyHistory(cuId, sFormat.parse(startDate),
 								sFormat.parse(endDate));
 				if (null != results && !results.isEmpty()) {
-					Map<String, LabourEfficiency> map = new HashMap<String, LabourEfficiency>();
-					LabourEfficiency nle = null;
 					for (LabourEfficiency le : results) {
-						if (map.containsKey(sFormat.format(le.getBizDate()))) {
-							nle = map.get(sFormat.format(le.getBizDate()));
-						} else {
-							nle = new LabourEfficiency();
-							nle.setBizDate(le.getBizDate());
-							map.put(sFormat.format(le.getBizDate()), nle);
+						if(le.getNumberOnduty()>0){
+							le.setEfficiency(le.getOrderQuantity()/le.getNumberOnduty()*1.0);
 						}
-						Double efficiency = nle.getEfficiency();
-						efficiency += le.getEfficiency();
-						int numberOnduty = nle.getNumberOnduty()
-								+ le.getNumberOnduty();
-						int orderQuantity = nle.getOrderQuantity()
-								+ le.getOrderQuantity();
-						nle.setAvgEfficiency(efficiency / 2);
-						nle.setEfficiency(efficiency / 2);
-						nle.setNumberOnduty(numberOnduty / 2);
-						nle.setOrderQuantity(orderQuantity / 2);
 
 					}
-					LabourEfficiency[] arr = map.values().toArray(
+					LabourEfficiency[] arr = results.toArray(
 							new LabourEfficiency[results.size()]);
 					//补充缺失日期数据
 					LabourEfficiency[] array=patchMissEfficiencyHistoryDateData(arr,startDate);
@@ -304,7 +287,7 @@ public class AppController extends BaseController {
 				}
 				JsonObject retMsg = new JsonObject();
 				retMsg.addProperty("returnCode", 0);
-				retMsg.addProperty("message", "无历史在岗人数数据");
+				retMsg.addProperty("message", "无历史在人效数据！");
 				return retMsg.toString();
 			} catch (ParseException e) {
 				e.printStackTrace();
