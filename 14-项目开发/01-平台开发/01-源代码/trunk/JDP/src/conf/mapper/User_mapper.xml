@@ -194,4 +194,16 @@
     </if>
   </select>
   
+  <select id="getCurrentTimeAreaForChart" resultType="java.util.HashMap">
+	<![CDATA[	
+		SELECT AREA.AREA_NAME as name,
+		AREA.COORD1_X as x,
+		AREA.COORD1_Y as y
+	  	FROM  NP_EQ_AREA AREA 
+	  	LEFT JOIN NP_CF_SUBSYSTEM SUB ON AREA.ID = SUB.AREA_ID
+		LEFT JOIN NP_SYS_CONTROLUNIT CU ON CU.ID = SUB.MANAGE_ID
+	  	WHERE  AREA.AREA_CLASS='BROUGH' 
+	  	and AREA.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' )
+	]]>
+  </select>
 </mapper>

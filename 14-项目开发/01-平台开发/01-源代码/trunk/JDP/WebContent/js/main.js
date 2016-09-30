@@ -968,8 +968,8 @@ option = {
 				$.each(data, function(index, row){
 					//name 地区名 averageEffect 该地区平均人效
 					bardata2[0].push(row.name);
-					bardata2[1].push(row.clerkNum>0?eval(row.orderNum/row.clerkNum).toFixed(2):0);
-					totalClerkNum += row.clerkNum;
+					bardata2[1].push((row.NotEmpNum+row.EmpNum)>0?eval(row.orderNum/(row.NotEmpNum+row.EmpNum)).toFixed(2):0);
+					totalClerkNum += (row.NotEmpNum+row.EmpNum);
 					totalOrderNum += row.orderNum;
 				});
 			}

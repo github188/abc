@@ -27,19 +27,12 @@
 	]]>
 	</select>
 	
-	<select id="getEfficiencyForChart" resultType="java.util.HashMap">
+	<select id="getEfficiencyOrderForChart" resultType="java.util.HashMap">
 	<![CDATA[
 		SELECT 		
-		 LE.clerkNum as clerkNum, sum(qu.ORDER_QUANTITY) as orderNum
-		FROM (
-			select IFNULL(avg(case when PERSON_TYPE='1' THEN QUANTITY_ONDUTY END),0)+
-			IFNULL(avg(case when PERSON_TYPE='2' THEN QUANTITY_ONDUTY END),0)+
-	 		IFNULL(avg(case	when PERSON_TYPE='3' THEN QUANTITY_ONDUTY END),0)+
-	        IFNULL(avg(case	when PERSON_TYPE='4' THEN QUANTITY_ONDUTY END),0)+
-	        IFNULL(avg(case when PERSON_TYPE='5' THEN QUANTITY_ONDUTY END),0) as clerkNum,CU_ID,BIZ_DATE from JD_LE_LABOUR_ONDUTY WHERE BIZ_DATE=#{date} AND TIMING >=#{begin} AND TIMING <#{end} AND CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%'))
-			)  LE
-		LEFT JOIN JD_LE_ORDER_QUANTITY qu on qu.CU_ID=LE.CU_ID and LE.BIZ_DATE = qu.BIZ_DATE
-		WHERE qu.TIME_PERIOD=#{timePeriod} GROUP by LE.BIZ_DATE
+		IFNULL(sum(qu.ORDER_QUANTITY),0) as orderNum
+		FROM JD_LE_ORDER_QUANTITY qu where qu.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%')) and qu.BIZ_DATE = #{date}
+		AND qu.TIME_PERIOD=#{timePeriod} 
 	]]>
 	</select>
 	

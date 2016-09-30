@@ -45,24 +45,20 @@
 		AND CU.FULL_PATH LIKE CONCAT(#{fullPath},'%' )
   	]]>
   </select>
-
+  
   <select id="getCurrentTimeLabourOndutyForChart" resultType="java.util.HashMap">
 	<![CDATA[	
-		SELECT AREA.AREA_NAME as name,
-		AREA.COORD1_X as x,
-		AREA.COORD1_Y as y,
-		IFNULL(avg(case when LO.PERSON_TYPE='1' THEN LO.QUANTITY_ONDUTY END),0) as EmpNum,
-		IFNULL(avg(case when LO.PERSON_TYPE='2' THEN LO.QUANTITY_ONDUTY END),0)+
- 		IFNULL(avg(case	when LO.PERSON_TYPE='3' THEN LO.QUANTITY_ONDUTY END),0)+
-        IFNULL(avg(case	when LO.PERSON_TYPE='4' THEN LO.QUANTITY_ONDUTY END),0) as NotEmpNum,
-        IFNULL(avg(case when LO.PERSON_TYPE='5' THEN LO.QUANTITY_ONDUTY END),0) as otherNumEmp
-		  	FROM  NP_EQ_AREA AREA 
-		  	LEFT JOIN NP_CF_SUBSYSTEM SUB ON SUB.AREA_ID = AREA.ID
-		  	LEFT JOIN (
-				select PERSON_TYPE,QUANTITY_ONDUTY,CU_ID from JD_LE_LABOUR_ONDUTY WHERE BIZ_DATE=#{currentDate} AND TIMING >=#{begin} AND TIMING <=#{end} 
-			) LO  ON LO.CU_ID = SUB.MANAGE_ID
-		  	WHERE  AREA.AREA_CLASS='BROUGH' and AREA.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' )
-		 GROUP BY AREA.AREA_NAME,AREA.COORD1_X,AREA.COORD1_Y
+		select 		
+			IFNULL(round(avg(case when PERSON_TYPE='1' THEN QUANTITY_ONDUTY END),2),0) as EmpNum,
+			IFNULL(round(avg(case when PERSON_TYPE='2' THEN QUANTITY_ONDUTY END),2),0)+
+	 		IFNULL(round(avg(case	when PERSON_TYPE='3' THEN QUANTITY_ONDUTY END),2),0)+
+	        IFNULL(round(avg(case	when PERSON_TYPE='4' THEN QUANTITY_ONDUTY END),2),0) as NotEmpNum,
+	        IFNULL(round(avg(case when PERSON_TYPE='5' THEN QUANTITY_ONDUTY END),2),0) as otherNumEmp
+	        from JD_LE_LABOUR_ONDUTY 
+	        WHERE BIZ_DATE=#{currentDate} 
+	        AND TIMING >=#{begin} 
+	        AND TIMING <#{end} 
+			AND  CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
 	]]>
   </select>
 

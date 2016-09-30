@@ -62,4 +62,6 @@ public interface UserDao extends IBaseDao{
 	List<Map<String, Object>> getAreaList(@Param("name")String name);
 	
 	Integer getSubOrganizationSize(@Param("parentId")String parentId);
+	
+	List<Map<String, Object>> getCurrentTimeAreaForChart(@Param("name")String name);
 }
