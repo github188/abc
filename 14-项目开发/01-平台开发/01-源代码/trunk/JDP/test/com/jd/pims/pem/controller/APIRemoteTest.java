@@ -107,7 +107,7 @@ public class APIRemoteTest {
 		list.add(new BasicNameValuePair("empId",
 				"11111111111111111111111111111112"));
 		list.add(new BasicNameValuePair("cuId",
-				"12cad8e307844dcc8525c9357f0692f0"));
+				"11111111111111111111111111111111"));
 		list.add(new BasicNameValuePair("startDate", "2016-09-23"));
 		list.add(new BasicNameValuePair("endDate", "2016-09-29"));
 		list.add(new BasicNameValuePair("interval", "D"));

@@ -315,8 +315,11 @@ public class AppController extends BaseController {
 		Date stDate = sFormat.parse(startDate);
 		for (int i = 0; i < 7; i++) {
 			LabourEfficiency match = null;
+			Calendar currentTime = Calendar.getInstance();
+			currentTime.setTime(stDate);
+			currentTime.add(Calendar.DAY_OF_MONTH, i);
 			for (LabourEfficiency le : arr) {
-				if (sFormat.format(le.getBizDate()).equals(sFormat.format(stDate))) {
+				if (sFormat.format(le.getBizDate()).equals(sFormat.format(currentTime.getTime()))) {
 					match = le;
 					break;
 				}
@@ -325,9 +328,6 @@ public class AppController extends BaseController {
 				array[i] = match;
 			} else {
 				array[i] = new LabourEfficiency();
-				Calendar currentTime = Calendar.getInstance();
-				currentTime.setTime(stDate);
-				currentTime.add(Calendar.DAY_OF_MONTH, i);
 				array[i].setBizDate(currentTime.getTime());
 			}
 		}

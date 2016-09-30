@@ -99,7 +99,7 @@ public class AppControllerTest extends
 		request.addParameter("empId", "11111111111111111111111111111111");
 		request.addParameter("cuId", "11111111111111111111111111111111");
 		request.addParameter("startDate", "2016-09-06");
-		request.addParameter("endDate", "2016-09-13");
+		request.addParameter("endDate", "2016-09-30");
 		request.addParameter("interval", "D");
 		String msg = controller.getEfficiencyHistory(request, response);
 		System.out.println(msg);
