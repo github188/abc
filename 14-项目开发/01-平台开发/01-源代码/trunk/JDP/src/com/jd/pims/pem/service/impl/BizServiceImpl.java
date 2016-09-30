@@ -54,7 +54,8 @@ public class BizServiceImpl implements IBizService {
 		state.setCuName(cu.getCuName());
 		List<LabourOnduty> list;
 		int beginTime=getBeginTime();
-		int endTime=beginTime+1;
+		int endTime=beginTime;
+		beginTime--;
 		list = labourOndutyDao.getCurrentTimeLabourOnduty(sFormat.format(date),
 				(beginTime<10?"0":"")+beginTime+":00:00",(endTime<10?"0":"")+endTime+":00:00",cu.getFullPath());
 		for (LabourOnduty rec : list) {
@@ -126,31 +127,18 @@ public class BizServiceImpl implements IBizService {
 		ControlUnit cu = userDao.findOrganization(cuId);
 		// 如果timePeriod为空，默认当前一小时
 		if (timePeriod == null) {
-			Calendar currentTime = Calendar.getInstance();
-			currentTime.setTime(new Date());
-			timePeriod = currentTime.get(Calendar.HOUR_OF_DAY);
-			if (timePeriod ==0) {
-				timePeriod = 24;
-			}
+			timePeriod = getBeginTime();
 		}
+		int beginTime=timePeriod-1;
+		int endTime=timePeriod;
 		//取符合条件的人效记录（每个分拣中心一条记录）
-		List<LabourEfficiency> list = labourEfficiencyDao.getLabourEfficiency(
-				sFormat.format(bizDate), timePeriod, cu.getFullPath());
-		LabourEfficiency result=new LabourEfficiency();
+		LabourEfficiency result = labourEfficiencyDao.getLabourEfficiency(
+				sFormat.format(bizDate), timePeriod, cu.getFullPath(),(beginTime<10?"0":"")+beginTime+":00:00",(endTime<10?"0":"")+endTime+":00:00");
 		result.setCuId(cuId);
 		result.setCuName(cu.getCuName());
-		double efficiency=0.0;
-		if (list != null && list.size()>0) {
-			for(LabourEfficiency le:list){
-				efficiency+=le.getPeriodEfficiency();//累计时段的人效值
-			}
-			
+		if(result.getNumberOnduty()!=0){
+			result.setEfficiency(result.getOrderQuantity()/result.getNumberOnduty()*1.0);
 		}
-		int size=userDao.getSubOrganizationSize(cuId);
-		if(size>0){
-			efficiency=efficiency/size;//求平均
-		}
-		result.setEfficiency(efficiency);
 		return result;
 	}
 
