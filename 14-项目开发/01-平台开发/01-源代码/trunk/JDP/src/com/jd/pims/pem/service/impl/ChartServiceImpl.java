@@ -169,8 +169,8 @@ public class ChartServiceImpl implements IChartService {
 		List<Map<String,Object>> list = labourEfficiencyDao.getHistoryEfficiencyForChart(endtime,starttime,24, name);
 		List<Map<String,Object>> OrderList = labourEfficiencyDao.getHistoryEfficiencyOrderForChart(endtime,starttime,24, name);
 		if(null!=list&&!list.isEmpty()&&list.size()>0){
-			Map<String,Object>tempMap = new HashMap<String,Object>();
 			for(Map<String,Object>map:list){
+				Map<String,Object>tempMap = new HashMap<String,Object>();
 				tempMap.put("name", map.get("name"));
 				tempMap.put("effect", map.get("effect"));
 				tempMap.put("clerkNum", map.get("clerkNum"));
@@ -183,9 +183,9 @@ public class ChartServiceImpl implements IChartService {
 				}else{
 					tempMap.put("orderNum",0);
 				}
-
+				result.add(tempMap);
 			}
-			result.add(tempMap);
+			
 		}
 		return getData(result,"EfficiencyHistory");
 	}
