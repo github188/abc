@@ -134,6 +134,9 @@ public class BizServiceImpl implements IBizService {
 		//取符合条件的人效记录（每个分拣中心一条记录）
 		LabourEfficiency result = labourEfficiencyDao.getLabourEfficiency(
 				sFormat.format(bizDate), timePeriod, cu.getFullPath(),(beginTime<10?"0":"")+beginTime+":00:00",(endTime<10?"0":"")+endTime+":00:00");
+		if(result==null){
+			result=new LabourEfficiency();
+		}
 		result.setCuId(cuId);
 		result.setCuName(cu.getCuName());
 		if(result.getNumberOnduty()!=0){
