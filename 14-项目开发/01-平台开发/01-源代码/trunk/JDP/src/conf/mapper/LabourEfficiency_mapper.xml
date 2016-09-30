@@ -76,9 +76,9 @@
 	
 	<select id="getHistoryEfficiencyOrderForChart" resultType="java.util.HashMap">
 	<![CDATA[
-		SELECT concat(concat((date_format(qu.BIZ_DATE,'%m')),'月'),concat((date_format(qu.BIZ_DATE,'%d')),'日')) as name,sum(IFNULL(qu.TOTAL_QUANTITY,0)) as orderNum
+		SELECT concat(concat((date_format(qu.BIZ_DATE,'%m')),'月'),concat((date_format(qu.BIZ_DATE,'%d')),'日')) as name,avg(IFNULL(qu.ORDER_QUANTITY,0)) as orderNum
 		FROM JD_LE_ORDER_QUANTITY qu 
-		WHERE qu.BIZ_DATE>=#{startDate} AND qu.BIZ_DATE<#{endDate} AND qu.TIME_PERIOD='24'
+		WHERE qu.BIZ_DATE>=#{startDate} AND qu.BIZ_DATE<#{endDate} 
 		AND qu.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
 		GROUP by qu.BIZ_DATE
 	]]>
