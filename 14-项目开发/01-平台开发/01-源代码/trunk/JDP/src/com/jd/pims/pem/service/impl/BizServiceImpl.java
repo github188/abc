@@ -54,7 +54,8 @@ public class BizServiceImpl implements IBizService {
 		state.setCuName(cu.getCuName());
 		List<LabourOnduty> list;
 		int beginTime=getBeginTime();
-		int endTime=beginTime+1;
+		int endTime=beginTime;
+		beginTime--;
 		list = labourOndutyDao.getCurrentTimeLabourOnduty(sFormat.format(date),
 				(beginTime<10?"0":"")+beginTime+":00:00",(endTime<10?"0":"")+endTime+":00:00",cu.getFullPath());
 		for (LabourOnduty rec : list) {
