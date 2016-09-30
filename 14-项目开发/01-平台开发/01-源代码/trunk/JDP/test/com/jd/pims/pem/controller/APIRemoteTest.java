@@ -111,6 +111,8 @@ public class APIRemoteTest {
 		list.add(new BasicNameValuePair("startDate", "2016-09-23"));
 		list.add(new BasicNameValuePair("endDate", "2016-09-29"));
 		list.add(new BasicNameValuePair("interval", "D"));
+		
+		logger.debug(11000/(double)3);
 
 		HttpEntity en = new UrlEncodedFormEntity(list, "UTF-8");
 		execute(en, action);

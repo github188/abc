@@ -269,7 +269,7 @@ public class AppController extends BaseController {
 				if (null != results && !results.isEmpty()) {
 					for (LabourEfficiency le : results) {
 						if(le.getNumberOnduty()>0){
-							le.setEfficiency(le.getOrderQuantity()/le.getNumberOnduty()*1.0);
+							le.setEfficiency(le.getOrderQuantity()/(double)le.getNumberOnduty());
 						}
 
 					}

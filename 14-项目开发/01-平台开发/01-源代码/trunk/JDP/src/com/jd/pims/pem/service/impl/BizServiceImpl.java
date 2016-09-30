@@ -140,7 +140,7 @@ public class BizServiceImpl implements IBizService {
 		result.setCuId(cuId);
 		result.setCuName(cu.getCuName());
 		if(result.getNumberOnduty()!=0){
-			result.setEfficiency(result.getOrderQuantity()/result.getNumberOnduty()*1.0);
+			result.setEfficiency(result.getOrderQuantity()/(double)result.getNumberOnduty());
 		}
 		return result;
 	}
