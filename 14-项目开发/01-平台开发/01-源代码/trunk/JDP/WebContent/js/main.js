@@ -1305,3 +1305,12 @@ option = {
 		function logout(){
 			window.location.href = "login.html";
 		}
+		function reports(){
+			window.location.href = "reports.html";
+		}
+		function yyreports(){
+			window.location.href = "yyreports.html";
+		}
+		function ycreports(){
+			window.location.href = "ycreports.html";
+		}
