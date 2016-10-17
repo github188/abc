@@ -679,8 +679,8 @@ option = {
 				dataType: "json",
 				success: function (chinaJson) {
 				    echarts.registerMap(mapName, chinaJson);   
-				    //getData(mapName);
-				    loadDault(mapName);
+				    getData(mapName);
+				    //loadDault(mapName);
 				},statusCode: {404: function() {init ('全国');}}
 			});
 			mapchart.on('click', function (param){
@@ -694,8 +694,8 @@ option = {
 						dataType: "json",
 						success: function (chinaJson) {
 						    echarts.registerMap(name, chinaJson);   
-						    //getData(name);
-						    loadDault(name);
+						    getData(name);
+						    //loadDault(name);
 						},
 					  statusCode: {404: function() {init ('全国');}}
 					});
@@ -838,8 +838,8 @@ option = {
 			
 			$("#orderCountName").html(name?name+'平均人效':'全国平均人效');
 			$("#orderCountNum").html(763);
-			$("#averageEffectName").html(name?name+'已处理单量':'全国已处理单量');
-			$("#averageEffectNum").html(7488742);
+			$("#averageEffectName").html(name?name+'当前一小时处理单/今天已处理单量':'全国当前一小时处理单/今天已处理单量');
+			$("#averageEffectNum").html(7488742+'/'+77488742);
 		    barOption2.yAxis[0].data = ['东北地区','华北地区','华东地区','西北地区','西南地区','华中地区','华南地区'];
 		    barOption2.series[0].data = [812,788,747,727,702,698,710];
 		    barOption2.series[1].data = [812,788,747,727,702,698,710];
@@ -1117,6 +1117,7 @@ option = {
 			bardata2[3] = new Array();
 			var totalClerkNum = 0.0;
 			var totalOrderNum = 0.0;
+			var totalOrder = 0.0;
 			var data=eval(data);
 			if(data!=null){
 				$.each(data, function(index, row){
@@ -1127,16 +1128,17 @@ option = {
 					bardata2[3].push((row.NotEmpNum+row.EmpNum)>0?Math.ceil(eval(row.orderNum/(row.NotEmpNum+row.EmpNum))):0);
 					totalClerkNum += (row.NotEmpNum+row.EmpNum);
 					totalOrderNum += row.orderNum;
+					totalOrder += row.totalOrder;
 				});
 			}
-			setBar2Option(bardata2,((data&&data.length>0&&totalClerkNum>0)?Math.ceil(totalOrderNum/totalClerkNum):'0'),totalOrderNum,name);
+			setBar2Option(bardata2,((data&&data.length>0&&totalClerkNum>0)?Math.ceil(totalOrderNum/totalClerkNum):'0'),totalOrderNum,name,totalOrder);
 		}
 
-		function setBar2Option(bardata2,avgEffect,totalOrderNum,name){
+		function setBar2Option(bardata2,avgEffect,totalOrderNum,name,totalOrder){
 			$("#orderCountName").html(name?name+'平均人效':'全国平均人效');
 			$("#orderCountNum").html(avgEffect);
-			$("#averageEffectName").html(name?name+'已处理单量':'全国已处理单量');
-			$("#averageEffectNum").html(totalOrderNum);
+			$("#averageEffectName").html(name?name+'当前一小时已处理单量/今天累计已处理单量':'全国当前一小时已处理单量/今天累计已处理单量');
+			$("#averageEffectNum").html(totalOrderNum+'/'+totalOrder);
 		    barOption2.yAxis[0].data = bardata2[0];
 		    barOption2.series[0].data = bardata2[1];
 		    barOption2.series[1].data = bardata2[2];

@@ -27,7 +27,7 @@ public interface LabourOndutyDao extends IBaseDao {
 			@Param("currentDate") String currentDate,
 			@Param("begin") String begin, @Param("end") String end,
 			@Param("name") String name);
-
+	
 	List<Map<String, Object>> getHistoryLabourOndutyForChart(
 			@Param("startDate") String startDate,
 			@Param("endDate") String endDate, @Param("name") String name);

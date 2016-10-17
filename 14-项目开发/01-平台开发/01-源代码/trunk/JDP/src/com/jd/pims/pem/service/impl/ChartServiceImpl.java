@@ -119,14 +119,22 @@ public class ChartServiceImpl implements IChartService {
 		        float NotEmpNum = 0;
 		        float otherNumEmp = 0;
 		        int order = 0;
+		        int totalOrder = 0;
 		        Map<String,Object>tempMap = new HashMap<String,Object>();
 		        tempMap.put("name",map.get("name"));
 			/*	List<Map<String,Object>> arealist=userDao.getCurrentTimeAreaForChart(name);*/
 				List<Map<String,Object>> orderlist=labourEfficiencyDao.getEfficiencyOrderForChart(
-						time, timePeriod,begin,end,map.get("name").toString());
+						time, timePeriod,map.get("name").toString());
 				if(null!=orderlist&&!orderlist.isEmpty()&&orderlist.size()>0){
 					for(Map<String,Object>orderMap:orderlist){
 						order+=Integer.parseInt(orderMap.get("orderNum").toString());
+					}
+				}
+				List<Map<String,Object>> totalOrderlist=labourEfficiencyDao.getTodayOrderForChart(
+						time,map.get("name").toString());
+				if(null!=totalOrderlist&&!totalOrderlist.isEmpty()&&totalOrderlist.size()>0){
+					for(Map<String,Object>totalOrderMap:totalOrderlist){
+						totalOrder+=Integer.parseInt(totalOrderMap.get("orderNum").toString());
 					}
 				}
 				List<Map<String,Object>> clerklist=labourOndutyDao.getCurrentTimeLabourOndutyForChart(
@@ -142,6 +150,7 @@ public class ChartServiceImpl implements IChartService {
 	            tempMap.put("NotEmpNum",NotEmpNum);
 	            tempMap.put("otherNumEmp",otherNumEmp);
 	            tempMap.put("orderNum",order);
+	            tempMap.put("totalOrder",totalOrder);
 	            list.add(tempMap);	
 			}		
 		} catch (Exception e) {
