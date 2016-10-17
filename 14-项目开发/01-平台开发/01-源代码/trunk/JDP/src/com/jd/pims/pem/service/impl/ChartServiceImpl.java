@@ -195,8 +195,8 @@ public class ChartServiceImpl implements IChartService {
 		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 8);
 		for(int i=1;i<=7;i++){
 			cal.set(Calendar.DATE, cal.get(Calendar.DATE) + 1);
-			String month = (cal.get(Calendar.MONTH)+1)<11?("0"+(cal.get(Calendar.MONTH)+1)+"月"):((cal.get(Calendar.MONTH)+1)+"月");
-			String day = cal.get(Calendar.DAY_OF_MONTH)<11?("0"+cal.get(Calendar.DAY_OF_MONTH)+"日"):(cal.get(Calendar.DAY_OF_MONTH)+"日");
+			String month = (cal.get(Calendar.MONTH)+1)<10?("0"+(cal.get(Calendar.MONTH)+1)+"月"):((cal.get(Calendar.MONTH)+1)+"月");
+			String day = cal.get(Calendar.DAY_OF_MONTH)<10?("0"+cal.get(Calendar.DAY_OF_MONTH)+"日"):(cal.get(Calendar.DAY_OF_MONTH)+"日");
 			String date = month+day;
 			boolean flag = false;
 			if(null!=list&&!list.isEmpty()&&list.size()>0){
