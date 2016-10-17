@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html style="height: 100%">
+<head>
+	<meta charset="utf-8">
+	<title>京东</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script type="text/javascript" src="js/common/jquery.min.js"></script>
+	<script type="text/javascript" src="js/common/angular-1.3.0.js"></script>
+	<script type="text/javascript" src="js/common/angular-cookies.js"></script>
+    <script type="text/javascript" src="js/common/bootstrap.min.js"></script>
+  	<script type="text/javascript" src="js/app.js"></script>
+  	<script type="text/javascript" src="js/prefixfree.min.js"></script>
+	<script type="text/javascript" src="js/stopExecutionOnTimeout.js"></script>
+	<script type="text/javascript" src="js/common/echarts.js"></script>
+	<script type="text/javascript" src="js/main.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<!--   	<link rel="stylesheet" type="text/css" href="css/normalize.css">
+	<link rel="stylesheet" type="text/css" href="css/default.css"> -->
+  	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elrements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style class="cp-pen-styles">
+html{font-size:62.5%; /* 10÷16=62.5% */}
+body{
+/* 	 background:url(images/mainBg.png)no-repeat;
+	 background-size: 200% 200%; */
+	 font: 1.6rem Arial, Helvetica, sans-serif;
+	 margin:0;
+	 padding:0;
+	 color:#0F0F0F; 
+	 height: 100%;
+	 TEXT-ALIGN: center;
+	  /* background: radial-gradient(200% 100% at bottom center, #f7f7b6, #e96f92, #75517d, #1b2947); */
+	  background: radial-gradient(220% 105% at top center, #041946 10%, #1b2947 40%, #041946 65%, #1b2947);
+	  background-attachment: fixed;
+	  overflow: hidden;
+}
+
+@font-face {
+    font-family: 'digital-7__mono';
+    src: url('fonts/digital-7__mono.ttf');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: '造字工房悦圆常规体';
+    src: url('fonts/zaozigongfangyueyuan.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+#logOutButton {border: none;height: 3%;width: 3%; margin:0 auto;background:url(images/logout.png)no-repeat; background-size: 100% 100%;position:absolute;right:3%;top:6%}
+#reportsButton {border: none;height: 3%;width: 3%; margin:0 auto;background:url(images/logout.png)no-repeat; background-size: 100% 100%;position:absolute;right:6%;top:6%}
+/* .title {height: 8%; margin:0 auto;padding-top:0.5rem;padding-bottom:0.5rem; color:#46d7ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;} */
+#world {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:3.5rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
+.clock {display:inline;width:31%;height: 5%; margin-left:auto; padding-top:0.3%;position:relative;color:#46d7ff; background:url(images/clock.png)no-repeat;  background-size: 100% 100%;margin-top:0.1%}
+ul { display:inline; margin:0 auto; padding:0px; list-style:none; text-align:center; }
+ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
+#point {  -moz-animation:mymove 1s ease infinite; -webkit-animation:mymove 1s ease infinite;}
+@-webkit-keyframes mymove 
+{
+0% {opacity:1.0; text-shadow:0 0 20px #00c6ff;}
+50% {opacity:0; text-shadow:none; }
+100% {opacity:1.0; text-shadow:0 0 20px #00c6ff; }	
+}
+
+@-moz-keyframes mymove 
+{
+0% {opacity:1.0; text-shadow:0 0 20px #00c6ff;}
+50% {opacity:0; text-shadow:none; }
+100% {opacity:1.0; text-shadow:0 0 20px #00c6ff; }	
+}
+
+	@keyframes rotate {
+	  0% {
+	    transform: perspective(400px) rotateZ(20deg) rotateX(-40deg) rotateY(0);
+	  }
+	  100% {
+	    transform: perspective(400px) rotateZ(20deg) rotateX(-40deg) rotateY(-360deg);
+	  }
+	}
+	.stars {
+	  transform: perspective(500px);
+	  transform-style: preserve-3d;
+	  position: absolute;
+	  bottom: 0;
+	  perspective-origin: 50% 100%;
+	  left: 50%;
+	  animation: rotate 90s infinite linear;
+	  width:0;
+	  height:0
+	}
+
+	.star {
+	  width: 2px;
+	  height: 2px;
+	  background: #F7F7B6;
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  transform-origin: 0 0 -300px;
+	  transform: translate3d(0, 0, -300px);
+	  backface-visibility: hidden;
+	}
+</style>
+<script type="text/javascript">
+
+
+
+/*$(document).ready(function() {
+		var monthNames = [ "January", "February", "March", "April", "May", "June", "July", "August", "Septrember", "October", "Novrember", "Decrember" ]; 
+		var dayNames= ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+}); */
+</script>
+</head>
+<body>
+	<!-- <div class="title"></div> -->
+	<div class="stars"></div>
+	<div id="world">京东集团分拣中心管理部全国在岗人员管理平台</div>
+	<input type="button" id="logOutButton" onclick="logout()"></input>
+	<div class="clock">
+		<ul>
+			<li id="year"></li>
+			<li id="point">-</li>
+			<li id="month"></li>
+			<li id="point">-</li>
+			<li id="day"></li>
+			<li id="point">&nbsp;</li>
+			<li id="hours"></li>
+			<li id="point">:</li>
+			<li id="min"></li>
+			<li id="point">:</li>
+			<li id="sec"></li>
+		</ul>
+	</div>
+	<div style="height: 30%;margin-top:20%;position: relative;width:100%;padding:0;">
+		<div class="row">
+			<div class="col-md-1 col-sm-1 col-md-offset-5">
+				<button type="button" onclick="ycreports()">异常报表</button>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+
