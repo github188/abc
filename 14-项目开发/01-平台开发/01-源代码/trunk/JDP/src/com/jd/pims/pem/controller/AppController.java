@@ -424,7 +424,7 @@ public class AppController extends BaseController {
 				result.addProperty("lastVersion", lastVersion);
 				result.addProperty("updateContent", updateContent);
 				result.addProperty("updateUrl", updateUrl);
-				this.buildSuccessResponse(result);
+				return this.buildSuccessResponse(result).toString();
 			}catch(XMLFormatException xfe){
 				return this.buildFailResponse(xfe.getCode(),xfe.getMessage()).toString();
 			} catch (Exception e) {
