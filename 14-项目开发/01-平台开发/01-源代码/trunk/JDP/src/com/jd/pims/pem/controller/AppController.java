@@ -27,6 +27,8 @@ import com.jd.pims.pem.service.IBizService;
 import com.jd.pims.user.model.ControlUnit;
 import com.jd.pims.user.model.Employee;
 import com.jd.pims.user.service.IUserService;
+import com.jd.pims.util.XMLFormatException;
+import com.jd.pims.util.XMLHelper;
 
 @Controller
 @RequestMapping("/app")
@@ -405,5 +407,32 @@ public class AppController extends BaseController {
 		result.addProperty("avgEfficiency",
 				parent != null ? parent.getEfficiency() : 0);
 		return this.buildSuccessResponse(result).toString();
+	}
+	
+	@RequestMapping(value = "/getUpdateState", method = RequestMethod.POST)
+	@ResponseBody
+	public String getUpdateState(HttpServletRequest request,
+			HttpServletResponse response) {
+		String type = request.getParameter("type");
+		if(type!=null){
+			try {
+				XMLHelper xmlHelper=new XMLHelper(type+"-update.xml");
+				String lastVersion=xmlHelper.getLastVersion();
+				String updateContent=xmlHelper.getUpdateContent(lastVersion);
+				String updateUrl=xmlHelper.getUpdateUrl(lastVersion);
+				JsonObject result = new JsonObject();
+				result.addProperty("lastVersion", lastVersion);
+				result.addProperty("updateContent", updateContent);
+				result.addProperty("updateUrl", updateUrl);
+				this.buildSuccessResponse(result);
+			}catch(XMLFormatException xfe){
+				return this.buildFailResponse(xfe.getCode(),xfe.getMessage()).toString();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return this.buildFailResponse(-2, "升级文件不存在！").toString();
+			}
+		}
+		return this.buildFailResponse(-1, "请求参数不存在！").toString();
 	}
 }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<versions latestVersion="2.0.1">
+	<version id="2.0.1">
+		<updateContent>
+		<![CDATA[
+			版本升级描述
+		]]>
+		</updateContent>
+		<updateUrl>
+		<![CDATA[
+			升级地址
+		]]>
+		</updateUrl>
+	</version>
+</versions>
