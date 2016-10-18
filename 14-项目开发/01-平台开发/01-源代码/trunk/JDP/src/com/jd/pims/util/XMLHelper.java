@@ -23,7 +23,7 @@ public class XMLHelper {
 
 	}
 
-	public String getLastVersion() throws XMLFormatException {
+	public String getLatestVersion() throws XMLFormatException {
 		// 在xml文件里,只有一个根元素,先把根元素拿出来看看
 		Element element = doc.getDocumentElement();
 		if (element != null) {

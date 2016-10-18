@@ -417,13 +417,13 @@ public class AppController extends BaseController {
 		if(type!=null){
 			try {
 				XMLHelper xmlHelper=new XMLHelper(type+"-update.xml");
-				String lastVersion=xmlHelper.getLastVersion();
-				String updateContent=xmlHelper.getUpdateContent(lastVersion);
-				String updateUrl=xmlHelper.getUpdateUrl(lastVersion);
+				String latestVersion=xmlHelper.getLatestVersion();
+				String updateContent=xmlHelper.getUpdateContent(latestVersion);
+				String updateUrl=xmlHelper.getUpdateUrl(latestVersion);
 				JsonObject result = new JsonObject();
-				result.addProperty("lastVersion", lastVersion);
-				result.addProperty("updateContent", updateContent);
-				result.addProperty("updateUrl", updateUrl);
+				result.addProperty("latestVersion", latestVersion.trim());
+				result.addProperty("updateContent", updateContent.trim());
+				result.addProperty("updateUrl", updateUrl.trim());
 				return this.buildSuccessResponse(result).toString();
 			}catch(XMLFormatException xfe){
 				return this.buildFailResponse(xfe.getCode(),xfe.getMessage()).toString();

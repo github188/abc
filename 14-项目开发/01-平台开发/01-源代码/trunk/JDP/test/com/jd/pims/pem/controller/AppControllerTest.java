@@ -168,7 +168,7 @@ public class AppControllerTest extends
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		MockHttpServletResponse response = new MockHttpServletResponse();
 		request.setMethod(HttpMethod.POST.name());
-		request.addParameter("type", "android");
+		request.addParameter("type", "ios");
 		
 		String msg = controller.getUpdateState(request, response);
 		System.out.println(msg);

@@ -12,7 +12,7 @@ public class XMLHelperTest {
 	public void testGetLastVersion() {
 		try {
 			helper=new XMLHelper("ios-update.xml");
-			String version=helper.getLastVersion();
+			String version=helper.getLatestVersion();
 			if(version!=null){
 				System.out.println("version："+version);
 				Assert.assertTrue( version!=null);
@@ -29,7 +29,7 @@ public class XMLHelperTest {
 	public void testGetUpdateContent() {
 		try {
 			helper=new XMLHelper("ios-update.xml");
-			String updateContent=helper.getUpdateContent(helper.getLastVersion());
+			String updateContent=helper.getUpdateContent(helper.getLatestVersion());
 			if(updateContent!=null){
 				System.out.println("updateContent："+updateContent);
 				Assert.assertTrue(updateContent!=null);
@@ -45,7 +45,7 @@ public class XMLHelperTest {
 	public void testGetUpdateUrl() {
 		try {
 			helper=new XMLHelper("ios-update.xml");
-			String updateUrl=helper.getUpdateUrl(helper.getLastVersion());
+			String updateUrl=helper.getUpdateUrl(helper.getLatestVersion());
 			if(updateUrl!=null){
 				System.out.println("updateUrl："+updateUrl);
 				Assert.assertTrue(updateUrl!=null);
