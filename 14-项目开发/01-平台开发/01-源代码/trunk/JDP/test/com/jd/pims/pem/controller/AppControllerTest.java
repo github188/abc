@@ -26,7 +26,7 @@ public class AppControllerTest extends
 	@Autowired
 	private UserController userController;
 	
-	@Before
+	//@Before
 	public void login(){
 		MockHttpServletRequest request = new MockHttpServletRequest();
 		request.setRequestURI("/user/login");
@@ -154,6 +154,23 @@ public class AppControllerTest extends
 		request.addParameter("empId", "11111111111111111111111111111111");
 		
 		String msg = controller.getLabourAndEfficiencyOfGroup(request, response);
+		System.out.println(msg);
+
+		if(msg.contains("result")){
+			Assert.assertTrue("成功返回："+msg, true);
+		}else{
+			Assert.assertTrue("失败返回："+msg, true);
+		}
+	}
+	
+	@Test
+	public void testGetUpdateState() {
+		MockHttpServletRequest request = new MockHttpServletRequest();
+		MockHttpServletResponse response = new MockHttpServletResponse();
+		request.setMethod(HttpMethod.POST.name());
+		request.addParameter("type", "ios");
+		
+		String msg = controller.getUpdateState(request, response);
 		System.out.println(msg);
 
 		if(msg.contains("result")){
