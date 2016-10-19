@@ -42,6 +42,14 @@
 	]]>
 	</select>
 	
+	<select id="getTodayOrderForChart" resultType="java.util.HashMap">
+	<![CDATA[
+		SELECT 		
+		IFNULL(sum(qu.ORDER_QUANTITY),0) as orderNum
+		FROM JD_LE_ORDER_QUANTITY qu where qu.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%')) and qu.BIZ_DATE = #{date}
+	]]>
+	</select>
+	
 	<select id="getHistoryLabourEfficiency" resultMap="labourEfficiency">
 	<![CDATA[
 		SELECT RSS.BIZ_DATE,SUM(RSS.QUANTITY_ONDUTY) AS NUMBER_ONDUTY,SUM(LE.ORDER_QUANTITY ) AS ORDER_QUANTITY
