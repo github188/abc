@@ -1138,7 +1138,7 @@ option = {
 			$("#orderCountName").html(name?name+'平均人效':'全国平均人效');
 			$("#orderCountNum").html(avgEffect);
 			$("#averageEffectName").html('小时处理量|当日总单量');
-			$("#averageEffectNum").html(totalOrderNum+'|'+totalOrder);
+			$("#averageEffectNum").html(totalOrderNum+'<span style="font-size:3rem;font-family:黑体;color:#FFF"> | </span>'+totalOrder);
 		    barOption2.yAxis[0].data = bardata2[0];
 		    barOption2.series[0].data = bardata2[1];
 		    barOption2.series[1].data = bardata2[2];
@@ -1167,9 +1167,9 @@ option = {
 					var bar1 = $('#bar1');
 					bar1.css({"height":"50%","width":"25%","bottom":"4%","top":"auto","left":"auto","right":"0"});
 					var pie = $('#pie');
-					pie.css({"height":"40%","width":"30%","bottom":"auto","top":"4%","right":"18%"});
-					pieOption.legend.right='20%';
-					pieOption.legend.bottom=20;
+					pie.css({"height":"40%","width":"30%","bottom":"auto","top":"4%","right":"-2%"});
+					pieOption.legend.right='25%';
+					pieOption.legend.bottom='5%';
 					pieOption.legend.orient='horizontal';
 					pieOption.grid={
 						width:'100%',
@@ -1184,8 +1184,8 @@ option = {
 					barchart2.resize();
 					barchart3.resize();
 					piechart.resize();
-					$('.text1 ').css({"bottom":"52rem","right":"6%"});
-					$('.text2 ').css({"bottom":"40rem","right":"6%"});
+					$('.text1 ').css({"bottom":"69%","right":"25%"});
+					$('.text2 ').css({"bottom":"55%","right":"25%"});
 					enlarged = true;
 					break;
 				case 1 :
@@ -1244,12 +1244,13 @@ option = {
 					var bar1 = $('#bar1');
 					bar1.css({"height":"38%","width":"20%","top":"61%","left":"49%"});
 					var pie = $('#pie');
-					pie.css({"height":"30%","width":"30%","top":"auto","bottom":"15rem","right":"1%"});
-					pieOption.legend.right=0;pieOption.legend.bottom=10;
+					pie.css({"height":"30%","width":"35%","top":"auto","bottom":"28%","right":"1%"});
+					pieOption.legend.right='15%';
+					pieOption.legend.bottom=0;
 					pieOption.series[0].radius=[0, '45%'];
 					piechart.setOption(pieOption, true);
-					$('.text1 ').css({"bottom":"8rem","right":"2%"});
-					$('.text2 ').css({"bottom":"2rem","right":"2%"});
+					$('.text1 ').css({"bottom":"13%","right":"2%"});
+					$('.text2 ').css({"bottom":"2%","right":"2%"});
 					mapchart.resize();
 					barchart.resize();
 					barchart1.resize();
