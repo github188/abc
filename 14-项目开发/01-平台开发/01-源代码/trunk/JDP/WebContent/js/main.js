@@ -29,7 +29,7 @@ option = {
             var name = params.name;
             var value = params.value;
             var res ='<div style="margin:0;background:url(images/tooltip.png)no-repeat;background-size: 100% 100% ;text-align:center;padding:0;width:150%;padding-top:20%;box-shadow: 2px 2px 10px #32bbec">'
-            	+'<p style="background:#32bbec;color:black;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:"造字工房悦圆常规体", Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value[2].toFixed(0)+'</p></div>';
+            	+'<p style="background:#32bbec;color:/;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:"造字工房悦圆常规体", Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value[2].toFixed(0)+'</p></div>';
                     //设置自定义数据的模板，这里的模板是图片
             console.log(res);
 /*            setTimeout(function (){
@@ -242,7 +242,7 @@ option = {
 		            	normal:{
 		            		show:true,
 		                    textStyle:{
-		                    	color:'black',fontWeight:'bold'
+		                    	color:'white',fontWeight:'bold'
 		                    },
 		            		position:'top'
 		            	},
@@ -526,7 +526,7 @@ option = {
 			            	normal:{
 			            		show:true,
 			                    textStyle:{
-			                    	color:'black',fontWeight:'bold'
+			                    	color:'white',fontWeight:'bold'
 			                    },
 			            		position:'right'
 			            	},
@@ -568,14 +568,14 @@ option = {
 				right:50,
 				textStyle:{
 		        	color:'#fff'
-		      	},zlevel:1,orient:'horizontal'
+		      	},zlevel:1,orient:'horizontal',show:false
 			},
 		    series : [
 		        {
 		            name:'',
 		            type:'pie',
 		            selectedMode: 'single',
-		            radius: [0, '45%'],
+		            radius: ['50', '70%'],
 		            center: ['50%', '50%'],
 
 		            //因为有visualMap这个是无效的
@@ -600,10 +600,16 @@ option = {
 			            	value:randomData(),
 				            label: {
 				                normal: {
-				                    position: 'inside',
+				                    position: 'center',
 				                    show:false
-				                },
-				                
+				                },               
+				                emphasis: {
+				                    show: true,
+				                    textStyle: {
+				                        fontSize: '12',
+				                        fontWeight: 'bold'
+				                    }
+				                }			                
 				            },
 			            },
 			            {
@@ -611,9 +617,17 @@ option = {
 			            	value:randomData(),
 				            label: {
 				                normal: {
-				                    position: 'inside',
+				                    position: 'center',
 				                    show:false
-				                },
+				                },				                
+				                emphasis: {
+				                    show: true,
+				                    textStyle: {
+				                        fontSize: '12',
+				                        fontWeight: 'bold'
+				                    }
+				                }
+
 				                
 				            },
 			            }
@@ -632,7 +646,7 @@ option = {
 				var seconds = new Date().getSeconds();
 				var minutes = new Date().getMinutes();
 				var hours = new Date().getHours();
-				if(seconds=='0'&&minutes=='30'){
+				if(seconds=='0'&&(minutes%5==0)){
 					location.reload(true);
 				}
 				$("#year").html(year);
@@ -798,12 +812,19 @@ option = {
 			    			            	value:7035,
 			    				            label: {
 			    				                normal: {
-			    				                    position: 'inside',
+			    				                    position: 'center',
 			    				                    textStyle:{
-			    				                    	color:'black',fontWeight:'normal'
+			    				                    	color:'white',fontWeight:'normal',fontSize:'1'
 			    				                    },
-			    				                    show:true
-			    				                },
+			    				                    show:false
+			    				                },               
+			    				                emphasis: {
+			    				                    show: true,
+			    				                    textStyle: {
+			    				                        fontSize: '1',
+			    				                        fontWeight: 'bold'
+			    				                    }
+			    				                }	
 			    				                
 			    				            },
 			    			            },
@@ -812,13 +833,19 @@ option = {
 			    			            	value:3786,
 			    				            label: {
 			    				                normal: {
-			    				                    position: 'inside',			    				                    
+			    				                    position: 'center',			    				                    
 			    				                    textStyle:{
-			    				                    	color:'black',fontWeight:'normal'
+			    				                    	color:'white',fontWeight:'normal',fontSize:'1'
 			    				                    },
-			    				                    show:true
-			    				                },
-			    				                
+			    				                    show:false
+			    				                },               
+			    				                emphasis: {
+			    				                    show: true,
+			    				                    textStyle: {
+			    				                        fontSize: '1',
+			    				                        fontWeight: 'bold'
+			    				                    }
+			    				                }	
 			    				            },
 			    			            }
 			    		            ];
@@ -974,9 +1001,19 @@ option = {
 						value: Math.ceil(numEmp),
 			            label: {
 			                normal: {
-			                    position: 'inside',
+			                    position: 'center',
+			                    textStyle:{
+			                    	color:'white',fontWeight:'normal',fontSize:'1'
+			                    },
 			                    show:false
-			                },
+			                },               
+			                emphasis: {
+			                    show: true,
+			                    textStyle: {
+			                        fontSize: '1',
+			                        fontWeight: 'bold'
+			                    }
+			                }	
 			                
 			            },
 					},
@@ -985,9 +1022,19 @@ option = {
 						value:Math.ceil(notNumEmp),
 			            label: {
 			                normal: {
-			                    position: 'inside',
+			                    position: 'center',
+			                    textStyle:{
+			                    	color:'white',fontWeight:'normal',fontSize:'1'
+			                    },
 			                    show:false
-			                },
+			                },               
+			                emphasis: {
+			                    show: true,
+			                    textStyle: {
+			                        fontSize: '1',
+			                        fontWeight: 'bold'
+			                    }
+			                }	
 			                
 			            },
 					}
@@ -1137,8 +1184,10 @@ option = {
 		function setBar2Option(bardata2,avgEffect,totalOrderNum,name,totalOrder){
 			$("#orderCountName").html(name?name+'平均人效':'全国平均人效');
 			$("#orderCountNum").html(avgEffect);
-			$("#averageEffectName").html('小时处理量|当日总单量');
-			$("#averageEffectNum").html(totalOrderNum+'<span style="font-size:3rem;font-family:黑体;color:#FFF"> | </span>'+totalOrder);
+/*			$("#averageEffectName").html('小时处理量<span style="font-size:3rem;font-family:黑体;color:#FFF"> | </span>当日总单量');
+			$("#averageEffectNum").html(totalOrderNum+'<span style="font-size:3rem;font-family:黑体;color:#FFF"> | </span>'+totalOrder);*/
+			$("#averageEffectName").html('<p style="color:#FFF;font-size: 2.5rem;font-family:造字工房悦圆常规体,微软雅黑, Arial, Helvetica, sans-serif;">小时处理量</p><span style="color:#fedd1b;font-size: 4rem;font-family:digital-7__mono, Arial, Helvetica, sans-serif;">'+totalOrderNum+'</span>');
+			$("#averageEffectNum").html('<p style="color:#FFF;font-size: 2.5rem;font-family:造字工房悦圆常规体,微软雅黑, Arial, Helvetica, sans-serif;">当日总单量</p><span style="color:#fedd1b;font-size: 4rem;font-family:digital-7__mono, Arial, Helvetica, sans-serif;">'+totalOrder+'</span>');
 		    barOption2.yAxis[0].data = bardata2[0];
 		    barOption2.series[0].data = bardata2[1];
 		    barOption2.series[1].data = bardata2[2];
@@ -1167,7 +1216,7 @@ option = {
 					var bar1 = $('#bar1');
 					bar1.css({"height":"50%","width":"25%","bottom":"4%","top":"auto","left":"auto","right":"0"});
 					var pie = $('#pie');
-					pie.css({"height":"40%","width":"30%","bottom":"auto","top":"4%","right":"-2%"});
+					pie.css({"height":"40%","width":"30%","bottom":"auto","top":"9%","right":"-2%"});
 					pieOption.legend.right='25%';
 					pieOption.legend.bottom='5%';
 					pieOption.legend.orient='horizontal';
@@ -1176,7 +1225,7 @@ option = {
 						hight:'100%',
 			        	containLabel:true
 			        };
-					pieOption.series[0].radius=[0, '60%'];
+					pieOption.series[0].radius=['55%', '70%'];
 					piechart.setOption(pieOption, true);
 					mapchart.resize();
 					barchart.resize();
@@ -1185,7 +1234,7 @@ option = {
 					barchart3.resize();
 					piechart.resize();
 					$('.text1 ').css({"bottom":"69%","right":"25%"});
-					$('.text2 ').css({"bottom":"55%","right":"25%"});
+					$('.text2 ').css({"bottom":"55%","right":"25%","width":"16%"});
 					enlarged = true;
 					break;
 				case 1 :
@@ -1244,13 +1293,13 @@ option = {
 					var bar1 = $('#bar1');
 					bar1.css({"height":"38%","width":"20%","top":"61%","left":"49%"});
 					var pie = $('#pie');
-					pie.css({"height":"30%","width":"35%","top":"auto","bottom":"28%","right":"1%"});
+					pie.css({"height":"28%","width":"28%","top":"auto","bottom":"24%","right":"0"});
 					pieOption.legend.right='15%';
 					pieOption.legend.bottom=0;
-					pieOption.series[0].radius=[0, '45%'];
+					pieOption.series[0].radius=['50%', '70%'];
 					piechart.setOption(pieOption, true);
 					$('.text1 ').css({"bottom":"13%","right":"2%"});
-					$('.text2 ').css({"bottom":"2%","right":"2%"});
+					$('.text2 ').css({"bottom":"2%","right":"2%","width":"27%"});
 					mapchart.resize();
 					barchart.resize();
 					barchart1.resize();
