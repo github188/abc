@@ -5,10 +5,10 @@ angular.module('app', ['ngCookies']).controller('ctrl', ['$scope','$location','$
 	if($cookieStore.get('showornot')!='true'){
 		window.location.href = "login.html";
 	}
-/*	$scope.logout = function(){
+	$scope.logout = function(){
 		$cookieStore.put('showornot', 'false');
-		window.href = "login.html";
-	}*/
+		window.location.href = "login.html";
+	}
 }]);
 var app = angular.module('jsywp', ['ui.bootstrap','ui.router','chart.js','ngFileUpload','ngCookies']);
 
