@@ -839,7 +839,7 @@ option = {
 			$("#orderCountName").html(name?name+'平均人效':'全国平均人效');
 			$("#orderCountNum").html(763);
 			$("#averageEffectName").html('小时处理量|当日总单量');
-			$("#averageEffectNum").html(7488742+'/'+77488742);
+			$("#averageEffectNum").html(7488742+'|'+77488742);
 		    barOption2.yAxis[0].data = ['东北地区','华北地区','华东地区','西北地区','西南地区','华中地区','华南地区'];
 		    barOption2.series[0].data = [812,788,747,727,702,698,710];
 		    barOption2.series[1].data = [812,788,747,727,702,698,710];
@@ -1138,7 +1138,7 @@ option = {
 			$("#orderCountName").html(name?name+'平均人效':'全国平均人效');
 			$("#orderCountNum").html(avgEffect);
 			$("#averageEffectName").html('小时处理量|当日总单量');
-			$("#averageEffectNum").html(totalOrderNum+'/'+totalOrder);
+			$("#averageEffectNum").html(totalOrderNum+'|'+totalOrder);
 		    barOption2.yAxis[0].data = bardata2[0];
 		    barOption2.series[0].data = bardata2[1];
 		    barOption2.series[1].data = bardata2[2];
