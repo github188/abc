@@ -565,7 +565,7 @@ option = {
 			legend:{
 				data:['正式员工','非正式员工'],
 				bottom:10,
-				right:0,
+				right:50,
 				textStyle:{
 		        	color:'#fff'
 		      	},zlevel:1,orient:'horizontal'
@@ -1184,8 +1184,8 @@ option = {
 					barchart2.resize();
 					barchart3.resize();
 					piechart.resize();
-					$('.text1 ').css({"bottom":"44rem","right":"10%"});
-					$('.text2 ').css({"bottom":"36rem","right":"10%"});
+					$('.text1 ').css({"bottom":"52rem","right":"6%"});
+					$('.text2 ').css({"bottom":"40rem","right":"6%"});
 					enlarged = true;
 					break;
 				case 1 :
