@@ -47,10 +47,10 @@ public class ChartServiceImpl implements IChartService {
 		List<Map<String,Object>> result= new ArrayList<Map<String,Object>>();
 		Calendar calendar = Calendar.getInstance();
 		String temp_str=sdf.format(calendar.getTime()); 
-		SimpleDateFormat df = new SimpleDateFormat("HH:00:00");
-		calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
-		String end = df.format(calendar.getTime());
-		calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY) - 1);
+		SimpleDateFormat df = new SimpleDateFormat("HH:mm:00");
+		calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
+		String end= df.format(calendar.getTime());
+		calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) -10);
 		String begin = df.format(calendar.getTime());
 		List<Map<String,Object>> arealist=userDao.getCurrentTimeAreaForChart(name);
 		for(Map<String,Object>map:arealist){

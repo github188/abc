@@ -36,4 +36,16 @@
 		            transform: ' translate3d(0,0,-' + curR + 'px) rotateY(' + Math.random() * 360+ 'deg) rotateX(' + Math.random() * -50 + 'deg) scale(' + s + ',' + s + ')'
 		        });
 		    });
+	    	$('#yyreports').hide();
+	    	$('#ycreports').hide();
+	    	
 		});
+		
+	    function showYYreports(){
+	    	$('#yyreports').show();
+	    	$('#ycreports').hide();
+	    };
+	    function showYCreports(){
+	    	$('#ycreports').show();
+	    	$('#yyreports').hide();
+	    };

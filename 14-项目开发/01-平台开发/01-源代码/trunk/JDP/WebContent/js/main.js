@@ -29,7 +29,7 @@ option = {
             var name = params.name;
             var value = params.value;
             var res ='<div style="margin:0;background:url(images/tooltip.png)no-repeat;background-size: 100% 100% ;text-align:center;padding:0;width:150%;padding-top:20%;box-shadow: 2px 2px 10px #32bbec">'
-            	+'<p style="background:#32bbec;color:/;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:"造字工房悦圆常规体", Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value[2].toFixed(0)+'</p></div>';
+            	+'<p style="background:#32bbec;color:#FFF;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:"造字工房悦圆常规体", Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value[2].toFixed(0)+'</p></div>';
                     //设置自定义数据的模板，这里的模板是图片
             console.log(res);
 /*            setTimeout(function (){
@@ -699,21 +699,25 @@ option = {
 			});
 			mapchart.on('click', function (param){
 				var name=param.name;
-				//在中国地图上要去掉这几个地方的点击事件 直辖市 台湾 
-				if(!name.match(/^北京|^天津|^重庆|^上海|在线|离线|台湾/)||name!=""){
-					$("#areaTip").html(name||"全国");
-					$.ajax({
-						url: 'geoJson/'+name+'.json',
-						type: "get",
-						dataType: "json",
-						success: function (chinaJson) {
-						    echarts.registerMap(name, chinaJson);   
-						    getData(name);
-						    //loadDault(name);
-						},
-					  statusCode: {404: function() {init ('全国');}}
-					});
-			    }
+				if(param.componentType=='geo'){
+					//在中国地图上要去掉这几个地方的点击事件 直辖市 台湾 
+					if(!name.match(/^北京|^天津|^重庆|^上海|在线|离线|台湾/)||name!=""){
+						$("#areaTip").html(name||"全国");
+						$.ajax({
+							url: 'geoJson/'+name+'.json',
+							type: "get",
+							dataType: "json",
+							success: function (chinaJson) {
+							    echarts.registerMap(name, chinaJson);   
+							    getData(name);
+							    //loadDault(name);
+							},
+						  statusCode: {404: function() {init ('全国');}}
+						});
+				    }
+				}else{
+					getData1(name);
+				}
 			}); 
 		};
 
@@ -886,6 +890,15 @@ option = {
 /*			}*/
 		};
 		
+		function getData1(name){
+			setTimeout(searchMap1(name),1);
+			setTimeout(searchBar2(name),1);
+		/*	if(!enlarged){*/
+			setTimeout(searchBar(name),1);
+			setTimeout(searchBar1(name),1);
+/*			}*/
+		};
+		
 		function searchMap(name) {
 			var url = "chart/getMapData.do?name="+name;
 			$.ajax({
@@ -896,6 +909,18 @@ option = {
 				}
 			});
 		};
+		
+		function searchMap1(name) {
+			var url = "chart/getMapData.do?name="+name;
+			$.ajax({
+				url: url,
+				type: "post",
+				success: function (data) {
+					makeMapData1(data,name);
+				}
+			});
+		};
+		
 		
 		//获取拼接地图数据
 		function makeMapData(data,name){
@@ -1045,20 +1070,96 @@ option = {
 			setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
 		}
 
+		//获取拼接地图数据
+		function makeMapData1(data,name){
+			mapdata= new Array();
+			piedata= new Array();
+			pieLegendData= new Array();
+			var data=eval(data);
+			var numEmp = 0.0;
+			var notNumEmp = 0.0;
+			var otherNumEmp = 0.0;
+			var a = 0.00;
+			var b = 0.00;
+			if(data!=null){
+				$.each(data, function(index, row){
+/*					if(row.name.match(/^黑龙江|^内蒙古/)){
+						row.name=data[index].name.substring(0,3);
+					}*/
+					var c = eval(row.EmpNum+row.NotEmpNum+row.otherNumEmp);
+					otherNumEmp += row.otherNumEmp;
+					numEmp += row.EmpNum;
+					notNumEmp += row.NotEmpNum;
+				});
+			}
+			a=numEmp+notNumEmp==0?0:((numEmp/(numEmp+notNumEmp)).toFixed(2));
+			b=numEmp+notNumEmp==0?0:((notNumEmp/(numEmp+notNumEmp)).toFixed(2));
+			piedata.push(
+					{
+						name:'正式员工  '+Math.ceil(a*100)+'%',
+						value: Math.ceil(numEmp),
+			            label: {
+			                normal: {
+			                    position: 'center',
+			                    textStyle:{
+			                    	color:'white',fontWeight:'normal',fontSize:'1'
+			                    },
+			                    show:false
+			                },               
+			                emphasis: {
+			                    show: true,
+			                    textStyle: {
+			                        fontSize: '1',
+			                        fontWeight: 'bold'
+			                    }
+			                }	
+			                
+			            },
+					},
+					{
+						name:'非正式员工  '+Math.ceil(b*100)+'%',
+						value:Math.ceil(notNumEmp),
+			            label: {
+			                normal: {
+			                    position: 'center',
+			                    textStyle:{
+			                    	color:'white',fontWeight:'normal',fontSize:'1'
+			                    },
+			                    show:false
+			                },               
+			                emphasis: {
+			                    show: true,
+			                    textStyle: {
+			                        fontSize: '1',
+			                        fontWeight: 'bold'
+			                    }
+			                }	
+			                
+			            },
+					}
+
+				); 
+			pieLegendData.push('正式员工  '+Math.ceil(a*100)+'%');
+			pieLegendData.push('非正式员工  '+Math.ceil(b*100)+'%');
+			setMapOption(null,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
+		}
+		
 		function setMapOption(mapdata,piedata,pieLegendData,total,name){
 			$("#areaTip").html(name||"全国");
 			$("#mapTopLeft").html(name?name+'实时人力构成':'全国实时人力构成');
 			option.title.text = name?(name+"在岗总人数"):"在岗总人数";
 			option.title.subtext =(total?""+Math.ceil(total)+"":'0');
-			option.geo.map= (name||"全国");
-			if(name=='海南'){
-				option.geo.center = [109.8,19];
-				option.geo.zoom = 4;
-			}else{
-				option.geo.center = [];
-				option.geo.zoom = 1;
-			}
-			option.series[0].data = mapdata;
+			if(mapdata){
+				option.geo.map= (name||"全国");
+				option.series[0].data = mapdata;
+				if(name=='海南'){
+					option.geo.center = [109.8,19];
+					option.geo.zoom = 4;
+				}else{
+					option.geo.center = [];
+					option.geo.zoom = 1;
+				}
+			};
 			pieOption.series[0].data = piedata;
 			pieOption.legend.data = pieLegendData;
 			mapchart.setOption(option, true);
