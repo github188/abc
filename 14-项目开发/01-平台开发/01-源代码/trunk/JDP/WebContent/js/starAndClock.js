@@ -42,10 +42,10 @@
 		});
 		
 	    function showYYreports(){
-	    	$('#yyreports').show();
+	    	$('#yyreports').fadeIn();
 	    	$('#ycreports').hide();
 	    };
 	    function showYCreports(){
-	    	$('#ycreports').show();
+	    	$('#ycreports').fadeIn();
 	    	$('#yyreports').hide();
 	    };
