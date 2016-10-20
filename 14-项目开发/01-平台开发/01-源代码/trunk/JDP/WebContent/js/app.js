@@ -70,7 +70,7 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 	}
 }]);
 
-angular.module('yyreports', []).controller('yyreportsctrl', ['$scope', function($scope){
+angular.module('yyreports', []).controller('yyreportsctrl', ['$scope','$http', function($scope,$http){
 	$scope.activebase='active';
 	$scope.active1=$scope.activebase;
 	$scope.active2=!$scope.activebase;
@@ -89,16 +89,7 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope', function(
 		$scope.items[index].style='active';
 		$scope.lastactive=index;
 	};
-	$scope.projectList = [
-			{id:'1',area:'1',pimname:'运维中',personname:'John',group:'1',shenfen:'1',erpid:'2',offline:'2016-5-12',online:'2016-5-12',identity:'@jh'},
-			{id:'2',area:'1',pimname:'运维中',personname:'Bill',group:'1',shenfen:'1',erpid:'2',offline:'2016-5-9',online:'2016-5-12',identity:'@bg'},
-			{id:'3',area:'1',pimname:'暂停',personname:'Bobo',group:'1',shenfen:'1',erpid:'2',offline:'2015-5-12',online:'2016-5-12',identity:'@hz'},
-			{id:'4',area:'1',pimname:'暂停',personname:'Bobo',group:'1',shenfen:'1',erpid:'2',offline:'2015-5-12',online:'2016-5-12',identity:'@hz'},
-			{id:'5',area:'1',pimname:'暂停',personname:'Bobo',group:'1',shenfen:'1',erpid:'2',offline:'2015-5-12',online:'2016-5-12',identity:'@hz'},
-			{id:'6',area:'1',pimname:'暂停',personname:'Bobo',group:'1',shenfen:'1',erpid:'2',offline:'2015-5-12',online:'2016-5-12',identity:'@hz'},
-			{id:'7',area:'1',pimname:'暂停',personname:'Bobo',group:'1',shenfen:'1',erpid:'2',offline:'2015-5-12',online:'2016-5-12',identity:'@hz'},
-			{id:'8',area:'1',pimname:'暂停',personname:'Bobo',group:'1',shenfen:'1',erpid:'2',offline:'2015-5-12',online:'2016-5-12',identity:'@hz'}
-		];
+	$scope.projectList = [];
 	$scope.menus=['项目名称','接入日期','所属系统'];
 	$scope.sortBy = function(menu){
 		console.log(menu);
@@ -155,15 +146,15 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope', function(
 
 	$scope.inputs=[];
 	$scope.contents=['区域','开始时间','结束时间','分拣场地'];
-	$scope.fuhao=['大于','等于','小于','包含'];
+	$scope.fuhao=['>','=','<'];
 	$scope.times=[];
 	$scope.inputshow1=false;
 	$scope.input1='';
-	$scope.input2='';
+	$scope.input2='=';
 	$scope.input3='';
 	$scope.inputadd= function (){
 		$scope.input1='';
-		$scope.input2='';
+		$scope.input2='=';
 		$scope.input3='';
 		$scope.show=true;
 	};
@@ -180,7 +171,7 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope', function(
 	};
 	$scope.save1= function (){
 		if($scope.input1.length!=0&&$scope.input2.length!=0&&$scope.input3.length!=0){
-			$scope.inputs.push($scope.input1+','+$scope.input2+','+$scope.input3);
+			$scope.inputs.push($scope.input1+','+$scope.input3);
 			console.log($scope.inputs);
 			$scope.show=false;
 		}else{
@@ -218,144 +209,28 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope', function(
 	$scope.checkornot= function(index,value){
 		console.log(index + value);
 	}
+	$scope.blur1=function(){
+		if($scope.input1=="开始时间"||$scope.input1=="结束时间"){
+			$scope.input3type="date";
+		}else{
+			$scope.input3type="text";
+		}
+	}
+	$scope.daochu=function(){
+		var url = "export/yydata.do?";
+		$http.post(url+"inputs="+$scope.inputs).success(function(response) {
+			console.log(response);
+			
+//			window.open("images/111.xls"); 
+		});
+	}
+	$scope.save=function(){
+		console.log($scope.currentpage);
+		var url = "export/queryyydata.do?";
+		$http.post(url+"inputs="+$scope.inputs+"&pages="+$scope.currentpage).success(function(response) {
+			console.log(response);
+			$scope.projectList=angular.fromJson(angular.fromJson(response));
+//			window.open("images/111.xls"); 
+		});
+	}
 }]);
-
-app.config(function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/index');
-    $stateProvider
-        .state('index', {
-            url: '/index',
-            templateUrl: 'templates/project/ProjectOnlineState.html',
-            controller: 'ProjectOnlineStateCtrl'
-        })
-    .state('ProjectList', {
-            url: '/ProjectList',
-            templateUrl: 'templates/project/ProjectList.html',
-            controller : 'ProjectListCtrl'
-        })
-    .state('ProjectInfo',{
-        url:'/ProjectInfo/id=:id',
-        templateUrl:'templates/project/ProjectInfo.html',
-        controller :'ProjectInfoCtrl'
-    })
-    .state('ProjectOnlineList', {
-            url: '/ProjectOnlineList',
-            templateUrl: 'templates/project/ProjectOnlineList.html',
-            controller :'ProjectOnlineListCtrl'
-        })
-    .state('ProjectOnlineEdit',{
-        url:'/ProjectOnlineEdit/id=:id',
-        templateUrl:'templates/project/ProjectOnlineEdit.html',
-        controller :'ProjectOnlineEditCtrl'
-    })
-    .state('ProjectOnlineAdd',{
-        url:'/ProjectOnlineAdd',
-        templateUrl:'templates/project/ProjectOnlineAdd.html',
-        controller :'ProjectOnlineAddCtrl'
-    })
-    .state('ProjectOnlineState', {
-            url: '/ProjectOnlineState',
-            templateUrl: 'templates/project/ProjectOnlineState.html',
-            controller: 'ProjectOnlineStateCtrl'
-        })
-    .state('APICustomerList', {
-            url: '/APICustomerList',
-            templateUrl: 'templates/apilink/APICustomerList.html',
-            controller : 'APICustomerListCtrl'
-        })
-    .state('APICustomerEdit',{
-        url:'/APICustomerEdit/id=:id',
-        templateUrl:'templates/apilink/APICustomerEdit.html',
-        controller : 'APICustomerEditCtrl'
-    })
-    .state('APICustomerAdd',{
-        url:'/APICustomerAdd',
-        templateUrl:'templates/apilink/APICustomerAdd.html',
-        controller : 'APICustomerAddCtrl'
-    })
-    .state('APIProjectList', {
-            url: '/APIProjectList',
-            templateUrl: 'templates/apilink/APIProjectList.html',
-            controller : 'APIProjectListCtrl'
-        })
-    .state('APIProjectInfo',{
-        url:'/APIProjectInfo/id=:id',
-        templateUrl:'templates/apilink/APIProjectInfo.html',
-        controller : 'APIProjectInfoCtrl'
-    })
-    .state('APIProjectAdd',{
-        url:'/APIProjectAdd',
-        templateUrl:'templates/apilink/APIProjectAdd.html',
-        controller : 'APIProjectAddCtrl'
-    })
-    .state('APIProjectState', {
-            url: '/APIProjectState',
-            templateUrl: 'templates/apilink/APIProjectState.html',
-            controller:'APIProjectStateCtrl'
-        })
-    .state('APIList',{
-        url: '/APIList',
-        templateUrl: 'templates/apilink/APIList.html',
-        controller : 'APIListCtrl'
-    })
-    .state('APIEdit',{
-        url: '/APIEdit/id=:id',
-        templateUrl: 'templates/apilink/APIEdit.html',
-        controller : 'APIEditCtrl'
-    })
-    .state('APIAdd',{
-        url: '/APIAdd',
-        templateUrl: 'templates/apilink/APIAdd.html',
-        controller : 'APIAddCtrl'
-    })
-    .state('Hosts',{
-        url: '/Hosts',
-        templateUrl: 'templates/automation/Hosts.html',
-        controller : 'HostsCtrl'
-    })
-    .state('HostEdit',{
-        url: '/HostEdit/id=:id',
-        templateUrl: 'templates/automation/HostEdit.html',
-        controller : 'HostEditCtrl'
-    })
-    .state('HostAdd',{
-        url: '/HostAdd',
-        templateUrl: 'templates/automation/HostAdd.html',
-        controller : 'HostAddCtrl'
-    })
-    .state('Projects',{
-        url: '/Projects',
-        templateUrl: 'templates/automation/Projects.html',
-        controller : 'ProjectsCtrl'
-    })
-    .state('ProjectsEdit',{
-        url: '/ProjectsEdit/id=:id',
-        templateUrl: 'templates/automation/ProjectsEdit.html',
-        controller : 'ProjectsEditCtrl'
-    })
-    .state('ProjectsAdd',{
-        url: '/ProjectsAdd',
-        templateUrl: 'templates/automation/ProjectsAdd.html',
-        controller : 'ProjectsAddCtrl'
-    })
-    .state('Services',{
-        url: '/Services',
-        templateUrl: 'templates/automation/Services.html',
-        controller : 'ServicesCtrl'
-    })
-    .state('ServicesEdit',{
-        url: '/ServicesEdit/id=:id',
-        templateUrl: 'templates/automation/ServicesEdit.html',
-        controller : 'ServicesEditCtrl'
-    })
-    .state('ServicesAdd',{
-        url: '/ServicesAdd',
-        templateUrl: 'templates/automation/ServicesAdd.html',
-        controller : 'ServicesAddCtrl'
-    })
-    .state('Automation',{
-        url: '/Automation',
-        templateUrl: 'templates/automation/Automation.html',
-        controller : 'AutomationCtrl'
-    });
-});

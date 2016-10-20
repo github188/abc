@@ -632,7 +632,7 @@ option = {
 				var seconds = new Date().getSeconds();
 				var minutes = new Date().getMinutes();
 				var hours = new Date().getHours();
-				if(seconds=='0'&&minutes=='30'){
+				if(seconds=='0'&&(minutes%5==0)){
 					location.reload(true);
 				}
 				$("#year").html(year);

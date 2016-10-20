@@ -141,7 +141,7 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 		  <div class="col-md-12" style="height: 88%;margin-top: 10%;position: relative;width:100%;padding:0;">
 		      <div class="row">
 				  <input class="col-md-1 col-md-offset-10" type="button" value="查询" data-toggle="modal" data-target="#myModal"></input>
-				  <input class="col-md-1" type="button" value="导出"></input>
+				  <input class="col-md-1" type="button" value="导出" ng-click="daochu()"></input>
 		      </div>
 		    <div class="table-responsive" style="margin-top:30px;">
 		      <table class="table">
@@ -160,17 +160,17 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 		          </tr>
 		        </thead>
 		        <tbody style="font-size:12px;color:white">
-		          <tr ng-repeat="project in projectList">
+		          <tr ng-repeat="project in projectList  track by $index">
 		            <td>{{ $index + 1 }}</td>
-		            <td>{{project.area}}</td>
-		            <td>{{project.pimname}}</td>
-		            <td>{{project.personname}}</td>
-		            <td>{{project.group}}</td>
-		            <td>{{project.shenfen}}</td>
-		            <td>{{project.erpid}}</td>
-		            <td>{{project.identity}}</td>
-		            <td>{{project.offline}}</td>
-		            <td>{{project.online}}</td>
+		            <td>{{project.areaName}}</td>
+		            <td>{{project.pimsName}}</td>
+		            <td>{{project.orderQuantity}}</td>
+		            <td>{{project.quantityOnduty}}</td>
+		            <td>{{project.avgEfficiency}}</td>
+		            <td>{{project.normal}}</td>
+		            <td>{{project.notnomal}}</td>
+		            <td>{{project.other}}</td>
+		            <td>{{project.percent}}</td>
 		          </tr>
 		        </tbody>
 		      </table>
@@ -205,26 +205,26 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 	         &nbsp;&nbsp;
 	         <div class="modal-body">
 	          <div class="table-responsive">
-			      <table class="table table-bordered">
-			        <thead>
+			      <table class="table table-bordered table-condensed">
+			        <thead align="center">
 			          <tr>
-			            <th><h5>查询内容</h5></th>
-			            <th><h5>比较符</h5></th>
-			            <th><h5>比较值</h5></th>
+			            <th><h5 align="center">查询内容</h5></th>
+			            <th><h5 align="center">比较符</h5></th>
+			            <th><h5 align="center">比较值</h5></th>
 			            <th></th>
 			          </tr>
 			        </thead>
 			        <tbody>
 				        <tr ng-repeat="input in inputs">
 	                      	<td>{{input.split(',')[0]}}</td>
+			            	<td>等于</td>
 			            	<td>{{input.split(',')[1]}}</td>
-			            	<td>{{input.split(',')[2]}}</td>
 			            	<td><a ng-click="inputdelete($index)" style="cursor: pointer;"><span class="glyphicon glyphicon-minus"></span></a></td>
 	                    </tr>
 			          <tr ng-show="show">
-			            <td><select style="height:30px" class="col-md-12" ng-model="input1" ng-options="x for x in contents"></select></td>
-			            <td><select style="height:30px" class="col-md-12" ng-model="input2" ng-options="y for y in fuhao"></select></td>
-			            <td><input ng-model="input3" type="text" class="form-control" required></td>
+			            <td><select style="height:30px" class="col-md-12" ng-model="input1" ng-options="x for x in contents" ng-blur="blur1()"></select></td>
+			            <td><label style="height:30px" class="col-md-12">等于</label></td>
+			            <td><input ng-model="input3" type="{{input3type}}" class="form-control" required></td>
 			            <td><a ng-click="save1()" style="cursor: pointer;"><span class="glyphicon glyphicon-plus pull-right"></span></a></td> 
 			          </tr>
 			        </tbody>
@@ -232,8 +232,8 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 			    </div>
 	         </div>
 	         <div class="modal-footer">
-	            <a class="btn btn-primary" data-dismiss="modal" ng-click="save()">Save</a>
-	            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="quit()">Quit</button>
+	            <a class="btn btn-primary" data-dismiss="modal" ng-click="save()">查询</a>
+	            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="quit()">退出</button>
 	         </div>
 	      </div><!-- /.modal-content -->
 	   </div><!-- /.modal -->

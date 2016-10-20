@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.pims.pem.dao.ReportDao">
+
+	<select id="queryYydata" resultType="java.util.HashMap">
+	<![CDATA[
+		select
+		c.id as CU_ID,
+		c.PARENT_NAME AS PARENT_NAME,
+		c.NAME AS NAME,
+		sum(q.ORDER_QUANTITY) AS ORDER_QUANTITY,
+		AVG(o.QUANTITY_ONDUTY) AS QUANTITY_ONDUTY,
+		o.QUANTITY_ONDUTY  AS QUANTITY_ONDUTY
+		from JD_LE_LABOUR_ONDUTY o
+		left join NP_SYS_CONTROLUNIT c on c.id=o.CU_ID
+		left join JD_LE_ORDER_QUANTITY q on q.CU_ID=c.id
+		where c.PARENT_NAME like CONCAT('%',#{area},'%') and o.BIZ_DATE > #{starttime} and o.BIZ_DATE < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
+		group by c.id
+		LIMIT #{startpages},#{endpages}
+	]]>
+	</select>
+	
+	<select id="queryavgefficiency" resultType="java.util.HashMap">
+	<![CDATA[
+		select AVG(e.AVG_EFFICIENCY) as AVG_EFFICIENCY from jd_le_labour_efficiency e where cu_id =#{cuid} and e.BIZ_DATE > #{starttime} and e.BIZ_DATE < #{endtime}
+	]]>
+	</select>
+	
+	<select id="queryOnduty" resultType="java.util.HashMap">
+	<![CDATA[
+		select PERSON_TYPE,QUANTITY_ONDUTY from jd_le_labour_onduty where cu_id=#{cuid} and BIZ_DATE > #{starttime} and BIZ_DATE < #{endtime} group by PERSON_TYPE
+	]]>
+	</select>
+
+</mapper>

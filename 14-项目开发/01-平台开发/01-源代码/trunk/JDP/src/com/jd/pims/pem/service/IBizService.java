@@ -2,6 +2,7 @@ package com.jd.pims.pem.service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.jd.pims.pem.model.LabourEfficiency;
 import com.jd.pims.pem.model.LabourOndutyDayState;
@@ -72,6 +73,9 @@ public interface IBizService {
 	 */
 	public List<LabourEfficiency> getEfficiencyHistory(String cuId,
 			Date startDate, Date endDate);
+	
+	
+	public List<Map<String, Object>> queryYydata(String[] inputs,int pages);
 	
 	
 
