@@ -70,7 +70,8 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 	}
 }]);
 
-angular.module('yyreports', []).controller('yyreportsctrl', ['$scope','$http', function($scope,$http){
+var reports = angular.module('reports', []);
+reports.controller('yyreportsctrl', ['$scope','$http', function($scope,$http){
 	$scope.activebase='active';
 	$scope.active1=$scope.activebase;
 	$scope.active2=!$scope.activebase;
@@ -266,4 +267,8 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope','$http', f
 //			window.open("images/111.xls"); 
 		});
 	}
+}]);
+
+reports.controller('ycreportsctrl', ['$scope','$http', function($scope,$http){
+	
 }]);
