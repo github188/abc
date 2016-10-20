@@ -28,4 +28,9 @@ public interface ReportDao extends IBaseDao {
 	List<Map<String, Object>> queryOnduty(@Param("cuid")String cuid,
 			@Param("starttime")String starttime,
 			@Param("endtime")String endtime);
+	
+	List<Map<String, Object>> queryAllYydata(@Param("area")String area,
+			@Param("starttime")String starttime,
+			@Param("endtime")String endtime,
+			@Param("pimsname")String pimsname);
 }

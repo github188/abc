@@ -4,8 +4,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.jd.pims.pem.model.LabourEfficiency;
-import com.jd.pims.pem.model.LabourOndutyDayState;
 import com.jd.pims.pem.model.LabourOndutyState;
 
 /**
@@ -75,7 +76,9 @@ public interface IBizService {
 			Date startDate, Date endDate);
 	
 	
-	public List<Map<String, Object>> queryYydata(String[] inputs,int pages);
+	public List<Map<String, Object>> queryYydata(String[] inputs,int pages,int endpages);
+
+	public String yydata(String[] inputs,HttpServletRequest request);
 
 
 }

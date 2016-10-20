@@ -34,7 +34,7 @@ public class DataExportController extends BaseController {
 	public String queryYydata(HttpServletRequest request,HttpServletResponse response) {
 		String inputs = request.getParameter("inputs");
 		int pages=Integer.parseInt(request.getParameter("pages"));
-		List<Map<String, Object>> list = pemService.queryYydata(inputs.split(","),pages);
+		List<Map<String, Object>> list = pemService.queryYydata(inputs.split(","),pages,pages*8+8);
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}
@@ -48,10 +48,10 @@ public class DataExportController extends BaseController {
 	@RequestMapping(value = "/yydata", method = RequestMethod.POST)
 	@ResponseBody
 	public String yydata(HttpServletRequest request,HttpServletResponse response) {
-		String[] name = request.getParameterValues("inputs");
-//		List<Map<String, Object>> list = chartService.getNumberOnDuty(name);
-		Gson gson = new Gson();
-		return gson.toJson(null);
+		String inputs = request.getParameter("inputs");
+		String url = pemService.yydata(inputs.split(","),request);
+		
+		return url;
 	}
         
 }

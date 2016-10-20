@@ -251,8 +251,10 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope','$http', f
 		var url = "export/yydata.do?";
 		$http.post(url+"inputs="+$scope.inputs).success(function(response) {
 			console.log(response);
-			
-//			window.open("images/111.xls"); 
+			if(response!=""){
+				window.location.href = ""+angular.fromJson(response);
+			}
+//			window.open("111.xls"); 
 		});
 	}
 	$scope.save=function(){
