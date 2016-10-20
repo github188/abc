@@ -76,7 +76,6 @@ public interface IBizService {
 	
 	
 	public List<Map<String, Object>> queryYydata(String[] inputs,int pages);
-	
-	
+
 
 }

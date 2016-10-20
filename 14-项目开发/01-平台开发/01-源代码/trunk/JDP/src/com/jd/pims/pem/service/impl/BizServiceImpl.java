@@ -178,7 +178,7 @@ public class BizServiceImpl implements IBizService {
 			}
 		}
 		
-		List<Map<String, Object>> datas = reportDao.queryYydata(inputss[0],inputss[1].isEmpty()?"1970-01-01":inputss[1],inputss[2].isEmpty()?"2050-01-01":inputss[2],inputss[3],startpages*9,startpages*9+8);
+		List<Map<String, Object>> datas = reportDao.queryYydata(inputss[0],inputss[1].isEmpty()?"1970-01-01":inputss[1],inputss[2].isEmpty()?"2050-01-01":inputss[2],inputss[3],startpages*8,startpages*8+8);
 		
 		List<Map<String, Object>> response = new ArrayList<>();
 		
@@ -186,7 +186,7 @@ public class BizServiceImpl implements IBizService {
 			String PARENT_NAME = data.get("PARENT_NAME").toString();//区域
 			String NAME = data.get("NAME").toString();//分拣中心名称
 			String QUANTITY_ONDUTY = data.get("QUANTITY_ONDUTY").toString();//在岗人数
-			String ORDER_QUANTITY = data.get("ORDER_QUANTITY").toString();//订单总数
+			String ORDER_QUANTITY = data.get("ORDER_QUANTITY")==null?"":data.get("ORDER_QUANTITY").toString();//订单总数
 			String CU_ID = data.get("CU_ID").toString();//订单总数
 			
 			HashMap<String, Object> map = new HashMap<>();
@@ -196,12 +196,13 @@ public class BizServiceImpl implements IBizService {
 			map.put("orderQuantity", ORDER_QUANTITY);
 			
 			Map<String, Object> map1= reportDao.queryavgefficiency(CU_ID,inputss[1].isEmpty()?"1970-01-01":inputss[1],inputss[2].isEmpty()?"2050-01-01":inputss[2]);
-			map.put("avgEfficiency", map1.get("AVG_EFFICIENCY"));
-			
+			if(map1!=null && map1.size()!=0){
+				map.put("avgEfficiency", map1.get("AVG_EFFICIENCY"));
+			}
 			List<Map<String, Object>> map2= reportDao.queryOnduty(CU_ID,inputss[1].isEmpty()?"1970-01-01":inputss[1],inputss[2].isEmpty()?"2050-01-01":inputss[2]);
-			Integer normal = null;
-			Integer notnomal= null;
-			Integer other= null;
+			Integer normal = 0;
+			Integer notnomal= 0;
+			Integer other= 0;
 			for (Map<String, Object> data1 : map2) {
 				if("1".equals(data1.get("PERSON_TYPE"))){
 					normal = data1.get("QUANTITY_ONDUTY")==null?0:(Integer)data1.get("QUANTITY_ONDUTY"); //正式工
@@ -216,11 +217,14 @@ public class BizServiceImpl implements IBizService {
 			map.put("normal", normal.toString());
 			map.put("notnomal", notnomal.toString());
 			map.put("other", other.toString());
-			map.put("percent", normal.toString().equals("0")?0:(int)((float)normal/(float)(normal+notnomal)*100)+"%");			
+			map.put("percent", normal.toString().equals("0")?0:(int)((float)normal/(float)(normal+notnomal)*100)+"%");		
+			String allpages= reportDao.queryyyallpages(PARENT_NAME, inputss[1].isEmpty()?"1970-01-01":inputss[1], inputss[2].isEmpty()?"2050-01-01":inputss[2], NAME);
+			map.put("allpages", Integer.parseInt(allpages)/8+1);
 			response.add(map);
 			
 		}
 		
 		return response;
 	}
+
 }

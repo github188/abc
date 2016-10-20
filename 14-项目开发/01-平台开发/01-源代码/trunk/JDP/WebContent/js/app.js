@@ -104,9 +104,7 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope','$http', f
 	$scope.pages=[
 			{index:0,status:'font-size:12px;color:white'},
 			{index:1,status:''},
-			{index:2,status:''},
-			{index:3,status:''},
-			{index:4,status:''}
+			{index:2,status:''}
 		];
 	$scope.changepage = function(index){
 		$scope.pages[$scope.currentpage].status=$scope.status2;
@@ -127,7 +125,7 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope','$http', f
 
 	};
 	$scope.rightchangepage= function(){
-		if ($scope.pages[4].index!=$scope.allpages-1) {
+		if ($scope.pages[2].index!=$scope.allpages-1) {
 			for (var i = $scope.pages.length - 1; i >= 0; i--) {
 				$scope.pages[i].index++;
 			};
@@ -152,9 +150,7 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope','$http', f
 		$scope.pages=[
 			{index:0,status:'font-size:12px;color:white'},
 			{index:1,status:''},
-			{index:2,status:''},
-			{index:3,status:''},
-			{index:4,status:''}
+			{index:2,status:''}
 		];
 		console.log($scope.currentpage);
 		var url = "export/queryyydata.do?";
@@ -172,6 +168,21 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope','$http', f
 	$scope.input1='';
 	$scope.input2='=';
 	$scope.input3='';
+	console.log($scope.currentpage);
+	var url = "export/queryyydata.do?";
+	$http.post(url+"inputs="+$scope.inputs+"&pages="+$scope.currentpage).success(function(response) {
+		console.log(angular.fromJson(angular.fromJson(response)));
+		$scope.projectList=angular.fromJson(angular.fromJson(response));
+		if(angular.fromJson(angular.fromJson(response)).length==0){
+			$scope.allpages=3;
+		}else{
+			if(angular.fromJson(angular.fromJson(response))[0].allpages<3){
+				$scope.allpages=3;
+			}else{
+				$scope.allpages=angular.fromJson(angular.fromJson(response))[0].allpages;
+			}
+		}
+	});
 	$scope.inputadd= function (){
 		$scope.input1='';
 		$scope.input2='=';

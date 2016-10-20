@@ -31,5 +31,16 @@
 		select PERSON_TYPE,QUANTITY_ONDUTY from jd_le_labour_onduty where cu_id=#{cuid} and BIZ_DATE > #{starttime} and BIZ_DATE < #{endtime} group by PERSON_TYPE
 	]]>
 	</select>
+	
+	<select id="queryyyallpages" resultType="String">
+	<![CDATA[
+		select
+		count(DISTINCT o.cu_id)
+		from JD_LE_LABOUR_ONDUTY o
+		left join NP_SYS_CONTROLUNIT c on c.id=o.CU_ID
+		where c.PARENT_NAME like CONCAT('%',#{area},'%') and o.BIZ_DATE > #{starttime} and o.BIZ_DATE < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
+		group by c.id
+	]]>
+	</select>
 
 </mapper>
