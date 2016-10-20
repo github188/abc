@@ -349,8 +349,8 @@ option = {
 		        	color:'#33bced'
 		        },
 				subtextStyle:{
-				    color:'#1bff2f',
-				    fontFamily:'digital-7__mono',
+				    color:'#FFF',
+				    //fontFamily:'digital-7__mono',
 				    fontSize:'18'
 				}
 	        },
@@ -467,11 +467,11 @@ option = {
 		            left: 'center',
 			        top: 5,
 			        textStyle:{
-			        	color:'#33bced'
+			        	color:'#FFF'
 			        },
 					subtextStyle:{
-					    color:'#1bff2f',
-					    fontFamily:'digital-7__mono',
+					    color:'#FFF',
+					   // fontFamily:'digital-7__mono',
 					    fontSize:'18'
 					}
 		        },
