@@ -59,7 +59,6 @@ body{
     font-style: normal;
 }
 #logOutButton {border: none;height: 3%;width: 3%; margin:0 auto;background:url(images/logout.png)no-repeat; background-size: 100% 100%;position:absolute;right:3%;top:6%}
-#reportsButton {border: none;height: 3%;width: 3%; margin:0 auto;background:url(images/logout.png)no-repeat; background-size: 100% 100%;position:absolute;right:6%;top:6%}
 /* .title {height: 8%; margin:0 auto;padding-top:0.5rem;padding-bottom:0.5rem; color:#46d7ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;} */
 #world {width:100%;margin:0 auto;padding-bottom:1.5%;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:3.5rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
 .clock {display:inline;width:31%;height: 5%; margin-left:auto; padding-top:0.3%;position:relative;color:#46d7ff; background:url(images/clock.png)no-repeat;  background-size: 100% 100%;margin-top:0.1%}
@@ -126,8 +125,9 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 		<!-- <div class="title"></div> -->
 		<div class="stars"></div>
 		<div id="world">京东集团分拣中心管理部全国在岗人员管理平台</div>	
-		<button type="button" id="reportsButton" onclick="reports()"alt="报表"title="报表"></button>
+<!-- 		<button type="button" id="reportsButton" onclick="reports()"alt="报表"title="报表"></button> -->
 		<input type="button" id="logOutButton" ng-click="logout()" alt="退出"title="退出"></input>
+		<div class="pull-left"><a style="font-size:25px;color:white" href='reports.html'>报表</a></div>
 		<div class="clock">
 			<ul>
 				<li id="year"></li>

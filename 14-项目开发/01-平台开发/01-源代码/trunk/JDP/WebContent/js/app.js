@@ -118,6 +118,13 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope','$http', f
 		if ($scope.pages[index].index==0) {$scope.leftpagestatus=$scope.status1;};
 		if (index!=$scope.allpages) {$scope.rightpagestatus=!$scope.status1;};
 		if ($scope.pages[index].index==$scope.allpages) {$scope.rightpagestatus=$scope.status1;};
+		console.log($scope.currentpage);
+		var url = "export/queryyydata.do?";
+		$http.post(url+"inputs="+$scope.inputs+"&pages="+$scope.currentpage).success(function(response) {
+			console.log(response);
+			$scope.projectList=angular.fromJson(angular.fromJson(response));
+		});
+
 	};
 	$scope.rightchangepage= function(){
 		if ($scope.pages[4].index!=$scope.allpages-1) {
@@ -125,6 +132,13 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope','$http', f
 				$scope.pages[i].index++;
 			};
 		};
+		console.log($scope.currentpage);
+		var url = "export/queryyydata.do?";
+		$http.post(url+"inputs="+$scope.inputs+"&pages="+$scope.currentpage).success(function(response) {
+			console.log(response);
+			$scope.projectList=angular.fromJson(angular.fromJson(response));
+		});
+
 	};
 	$scope.leftchangepage= function(){
 		if ($scope.pages[0].index!=0) {
@@ -142,6 +156,12 @@ angular.module('yyreports', []).controller('yyreportsctrl', ['$scope','$http', f
 			{index:3,status:''},
 			{index:4,status:''}
 		];
+		console.log($scope.currentpage);
+		var url = "export/queryyydata.do?";
+		$http.post(url+"inputs="+$scope.inputs+"&pages="+$scope.currentpage).success(function(response) {
+			console.log(response);
+			$scope.projectList=angular.fromJson(angular.fromJson(response));
+		});
 	};
 
 	$scope.inputs=[];
