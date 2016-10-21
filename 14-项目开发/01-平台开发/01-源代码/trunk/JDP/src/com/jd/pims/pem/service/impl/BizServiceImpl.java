@@ -311,11 +311,12 @@ public class BizServiceImpl implements IBizService {
 
 			}
 
-			String path = "excels\\" + new Date().getTime() + ".xls";
+			String path = "excels"+System.getProperty("file.separator") + new Date().getTime() + ".xls";
+			System.out.println(request.getSession().getServletContext().getRealPath("") +System.getProperty("file.separator")+ path);
 			FileOutputStream os;
 			os = new FileOutputStream(
-					new File(request.getSession().getServletContext().getRealPath("/") + path) + "\\");
-
+					new File(request.getSession().getServletContext().getRealPath("") +System.getProperty("file.separator")+ path));
+			System.out.println(request.getSession().getServletContext().getRealPath("") +System.getProperty("file.separator")+ path);
 			// 创建工作薄
 			WritableWorkbook workbook = Workbook.createWorkbook(os);
 			// 创建新的一页
