@@ -16,7 +16,7 @@
 		left join JD_LE_ORDER_QUANTITY q on q.CU_ID=c.id
 		where c.PARENT_NAME like CONCAT('%',#{area},'%') and o.BIZ_DATE > #{starttime} and o.BIZ_DATE < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
 		group by c.id
-		LIMIT #{startpages},#{endpages}
+		LIMIT #{startpages},#{pageSize}
 	]]>
 	</select>
 	
@@ -39,7 +39,6 @@
 		from JD_LE_LABOUR_ONDUTY o
 		left join NP_SYS_CONTROLUNIT c on c.id=o.CU_ID
 		where c.PARENT_NAME like CONCAT('%',#{area},'%') and o.BIZ_DATE > #{starttime} and o.BIZ_DATE < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
-		group by c.id
 	]]>
 	</select>
 	
