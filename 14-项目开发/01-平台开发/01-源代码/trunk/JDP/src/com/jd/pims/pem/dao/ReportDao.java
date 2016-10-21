@@ -13,7 +13,7 @@ public interface ReportDao extends IBaseDao {
 			@Param("endtime")String endtime,
 			@Param("pimsname")String pimsname,
 			@Param("startpages")int startpages,
-			@Param("endpages")int endpages);
+			@Param("pageSize")int pageSize);
 	
 	String queryyyallpages(@Param("area")String area,
 			@Param("starttime")String starttime,

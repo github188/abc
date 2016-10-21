@@ -178,7 +178,7 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 		        </thead>
 		        <tbody style="font-size:12px;color:white">
 		          <tr ng-repeat="project in projectList  track by $index">
-		            <td>{{ $index + 1 }}</td>
+		            <td>{{project.index}}</td>
 		            <td>{{project.areaName}}</td>
 		            <td>{{project.pimsName}}</td>
 		            <td>{{project.orderQuantity}}</td>
@@ -197,7 +197,7 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 		      <li class="{{leftpagestatus}}" ng-click="leftchangepage()"><a style="color:#FFF;text-shadow: none;" href="#">&laquo;</a></li>
 		      <li class="{{page.status}}" ng-repeat="page in pages" ng-click="changepage($index)"><a style="color:#FFF;text-shadow: none;" class='btn'><div style="{{page.status}}">{{ page.index + 1 }}</div></a></li>
 		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#">&raquo;</a></li>
-		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#"><small>共&nbsp; &nbsp;{{allpages}}&nbsp; &nbsp;页</small></a></li>
+		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#"><small>共&nbsp; &nbsp;{{allpages}}&nbsp; &nbsp;页&nbsp; &nbsp;{{counts}}&nbsp; &nbsp;条</small></a></li>
 		
 		    </ul>
 		  </div>

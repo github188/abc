@@ -76,7 +76,7 @@ public interface IBizService {
 			Date startDate, Date endDate);
 	
 	
-	public List<Map<String, Object>> queryYydata(String[] inputs,int pages,int endpages);
+	public List<Map<String, Object>> queryYydata(String[] inputs,int pages,int pageSize);
 
 	public String yydata(String[] inputs,HttpServletRequest request);
 

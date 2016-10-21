@@ -168,7 +168,7 @@ public class BizServiceImpl implements IBizService {
 	}
 
 	@Override
-	public List<Map<String, Object>> queryYydata(String[] inputs,int startpages,int endpages) {
+	public List<Map<String, Object>> queryYydata(String[] inputs,int startpages,int pageSize) {
 		
 		String[] inputss = new String[]{"","","",""};
 		for (int i = 0; i < inputs.length; i++) {
@@ -187,14 +187,15 @@ public class BizServiceImpl implements IBizService {
 			}
 		}
 		
-		List<Map<String, Object>> datas = reportDao.queryYydata(inputss[0],inputss[1].isEmpty()?"1970-01-01":inputss[1],inputss[2].isEmpty()?"2050-01-01":inputss[2],inputss[3],startpages*8,endpages);
+		List<Map<String, Object>> datas = reportDao.queryYydata(inputss[0],inputss[1].isEmpty()?"1970-01-01":inputss[1],inputss[2].isEmpty()?"2050-01-01":inputss[2],inputss[3],startpages*8,pageSize);
 		
 		List<Map<String, Object>> response = new ArrayList<>();
 		
+		int i =startpages*8+1;
 		for (Map<String, Object> data : datas) {
 			String PARENT_NAME = data.get("PARENT_NAME").toString();//区域
 			String NAME = data.get("NAME").toString();//分拣中心名称
-			String QUANTITY_ONDUTY = data.get("QUANTITY_ONDUTY").toString();//在岗人数
+			String QUANTITY_ONDUTY = data.get("QUANTITY_ONDUTY")==null?"":data.get("QUANTITY_ONDUTY").toString();//在岗人数
 			String ORDER_QUANTITY = data.get("ORDER_QUANTITY")==null?"":data.get("ORDER_QUANTITY").toString();//订单总数
 			String CU_ID = data.get("CU_ID").toString();//订单总数
 			
@@ -227,10 +228,12 @@ public class BizServiceImpl implements IBizService {
 			map.put("notnomal", notnomal.toString());
 			map.put("other", other.toString());
 			map.put("percent", normal.toString().equals("0")?0:(int)((float)normal/(float)(normal+notnomal)*100)+"%");		
-			String allpages= reportDao.queryyyallpages(PARENT_NAME, inputss[1].isEmpty()?"1970-01-01":inputss[1], inputss[2].isEmpty()?"2050-01-01":inputss[2], NAME);
-			map.put("allpages", Integer.parseInt(allpages)/8+1);
+			String counts= reportDao.queryyyallpages(inputss[0],inputss[1].isEmpty()?"1970-01-01":inputss[1],inputss[2].isEmpty()?"2050-01-01":inputss[2],inputss[3]);
+			map.put("allpages", Integer.parseInt(counts)/9+1);
+			map.put("counts", counts);
+			map.put("index", i);
 			response.add(map);
-			
+			i++;
 		}
 		
 		return response;

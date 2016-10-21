@@ -108,9 +108,9 @@ reports.controller('yyreportsctrl', ['$scope','$http', function($scope,$http){
 			{index:2,status:''}
 		];
 	$scope.changepage = function(index){
-		$scope.pages[$scope.currentpage].status=$scope.status2;
+//		$scope.pages[$scope.currentpage].status=$scope.status2;
 		$scope.pages[index].status=$scope.status3;
-		$scope.currentpage=index;
+		$scope.currentpage=$scope.pages[index].index;
 		console.log(index);
 		console.log($scope.pages[index]);
 		if (index!=0) {$scope.leftpagestatus=!$scope.status1;};
@@ -132,12 +132,7 @@ reports.controller('yyreportsctrl', ['$scope','$http', function($scope,$http){
 			};
 		};
 		console.log($scope.currentpage);
-		var url = "export/queryyydata.do?";
-		$http.post(url+"inputs="+$scope.inputs+"&pages="+$scope.currentpage).success(function(response) {
-			console.log(response);
-			$scope.projectList=angular.fromJson(angular.fromJson(response));
-		});
-
+		
 	};
 	$scope.leftchangepage= function(){
 		if ($scope.pages[0].index!=0) {
@@ -176,7 +171,9 @@ reports.controller('yyreportsctrl', ['$scope','$http', function($scope,$http){
 		$scope.projectList=angular.fromJson(angular.fromJson(response));
 		if(angular.fromJson(angular.fromJson(response)).length==0){
 			$scope.allpages=3;
+			$scope.counts=0;
 		}else{
+			$scope.counts=angular.fromJson(angular.fromJson(response))[0].counts;
 			if(angular.fromJson(angular.fromJson(response))[0].allpages<3){
 				$scope.allpages=3;
 			}else{
@@ -259,11 +256,28 @@ reports.controller('yyreportsctrl', ['$scope','$http', function($scope,$http){
 		});
 	}
 	$scope.save=function(){
+		$scope.currentpage=0;
+		$scope.pages=[
+			{index:0,status:'font-size:12px;color:white'},
+			{index:1,status:''},
+			{index:2,status:''}
+		];
 		console.log($scope.currentpage);
 		var url = "export/queryyydata.do?";
 		$http.post(url+"inputs="+$scope.inputs+"&pages="+$scope.currentpage).success(function(response) {
 			console.log(response);
 			$scope.projectList=angular.fromJson(angular.fromJson(response));
+			if(angular.fromJson(angular.fromJson(response)).length==0){
+				$scope.allpages=3;
+				$scope.counts=0;
+			}else{
+				$scope.counts=angular.fromJson(angular.fromJson(response))[0].counts;
+				if(angular.fromJson(angular.fromJson(response))[0].allpages<3){
+					$scope.allpages=3;
+				}else{
+					$scope.allpages=angular.fromJson(angular.fromJson(response))[0].allpages;
+				}
+			}
 //			window.open("images/111.xls"); 
 		});
 	}
