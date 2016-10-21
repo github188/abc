@@ -36,16 +36,17 @@
 		            transform: ' translate3d(0,0,-' + curR + 'px) rotateY(' + Math.random() * 360+ 'deg) rotateX(' + Math.random() * -50 + 'deg) scale(' + s + ',' + s + ')'
 		        });
 		    });
-	    	$('#yyreports').hide();
-	    	$('#ycreports').hide();
+		    $('#ycreports').hide();
+	    	$('#yyreports').fadeIn();
+	    	
 	    	
 		});
 		
-	    function showYYreports(){
+/*	    function showYYreports(){
 	    	$('#yyreports').fadeIn();
 	    	$('#ycreports').hide();
 	    };
 	    function showYCreports(){
 	    	$('#ycreports').fadeIn();
 	    	$('#yyreports').hide();
-	    };
+	    };*/

@@ -818,9 +818,9 @@ option = {
 			    				                normal: {
 			    				                    position: 'center',
 			    				                    textStyle:{
-			    				                    	color:'white',fontWeight:'normal',fontSize:'1'
+			    				                    	fontWeight:'normal',fontSize:'1'
 			    				                    },
-			    				                    show:false
+			    				                    show:true
 			    				                },               
 			    				                emphasis: {
 			    				                    show: true,
@@ -839,9 +839,9 @@ option = {
 			    				                normal: {
 			    				                    position: 'center',			    				                    
 			    				                    textStyle:{
-			    				                    	color:'white',fontWeight:'normal',fontSize:'1'
+			    				                    	fontWeight:'normal',fontSize:'1'
 			    				                    },
-			    				                    show:false
+			    				                    show:true
 			    				                },               
 			    				                emphasis: {
 			    				                    show: true,
@@ -1028,9 +1028,9 @@ option = {
 			                normal: {
 			                    position: 'center',
 			                    textStyle:{
-			                    	color:'white',fontWeight:'normal',fontSize:'1'
+			                    	fontWeight:'normal',fontSize:'1'
 			                    },
-			                    show:false
+			                    show:true
 			                },               
 			                emphasis: {
 			                    show: true,
@@ -1049,9 +1049,9 @@ option = {
 			                normal: {
 			                    position: 'center',
 			                    textStyle:{
-			                    	color:'white',fontWeight:'normal',fontSize:'1'
+			                    	fontWeight:'normal',fontSize:'1'
 			                    },
-			                    show:false
+			                    show:true
 			                },               
 			                emphasis: {
 			                    show: true,
@@ -1102,9 +1102,9 @@ option = {
 			                normal: {
 			                    position: 'center',
 			                    textStyle:{
-			                    	color:'white',fontWeight:'normal',fontSize:'1'
+			                    	fontWeight:'normal',fontSize:'1'
 			                    },
-			                    show:false
+			                    show:true
 			                },               
 			                emphasis: {
 			                    show: true,
@@ -1123,9 +1123,9 @@ option = {
 			                normal: {
 			                    position: 'center',
 			                    textStyle:{
-			                    	color:'white',fontWeight:'normal',fontSize:'1'
+			                    	fontWeight:'normal',fontSize:'1'
 			                    },
-			                    show:false
+			                    show:true
 			                },               
 			                emphasis: {
 			                    show: true,
