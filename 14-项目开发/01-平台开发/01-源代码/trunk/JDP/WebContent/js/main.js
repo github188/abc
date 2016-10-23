@@ -2,6 +2,7 @@ option = null;
 function randomData() {
     return Math.round(Math.random()*100)+100;
 }
+var datalist = null;
 option = {
     title: {
         text: '在岗总人数',
@@ -202,6 +203,7 @@ option = {
 		            		position:'top'
 		            	},
 		            },
+		            barMinHeight:1,
 		            itemStyle:{
 		            	normal:{
 		            		color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -224,6 +226,7 @@ option = {
 		            symbol:'diamond',
 		            symbolSize:'10',
 		            smooth:true,
+		            barMinHeight:1,
 		            yAxisIndex:1,
 		            itemStyle:{
 		            	normal:{
@@ -247,6 +250,7 @@ option = {
 		            		position:'top'
 		            	},
 		            },
+		            barMinHeight:1,
 		            itemStyle:{
 		            	normal:{
 		            		color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -325,6 +329,7 @@ option = {
 		            		position:'top'
 		            	},
 		            },
+		            barMinHeight:1,
 		            itemStyle:{
 		            	normal:{
 		            		color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
@@ -339,127 +344,8 @@ option = {
 	        ]
 		};
 		
-		var barOption2 = {
-			title: {
-	            text: '实时监控',
-	            subtext:'人数',
-	            left: 'left',
-		        top: 5,
-		        textStyle:{
-		        	color:'#33bced'
-		        },
-				subtextStyle:{
-				    color:'#FFF',
-				    //fontFamily:'digital-7__mono',
-				    fontSize:'18'
-				}
-	        },
-			legend:{
-				data:['正式工','非正式工'],
-				bottom:5,
-				textStyle:{
-		        	color:'#fff'
-		      	},
-		     	show:false
-			},
-		    tooltip : {
-				trigger: 'axis',
-		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-		        }
-		    },
-		    color:[ '#7ab8f9','#fedd1b'],
-	        grid:{
-	        	//width:'85%',
-	        	left:'4%',
-	        	right:0,
-	        	bottom:0,
-	        	containLabel:true
-	        },
-	        barWidth:20,
-		    xAxis: {
-		    	type:'value',
-		    	left:'10%',
-		    	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
-		     	},
-		    	show:false
-	       },
-	        yAxis: [
-	        {
-	        	type:'category',
-	        	data:[''],
-		    	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
-		       },
-	        }
-	        ],
-          	series: [
-	            {
-		            name: '正式工',
-		            type: 'bar',
-		            stack: 1,
-		            label:{
-		            	normal:{
-		            		show:true,
-		            		position:'top'
-		            	},
-		            },
-		            itemStyle: {
-		                normal: {
-/*		                    color: function(params) {
-		                        // build a color map as your need.
-		                        var colorList = [
-		                          '#7ab8f9','#fedd1b'
-		                        ];
-		                        return colorList[params.dataIndex%2]
-		                    },*/
-		                	color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-			            	  offset: 0, color: '#32bbec' // 0% 处的颜色
-		            		}, {
-		            		  offset: 1, color: '#0054a8' // 100% 处的颜色
-		            		}], false),
-		                    //barBorderRadius:[5, 5, 5, 5]
-		                }
-	               },
-	               data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-            },	           
-            {
-	            name: '非正式工',
-	            type: 'bar',
-	            stack: 1,
-	            label:{
-	            	normal:{
-	            		show:true,
-	            		position:'top'
-	            	},
-	            },
-	            itemStyle: {
-	                normal: {
-/*	                    color: function(params) {
-	                        // build a color map as your need.
-	                        var colorList = [
-	                          '#7ab8f9','#fedd1b'
-	                        ];
-	                        return colorList[params.dataIndex%2]
-	                    },*/
-	                	color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-			            	  offset: 0, color: '#fedd1b' // 0% 处的颜色
-		            		}, {
-		            		  offset: 1, color: '#DAC12F' // 100% 处的颜色
-		            		}], false),
-	                   // barBorderRadius:[5, 5, 5, 5]
-	                }
-               },
-               data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-        }
-	        ]
-		};
 		
+		/*
 		var barOption3 = {
 				title: {
 		            text: '',
@@ -533,13 +419,13 @@ option = {
 			            },
 			            itemStyle: {
 			                normal: {
-/*			                    color: function(params) {
+			                    color: function(params) {
 			                        // build a color map as your need.
 			                        var colorList = [
 			                          '#7ab8f9','#fedd1b'
 			                        ];
 			                        return colorList[params.dataIndex%2]
-			                    },*/
+			                    },
 			            		color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
 					            	  offset: 0, color: '#9035B1' // 0% 处的颜色
 				            		}, {
@@ -552,7 +438,7 @@ option = {
 	            }
 		        ]
 			};
-		
+		*/
 		var pieOption = {
 			title: {
 	            text: '',
@@ -685,7 +571,7 @@ option = {
 			barchart = echarts.init(document.getElementById('effect'));
 			barchart1 = echarts.init(document.getElementById('count'));
 			barchart2 = echarts.init(document.getElementById('bar'));
-			barchart3 = echarts.init(document.getElementById('bar1'));
+/*			barchart3 = echarts.init(document.getElementById('bar1'));*/
 			piechart = echarts.init(document.getElementById('pie'));
 			$.ajax({
 				url: 'geoJson/'+mapName+'.json',
@@ -701,7 +587,7 @@ option = {
 				var name=param.name;
 				if(param.componentType=='geo'){
 					//在中国地图上要去掉这几个地方的点击事件 直辖市 台湾 
-					if(!name.match(/^北京|^天津|^重庆|^上海|在线|离线|台湾/)||name!=""){
+					if(!name.match(/^北京|^天津|^重庆|^上海|^在线|^离线|^台湾/)&&name!=""){
 						$("#areaTip").html(name||"全国");
 						$.ajax({
 							url: 'geoJson/'+name+'.json',
@@ -877,8 +763,137 @@ option = {
 			mapchart.setOption(option, true);
 		    barchart.setOption(barOption, true);
 		    barchart1.setOption(barOption1, true);
+		    var barOption2 = {
+					title: {
+			            text: '实时监控',
+			            subtext:'人数',
+			            left: 'left',
+				        top: 5,
+				        textStyle:{
+				        	color:'#33bced'
+				        },
+						subtextStyle:{
+						    color:'#FFF',
+						    //fontFamily:'digital-7__mono',
+						    fontSize:'18'
+						}
+			        },
+					legend:{
+						data:['正式工','非正式工'],
+						bottom:5,
+						textStyle:{
+				        	color:'#fff'
+				      	},
+				     	show:false
+					},
+				    tooltip : {
+						trigger: 'axis',
+				        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+				            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+				        }
+				    },
+				    color:[ '#7ab8f9','#fedd1b'],
+			        grid:{
+			        	//width:'85%',
+			        	left:'4%',
+			        	right:'10%',
+			        	bottom:0,
+			        	containLabel:true
+			        },
+			        barWidth:20,
+				    xAxis: {
+				    	type:'value',
+				    	left:'10%',
+				    	axisLine:{
+				    		lineStyle:{
+				    			color:'#7ab8f9'
+				    		}
+				     	},
+				    	show:false
+			       },
+			        yAxis: [
+			        {
+			        	type:'category',
+			        	data:[''],
+				    	axisLine:{
+				    		lineStyle:{
+				    			color:'#7ab8f9'
+				    		}
+				       },
+			        }
+			        ],
+		          	series: [
+			            {
+				            name: '正式工',
+				            type: 'bar',
+				            stack: 1,
+				            label:{
+				            	normal:{
+				            		show:true,
+				            		position:'top'
+				            	},
+				            },
+				            itemStyle: {
+				                normal: {
+		/*		                    color: function(params) {
+				                        // build a color map as your need.
+				                        var colorList = [
+				                          '#7ab8f9','#fedd1b'
+				                        ];
+				                        return colorList[params.dataIndex%2]
+				                    },*/
+				                	color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+					            	  offset: 0, color: '#32bbec' // 0% 处的颜色
+				            		}, {
+				            		  offset: 1, color: '#0054a8' // 100% 处的颜色
+				            		}], false),
+				                    //barBorderRadius:[5, 5, 5, 5]
+				                }
+			               },
+			               data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
+		            },	           
+		            {
+			            name: '非正式工',
+			            type: 'bar',
+			            stack: 1,
+			            label:{
+			            	normal:{
+			            		show:true,
+			            		position:'right',
+			            		formatter : function(a,b,c){
+			        		    	alert(a,b,c);
+			        		    	return datalist[a];
+			        		    },		                    
+			            		textStyle: {
+			            			color:'#FFF',
+			                        fontSize: '12',
+			                        fontWeight: 'bold'
+			                    }
+			            	},
+			            },
+			            itemStyle: {
+			                normal: {
+		/*	                    color: function(params) {
+			                        // build a color map as your need.
+			                        var colorList = [
+			                          '#7ab8f9','#fedd1b'
+			                        ];
+			                        return colorList[params.dataIndex%2]
+			                    },*/
+			                	color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+					            	  offset: 0, color: '#fedd1b' // 0% 处的颜色
+				            		}, {
+				            		  offset: 1, color: '#DAC12F' // 100% 处的颜色
+				            		}], false),
+			                   // barBorderRadius:[5, 5, 5, 5]
+			                }
+		               },
+		               data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
+		        }
+			        ]
+				};
 		    barchart2.setOption(barOption2, true);
-		    barchart3.setOption(barOption3, true);
+/*		    barchart3.setOption(barOption3, true);*/
 		    piechart.setOption(pieOption, true);
 		}
 		function getData(name){
@@ -933,6 +948,7 @@ option = {
 			var otherNumEmp = 0.0;
 			var a = 0.00;
 			var b = 0.00;
+			var colorList={1:"#f4e925",2:"#F327F5"}
 			if(data!=null){
 				$.each(data, function(index, row){
 /*					if(row.name.match(/^黑龙江|^内蒙古/)){
@@ -974,22 +990,22 @@ option = {
 							//地区的id 取china area表id
 					        selected:false,
 					        //自定义特殊 itemStyle，仅对该数据项有效
-					        symbolSize:5,
+					        symbolSize:10,
 				            itemStyle: {
 				                normal: {
-				                    color: '#f4e925',
-				                    shadowBlur: 10,
-				                    shadowColor: '#333'
+				                    color: colorList[row.level],
+				                    shadowBlur: 20,
+				                    shadowColor: colorList[row.level]
 				                },
 				                emphasis: {
-				                    color: '#f4e925',
-				                    shadowBlur: 10,
-				                    shadowColor: '#333'
+				                    color: colorList[row.level],
+				                    shadowBlur: 20,
+				                    shadowColor: colorList[row.level]
 				                }
 				            },
 						}); 
 					}else if(c>=100){
-						var size = Math.round(c / 80);
+						var size = Math.round(c / 50);
 						mapdata.push({
 							//地区名称 取china area表
 							name:row.name,
@@ -1001,14 +1017,14 @@ option = {
 				            symbolSize: size,
 				            itemStyle: {
 				                normal: {
-				                    color: '#f4e925',
-				                    shadowBlur: 10,
-				                    shadowColor: '#333'
+				                    color: colorList[row.level],
+				                    shadowBlur: 20,
+				                    shadowColor:colorList[row.level]
 				                },
 				                emphasis: {
-				                    color: '#f4e925',
-				                    shadowBlur: 10,
-				                    shadowColor: '#333'
+				                    color: colorList[row.level],
+				                    shadowBlur: 20,
+				                    shadowColor:colorList[row.level]
 				                }
 				            },
 						}); 
@@ -1262,7 +1278,9 @@ option = {
 			bardata2[0] = new Array();
 			bardata2[1] = new Array();
 			bardata2[2] = new Array();
-			bardata2[3] = new Array();
+			datalist = new Object();
+			datalist[0] = new Object();
+			datalist[1] = new Object();
 			var totalClerkNum = 0.0;
 			var totalOrderNum = 0.0;
 			var totalOrder = 0.0;
@@ -1273,7 +1291,10 @@ option = {
 					bardata2[0].push(row.name);
 					bardata2[1].push(row.EmpNum);
 					bardata2[2].push(row.NotEmpNum);
-					bardata2[3].push((row.NotEmpNum+row.EmpNum)>0?Math.ceil(eval(row.orderNum/(row.NotEmpNum+row.EmpNum))):0);
+					var zhanbi = (row.NotEmpNum+row.EmpNum)>0?(Math.ceil(row.EmpNum/(row.NotEmpNum+row.EmpNum)))*100:0;
+					var renxiao = (row.NotEmpNum+row.EmpNum)>0?Math.ceil(eval(row.orderNum/(row.NotEmpNum+row.EmpNum))):0
+					datalist[0][row.name]='            正式员工占比：'+zhanbi+'%/总人数：'+row.NotEmpNum;
+					datalist[1][row.name]='人效:'+renxiao;
 					totalClerkNum += (row.NotEmpNum+row.EmpNum);
 					totalOrderNum += row.orderNum;
 					totalOrder += row.totalOrder;
@@ -1289,23 +1310,166 @@ option = {
 			$("#averageEffectNum").html(totalOrderNum+'<span style="font-size:3rem;font-family:黑体;color:#FFF"> | </span>'+totalOrder);*/
 			$("#averageEffectName").html('<p style="color:#FFF;font-size: 2.5rem;font-family:造字工房悦圆常规体,微软雅黑, Arial, Helvetica, sans-serif;">小时处理量</p><span style="color:#fedd1b;font-size: 4rem;font-family:digital-7__mono, Arial, Helvetica, sans-serif;">'+totalOrderNum+'</span>');
 			$("#averageEffectNum").html('<p style="color:#FFF;font-size: 2.5rem;font-family:造字工房悦圆常规体,微软雅黑, Arial, Helvetica, sans-serif;">当日总单量</p><span style="color:#fedd1b;font-size: 4rem;font-family:digital-7__mono, Arial, Helvetica, sans-serif;">'+totalOrder+'</span>');
-		    barOption2.yAxis[0].data = bardata2[0];
-		    barOption2.series[0].data = bardata2[1];
-		    barOption2.series[1].data = bardata2[2];
-		    barOption3.series[0].data = bardata2[3];
+			var barOption2 = {
+					title: {
+			            text: '实时监控',
+			            subtext:'',
+			            left: 'left',
+				        top: 5,
+				        textStyle:{
+				        	color:'#33bced'
+				        },
+						subtextStyle:{
+						    color:'#FFF',
+						    //fontFamily:'digital-7__mono',
+						    fontSize:'18'
+						}
+			        },
+					legend:{
+						data:['正式工','非正式工'],
+						bottom:5,
+						textStyle:{
+				        	color:'#fff'
+				      	},
+				     	show:false
+					},
+				    tooltip : {
+						trigger: 'axis',
+				        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+				            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+				        }
+				    },
+				    color:[ '#7ab8f9','#fedd1b'],
+			        grid:{
+			        	//width:'85%',
+			        	left:'10%',
+			        	//right:'4%',
+/*			        	x:'20%',
+			        	y:'20%',
+			        	x2:'20%',
+			        	y2:'20%',*/
+			        	//bottom:0,
+			        	//containLabel:true
+			        },
+			        barWidth:20,
+				    xAxis: {
+				    	type:'value',
+				    	left:'10%',
+				    	axisLine:{
+				    		lineStyle:{
+				    			color:'#7ab8f9'
+				    		}
+				     	},
+				    	show:false
+			       },
+			        yAxis: [
+			        {
+			        	type:'category',
+			        	data: bardata2[0],
+				    	axisLine:{
+				    		lineStyle:{
+				    			color:'#7ab8f9'
+				    		}
+				       },
+			        }
+			        ],
+		          	series: [
+			            {
+				            name: '正式工',
+				            type: 'bar',
+				            stack: 1,
+				            label:{
+				            	normal:{
+				            		show:true,
+				            		position:['10%', '10%'],
+				            		formatter : function(params){
+				        		    	//alert(a,b,c);
+				        		    	//return datalist[b];
+				            			return datalist[0][params.name];
+				        		    },			            		
+				        		    textStyle: {
+				            			color:'#FFF',
+				                        fontSize: '12',
+				                        fontWeight: 'bold',
+				                        fontFamily:'造字工房悦圆常规体'
+				                    }	
+				            	},
+				            },
+				            itemStyle: {
+				                normal: {
+		/*		                    color: function(params) {
+				                        // build a color map as your need.
+				                        var colorList = [
+				                          '#7ab8f9','#fedd1b'
+				                        ];
+				                        return colorList[params.dataIndex%2]
+				                    },*/
+				                	color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+					            	  offset: 0, color: '#32bbec' // 0% 处的颜色
+				            		}, {
+				            		  offset: 1, color: '#0054a8' // 100% 处的颜色
+				            		}], false),
+				                    //barBorderRadius:[5, 5, 5, 5]
+				                }
+			               },
+			               data: bardata2[1]
+		            },	           
+		            {
+			            name: '非正式工',
+			            type: 'bar',
+			            stack: 1,
+			            label:{
+			            	normal:{
+			            		show:true,
+			            		position:['10%', '10%'],
+			            		formatter : function(params){
+			        		    	//alert(a,b,c);
+			        		    	//return datalist[b];
+			            			return datalist[1][params.name];
+			        		    },		                    
+			            		textStyle: {
+			            			color:'#FFF',
+			                        fontSize: '12',
+			                        fontWeight: 'bold',
+			                        fontFamily:'造字工房悦圆常规体'
+			                    }
+			            	},
+			            },
+			            itemStyle: {
+			                normal: {
+		/*	                    color: function(params) {
+			                        // build a color map as your need.
+			                        var colorList = [
+			                          '#7ab8f9','#fedd1b'
+			                        ];
+			                        return colorList[params.dataIndex%2]
+			                    },*/
+			                	color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+					            	  offset: 0, color: '#fedd1b' // 0% 处的颜色
+				            		}, {
+				            		  offset: 1, color: '#DAC12F' // 100% 处的颜色
+				            		}], false),
+			                   // barBorderRadius:[5, 5, 5, 5]
+			                }
+		               },
+		               data: bardata2[2]
+		        }
+			        ]
+			};
+/*		    barOption3.series[0].data = bardata2[3];*/
 			barchart2.setOption(barOption2, true);  
-			barchart3.setOption(barOption3, true);
+/*			barchart3.setOption(barOption3, true);*/
 		}
 		
 		function resize(index){
-			var a = $('#a');
-			var b = $('#b');
-			var c = $('#c');
+			var areaA = $('#areaA');
+			var areaB = $('#areaB');
+			var areaC = $('#areaC');
 			switch(index){
 				case 0 :
-					b.hide();
-					c.hide();
-					a.attr("class", "col-md-12");
+					areaB.hide();
+					areaC.hide();
+					areaA.attr("class", "col-md-12");
 					var mapTopRight = $('#mapTopRight');
 					mapTopRight.removeAttr("onclick");
 					var mapTopRight = $('#mapTopRight');
@@ -1314,8 +1478,8 @@ option = {
 					map.css({"height":"93%","width":"60%"});
 					var bar = $('#bar');
 					bar.css({"height":"50%","width":"29%","bottom":"4%","top":"auto","left":"auto","right":"21%"});
-					var bar1 = $('#bar1');
-					bar1.css({"height":"50%","width":"25%","bottom":"4%","top":"auto","left":"auto","right":"0"});
+/*					var bar1 = $('#bar1');
+					bar1.css({"height":"50%","width":"25%","bottom":"4%","top":"auto","left":"auto","right":"0"});*/
 					var pie = $('#pie');
 					pie.css({"height":"40%","width":"30%","bottom":"auto","top":"9%","right":"-2%"});
 					pieOption.legend.right='25%';
@@ -1332,17 +1496,17 @@ option = {
 					barchart.resize();
 					barchart1.resize();
 					barchart2.resize();
-					barchart3.resize();
+					/*barchart3.resize();*/
 					piechart.resize();
 					$('.text1 ').css({"bottom":"69%","right":"25%"});
 					$('.text2 ').css({"bottom":"55%","right":"25%","width":"16%"});
 					enlarged = true;
 					break;
 				case 1 :
-					a.hide();
-					c.hide();
-					b.attr("class", "col-md-12");
-					b.css({
+					areaA.hide();
+					areaC.hide();
+					areaB.attr("class", "col-md-12");
+					areaB.css({
 						"height":'98%'
 					});
 					var effectTopRight = $('#effectTopRight');
@@ -1356,12 +1520,12 @@ option = {
 					piechart.resize();
 					break;
 				case 2 :
-					a.hide();
-					b.hide();
-					c.css({
+					areaA.hide();
+					areaB.hide();
+					areaC.css({
 						"height":'98%'
 					});
-					c.attr("class", "col-md-12");
+					areaC.attr("class", "col-md-12");
 					var countTopRight = $('#countTopRight');
 					countTopRight.removeAttr("onclick");
 					var countTopRight = $('#countTopRight');
@@ -1375,14 +1539,14 @@ option = {
 			}	
 		}
 		function back(index){
-			var a = $('#a');
-			var b = $('#b');
-			var c = $('#c');
+			var areaA = $('#areaA');
+			var areaB = $('#areaB');
+			var areaC = $('#areaC');
 			switch(index){
 				case 0 :
-					b.show();
-					c.show();
-					a.attr("class", "col-md-7");
+					areaB.show();
+					areaC.show();
+					areaA.attr("class", "col-md-7");
 					var mapTopRight = $('#mapTopRight');
 					mapTopRight.removeAttr("onclick");
 					var mapTopRight = $('#mapTopRight');
@@ -1391,8 +1555,8 @@ option = {
 					map.css({"height":"65%","width":"90%"});
 					var bar = $('#bar');
 					bar.css({"height":"38%","width":"54%","top":"61%","left":"2%"});
-					var bar1 = $('#bar1');
-					bar1.css({"height":"38%","width":"20%","top":"61%","left":"49%"});
+/*					var bar1 = $('#bar1');
+					bar1.css({"height":"38%","width":"20%","top":"61%","left":"49%"});*/
 					var pie = $('#pie');
 					pie.css({"height":"28%","width":"28%","top":"auto","bottom":"24%","right":"0"});
 					pieOption.legend.right='15%';
@@ -1405,17 +1569,17 @@ option = {
 					barchart.resize();
 					barchart1.resize();
 					barchart2.resize();
-					barchart3.resize();
+/*					barchart3.resize();*/
 					piechart.resize();
 					enlarged = false;
 					break;
 				case 1 :
-					a.show();
-					c.show();
-					b.css({
+					areaA.show();
+					areaC.show();
+					areaB.css({
 						"height":'49%'
 					});
-					b.attr("class", "col-md-5");
+					areaB.attr("class", "col-md-5");
 					var effectTopRight = $('#effectTopRight');
 					effectTopRight.removeAttr("onclick");
 					var effectTopRight = $('#effectTopRight');
@@ -1427,12 +1591,12 @@ option = {
 					piechart.resize();
 					break;
 				case 2 :
-					a.show();
-					b.show();
-					c.css({
+					areaA.show();
+					areaB.show();
+					areaC.css({
 						"height":'49%'
 					});
-					c.attr("class", "col-md-5");
+					areaC.attr("class", "col-md-5");
 					var countTopRight = $('#countTopRight');
 					countTopRight.removeAttr("onclick");
 					var countTopRight = $('#countTopRight');

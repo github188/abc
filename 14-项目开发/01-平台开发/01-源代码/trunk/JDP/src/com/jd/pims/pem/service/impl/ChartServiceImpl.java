@@ -58,6 +58,7 @@ public class ChartServiceImpl implements IChartService {
 			tempMap.put("name",map.get("name"));
 			tempMap.put("x",map.get("x"));
 			tempMap.put("y",map.get("y"));
+			tempMap.put("level",map.get("level"));
 			List<Map<String,Object>> labourOndutylist=labourOndutyDao.getCurrentTimeLabourOndutyForChart(temp_str,begin,end, map.get("name").toString());
 			if(null!=labourOndutylist&&!labourOndutylist.isEmpty()&&labourOndutylist.size()>0){
 	            tempMap.put("EmpNum",labourOndutylist.get(0).get("EmpNum"));
