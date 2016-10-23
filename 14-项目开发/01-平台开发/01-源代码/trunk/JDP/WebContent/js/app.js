@@ -68,10 +68,17 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 			}
 		});
 	}
+	$scope.logout = function(){
+		$cookieStore.put('showornot', 'false');
+		window.location.href = "login.html";
+	}
 }]);
 
-var reports = angular.module('reports', []);
-reports.controller('yyreportsctrl', ['$scope','$http', function($scope,$http){
+var reports = angular.module('reports', ['ngCookies']);
+reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($scope,$http,$cookieStore){
+	if($cookieStore.get('showornot')!='true'){
+		window.location.href = "login.html";
+	}
 	$scope.activebase='active';
 	$scope.active1=$scope.activebase;
 	$scope.active2=!$scope.activebase;
@@ -182,13 +189,18 @@ reports.controller('yyreportsctrl', ['$scope','$http', function($scope,$http){
 		}
 	});
 	$scope.inputadd= function (){
-		$scope.input1='';
-		$scope.input2='=';
-		$scope.input3='';
-		$scope.show=true;
+		if($scope.contents.length!=0){
+			$scope.input1='';
+			$scope.input2='=';
+			$scope.input3='';
+			$scope.show=true;
+		}
 	};
 	$scope.inputdelete= function (input){
+		console.log($scope.inputs[input].split(',')[0]);
+		$scope.contents.push($scope.inputs[input].split(',')[0]);
 		$scope.inputs.splice(input,1);
+		console.log($scope.contents);
 		console.log($scope.inputs);
 	};
 	$scope.inputblur= function (){
@@ -203,6 +215,12 @@ reports.controller('yyreportsctrl', ['$scope','$http', function($scope,$http){
 			$scope.inputs.push($scope.input1+','+$scope.input3);
 			console.log($scope.inputs);
 			$scope.show=false;
+			for (var i = $scope.contents.length - 1; i >= 0; i--) {
+				if($scope.contents[i]==$scope.input1){
+					$scope.contents.splice(i,1);
+					break;
+				}
+			};
 		}else{
 			$scope.inputshow1=true;
 		}
@@ -238,11 +256,14 @@ reports.controller('yyreportsctrl', ['$scope','$http', function($scope,$http){
 	$scope.checkornot= function(index,value){
 		console.log(index + value);
 	}
+	$scope.bijiaofu='等于';
 	$scope.blur1=function(){
 		if($scope.input1=="开始时间"||$scope.input1=="结束时间"){
 			$scope.input3type="date";
+			$scope.bijiaofu='等于';
 		}else{
 			$scope.input3type="text";
+			$scope.bijiaofu='等于';
 		}
 	}
 	$scope.daochu=function(){
@@ -280,6 +301,10 @@ reports.controller('yyreportsctrl', ['$scope','$http', function($scope,$http){
 			}
 //			window.open("images/111.xls"); 
 		});
+	}
+	$scope.logout = function(){
+		$cookieStore.put('showornot', 'false');
+		window.location.href = "login.html";
 	}
 }]);
 
