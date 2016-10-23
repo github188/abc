@@ -37,7 +37,7 @@
 	<![CDATA[
 		SELECT 		
 		IFNULL(sum(qu.ORDER_QUANTITY),0) as orderNum
-		FROM JD_LE_ORDER_QUANTITY qu where qu.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%')) and qu.BIZ_DATE = #{date}
+		FROM JD_LE_ORDER_QUANTITY qu where qu.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_CLASS='BROUGH' AND AREA_NAME = #{name}),'%')) and qu.BIZ_DATE = #{date}
 		AND qu.TIME_PERIOD=#{timePeriod} 
 	]]>
 	</select>
@@ -46,7 +46,7 @@
 	<![CDATA[
 		SELECT 		
 		IFNULL(sum(qu.ORDER_QUANTITY),0) as orderNum
-		FROM JD_LE_ORDER_QUANTITY qu where qu.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%')) and qu.BIZ_DATE = #{date}
+		FROM JD_LE_ORDER_QUANTITY qu where qu.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_CLASS='BROUGH' AND AREA_NAME = #{name}),'%')) and qu.BIZ_DATE = #{date}
 	]]>
 	</select>
 	
@@ -76,7 +76,7 @@
 		SELECT concat(concat((date_format(ond.BIZ_DATE,'%m')),'月'),concat((date_format(ond.BIZ_DATE,'%d')),'日')) as name,sum(IFNULL(ond.AVG_QUANTITY,0)) as clerkNum
 		FROM JD_LE_LABOUR_ONDUTY_DAY_ST ond 
 		WHERE ond.BIZ_DATE>=#{startDate} AND ond.BIZ_DATE<#{endDate} AND ond.PERSON_TYPE != 5
-		AND ond.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+		AND ond.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_CLASS='BROUGH' AND AREA_NAME = #{name}),'%' ))
 		GROUP by ond.BIZ_DATE
 	]]>
 	</select>
@@ -86,7 +86,7 @@
 		SELECT concat(concat((date_format(qu.BIZ_DATE,'%m')),'月'),concat((date_format(qu.BIZ_DATE,'%d')),'日')) as name,sum(IFNULL(qu.ORDER_QUANTITY,0)) as orderNum
 		FROM JD_LE_ORDER_QUANTITY qu 
 		WHERE qu.BIZ_DATE>=#{startDate} AND qu.BIZ_DATE<#{endDate} 
-		AND qu.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+		AND qu.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_CLASS='BROUGH' AND AREA_NAME = #{name}),'%' ))
 		GROUP by qu.BIZ_DATE
 	]]>
 	</select>
