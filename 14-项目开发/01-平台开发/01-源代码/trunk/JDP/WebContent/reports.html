@@ -126,11 +126,11 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 }); */
 </script>
 </head>
-<body ng-app="reports">
+<body ng-app="reports"  ng-controller="yyreportsctrl">
 	<!-- <div class="title"></div> -->
 	<div class="stars"></div>
 	<div id="world">京东集团分拣中心管理部全国在岗人员管理平台</div>
-	<input type="button" id="logOutButton" onclick="logout()"></input>
+	<input type="button" id="logOutButton" ng-click="logout()"></input>
 	<div class="clock">
 		<ul id="clock">
 			<li id="year"></li>
@@ -155,7 +155,7 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 		</div> -->
 		<div id="reportTitle">运营报表</div>
 	</div>
-	<div id="yyreports" class="container"  ng-controller="yyreportsctrl">
+	<div id="yyreports" class="container" >
 		<div class="row">
 		  <div class="col-md-12" style="height: 88%;margin-top: 0;position: relative;width:100%;padding:0;">
 		      <div class="row">
@@ -233,13 +233,13 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 				        <tbody>
 					        <tr ng-repeat="input in inputs">
 		                      	<td>{{input.split(',')[0]}}</td>
-				            	<td>等于</td>
+				            	<td>{{bijiaofu}}</td>
 				            	<td>{{input.split(',')[1]}}</td>
 				            	<td><a ng-click="inputdelete($index)" style="cursor: pointer;"><span class="glyphicon glyphicon-minus"></span></a></td>
 		                    </tr>
 				          <tr ng-show="show">
 				            <td><select style="height:30px" class="col-md-12" ng-model="input1" ng-options="x for x in contents" ng-blur="blur1()"></select></td>
-				            <td><label style="height:30px" class="col-md-12">等于</label></td>
+				            <td><label style="height:30px" class="col-md-12">{{bijiaofu}}</label></td>
 				            <td><input ng-model="input3" type="{{input3type}}" class="form-control" required></td>
 				            <td><a ng-click="save1()" style="cursor: pointer;"><span class="glyphicon glyphicon-plus pull-right"></span></a></td> 
 				          </tr>
