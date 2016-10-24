@@ -1293,7 +1293,7 @@ option = {
 					bardata2[2].push(row.NotEmpNum);
 					var zhanbi = (row.NotEmpNum+row.EmpNum)>0?(Math.ceil(row.EmpNum/(row.NotEmpNum+row.EmpNum)))*100:0;
 					var renxiao = (row.NotEmpNum+row.EmpNum)>0?Math.ceil(eval(row.orderNum/(row.NotEmpNum+row.EmpNum))):0
-					datalist[0][row.name]='            正式员工占比：'+zhanbi+'%/总人数：'+row.NotEmpNum;
+					datalist[0][row.name]='总人数：'+(row.NotEmpNum+row.EmpNum)+'/正式员工占比：'+zhanbi+'%';
 					datalist[1][row.name]='人效:'+renxiao;
 					totalClerkNum += (row.NotEmpNum+row.EmpNum);
 					totalOrderNum += row.orderNum;

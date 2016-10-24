@@ -58,7 +58,7 @@
 	        WHERE BIZ_DATE=#{currentDate} 
 	        AND TIMING >=#{begin} 
 	        AND TIMING <#{end} 
-			AND  CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA.AREA_CLASS='BROUGH' AND AREA_NAME = #{name}),'%' ))
+			AND  CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
 	]]>
   </select>
   
@@ -69,7 +69,7 @@
                  when LO.PERSON_TYPE='4' THEN LO.AVG_QUANTITY ELSE 0 END) as NotEmpNum
 		  	FROM JD_LE_LABOUR_ONDUTY_DAY_ST LO
 		  	WHERE LO.BIZ_DATE>=#{startDate} AND LO.BIZ_DATE<#{endDate}
-			AND LO.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA.AREA_CLASS='BROUGH' AND AREA_NAME = #{name}),'%' ))
+			AND LO.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
 		 GROUP BY LO.BIZ_DATE
 	]]>
   </select>
