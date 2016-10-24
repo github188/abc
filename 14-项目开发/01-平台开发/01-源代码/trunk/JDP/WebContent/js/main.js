@@ -1498,11 +1498,11 @@ option = {
 					pieOption.series[0].radius=['55%', '70%'];
 					piechart.setOption(pieOption, true);
 					//barOption2.series[0].label.normal.position=['10%', '10%'];
-					//barOption2.series[1].label.normal.position="right";
+					//barOption2.series[1].label.normal.position=['230%', '10%'];
 					mapchart.resize();
 					barchart.resize();
 					barchart1.resize();
-					//barchart2.setOption(barOption2, true);
+					barchart2.setOption(barOption2, true);
 					barchart2.resize();
 					/*barchart3.resize();*/
 					piechart.resize();
@@ -1562,7 +1562,7 @@ option = {
 					var map = $('#map');
 					map.css({"height":"65%","width":"90%"});
 					var bar = $('#bar');
-					bar.css({"height":"38%","width":"54%","top":"61%","left":"2%"});
+					bar.css({"height":"38%","width":"70%","top":"61%","left":"2%"});
 /*					var bar1 = $('#bar1');
 					bar1.css({"height":"38%","width":"20%","top":"61%","left":"49%"});*/
 					var pie = $('#pie');
@@ -1577,7 +1577,7 @@ option = {
 					barchart.resize();
 					barchart1.resize();
 					//barOption2.series[0].label.normal.position=['10%', '10%'];
-					//barOption2.series[1].label.normal.position=['10%', '10%'];
+					//barOption2.series[1].label.normal.position=['260%', '10%'];
 					//barchart2.setOption(barOption2, true);
 					barchart2.resize();
 /*					barchart3.resize();*/
