@@ -1175,6 +1175,11 @@ option = {
 				}else{
 					option.geo.center = [];
 					option.geo.zoom = 1;
+				};
+				if(name=='全国'){
+					option.geo.label.normal.show = true;
+				}else{
+					option.geo.label.normal.show = false;
 				}
 			};
 			pieOption.series[0].data = piedata;
@@ -1294,8 +1299,8 @@ option = {
 					bardata2[2].push(row.NotEmpNum);
 					var zhanbi = (row.NotEmpNum+row.EmpNum)>0?(Math.ceil(row.EmpNum/(row.NotEmpNum+row.EmpNum)))*100:0;
 					var renxiao = (row.NotEmpNum+row.EmpNum)>0?Math.ceil(eval(row.orderNum/(row.NotEmpNum+row.EmpNum))):0
-					datalist[0][row.name]='总人数：'+(row.NotEmpNum+row.EmpNum)+' | 正式员工占比：'+zhanbi+'%';
-					datalist[1][row.name]=' | 人效:'+renxiao;
+					datalist[0][row.name]='';
+					datalist[1][row.name]='总人数：'+(row.NotEmpNum+row.EmpNum)+' | 正式员工占比：'+zhanbi+'% | 人效:'+renxiao;
 					totalClerkNum += (row.NotEmpNum+row.EmpNum);
 					totalOrderNum += row.orderNum;
 					totalOrder += row.totalOrder;
@@ -1426,7 +1431,7 @@ option = {
 			            label:{
 			            	normal:{
 			            		show:true,
-			            		position:['230%', '10%'],
+			            		position:['100%', '10%'],
 			            		formatter : function(params){
 			        		    	//alert(a,b,c);
 			        		    	//return datalist[b];
