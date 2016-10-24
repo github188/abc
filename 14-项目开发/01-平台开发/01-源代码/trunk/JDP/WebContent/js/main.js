@@ -43,7 +43,6 @@ option = {
     },
     grid:{
     	top:0,
-    	height:'100%',
     	left:0,
     	bottom:0,
     	right:0,
@@ -1355,7 +1354,7 @@ option = {
 			        	y:'20%',
 			        	x2:'20%',
 			        	y2:'20%',*/
-			        	//bottom:0,
+			        	bottom:'5%',
 			        	//containLabel:true
 			        },
 			        barWidth:20,

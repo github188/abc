@@ -187,9 +187,10 @@
   </select>
   
   <select id="getAreaList" resultType="java.util.HashMap">
-		<![CDATA[select AREA_NAME as name from NP_EQ_AREA ]]>
+		<![CDATA[select AREA_NAME as name from NP_EQ_AREA AREA]]>
 	<if test="name != '全国'" >
-       <![CDATA[ where PARENT_ID = (select id from NP_EQ_AREA where AREA_NAME = #{name})]]>
+       <![CDATA[ 
+       WHERE  AREA.AREA_CLASS='BROUGH' and AREA.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' )]]>
     </if>
   	<if test="name =='全国' " >
         <![CDATA[where PARENT_ID = (select id from NP_EQ_AREA where AREA_NAME = '京东集团')]]>
