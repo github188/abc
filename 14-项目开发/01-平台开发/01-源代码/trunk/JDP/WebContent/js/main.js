@@ -54,7 +54,7 @@ option = {
          label: {
         	 normal: {
                  position: 'right',
-                 show: true,
+                 show: false,
                  textStyle:{color:'#FFFFFF',fontFamily:'造字工房悦圆常规体'}
              },
              emphasis: {
@@ -1005,7 +1005,8 @@ option = {
 				            },
 						}); 
 					}else if(c>=100){
-						var size = Math.round(c / 50);
+						var size = Math.round(c / 20);
+						//var size = {1:"20",2:"10"};
 						mapdata.push({
 							//地区名称 取china area表
 							name:row.name,
@@ -1310,7 +1311,7 @@ option = {
 			$("#averageEffectNum").html(totalOrderNum+'<span style="font-size:3rem;font-family:黑体;color:#FFF"> | </span>'+totalOrder);*/
 			$("#averageEffectName").html('<p style="color:#FFF;font-size: 2.5rem;font-family:造字工房悦圆常规体,微软雅黑, Arial, Helvetica, sans-serif;">小时处理量</p><span style="color:#fedd1b;font-size: 4rem;font-family:digital-7__mono, Arial, Helvetica, sans-serif;">'+totalOrderNum+'</span>');
 			$("#averageEffectNum").html('<p style="color:#FFF;font-size: 2.5rem;font-family:造字工房悦圆常规体,微软雅黑, Arial, Helvetica, sans-serif;">当日总单量</p><span style="color:#fedd1b;font-size: 4rem;font-family:digital-7__mono, Arial, Helvetica, sans-serif;">'+totalOrder+'</span>');
-			var barOption2 = {
+			barOption2 = {
 					title: {
 			            text: '实时监控',
 			            subtext:'',
@@ -1341,7 +1342,7 @@ option = {
 				    },
 				    color:[ '#7ab8f9','#fedd1b'],
 			        grid:{
-			        	//width:'85%',
+			        	width:'50%',
 			        	left:'10%',
 			        	//right:'4%',
 /*			        	x:'20%',
@@ -1378,10 +1379,12 @@ option = {
 				            name: '正式工',
 				            type: 'bar',
 				            stack: 1,
+				            barMinHeight:1,
+				            zlevel:10086,
 				            label:{
 				            	normal:{
 				            		show:true,
-				            		position:['10%', '10%'],
+				            		position:['200%', '10%'],
 				            		formatter : function(params){
 				        		    	//alert(a,b,c);
 				        		    	//return datalist[b];
@@ -1418,10 +1421,12 @@ option = {
 			            name: '非正式工',
 			            type: 'bar',
 			            stack: 1,
+			            barMinHeight:1,
+			            zlevel:10086,
 			            label:{
 			            	normal:{
 			            		show:true,
-			            		position:['10%', '10%'],
+			            		position:['250%', '10%'],
 			            		formatter : function(params){
 			        		    	//alert(a,b,c);
 			        		    	//return datalist[b];
@@ -1477,7 +1482,7 @@ option = {
 					var map = $('#map');
 					map.css({"height":"93%","width":"60%"});
 					var bar = $('#bar');
-					bar.css({"height":"50%","width":"29%","bottom":"4%","top":"auto","left":"auto","right":"21%"});
+					bar.css({"height":"55%","width":"42%","bottom":"0%","top":"auto","left":"auto","right":"1%"});
 /*					var bar1 = $('#bar1');
 					bar1.css({"height":"50%","width":"25%","bottom":"4%","top":"auto","left":"auto","right":"0"});*/
 					var pie = $('#pie');
@@ -1492,9 +1497,12 @@ option = {
 			        };
 					pieOption.series[0].radius=['55%', '70%'];
 					piechart.setOption(pieOption, true);
+					//barOption2.series[0].label.normal.position=['10%', '10%'];
+					//barOption2.series[1].label.normal.position="right";
 					mapchart.resize();
 					barchart.resize();
 					barchart1.resize();
+					//barchart2.setOption(barOption2, true);
 					barchart2.resize();
 					/*barchart3.resize();*/
 					piechart.resize();
@@ -1568,6 +1576,9 @@ option = {
 					mapchart.resize();
 					barchart.resize();
 					barchart1.resize();
+					//barOption2.series[0].label.normal.position=['10%', '10%'];
+					//barOption2.series[1].label.normal.position=['10%', '10%'];
+					//barchart2.setOption(barOption2, true);
 					barchart2.resize();
 /*					barchart3.resize();*/
 					piechart.resize();
