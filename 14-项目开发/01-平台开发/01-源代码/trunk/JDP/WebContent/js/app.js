@@ -128,6 +128,11 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 			{index:2,status:''}
 		];
 	$scope.changepage = function(index){
+		$scope.inputsss=[];
+		$scope.inputsss.push("区域,"+$scope.input11);
+		$scope.inputsss.push("开始时间,"+$scope.dt.getFullYear()+"-"+($scope.dt.getMonth()+1)+"-"+$scope.dt.getDate()+"-"+$scope.dt.getHours());
+		$scope.inputsss.push("结束时间,"+$scope.dt1.getFullYear()+"-"+($scope.dt1.getMonth()+1)+"-"+$scope.dt1.getDate()+"-"+$scope.dt1.getHours());
+		$scope.inputsss.push("分拣场地,"+$scope.input22);
 //		$scope.pages[$scope.currentpage].status=$scope.status2;
 		$scope.pages[index].status=$scope.status3;
 		$scope.currentpage=$scope.pages[index].index;
@@ -139,7 +144,7 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 		if ($scope.pages[index].index==$scope.allpages) {$scope.rightpagestatus=$scope.status1;};
 		console.log($scope.currentpage);
 		var url = "export/queryyydata.do?";
-		$http.post(url+"inputs="+$scope.inputs+"&pages="+$scope.currentpage).success(function(response) {
+		$http.post(url+"inputs="+$scope.inputsss+"&pages="+$scope.currentpage).success(function(response) {
 			console.log(response);
 			$scope.projectList=angular.fromJson(angular.fromJson(response));
 		});
@@ -162,6 +167,11 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 		};
 	};
 	$scope.first=function(){
+		$scope.inputsss=[];
+		$scope.inputsss.push("区域,"+$scope.input11);
+		$scope.inputsss.push("开始时间,"+$scope.dt.getFullYear()+"-"+($scope.dt.getMonth()+1)+"-"+$scope.dt.getDate()+"-"+$scope.dt.getHours());
+		$scope.inputsss.push("结束时间,"+$scope.dt1.getFullYear()+"-"+($scope.dt1.getMonth()+1)+"-"+$scope.dt1.getDate()+"-"+$scope.dt1.getHours());
+		$scope.inputsss.push("分拣场地,"+$scope.input22);
 		$scope.currentpage=0;
 		$scope.pages=[
 			{index:0,status:'font-size:12px;color:white'},
@@ -170,7 +180,7 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 		];
 		console.log($scope.currentpage);
 		var url = "export/queryyydata.do?";
-		$http.post(url+"inputs="+$scope.inputs+"&pages="+$scope.currentpage).success(function(response) {
+		$http.post(url+"inputs="+$scope.inputsss+"&pages="+$scope.currentpage).success(function(response) {
 			console.log(response);
 			$scope.projectList=angular.fromJson(angular.fromJson(response));
 		});
@@ -320,8 +330,17 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 		}
 	}
 	$scope.daochu=function(){
+		$scope.inputsss=[];
+		console.log($scope.input11);
+		console.log($scope.dt);
+		console.log($scope.dt1);
+		console.log($scope.input22);
+		$scope.inputsss.push("区域,"+$scope.input11);
+		$scope.inputsss.push("开始时间,"+$scope.dt.getFullYear()+"-"+($scope.dt.getMonth()+1)+"-"+$scope.dt.getDate()+"-"+$scope.dt.getHours());
+		$scope.inputsss.push("结束时间,"+$scope.dt1.getFullYear()+"-"+($scope.dt1.getMonth()+1)+"-"+$scope.dt1.getDate()+"-"+$scope.dt1.getHours());
+		$scope.inputsss.push("分拣场地,"+$scope.input22);
 		var url = "export/yydata.do?";
-		$http.post(url+"inputs="+$scope.inputs).success(function(response) {
+		$http.post(url+"inputs="+$scope.inputsss).success(function(response) {
 			console.log(response);
 			if(response!=""){
 				window.location.href = ""+angular.fromJson(response);
@@ -330,6 +349,15 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 		});
 	}
 	$scope.save=function(){
+		$scope.inputsss=[];
+		console.log($scope.input11);
+		console.log($scope.dt);
+		console.log($scope.dt1);
+		console.log($scope.input22);
+		$scope.inputsss.push("区域,"+$scope.input11);
+		$scope.inputsss.push("开始时间,"+$scope.dt.getFullYear()+"-"+($scope.dt.getMonth()+1)+"-"+$scope.dt.getDate()+"-"+$scope.dt.getHours());
+		$scope.inputsss.push("结束时间,"+$scope.dt1.getFullYear()+"-"+($scope.dt1.getMonth()+1)+"-"+$scope.dt1.getDate()+"-"+$scope.dt1.getHours());
+		$scope.inputsss.push("分拣场地,"+$scope.input22);
 		$scope.currentpage=0;
 		$scope.pages=[
 			{index:0,status:'font-size:12px;color:white'},
@@ -338,7 +366,7 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 		];
 		console.log($scope.currentpage);
 		var url = "export/queryyydata.do?";
-		$http.post(url+"inputs="+$scope.inputs+"&pages="+$scope.currentpage).success(function(response) {
+		$http.post(url+"inputs="+$scope.inputsss+"&pages="+$scope.currentpage).success(function(response) {
 			console.log(response);
 			$scope.projectList=angular.fromJson(angular.fromJson(response));
 			if(angular.fromJson(angular.fromJson(response)).length==0){
