@@ -1348,7 +1348,7 @@ option = {
 				    color:[ '#7ab8f9','#fedd1b'],
 			        grid:{
 			        	width:'50%',
-			        	left:'10%',
+			        	left:'20%',
 			        	//right:'4%',
 /*			        	x:'20%',
 			        	y:'20%',
@@ -1466,6 +1466,7 @@ option = {
 		        }
 			        ]
 			};
+			if('全国'==name){barOption2.grid.left='10%'}else{barOption2.grid.left='20%'}
 /*		    barOption3.series[0].data = bardata2[3];*/
 			barchart2.setOption(barOption2, true);  
 /*			barchart3.setOption(barOption3, true);*/
