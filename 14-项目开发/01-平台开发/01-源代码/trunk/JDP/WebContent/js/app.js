@@ -74,8 +74,21 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 	}
 }]);
 
-var reports = angular.module('reports', ['ngCookies']);
+var reports = angular.module('reports', ['ngCookies','ui.bootstrap']);
 reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($scope,$http,$cookieStore){
+	end = new Date();
+	$scope.dt=new Date(end.valueOf() - 7*24*60*60*1000);
+    $scope.openCalendar = function ($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        $scope.opened = true;
+    };
+    $scope.dt1=new Date();
+    $scope.openCalendar1 = function ($event) {
+    	$event.preventDefault();
+    	$event.stopPropagation();
+    	$scope.opened1 = true;
+    };
 	if($cookieStore.get('showornot')!='true'){
 		window.location.href = "login.html";
 	}
@@ -172,8 +185,13 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 	$scope.input2='=';
 	$scope.input3='';
 	console.log($scope.currentpage);
+	$scope.inputssss=[];
+	$scope.inputssss.push("区域, ");
+	$scope.inputssss.push("开始时间,"+$scope.dt.getFullYear()+"-"+($scope.dt.getMonth()+1)+"-"+$scope.dt.getDate()+"-"+$scope.dt.getHours());
+	$scope.inputssss.push("结束时间,"+$scope.dt1.getFullYear()+"-"+($scope.dt1.getMonth()+1)+"-"+$scope.dt1.getDate()+"-"+$scope.dt1.getHours());
+	$scope.inputssss.push("分拣场地, ");
 	var url = "export/queryyydata.do?";
-	$http.post(url+"inputs="+$scope.inputs+"&pages="+$scope.currentpage).success(function(response) {
+	$http.post(url+"inputs="+$scope.inputssss+"&pages="+$scope.currentpage).success(function(response) {
 		console.log(angular.fromJson(angular.fromJson(response)));
 		$scope.projectList=angular.fromJson(angular.fromJson(response));
 		if(angular.fromJson(angular.fromJson(response)).length==0){
@@ -224,6 +242,41 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 		}else{
 			$scope.inputshow1=true;
 		}
+	};
+	$scope.save11= function (){
+		$scope.inputsss=[];
+		console.log($scope.input11);
+		console.log($scope.dt);
+		console.log($scope.dt1);
+		console.log($scope.input22);
+		$scope.inputsss.push("区域,"+$scope.input11);
+		$scope.inputsss.push("开始时间,"+$scope.dt.getFullYear()+"-"+($scope.dt.getMonth()+1)+"-"+$scope.dt.getDate()+"-"+$scope.dt.getHours());
+		$scope.inputsss.push("结束时间,"+$scope.dt1.getFullYear()+"-"+($scope.dt1.getMonth()+1)+"-"+$scope.dt1.getDate()+"-"+$scope.dt1.getHours());
+		$scope.inputsss.push("分拣场地,"+$scope.input22);
+		$scope.currentpage=0;
+		$scope.pages=[
+			{index:0,status:'font-size:12px;color:white'},
+			{index:1,status:''},
+			{index:2,status:''}
+		];
+		console.log($scope.currentpage);
+		var url = "export/queryyydata.do?";
+		$http.post(url+"inputs="+$scope.inputsss+"&pages="+$scope.currentpage).success(function(response) {
+			console.log(response);
+			$scope.projectList=angular.fromJson(angular.fromJson(response));
+			if(angular.fromJson(angular.fromJson(response)).length==0){
+				$scope.allpages=3;
+				$scope.counts=0;
+			}else{
+				$scope.counts=angular.fromJson(angular.fromJson(response))[0].counts;
+				if(angular.fromJson(angular.fromJson(response))[0].allpages<3){
+					$scope.allpages=3;
+				}else{
+					$scope.allpages=angular.fromJson(angular.fromJson(response))[0].allpages;
+				}
+			}
+		});
+		$scope.inputsss=[];
 	};
 
 	$scope.outputshow1=false;

@@ -14,7 +14,7 @@
 		from JD_LE_LABOUR_ONDUTY o
 		left join NP_SYS_CONTROLUNIT c on c.id=o.CU_ID
 		left join JD_LE_ORDER_QUANTITY q on q.CU_ID=c.id
-		where c.PARENT_NAME like CONCAT('%',#{area},'%') and o.BIZ_DATE > #{starttime} and o.BIZ_DATE < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
+		where c.PARENT_NAME like CONCAT('%',#{area},'%') and concat(DATE_FORMAT(o.BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(o.TIMING,'%H')) >= #{starttime} and concat(DATE_FORMAT(o.BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(o.TIMING,'%H')) < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
 		group by c.id
 		LIMIT #{startpages},#{pageSize}
 	]]>
@@ -22,13 +22,13 @@
 	
 	<select id="queryavgefficiency" resultType="java.util.HashMap">
 	<![CDATA[
-		select AVG(e.AVG_EFFICIENCY) as AVG_EFFICIENCY from jd_le_labour_efficiency e where cu_id =#{cuid} and e.BIZ_DATE > #{starttime} and e.BIZ_DATE < #{endtime}
+		select AVG(e.AVG_EFFICIENCY) as AVG_EFFICIENCY from jd_le_labour_efficiency e where cu_id =#{cuid} and CONCAT(DATE_FORMAT(e.BIZ_DATE,'%Y-%m-%d'),'-',e.TIME_PERIOD)>= #{starttime} and CONCAT(DATE_FORMAT(e.BIZ_DATE,'%Y-%m-%d'),'-',e.TIME_PERIOD) < #{endtime}
 	]]>
 	</select>
 	
 	<select id="queryOnduty" resultType="java.util.HashMap">
 	<![CDATA[
-		select PERSON_TYPE,QUANTITY_ONDUTY from jd_le_labour_onduty where cu_id=#{cuid} and BIZ_DATE > #{starttime} and BIZ_DATE < #{endtime} group by PERSON_TYPE
+		select PERSON_TYPE,QUANTITY_ONDUTY from jd_le_labour_onduty where cu_id=#{cuid} and concat(DATE_FORMAT(BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(TIMING,'%H')) >= #{starttime} and concat(DATE_FORMAT(BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(TIMING,'%H')) < #{endtime} group by PERSON_TYPE
 	]]>
 	</select>
 	
@@ -38,7 +38,7 @@
 		count(DISTINCT o.cu_id)
 		from JD_LE_LABOUR_ONDUTY o
 		left join NP_SYS_CONTROLUNIT c on c.id=o.CU_ID
-		where c.PARENT_NAME like CONCAT('%',#{area},'%') and o.BIZ_DATE > #{starttime} and o.BIZ_DATE < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
+		where c.PARENT_NAME like CONCAT('%',#{area},'%') and concat(DATE_FORMAT(o.BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(o.TIMING,'%H')) >= #{starttime} and concat(DATE_FORMAT(o.BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(o.TIMING,'%H')) < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
 	]]>
 	</select>
 	
@@ -54,7 +54,7 @@
 		from JD_LE_LABOUR_ONDUTY o
 		left join NP_SYS_CONTROLUNIT c on c.id=o.CU_ID
 		left join JD_LE_ORDER_QUANTITY q on q.CU_ID=c.id
-		where c.PARENT_NAME like CONCAT('%',#{area},'%') and o.BIZ_DATE > #{starttime} and o.BIZ_DATE < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
+		where c.PARENT_NAME like CONCAT('%',#{area},'%') and concat(DATE_FORMAT(o.BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(o.TIMING,'%H')) >= #{starttime} and concat(DATE_FORMAT(o.BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(o.TIMING,'%H')) < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
 		group by c.id
 	]]>
 	</select>

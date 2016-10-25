@@ -169,17 +169,41 @@ public class BizServiceImpl implements IBizService {
 
 	@Override
 	public List<Map<String, Object>> queryYydata(String[] inputs,int startpages,int pageSize) {
-		
+		for (int i = 0; i < inputs.length; i++) {
+			if("undefined".equals(inputs[i])){
+				inputs[i]="";
+			}
+		}
+		StringBuffer sBuffer = new StringBuffer();
+		StringBuffer sBuffer1 = new StringBuffer();
 		String[] inputss = new String[]{"","","",""};
 		for (int i = 0; i < inputs.length; i++) {
 			if(inputs[i].equals("区域")){
 				inputss[0]=inputs[i+1];
 				i++;
 			}else if (inputs[i].equals("开始时间")) {
-				inputss[1]=inputs[i+1];
+				String[] sss = inputs[i+1].split("-");
+				for (int j = 0;j < sss.length; j++) {
+					if(sss[j].length()<2){
+						sss[j]="0"+sss[j];
+					}
+				}
+				for (int j = 0; j < sss.length; j++) {
+					sBuffer.append(sss[j]+"-");
+				}
+				inputss[1]=sBuffer.substring(0, sBuffer.length()-1);
 				i++;
 			}else if (inputs[i].equals("结束时间")) {
-				inputss[2]=inputs[i+1];
+				String[] sss = inputs[i+1].split("-");
+				for (int j = 0;j < sss.length; j++) {
+					if(sss[j].length()<2){
+						sss[j]="0"+sss[j];
+					}
+				}
+				for (int j = 0; j < sss.length; j++) {
+					sBuffer1.append(sss[j]+"-");
+				}
+				inputss[2]=sBuffer1.substring(0, sBuffer1.length()-1);
 				i++;
 			}else if (inputs[i].equals("分拣场地")) {
 				inputss[3]=inputs[i+1];
@@ -187,7 +211,7 @@ public class BizServiceImpl implements IBizService {
 			}
 		}
 		
-		List<Map<String, Object>> datas = reportDao.queryYydata(inputss[0],inputss[1].isEmpty()?"1970-01-01":inputss[1],inputss[2].isEmpty()?"2050-01-01":inputss[2],inputss[3],startpages*8,pageSize);
+		List<Map<String, Object>> datas = reportDao.queryYydata(inputss[0],inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2],inputss[3],startpages*8,pageSize);
 		
 		List<Map<String, Object>> response = new ArrayList<>();
 		
@@ -205,11 +229,11 @@ public class BizServiceImpl implements IBizService {
 			map.put("quantityOnduty", QUANTITY_ONDUTY);
 			map.put("orderQuantity", ORDER_QUANTITY);
 			
-			Map<String, Object> map1= reportDao.queryavgefficiency(CU_ID,inputss[1].isEmpty()?"1970-01-01":inputss[1],inputss[2].isEmpty()?"2050-01-01":inputss[2]);
+			Map<String, Object> map1= reportDao.queryavgefficiency(CU_ID,inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2]);
 			if(map1!=null && map1.size()!=0){
 				map.put("avgEfficiency", map1.get("AVG_EFFICIENCY"));
 			}
-			List<Map<String, Object>> map2= reportDao.queryOnduty(CU_ID,inputss[1].isEmpty()?"1970-01-01":inputss[1],inputss[2].isEmpty()?"2050-01-01":inputss[2]);
+			List<Map<String, Object>> map2= reportDao.queryOnduty(CU_ID,inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2]);
 			Integer normal = 0;
 			Integer notnomal= 0;
 			Integer other= 0;
@@ -228,7 +252,7 @@ public class BizServiceImpl implements IBizService {
 			map.put("notnomal", notnomal.toString());
 			map.put("other", other.toString());
 			map.put("percent", normal.toString().equals("0")?0:(int)((float)normal/(float)(normal+notnomal)*100)+"%");		
-			String counts= reportDao.queryyyallpages(inputss[0],inputss[1].isEmpty()?"1970-01-01":inputss[1],inputss[2].isEmpty()?"2050-01-01":inputss[2],inputss[3]);
+			String counts= reportDao.queryyyallpages(inputss[0],inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2],inputss[3]);
 			map.put("allpages", Integer.parseInt(counts)/9+1);
 			map.put("counts", counts);
 			map.put("index", i);
