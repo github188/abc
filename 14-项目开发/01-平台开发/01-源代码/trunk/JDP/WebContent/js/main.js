@@ -532,7 +532,8 @@ option = {
 				var minutes = new Date().getMinutes();
 				var hours = new Date().getHours();
 				if(seconds=='0'&&(minutes%5==0)){
-					location.reload(true);
+					//location.reload(true);
+					 init ('全国');
 				}
 				$("#year").html(year);
 				$("#month").html(( month < 10 ? "0" : "" ) + month);
