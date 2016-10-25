@@ -385,9 +385,9 @@ public class BizServiceImpl implements IBizService {
 			sheet.addCell(condition00);
 			Label condition10 = new Label(1, 1, conditions[1]);
 			sheet.addCell(condition10);
-			Label condition20 = new Label(2, 1, conditions[3]);
+			Label condition20 = new Label(2, 1, conditions[3].substring(0, conditions[3].lastIndexOf("-"))+" "+conditions[3].substring(conditions[3].lastIndexOf("-")+1)+"时");
 			sheet.addCell(condition20);
-			Label condition30 = new Label(3, 1, conditions[5]);
+			Label condition30 = new Label(3, 1, conditions[5].substring(0, conditions[5].lastIndexOf("-"))+" "+conditions[5].substring(conditions[5].lastIndexOf("-")+1)+"时");
 			sheet.addCell(condition30);
 			Label condition40 = new Label(4, 1, conditions[7]);
 			sheet.addCell(condition40);
