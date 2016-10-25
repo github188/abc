@@ -1399,8 +1399,8 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
 
 .constant('datepickerPopupConfig', {
   datepickerPopup: 'yyyy-MM-dd',
-  currentText: 'Today',
-  clearText: 'Clear',
+  currentText: '今日',
+  clearText: '清空',
   closeText: 'Done',
   closeOnDateSelection: true,
   appendToBody: false,
