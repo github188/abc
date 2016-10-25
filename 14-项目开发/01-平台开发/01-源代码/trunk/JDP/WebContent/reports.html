@@ -42,7 +42,7 @@ body{
 	 font: 1.6rem Arial, Helvetica, sans-serif;
 	 margin:0;
 	 padding:0;
-	 color:#0F0F0F; 
+	 color:black; 
 	 height: 100%;
 	 TEXT-ALIGN: center;
 	  /* background: radial-gradient(200% 100% at bottom center, #f7f7b6, #e96f92, #75517d, #1b2947); */
@@ -69,6 +69,7 @@ body{
 #world {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:3.5rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
 #reportTitle {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:3.5rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:none}
 .clock {display:inline;width:31%;height: 5%; margin-left:auto; padding-top:0.3%;position:relative;color:#46d7ff; background:url(images/clock.png)no-repeat;  background-size: 100% 100%;margin-top:0.1%}
+.ng-binding{color:black}
 #clock,#page1 { display:inline; margin:0 auto; padding:0px; list-style:none; text-align:center; }
 #clock>li,#page1>li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
 #point {  -moz-animation:mymove 1s ease infinite; -webkit-animation:mymove 1s ease infinite;}
@@ -212,9 +213,9 @@ body{
 		    <ul id="page1" class="col-md-5 col-md-offset-2 pull-right">
 		      <li class="enable" ng-click="first()"><a href="#"><small style="color:#FFF;text-shadow: none;">首页</small></a></li>
 		      <li class="{{leftpagestatus}}" ng-click="leftchangepage()"><a style="color:#FFF;text-shadow: none;" href="#">&laquo;</a></li>
-		      <li class="{{page.status}}" ng-repeat="page in pages" ng-click="changepage($index)"><a style="color:#FFF;text-shadow: none;" class='btn'><div style="{{page.status}}">{{ page.index + 1 }}</div></a></li>
+		      <li class="{{page.status}}" ng-repeat="page in pages" ng-click="changepage($index)"><a style="color:#FFF;text-shadow: none;" class='btn'><div style="{{page.status}};color:#FFF">{{ page.index + 1 }}</div></a></li>
 		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#">&raquo;</a></li>
-		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#"><small>共&nbsp; &nbsp;{{allpages}}&nbsp; &nbsp;页&nbsp; &nbsp;{{counts}}&nbsp; &nbsp;条</small></a></li>
+		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#"><small style="color:#FFF;text-shadow: none;">共&nbsp; &nbsp;{{allpages}}&nbsp; &nbsp;页&nbsp; &nbsp;{{counts}}&nbsp; &nbsp;条</small></a></li>
 		    </ul>
 		  </div>
 		</div>
@@ -311,9 +312,9 @@ body{
 		    <ul class="col-md-10 col-md-offset-2 pull-right">
 		      <li class="enable" ng-click="first()"><a href="#"><small style="color:#FFF;text-shadow: none;">首页</small></a></li>
 		      <li class="{{leftpagestatus}}" ng-click="leftchangepage()"><a style="color:#FFF;text-shadow: none;" href="#">&laquo;</a></li>
-		      <li class="{{page.status}}" ng-repeat="page in pages" ng-click="changepage($index)"><a style="color:#FFF;text-shadow: none;" class='btn'><div style="{{page.status}}">{{ page.index + 1 }}</div></a></li>
+		      <li class="{{page.status}}" ng-repeat="page in pages" ng-click="changepage($index)"><a style="color:#FFF;text-shadow: none;" class='btn'><div style="{{page.status}};color:#FFF;">{{ page.index + 1 }}</div></a></li>
 		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#">&raquo;</a></li>
-		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#"><small>共&nbsp; &nbsp;{{allpages}}&nbsp; &nbsp;页</small></a></li>
+		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#"><small style="color:#FFF;text-shadow: none;">共&nbsp; &nbsp;{{allpages}}&nbsp; &nbsp;页</small></a></li>
 		    </ul>
 		  </div>
 		</div>
