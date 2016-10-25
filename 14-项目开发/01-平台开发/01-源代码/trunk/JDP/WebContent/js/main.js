@@ -53,7 +53,7 @@ option = {
          label: {
         	 normal: {
                  position: 'right',
-                 show: false,
+                 show: true,
                  textStyle:{color:'#FFFFFF',fontFamily:'造字工房悦圆常规体'}
              },
              emphasis: {
@@ -1175,11 +1175,11 @@ option = {
 					option.geo.center = [];
 					option.geo.zoom = 1;
 				};
-				if(name=='全国'){
+/*				if(name=='全国'){
 					option.geo.label.normal.show = true;
 				}else{
 					option.geo.label.normal.show = false;
-				}
+				}*/
 			};
 			pieOption.series[0].data = piedata;
 			pieOption.legend.data = pieLegendData;
