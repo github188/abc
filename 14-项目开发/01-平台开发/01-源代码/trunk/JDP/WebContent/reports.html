@@ -69,8 +69,8 @@ body{
 #world {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:3.5rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
 #reportTitle {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:3.5rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:none}
 .clock {display:inline;width:31%;height: 5%; margin-left:auto; padding-top:0.3%;position:relative;color:#46d7ff; background:url(images/clock.png)no-repeat;  background-size: 100% 100%;margin-top:0.1%}
-ul { display:inline; margin:0 auto; padding:0px; list-style:none; text-align:center; }
-ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
+#clock,#page1 { display:inline; margin:0 auto; padding:0px; list-style:none; text-align:center; }
+#clock>li,#page1>li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
 #point {  -moz-animation:mymove 1s ease infinite; -webkit-animation:mymove 1s ease infinite;}
 @-webkit-keyframes mymove 
 {
@@ -168,10 +168,10 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 			    	<div>
 			    	区域：<input style="color:black" type="text col-md-1" ng-model="input11"/>
 			  		&nbsp&nbsp&nbsp&nbsp&nbsp开始时间：
-		    		<input style="color:black" type="text" datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-model="dt" is-open="opened" close-text="Close"/>
+		    		<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-model="dt" is-open="opened" close-text="Close"/>
 	             	<button type="button" class="btn btn-default" ng-click="openCalendar($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 			    	&nbsp&nbsp&nbsp&nbsp&nbsp结束时间：
-			    	<input style="color:black" type="text" datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-model="dt1" is-open="opened1" close-text="Close"/>
+			    	<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd HH:mm:ss" ng-model="dt1" is-open="opened1" close-text="Close"/>
 	             	<button type="button" class="btn btn-default" ng-click="openCalendar1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 			   		&nbsp&nbsp&nbsp&nbsp&nbsp分拣场地：
 			   		 <input style="color:black" type="text col-md-1"  ng-model="input22"/>
@@ -209,13 +209,12 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 		        </tbody>
 		      </table>
 		    </div>
-		    <ul class="col-md-10 col-md-offset-2 pull-right">
+		    <ul id="page1" class="col-md-5 col-md-offset-2 pull-right">
 		      <li class="enable" ng-click="first()"><a href="#"><small style="color:#FFF;text-shadow: none;">首页</small></a></li>
 		      <li class="{{leftpagestatus}}" ng-click="leftchangepage()"><a style="color:#FFF;text-shadow: none;" href="#">&laquo;</a></li>
 		      <li class="{{page.status}}" ng-repeat="page in pages" ng-click="changepage($index)"><a style="color:#FFF;text-shadow: none;" class='btn'><div style="{{page.status}}">{{ page.index + 1 }}</div></a></li>
 		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#">&raquo;</a></li>
 		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#"><small>共&nbsp; &nbsp;{{allpages}}&nbsp; &nbsp;页&nbsp; &nbsp;{{counts}}&nbsp; &nbsp;条</small></a></li>
-		
 		    </ul>
 		  </div>
 		</div>
@@ -315,7 +314,6 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 		      <li class="{{page.status}}" ng-repeat="page in pages" ng-click="changepage($index)"><a style="color:#FFF;text-shadow: none;" class='btn'><div style="{{page.status}}">{{ page.index + 1 }}</div></a></li>
 		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#">&raquo;</a></li>
 		      <li class="{{rightpagestatus}}" ng-click="rightchangepage()"><a style="color:#FFF;text-shadow: none;" href="#"><small>共&nbsp; &nbsp;{{allpages}}&nbsp; &nbsp;页</small></a></li>
-		
 		    </ul>
 		  </div>
 		</div>
