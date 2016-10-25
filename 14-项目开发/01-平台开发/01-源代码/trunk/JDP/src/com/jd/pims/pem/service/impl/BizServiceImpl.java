@@ -216,6 +216,7 @@ public class BizServiceImpl implements IBizService {
 		List<Map<String, Object>> response = new ArrayList<>();
 		
 		int i =startpages*8+1;
+		String counts= reportDao.queryyyallpages(inputss[0],inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2],inputss[3]);
 		for (Map<String, Object> data : datas) {
 			String PARENT_NAME = data.get("PARENT_NAME").toString();//区域
 			String NAME = data.get("NAME").toString();//分拣中心名称
@@ -252,7 +253,6 @@ public class BizServiceImpl implements IBizService {
 			map.put("notnomal", notnomal.toString());
 			map.put("other", other.toString());
 			map.put("percent", normal.toString().equals("0")?0:(int)((float)normal/(float)(normal+notnomal)*100)+"%");		
-			String counts= reportDao.queryyyallpages(inputss[0],inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2],inputss[3]);
 			map.put("allpages", Integer.parseInt(counts)/9+1);
 			map.put("counts", counts);
 			map.put("index", i);
@@ -266,26 +266,51 @@ public class BizServiceImpl implements IBizService {
 	@Override
 	public String yydata(String[] inputs, HttpServletRequest request) {
 		try {
-
-			String[] inputss = new String[] { "", "", "", "" };
+			String[] conditions = inputs;
 			for (int i = 0; i < inputs.length; i++) {
-				if (inputs[i].equals("区域")) {
-					inputss[0] = inputs[i + 1];
+				if("undefined".equals(inputs[i])){
+					inputs[i]="";
+				}
+			}
+			StringBuffer sBuffer = new StringBuffer();
+			StringBuffer sBuffer1 = new StringBuffer();
+			String[] inputss = new String[]{"","","",""};
+			for (int i = 0; i < inputs.length; i++) {
+				if(inputs[i].equals("区域")){
+					inputss[0]=inputs[i+1];
 					i++;
-				} else if (inputs[i].equals("开始时间")) {
-					inputss[1] = inputs[i + 1];
+				}else if (inputs[i].equals("开始时间")) {
+					String[] sss = inputs[i+1].split("-");
+					for (int j = 0;j < sss.length; j++) {
+						if(sss[j].length()<2){
+							sss[j]="0"+sss[j];
+						}
+					}
+					for (int j = 0; j < sss.length; j++) {
+						sBuffer.append(sss[j]+"-");
+					}
+					inputss[1]=sBuffer.substring(0, sBuffer.length()-1);
 					i++;
-				} else if (inputs[i].equals("结束时间")) {
-					inputss[2] = inputs[i + 1];
+				}else if (inputs[i].equals("结束时间")) {
+					String[] sss = inputs[i+1].split("-");
+					for (int j = 0;j < sss.length; j++) {
+						if(sss[j].length()<2){
+							sss[j]="0"+sss[j];
+						}
+					}
+					for (int j = 0; j < sss.length; j++) {
+						sBuffer1.append(sss[j]+"-");
+					}
+					inputss[2]=sBuffer1.substring(0, sBuffer1.length()-1);
 					i++;
-				} else if (inputs[i].equals("分拣场地")) {
-					inputss[3] = inputs[i + 1];
+				}else if (inputs[i].equals("分拣场地")) {
+					inputss[3]=inputs[i+1];
 					i++;
 				}
 			}
 
 			List<Map<String, Object>> datas = reportDao.queryAllYydata(inputss[0],
-					inputss[1].isEmpty() ? "1970-01-01" : inputss[1], inputss[2].isEmpty() ? "2050-01-01" : inputss[2],
+					inputss[1].isEmpty() ? "1970-01-01-00" : inputss[1], inputss[2].isEmpty() ? "2050-01-01-00" : inputss[2],
 					inputss[3]);
 
 			List<Map<String, Object>> response = new ArrayList<>();
@@ -304,14 +329,14 @@ public class BizServiceImpl implements IBizService {
 				map.put("orderQuantity", ORDER_QUANTITY);
 
 				Map<String, Object> map1 = reportDao.queryavgefficiency(CU_ID,
-						inputss[1].isEmpty() ? "1970-01-01" : inputss[1],
-						inputss[2].isEmpty() ? "2050-01-01" : inputss[2]);
+						inputss[1].isEmpty() ? "1970-01-01-00" : inputss[1],
+						inputss[2].isEmpty() ? "2050-01-01-00" : inputss[2]);
 				if (map1 != null && map1.size() != 0) {
 					map.put("avgEfficiency", map1.get("AVG_EFFICIENCY"));
 				}
 				List<Map<String, Object>> map2 = reportDao.queryOnduty(CU_ID,
-						inputss[1].isEmpty() ? "1970-01-01" : inputss[1],
-						inputss[2].isEmpty() ? "2050-01-01" : inputss[2]);
+						inputss[1].isEmpty() ? "1970-01-01-00" : inputss[1],
+						inputss[2].isEmpty() ? "2050-01-01-00" : inputss[2]);
 				Integer normal = 0;
 				Integer notnomal = 0;
 				Integer other = 0;
@@ -345,25 +370,47 @@ public class BizServiceImpl implements IBizService {
 			WritableWorkbook workbook = Workbook.createWorkbook(os);
 			// 创建新的一页
 			WritableSheet sheet = workbook.createSheet("First Sheet", 0);
-			Label title1 = new Label(0, 0, "大区");
+			Label condition0 = new Label(0, 0, "查询条件");
+			sheet.addCell(condition0);
+			Label condition1 = new Label(1, 0, "大区");
+			sheet.addCell(condition1);
+			Label condition2 = new Label(2, 0, "开始时间");
+			sheet.addCell(condition2);
+			Label condition3 = new Label(3, 0, "结束时间");
+			sheet.addCell(condition3);
+			Label condition4 = new Label(4, 0, "分拣场地名称");
+			sheet.addCell(condition4);
+			
+			Label condition00 = new Label(0, 1, "#");
+			sheet.addCell(condition00);
+			Label condition10 = new Label(1, 1, conditions[1]);
+			sheet.addCell(condition10);
+			Label condition20 = new Label(2, 1, conditions[3]);
+			sheet.addCell(condition20);
+			Label condition30 = new Label(3, 1, conditions[5]);
+			sheet.addCell(condition30);
+			Label condition40 = new Label(4, 1, conditions[7]);
+			sheet.addCell(condition40);
+			
+			Label title1 = new Label(0, 3, "大区");
 			sheet.addCell(title1);
-			Label title2 = new Label(1, 0, "分拣场地名称");
+			Label title2 = new Label(1, 3, "分拣场地名称");
 			sheet.addCell(title2);
-			Label title3 = new Label(2, 0, "操作总单量");
+			Label title3 = new Label(2, 3, "操作总单量");
 			sheet.addCell(title3);
-			Label title4 = new Label(3, 0, "出勤总人数");
+			Label title4 = new Label(3, 3, "出勤总人数");
 			sheet.addCell(title4);
-			Label title5 = new Label(4, 0, "平均人效");
+			Label title5 = new Label(4, 3, "平均人效");
 			sheet.addCell(title5);
-			Label title6 = new Label(5, 0, "正式工数量");
+			Label title6 = new Label(5, 3, "正式工数量");
 			sheet.addCell(title6);
-			Label title7 = new Label(6, 0, "非正式工数量");
+			Label title7 = new Label(6, 3, "非正式工数量");
 			sheet.addCell(title7);
-			Label title8 = new Label(7, 0, "其他人员数量");
+			Label title8 = new Label(7, 3, "其他人员数量");
 			sheet.addCell(title8);
-			Label title9 = new Label(8, 0, "正式工占比");
+			Label title9 = new Label(8, 3, "正式工占比");
 			sheet.addCell(title9);
-			int i=1;//标志位
+			int i=4;//标志位
 			for (Map<String, Object> map : response) {
 				// 创建要显示的内容,创建一个单元格，第一个参数为列坐标，第二个参数为行坐标，第三个参数为内容
 				Label areaName = new Label(0, i, map.get("areaName")==null?"":map.get("areaName").toString());
