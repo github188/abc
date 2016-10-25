@@ -29,7 +29,7 @@ option = {
         formatter: function (params,ticket,callback){
             var name = params.name;
             var value = params.value;
-            var res ='<div style="margin:0;background:url(images/tooltip.png)no-repeat;background-size: 100% 100% ;text-align:center;padding:0;width:150%;padding-top:20%;box-shadow: 2px 2px 10px #32bbec">'
+            var res ='<div style="margin:0;background:url(images/tooltip.png)no-repeat;background-size: 100% 100% ;text-align:center;padding:0;width:150%;padding-top:20%;box-shadow: 2px 2px 10px #32bbec;z-index:4">'
             	+'<p style="background:#32bbec;color:#FFF;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:"造字工房悦圆常规体", Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value[2].toFixed(0)+'</p></div>';
                     //设置自定义数据的模板，这里的模板是图片
             console.log(res);
@@ -53,7 +53,7 @@ option = {
          label: {
         	 normal: {
                  position: 'right',
-                 show: false,
+                 show: true,
                  textStyle:{color:'#FFFFFF',fontFamily:'造字工房悦圆常规体'}
              },
              emphasis: {
@@ -1175,11 +1175,11 @@ option = {
 					option.geo.center = [];
 					option.geo.zoom = 1;
 				};
-				if(name=='全国'){
+/*				if(name=='全国'){
 					option.geo.label.normal.show = true;
 				}else{
 					option.geo.label.normal.show = false;
-				}
+				}*/
 			};
 			pieOption.series[0].data = piedata;
 			pieOption.legend.data = pieLegendData;
@@ -1348,7 +1348,7 @@ option = {
 				    color:[ '#7ab8f9','#fedd1b'],
 			        grid:{
 			        	width:'50%',
-			        	left:'10%',
+			        	left:'20%',
 			        	//right:'4%',
 /*			        	x:'20%',
 			        	y:'20%',
@@ -1440,7 +1440,7 @@ option = {
 			            		textStyle: {
 			            			color:'#FFF',
 			                        fontSize: '12',
-			                        fontWeight: 'bold',
+			                        fontWeight: 'normal',
 			                        fontFamily:'造字工房悦圆常规体'
 			                    }
 			            	},
@@ -1466,6 +1466,7 @@ option = {
 		        }
 			        ]
 			};
+			if('全国'==name){barOption2.grid.left='10%'}else{barOption2.grid.left='20%'}
 /*		    barOption3.series[0].data = bardata2[3];*/
 			barchart2.setOption(barOption2, true);  
 /*			barchart3.setOption(barOption3, true);*/
