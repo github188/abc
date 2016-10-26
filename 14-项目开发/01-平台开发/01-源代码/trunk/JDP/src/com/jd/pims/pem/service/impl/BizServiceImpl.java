@@ -65,11 +65,11 @@ public class BizServiceImpl implements IBizService {
 		ControlUnit cu = userDao.findOrganization(cuId);
 		state.setCuName(cu.getCuName());
 		List<LabourOnduty> list;
-		int beginTime=getBeginTime();
-		int endTime=beginTime;
-		beginTime--;
+		//取时间跨度，当前时间到前10分钟这一时段
+		String[] timeSpan=getTimeSpan(null);
+		//beginTime--;
 		list = labourOndutyDao.getCurrentTimeLabourOnduty(sFormat.format(date),
-				(beginTime<10?"0":"")+beginTime+":00:00",(endTime<10?"0":"")+endTime+":00:00",cu.getFullPath());
+				timeSpan[0],timeSpan[1],cu.getFullPath());
 		for (LabourOnduty rec : list) {
 			if (rec.getPersonType().equals("1") ) {
 				state.setNumEmp((state.getNumEmp() == null ? 0 : state
@@ -137,15 +137,11 @@ public class BizServiceImpl implements IBizService {
 	public LabourEfficiency getTimePeriodEfficience(String cuId, Date bizDate,
 			Integer timePeriod) {
 		ControlUnit cu = userDao.findOrganization(cuId);
-		// 如果timePeriod为空，默认当前一小时
-		if (timePeriod == null) {
-			timePeriod = getBeginTime();
-		}
-		int beginTime=timePeriod-1;
-		int endTime=timePeriod;
+		
+		String[] timeSpan=getTimeSpan(timePeriod);
 		//取符合条件的人效记录（每个分拣中心一条记录）
 		LabourEfficiency result = labourEfficiencyDao.getLabourEfficiency(
-				sFormat.format(bizDate), timePeriod, cu.getFullPath(),(beginTime<10?"0":"")+beginTime+":00:00",(endTime<10?"0":"")+endTime+":00:00");
+				sFormat.format(bizDate), timePeriod, cu.getFullPath(),timeSpan[0],timeSpan[1]);
 		if(result==null){
 			result=new LabourEfficiency();
 		}
@@ -156,15 +152,20 @@ public class BizServiceImpl implements IBizService {
 		}
 		return result;
 	}
-
-	private int getBeginTime(){
+	
+	private String[] getTimeSpan(Integer timePeriod){
+		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
 		Calendar currentTime = Calendar.getInstance();
 		currentTime.setTime(new Date());
-		int timePeriod = currentTime.get(Calendar.HOUR_OF_DAY) ;
-		if (timePeriod ==0) {
-			timePeriod = 24;
+		if(timePeriod!=null){
+			currentTime.set(Calendar.HOUR, timePeriod);
 		}
-		return timePeriod;
+		String[] times=new String[]{};
+		times[1]=df.format(currentTime.getTime());
+		currentTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE)-10);
+		times[0]=df.format(currentTime.getTime());
+		
+		return times;
 	}
 
 	@Override
