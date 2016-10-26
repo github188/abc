@@ -211,7 +211,7 @@ public class BizServiceImpl implements IBizService {
 			}
 		}
 		
-		List<Map<String, Object>> datas = reportDao.queryYydata(inputss[0],inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2],inputss[3],startpages*8,pageSize);
+		List<Map<String, Object>> datas = reportDao.queryYydata(inputss[0],inputss[1].substring(0,inputss[1].length()-1).trim().replace(" ", "-").isEmpty()?"1970-01-01-00":inputss[1].substring(0,inputss[1].length()-1).trim().replace(" ", "-"),inputss[2].substring(0,inputss[2].length()-1).trim().replace(" ", "-").isEmpty()?"2050-01-01-00":inputss[2].substring(0,inputss[2].length()-1).trim().replace(" ", "-"),inputss[3],startpages*8,pageSize);
 		
 		List<Map<String, Object>> response = new ArrayList<>();
 		

@@ -77,13 +77,14 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 var reports = angular.module('reports', ['ngCookies','ui.bootstrap']);
 reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($scope,$http,$cookieStore){
 	end = new Date();
-	$scope.dt=new Date(end.valueOf() - 7*24*60*60*1000);
+	$scope.ee="2016-01-11T05:25:07Z";
+	$scope.dt=new Date(end.valueOf() - 7*24*60*60*1000).getFullYear()+"-"+(new Date(end.valueOf() - 7*24*60*60*1000).getMonth()+1)+"-"+new Date(end.valueOf() - 7*24*60*60*1000).getDate()+" "+new Date(end.valueOf() - 7*24*60*60*1000).getHours()+" 时";
     $scope.openCalendar = function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
         $scope.opened = true;
     };
-    $scope.dt1=new Date();
+    $scope.dt1=new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate()+" "+new Date().getHours()+" 时";
     $scope.openCalendar1 = function ($event) {
     	$event.preventDefault();
     	$event.stopPropagation();
@@ -130,8 +131,8 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 	$scope.changepage = function(index){
 		$scope.inputsss=[];
 		$scope.inputsss.push("区域,"+$scope.input11);
-		$scope.inputsss.push("开始时间,"+$scope.dt.getFullYear()+"-"+($scope.dt.getMonth()+1)+"-"+$scope.dt.getDate()+"-"+$scope.dt.getHours());
-		$scope.inputsss.push("结束时间,"+$scope.dt1.getFullYear()+"-"+($scope.dt1.getMonth()+1)+"-"+$scope.dt1.getDate()+"-"+$scope.dt1.getHours());
+		$scope.inputsss.push("开始时间,"+$scope.dt);
+		$scope.inputsss.push("结束时间,"+$scope.dt1);
 		$scope.inputsss.push("分拣场地,"+$scope.input22);
 //		$scope.pages[$scope.currentpage].status=$scope.status2;
 		$scope.pages[index].status=$scope.status3;
@@ -169,8 +170,8 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 	$scope.first=function(){
 		$scope.inputsss=[];
 		$scope.inputsss.push("区域,"+$scope.input11);
-		$scope.inputsss.push("开始时间,"+$scope.dt.getFullYear()+"-"+($scope.dt.getMonth()+1)+"-"+$scope.dt.getDate()+"-"+$scope.dt.getHours());
-		$scope.inputsss.push("结束时间,"+$scope.dt1.getFullYear()+"-"+($scope.dt1.getMonth()+1)+"-"+$scope.dt1.getDate()+"-"+$scope.dt1.getHours());
+		$scope.inputsss.push("开始时间,"+$scope.dt);
+		$scope.inputsss.push("结束时间,"+$scope.dt1);
 		$scope.inputsss.push("分拣场地,"+$scope.input22);
 		$scope.currentpage=0;
 		$scope.pages=[
@@ -197,8 +198,8 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 	console.log($scope.currentpage);
 	$scope.inputssss=[];
 	$scope.inputssss.push("区域, ");
-	$scope.inputssss.push("开始时间,"+$scope.dt.getFullYear()+"-"+($scope.dt.getMonth()+1)+"-"+$scope.dt.getDate()+"-"+$scope.dt.getHours());
-	$scope.inputssss.push("结束时间,"+$scope.dt1.getFullYear()+"-"+($scope.dt1.getMonth()+1)+"-"+$scope.dt1.getDate()+"-"+$scope.dt1.getHours());
+	$scope.inputssss.push("开始时间,"+$scope.dt);
+	$scope.inputssss.push("结束时间,"+$scope.dt1);
 	$scope.inputssss.push("分拣场地, ");
 	var url = "export/queryyydata.do?";
 	$http.post(url+"inputs="+$scope.inputssss+"&pages="+$scope.currentpage).success(function(response) {
@@ -260,8 +261,8 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 		console.log($scope.dt1);
 		console.log($scope.input22);
 		$scope.inputsss.push("区域,"+$scope.input11);
-		$scope.inputsss.push("开始时间,"+$scope.dt.getFullYear()+"-"+($scope.dt.getMonth()+1)+"-"+$scope.dt.getDate()+"-"+$scope.dt.getHours());
-		$scope.inputsss.push("结束时间,"+$scope.dt1.getFullYear()+"-"+($scope.dt1.getMonth()+1)+"-"+$scope.dt1.getDate()+"-"+$scope.dt1.getHours());
+		$scope.inputsss.push("开始时间,"+$scope.dt);
+		$scope.inputsss.push("结束时间,"+$scope.dt1);
 		$scope.inputsss.push("分拣场地,"+$scope.input22);
 		$scope.currentpage=0;
 		$scope.pages=[
@@ -336,8 +337,8 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 		console.log($scope.dt1);
 		console.log($scope.input22);
 		$scope.inputsss.push("区域,"+$scope.input11);
-		$scope.inputsss.push("开始时间,"+$scope.dt.getFullYear()+"-"+($scope.dt.getMonth()+1)+"-"+$scope.dt.getDate()+"-"+$scope.dt.getHours());
-		$scope.inputsss.push("结束时间,"+$scope.dt1.getFullYear()+"-"+($scope.dt1.getMonth()+1)+"-"+$scope.dt1.getDate()+"-"+$scope.dt1.getHours());
+		$scope.inputsss.push("开始时间,"+$scope.dt);
+		$scope.inputsss.push("结束时间,"+$scope.dt1);
 		$scope.inputsss.push("分拣场地,"+$scope.input22);
 		var url = "export/yydata.do?";
 		$http.post(url+"inputs="+$scope.inputsss).success(function(response) {
@@ -355,8 +356,8 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 		console.log($scope.dt1);
 		console.log($scope.input22);
 		$scope.inputsss.push("区域,"+$scope.input11);
-		$scope.inputsss.push("开始时间,"+$scope.dt.getFullYear()+"-"+($scope.dt.getMonth()+1)+"-"+$scope.dt.getDate()+"-"+$scope.dt.getHours());
-		$scope.inputsss.push("结束时间,"+$scope.dt1.getFullYear()+"-"+($scope.dt1.getMonth()+1)+"-"+$scope.dt1.getDate()+"-"+$scope.dt1.getHours());
+		$scope.inputsss.push("开始时间,"+$scope.dt);
+		$scope.inputsss.push("结束时间,"+$scope.dt1);
 		$scope.inputsss.push("分拣场地,"+$scope.input22);
 		$scope.currentpage=0;
 		$scope.pages=[

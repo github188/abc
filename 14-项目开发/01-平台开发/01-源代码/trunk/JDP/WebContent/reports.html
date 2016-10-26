@@ -13,6 +13,8 @@
     <script type="text/javascript" src="js/common/angular-ui-bootstrap.js"></script>
     <script type="text/javascript" src="js/common/ui-bootstrap-tpls-0.11.0.js"></script>
     <script type="text/javascript" src="js/common/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/common/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="js/common/bootstrap-datetimepicker.zh-CN.js"></script>
   	<script type="text/javascript" src="js/app.js"></script>
   	<script type="text/javascript" src="js/prefixfree.min.js"></script>
 	<script type="text/javascript" src="js/stopExecutionOnTimeout.js"></script>
@@ -20,6 +22,7 @@
 	<!-- <script type="text/javascript" src="js/main.js"></script> -->
 	<script type="text/javascript" src="js/starAndClock.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css">
   	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elrements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -69,7 +72,7 @@ body{
 #world {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:4.0rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
 #reportTitle {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:4.0rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:none}
 .clock {display:inline;width:31%;height: 5%; margin-left:auto; padding-top:0.3%;position:relative;color:#46d7ff; background:url(images/clock.png)no-repeat;  background-size: 100% 100%;margin-top:0.1%}
-.ng-binding{color:black}
+.ng-binding{color:white}
 #clock,#page1 { display:inline; margin:0 auto; padding:0px; list-style:none; text-align:center; }
 #clock>li{display:inline;  font-size:4.0rem; text-align:center; font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
 #page1>li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
@@ -166,17 +169,42 @@ body{
 				  <input class="col-md-1 col-md-offset-10 btn btn-info" type="button" value="查询" ng-click="save11()"></input>
 				  <input class="col-md-1 btn btn-success" type="button" value="导出" ng-click="daochu()"></input>
 		      </div>
-		      <div class="center" style="margin-top:1%;border:1px solid white;border-radius:5px;background-color:black;opacity:1;color:white;font-family: '造字工房悦圆常规体'">
-			    	<div>
-			    	区域：<input style="color:black" type="text col-md-1" ng-model="input11"/>
-			   		&nbsp&nbsp&nbsp&nbsp&nbsp分拣场地：
-			   		 <input style="color:black" type="text col-md-1"  ng-model="input22"/>
-			  		&nbsp&nbsp&nbsp&nbsp&nbsp开始时间：
-		    		<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd HH 时" ng-model="dt" is-open="opened" close-text="关闭"/>
-	             	<button type="button" class="btn btn-default" ng-click="openCalendar($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-			    	&nbsp&nbsp&nbsp&nbsp&nbsp结束时间：
-			    	<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd HH 时" ng-model="dt1" is-open="opened1" close-text="关闭"/>
-	             	<button type="button" class="btn btn-default" ng-click="openCalendar1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+		      <div class="center" style="padding-right:1rem;margin-top:1%;border:1px solid white;border-radius:5px;background-color:black;opacity:1;color:white;font-family: '造字工房悦圆常规体'">
+			    	<div class="row">
+			    		<div style="padding-top:1rem" class="col-md-3">
+					    	<div style="padding-top:0.5rem" class="col-md-4">区域</div>
+					    	<div class="col-md-6"><input style="color:black;font-family: '微软雅黑'" type="text" ng-model="input11"/></div>
+					    </div>
+					    <div style="padding-top:1rem" class="col-md-3">
+					   		<div style="padding-top:0.5rem" class="col-md-4">分拣场地</div>
+					   		 <div class="col-md-6"><input style="color:black;font-family: '微软雅黑'" type="text"  ng-model="input22"/></div>
+			    		</div>
+			    		<div class="col-md-3">
+				  			<div style="padding-top:1.5rem" class="col-md-4">开始时间</div>
+<!-- 			    			<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd HH 时" ng-model="dt" is-open="opened" close-text="关闭"/> -->
+<!-- 		             		<button type="button" class="btn btn-default" ng-click="openCalendar($event)"><i class="glyphicon glyphicon-calendar"></i></button> -->
+				            <div  style="padding-top:1rem" class="form-group">
+				                <div class="input-group date form_datetime col-md-5" data-date="" data-date-format="yyyy-mm-dd hh 时" data-link-field="dtp_input1">
+				                    <input style="color:black;font-family: '微软雅黑'" type="text" ng-model="dt" readonly/>
+				<!--                     <input class="form-control" size="16" type="text" value="" readonly> -->
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				                </div>
+				            </div>
+			
+				    	</div>
+				    	<div class="col-md-3">
+				    		<div style="padding-top:1.5rem" class="col-md-4">结束时间</div>
+<!-- 				    		<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd HH 时" ng-model="dt1" is-open="opened1" close-text="关闭"/> -->
+<!-- 		             		<button type="button" class="btn btn-default" ng-click="openCalendar1($event)"><i class="glyphicon glyphicon-calendar"></i></button> -->
+			             	 <div style="padding-top:1rem" class="form-group">
+				                <div class="input-group date form_datetime col-md-5" data-date="" data-date-format="yyyy-mm-dd hh 时" data-link-field="dtp_input1">
+				                    <input style="color:black;font-family: '微软雅黑'" type="text" ng-model="dt1" readonly/>
+				<!--                     <input class="form-control" size="16" type="text" value="" readonly> -->
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				                </div>
+				            </div>
+			            
+		             	</div>
 			   		</div>
 		      </div>
 		    <div class="table-responsive" style="margin-top:30px;">
@@ -322,6 +350,18 @@ body{
 	</div>
 	
 	<footer class="center"><a  style="font-size:2rem;color:#46d7ff;font-family:'造字工房悦圆常规体';bottom:1%;position:absolute;" href="main.html">返回首页</a></footer>
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+		autoclose: 1,
+		todayHighlight: 1,
+		startView: 2,
+		forceParse: 0,
+        showMeridian: 1
+    });
+</script>
 </body>
 </html>
 
