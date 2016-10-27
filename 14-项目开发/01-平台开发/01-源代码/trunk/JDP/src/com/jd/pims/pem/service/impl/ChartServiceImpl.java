@@ -50,7 +50,7 @@ public class ChartServiceImpl implements IChartService {
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm:00");
 		calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
 		String end= df.format(calendar.getTime());
-		calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) -20);
+		calendar.add(Calendar.MINUTE, -20);
 		String begin = df.format(calendar.getTime());
 		List<Map<String,Object>> arealist=userDao.getCurrentTimeAreaForChart(name);
 		for(Map<String,Object>map:arealist){
