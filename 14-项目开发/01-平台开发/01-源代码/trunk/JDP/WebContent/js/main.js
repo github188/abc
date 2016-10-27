@@ -982,6 +982,7 @@ option = {
 				            
 						}); 
 					}else if(c>=1&&c<100){
+						var size1 = Math.round(c / 20);
 						mapdata.push({
 							//地区名称 取china area表
 							name:row.name,
@@ -994,12 +995,12 @@ option = {
 				            itemStyle: {
 				                normal: {
 				                    color: colorList[row.level],
-				                    shadowBlur: 20,
+				                    shadowBlur: size1,
 				                    shadowColor: colorList[row.level]
 				                },
 				                emphasis: {
 				                    color: colorList[row.level],
-				                    shadowBlur: 20,
+				                    shadowBlur: size1,
 				                    shadowColor: colorList[row.level]
 				                }
 				            },
@@ -1015,16 +1016,16 @@ option = {
 							//地区的id 取china area表id
 					        selected:false,
 					        //自定义特殊 itemStyle，仅对该数据项有效
-				            symbolSize: size,
+				            symbolSize: 10,
 				            itemStyle: {
 				                normal: {
 				                    color: colorList[row.level],
-				                    shadowBlur: 20,
+				                    shadowBlur: size,
 				                    shadowColor:colorList[row.level]
 				                },
 				                emphasis: {
 				                    color: colorList[row.level],
-				                    shadowBlur: 20,
+				                    shadowBlur: size,
 				                    shadowColor:colorList[row.level]
 				                }
 				            },
