@@ -180,7 +180,7 @@ public class BizServiceImpl implements IBizService {
 		String[] inputss = new String[]{"","","",""};
 		for (int i = 0; i < inputs.length; i++) {
 			if(inputs[i].equals("区域")){
-				inputss[0]=inputs[i+1];
+				inputss[0]=inputs[i+1].trim();
 				i++;
 			}else if (inputs[i].equals("开始时间")) {
 				String[] sss = inputs[i+1].split("-");
@@ -192,7 +192,7 @@ public class BizServiceImpl implements IBizService {
 				for (int j = 0; j < sss.length; j++) {
 					sBuffer.append(sss[j]+"-");
 				}
-				inputss[1]=sBuffer.substring(0, sBuffer.length()-1);
+				inputss[1]=sBuffer.substring(0, sBuffer.length()-1).trim();
 				i++;
 			}else if (inputs[i].equals("结束时间")) {
 				String[] sss = inputs[i+1].split("-");
@@ -204,10 +204,10 @@ public class BizServiceImpl implements IBizService {
 				for (int j = 0; j < sss.length; j++) {
 					sBuffer1.append(sss[j]+"-");
 				}
-				inputss[2]=sBuffer1.substring(0, sBuffer1.length()-1);
+				inputss[2]=sBuffer1.substring(0, sBuffer1.length()-1).trim();
 				i++;
 			}else if (inputs[i].equals("分拣场地")) {
-				inputss[3]=inputs[i+1];
+				inputss[3]=inputs[i+1].trim();
 				i++;
 			}
 		}
