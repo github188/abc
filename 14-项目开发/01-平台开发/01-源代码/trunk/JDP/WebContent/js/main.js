@@ -1295,8 +1295,8 @@ option = {
 				$.each(data, function(index, row){
 					//name 地区名 averageEffect 该地区平均人效
 					bardata2[0].push(row.name);
-					bardata2[1].push(row.EmpNum);
-					bardata2[2].push(row.NotEmpNum);
+					bardata2[1].push(Math.ceil(row.EmpNum));
+					bardata2[2].push(Math.ceil(row.NotEmpNum));
 					var zhanbi = (row.NotEmpNum+row.EmpNum)>0?(Math.ceil(row.EmpNum/(row.NotEmpNum+row.EmpNum)))*100:0;
 					var renxiao = (row.NotEmpNum+row.EmpNum)>0?Math.ceil(eval(row.orderNum/(row.NotEmpNum+row.EmpNum))):0
 					datalist[0][row.name]='';
