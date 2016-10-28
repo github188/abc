@@ -93,8 +93,8 @@ public class ChartServiceImpl implements IChartService {
 			        }
 			        Comparator<Map<String, Object>> rule= new Comparator<Map<String, Object>>(){  
 			               public int compare(Map<String, Object> o1, Map<String, Object> o2) {  
-			                String name1 =(String)o1.get("Num");//name1是从你list里面拿出来的一个  
-			                String name2= (String)o2.get("Num"); //name1是从你list里面拿出来的第二个name      
+			                String name1 =o1.get("Num").toString();//name1是从你list里面拿出来的一个  
+			                String name2= o2.get("Num").toString(); //name1是从你list里面拿出来的第二个name      
 			                return name2.compareTo(name1);    
 			           } 
 			        };      
