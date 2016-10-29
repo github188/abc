@@ -103,11 +103,11 @@ public class ChartServiceImpl implements IChartService {
 			        Collections.sort(type3List,rule); 
 			        Collections.sort(type4List,rule); 
 			        Collections.sort(type5List,rule); 
-					EmpNum+=Integer.parseInt(String.valueOf(type1List.get(0).get("Num")))+
-							Integer.parseInt(String.valueOf(type2List.get(0).get("Num")))+
-							Integer.parseInt(String.valueOf(type3List.get(0).get("Num")));
-					NotEmpNum=Integer.parseInt(String.valueOf(type4List.get(0).get("Num")));
-					otherNumEmp=Integer.parseInt(String.valueOf(type5List.get(0).get("Num")));
+					EmpNum+=Integer.parseInt(String.valueOf(type1List.size()==0?0:type1List.get(0).get("Num")))+
+							Integer.parseInt(String.valueOf(type2List.size()==0?0:type2List.get(0).get("Num")))+
+							Integer.parseInt(String.valueOf(type3List.size()==0?0:type3List.get(0).get("Num")));
+					NotEmpNum=Integer.parseInt(String.valueOf(type4List.size()==0?0:type4List.get(0).get("Num")));
+					otherNumEmp=Integer.parseInt(String.valueOf(type5List.size()==0?0:type5List.get(0).get("Num")));
 			    }
 		            tempMap.put("EmpNum",EmpNum);
 		            tempMap.put("NotEmpNum",NotEmpNum);
