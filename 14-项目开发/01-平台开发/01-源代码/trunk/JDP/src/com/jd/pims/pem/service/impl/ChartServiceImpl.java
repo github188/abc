@@ -6,6 +6,8 @@ package com.jd.pims.pem.service.impl;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.parser.deserializer.ArrayListTypeFieldDeserializer;
 import com.jd.pims.pem.dao.LabourEfficiencyDao;
 import com.jd.pims.pem.dao.LabourOndutyDao;
 import com.jd.pims.pem.service.IChartService;
@@ -50,7 +53,7 @@ public class ChartServiceImpl implements IChartService {
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm:00");
 		calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE));
 		String end= df.format(calendar.getTime());
-		calendar.add(Calendar.MINUTE, -20);
+		calendar.add(Calendar.MINUTE, -30);
 		String begin = df.format(calendar.getTime());
 		List<Map<String,Object>> arealist=userDao.getCurrentTimeAreaForChart(name);
 		for(Map<String,Object>map:arealist){
@@ -59,19 +62,58 @@ public class ChartServiceImpl implements IChartService {
 			tempMap.put("x",map.get("x"));
 			tempMap.put("y",map.get("y"));
 			tempMap.put("level",map.get("level"));
-			List<Map<String,Object>> labourOndutylist=labourOndutyDao.getCurrentTimeLabourOndutyForChart(temp_str,begin,end, map.get("name").toString());
-			if(null!=labourOndutylist&&!labourOndutylist.isEmpty()&&labourOndutylist.size()>0){
-	            tempMap.put("EmpNum",labourOndutylist.get(0).get("EmpNum"));
-	            tempMap.put("NotEmpNum",labourOndutylist.get(0).get("NotEmpNum"));
-	            tempMap.put("otherNumEmp",labourOndutylist.get(0).get("otherNumEmp"));
-			}else{
-	            tempMap.put("EmpNum",0);
-	            tempMap.put("NotEmpNum",0);
-	            tempMap.put("otherNumEmp",0);
-			}
-			result.add(tempMap);
+			int EmpNum = 0;
+			int NotEmpNum = 0;
+			int otherNumEmp = 0;
+			List<Map<String,Object>> type1List = new ArrayList<Map<String,Object>>();
+			List<Map<String,Object>> type2List = new ArrayList<Map<String,Object>>();
+			List<Map<String,Object>> type3List = new ArrayList<Map<String,Object>>();
+			List<Map<String,Object>> type4List = new ArrayList<Map<String,Object>>();
+			List<Map<String,Object>> type5List = new ArrayList<Map<String,Object>>();
+				List<Map<String,Object>> labourOndutylist=labourOndutyDao.getCurrentTimeLabourOndutyForChart1(temp_str,begin,end, map.get("name").toString());
+				if(null!=labourOndutylist&&!labourOndutylist.isEmpty()&&labourOndutylist.size()>0){
+			        for(Map<String,Object> map1:labourOndutylist){
+			        	switch (map1.get("personType").toString()) {
+							case "1":
+								type1List.add(map1);
+								break;
+							case "2":
+								type2List.add(map1);
+								break;
+							case "3":
+								type3List.add(map1);
+								break;
+							case "4":
+								type4List.add(map1);
+								break;
+							case "5":
+								type5List.add(map1);
+								break;
+						}
+			        }
+			        Comparator<Map<String, Object>> rule= new Comparator<Map<String, Object>>(){  
+			               public int compare(Map<String, Object> o1, Map<String, Object> o2) {  
+			                String name1 =o1.get("Num").toString();//name1是从你list里面拿出来的一个  
+			                String name2= o2.get("Num").toString(); //name1是从你list里面拿出来的第二个name      
+			                return name2.compareTo(name1);    
+			           } 
+			        };      
+			        Collections.sort(type1List,rule); 
+			        Collections.sort(type2List,rule); 
+			        Collections.sort(type3List,rule); 
+			        Collections.sort(type4List,rule); 
+			        Collections.sort(type5List,rule); 
+					EmpNum+=Integer.parseInt(String.valueOf(type1List.size()==0?0:type1List.get(0).get("Num")))+
+							Integer.parseInt(String.valueOf(type2List.size()==0?0:type2List.get(0).get("Num")))+
+							Integer.parseInt(String.valueOf(type3List.size()==0?0:type3List.get(0).get("Num")));
+					NotEmpNum=Integer.parseInt(String.valueOf(type4List.size()==0?0:type4List.get(0).get("Num")));
+					otherNumEmp=Integer.parseInt(String.valueOf(type5List.size()==0?0:type5List.get(0).get("Num")));
+			    }
+		            tempMap.put("EmpNum",EmpNum);
+		            tempMap.put("NotEmpNum",NotEmpNum);
+		            tempMap.put("otherNumEmp",otherNumEmp);
+					result.add(tempMap);
 		}
-			
 		return result;
 	}
 
@@ -87,7 +129,7 @@ public class ChartServiceImpl implements IChartService {
 		//cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 1);
 		Date startDate = cal.getTime();
 		String starttime =sdf.format(startDate);
-		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 7);
+		cal.add(Calendar.DATE, -7);
 		Date endDate = cal.getTime();
 		String endtime =sdf.format(endDate);
 		list=labourOndutyDao.getHistoryLabourOndutyForChart(endtime,starttime, name);	
@@ -112,7 +154,7 @@ public class ChartServiceImpl implements IChartService {
 			SimpleDateFormat df = new SimpleDateFormat("HH:00:00");
 			currentTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY));
 			String end = df.format(currentTime.getTime());
-			currentTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY) - 1);
+			currentTime.add(Calendar.HOUR_OF_DAY, -1);
 			String begin = df.format(currentTime.getTime());
 	        List<Map<String,Object>>areaList = userDao.getAreaList(name);
 	        for(Map<String,Object>map:areaList){
@@ -173,7 +215,7 @@ public class ChartServiceImpl implements IChartService {
 		//cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 1);
 		Date startDate = cal.getTime();
 		String starttime =sdf.format(startDate);
-		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 7);
+		cal.add(Calendar.DATE, -7);
 		Date endDate = cal.getTime();
 		String endtime =sdf.format(endDate);
 		List<Map<String,Object>> list = labourEfficiencyDao.getHistoryEfficiencyForChart(endtime,starttime,24, name);
@@ -202,9 +244,9 @@ public class ChartServiceImpl implements IChartService {
 	public List<Map<String,Object>> getData(List<Map<String,Object>> list,String type){
 		Calendar cal = Calendar.getInstance();
 		List<Map<String,Object>> result = new ArrayList<Map<String,Object>>();
-		cal.set(Calendar.DATE, cal.get(Calendar.DATE) - 8);
+		cal.add(Calendar.DATE,-8);
 		for(int i=1;i<=7;i++){
-			cal.set(Calendar.DATE, cal.get(Calendar.DATE) + 1);
+			cal.add(Calendar.DATE, 1);
 			String month = (cal.get(Calendar.MONTH)+1)<10?("0"+(cal.get(Calendar.MONTH)+1)+"月"):((cal.get(Calendar.MONTH)+1)+"月");
 			String day = cal.get(Calendar.DAY_OF_MONTH)<10?("0"+cal.get(Calendar.DAY_OF_MONTH)+"日"):(cal.get(Calendar.DAY_OF_MONTH)+"日");
 			String date = month+day;
@@ -237,5 +279,28 @@ public class ChartServiceImpl implements IChartService {
 			}
 		}
 		return result;
+	}
+	public static void main(String args[]){
+		List<Map<String, String>> a = new ArrayList<Map<String, String>>();
+		Map<String, String> map = new HashMap<String, String>();
+		Map<String, String> map1 = new HashMap<String, String>();
+		Map<String, String> map2 = new HashMap<String, String>();
+		map.put("Num","1");
+		map1.put("Num","2");
+		map2.put("Num","3");
+		a.add(map);
+		a.add(map1);
+		a.add(map2);
+        Comparator<Map<String, String>> rule= new Comparator<Map<String, String>>(){  
+            public int compare(Map<String, String> o1, Map<String, String> o2) {  
+             String name1 =(String)o1.get("Num");//name1是从你list里面拿出来的一个  
+             String name2= (String)o2.get("Num"); //name1是从你list里面拿出来的第二个name      
+             return name2.compareTo(name1);    
+        } 
+     };      
+     Collections.sort(a,rule); 
+     for(Map<String, String>map3:a){
+    	 System.out.println(map3.get("Num"));
+     }
 	}
 }
