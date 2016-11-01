@@ -83,7 +83,11 @@
 	
 	<select id="getHistoryEfficiencyClerkForChart" resultType="java.util.HashMap">
 	<![CDATA[
-		SELECT concat(concat((date_format(ond.BIZ_DATE,'%m')),'月'),concat((date_format(ond.BIZ_DATE,'%d')),'日')) as name,sum(IFNULL(ond.AVG_QUANTITY,0)) as clerkNum
+		SELECT concat(concat((date_format(ond.BIZ_DATE,'%m')),'月'),concat((date_format(ond.BIZ_DATE,'%d')),'日')) as name,
+		sum(case when PERSON_TYPE='1' THEN IFNULL(ond.AVG_QUANTITY,0)
+				when PERSON_TYPE='2' THEN IFNULL(ond.AVG_QUANTITY,0)*0.8
+				when PERSON_TYPE='3' THEN IFNULL(ond.AVG_QUANTITY,0)*0.5
+				when PERSON_TYPE='4' THEN IFNULL(ond.AVG_QUANTITY,0)*0.8 END) as clerkNum
 		FROM JD_LE_LABOUR_ONDUTY_DAY_ST ond 
 		WHERE ond.BIZ_DATE>=#{startDate} AND ond.BIZ_DATE<#{endDate} AND ond.PERSON_TYPE != 5
 		AND ond.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))

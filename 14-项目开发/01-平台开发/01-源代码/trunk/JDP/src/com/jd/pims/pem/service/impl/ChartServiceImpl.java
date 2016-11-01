@@ -17,7 +17,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.parser.deserializer.ArrayListTypeFieldDeserializer;
 import com.jd.pims.pem.dao.LabourEfficiencyDao;
 import com.jd.pims.pem.dao.LabourOndutyDao;
 import com.jd.pims.pem.service.IChartService;
@@ -62,9 +61,9 @@ public class ChartServiceImpl implements IChartService {
 			tempMap.put("x",map.get("x"));
 			tempMap.put("y",map.get("y"));
 			tempMap.put("level",map.get("level"));
-			int EmpNum = 0;
-			int NotEmpNum = 0;
-			int otherNumEmp = 0;
+			double EmpNum = 0;
+			double NotEmpNum = 0;
+			double otherNumEmp = 0;
 			List<Map<String,Object>> type1List = new ArrayList<Map<String,Object>>();
 			List<Map<String,Object>> type2List = new ArrayList<Map<String,Object>>();
 			List<Map<String,Object>> type3List = new ArrayList<Map<String,Object>>();
@@ -104,9 +103,9 @@ public class ChartServiceImpl implements IChartService {
 			        Collections.sort(type4List,rule); 
 			        Collections.sort(type5List,rule); 
 					EmpNum+=Integer.parseInt(String.valueOf(type1List.size()==0?0:type1List.get(0).get("Num")))+
-							Integer.parseInt(String.valueOf(type2List.size()==0?0:type2List.get(0).get("Num")))+
-							Integer.parseInt(String.valueOf(type3List.size()==0?0:type3List.get(0).get("Num")));
-					NotEmpNum=Integer.parseInt(String.valueOf(type4List.size()==0?0:type4List.get(0).get("Num")));
+							Integer.parseInt(String.valueOf(type2List.size()==0?0:type2List.get(0).get("Num")))*0.8+
+							Integer.parseInt(String.valueOf(type3List.size()==0?0:type3List.get(0).get("Num")))*0.5;
+					NotEmpNum=Integer.parseInt(String.valueOf(type4List.size()==0?0:type4List.get(0).get("Num")))*0.8;
 					otherNumEmp=Integer.parseInt(String.valueOf(type5List.size()==0?0:type5List.get(0).get("Num")));
 			    }
 		            tempMap.put("EmpNum",EmpNum);
@@ -158,21 +157,58 @@ public class ChartServiceImpl implements IChartService {
 			String begin = df.format(currentTime.getTime());
 	        List<Map<String,Object>>areaList = userDao.getAreaList(name);
 	        for(Map<String,Object>map:areaList){
-		        float EmpNum = 0;
-		        float NotEmpNum = 0;
-		        float otherNumEmp = 0;
+		        double EmpNum = 0;
+		        double NotEmpNum = 0;
+		        double otherNumEmp = 0;
 		        int order = 0;
 		        int totalOrder = 0;
 		        Map<String,Object>tempMap = new HashMap<String,Object>();
 		        tempMap.put("name",map.get("name"));
 			/*	List<Map<String,Object>> arealist=userDao.getCurrentTimeAreaForChart(name);*/
-				List<Map<String,Object>> orderlist=labourEfficiencyDao.getEfficiencyOrderForChart(
-						time, timePeriod,map.get("name").toString());
-				if(null!=orderlist&&!orderlist.isEmpty()&&orderlist.size()>0){
-					for(Map<String,Object>orderMap:orderlist){
-						order+=Integer.parseInt(orderMap.get("orderNum").toString());
-					}
-				}
+				List<Map<String,Object>> type1List = new ArrayList<Map<String,Object>>();
+				List<Map<String,Object>> type2List = new ArrayList<Map<String,Object>>();
+				List<Map<String,Object>> type3List = new ArrayList<Map<String,Object>>();
+				List<Map<String,Object>> type4List = new ArrayList<Map<String,Object>>();
+				List<Map<String,Object>> type5List = new ArrayList<Map<String,Object>>();
+					List<Map<String,Object>> labourOndutylist=labourOndutyDao.getCurrentTimeLabourOndutyForChart1(timePeriod+"",begin,end, map.get("name").toString());
+					if(null!=labourOndutylist&&!labourOndutylist.isEmpty()&&labourOndutylist.size()>0){
+				        for(Map<String,Object> map1:labourOndutylist){
+				        	switch (map1.get("personType").toString()) {
+								case "1":
+									type1List.add(map1);
+									break;
+								case "2":
+									type2List.add(map1);
+									break;
+								case "3":
+									type3List.add(map1);
+									break;
+								case "4":
+									type4List.add(map1);
+									break;
+								case "5":
+									type5List.add(map1);
+									break;
+							}
+				        }
+				        Comparator<Map<String, Object>> rule= new Comparator<Map<String, Object>>(){  
+				               public int compare(Map<String, Object> o1, Map<String, Object> o2) {  
+				                String name1 =o1.get("Num").toString();//name1是从你list里面拿出来的一个  
+				                String name2= o2.get("Num").toString(); //name1是从你list里面拿出来的第二个name      
+				                return name2.compareTo(name1);    
+				           } 
+				        };      
+				        Collections.sort(type1List,rule); 
+				        Collections.sort(type2List,rule); 
+				        Collections.sort(type3List,rule); 
+				        Collections.sort(type4List,rule); 
+				        Collections.sort(type5List,rule); 
+						EmpNum+=Integer.parseInt(String.valueOf(type1List.size()==0?0:type1List.get(0).get("Num")))+
+								Integer.parseInt(String.valueOf(type2List.size()==0?0:type2List.get(0).get("Num")))*0.8+
+								Integer.parseInt(String.valueOf(type3List.size()==0?0:type3List.get(0).get("Num")))*0.5;
+						NotEmpNum=Integer.parseInt(String.valueOf(type4List.size()==0?0:type4List.get(0).get("Num")))*0.8;
+						otherNumEmp=Integer.parseInt(String.valueOf(type5List.size()==0?0:type5List.get(0).get("Num")));
+				    }
 				List<Map<String,Object>> totalOrderlist=labourEfficiencyDao.getTodayOrderForChart(
 						time,map.get("name").toString());
 				if(null!=totalOrderlist&&!totalOrderlist.isEmpty()&&totalOrderlist.size()>0){

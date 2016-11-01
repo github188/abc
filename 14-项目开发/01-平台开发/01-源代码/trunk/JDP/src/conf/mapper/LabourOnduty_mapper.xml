@@ -50,9 +50,9 @@
 	<![CDATA[	
 		select 		
 			IFNULL(round(avg(case when PERSON_TYPE='1' THEN QUANTITY_ONDUTY END),2),0) as EmpNum,
-			IFNULL(round(avg(case when PERSON_TYPE='2' THEN QUANTITY_ONDUTY END),2),0)+
-	 		IFNULL(round(avg(case	when PERSON_TYPE='3' THEN QUANTITY_ONDUTY END),2),0)+
-	        IFNULL(round(avg(case	when PERSON_TYPE='4' THEN QUANTITY_ONDUTY END),2),0) as NotEmpNum,
+			IFNULL(round(avg(case when PERSON_TYPE='2' THEN QUANTITY_ONDUTY END),2),0)*0.8+
+	 		IFNULL(round(avg(case	when PERSON_TYPE='3' THEN QUANTITY_ONDUTY END),2),0)*0.5+
+	        IFNULL(round(avg(case	when PERSON_TYPE='4' THEN QUANTITY_ONDUTY END),2),0)*0.8 as NotEmpNum,
 	        IFNULL(round(avg(case when PERSON_TYPE='5' THEN QUANTITY_ONDUTY END),2),0) as otherNumEmp
 	        from JD_LE_LABOUR_ONDUTY 
 	        WHERE BIZ_DATE=#{currentDate} 
@@ -91,9 +91,9 @@
 		select 
 		concat(concat((date_format(door.OPEN_TIME,'%m')),'月'),concat((date_format(door.OPEN_TIME,'%d')),'日')) as name,
 		sum(case when person.WORK_TYPE='1' THEN 1 ELSE 0 END) as EmpNum,
-		sum(case when person.WORK_TYPE='2' THEN 1
-		 		 when person.WORK_TYPE='3' THEN 1
-		         when person.WORK_TYPE='4' THEN 1 ELSE 0 END) as NotEmpNum 
+		sum(case when person.WORK_TYPE='2' THEN 0.8
+		 		 when person.WORK_TYPE='3' THEN 0.5
+		         when person.WORK_TYPE='4' THEN 0.8 ELSE 0 END) as NotEmpNum 
 		from np_dt_door_inout door 
 		LEFT JOIN np_cd_card card on door.CARD_ID = card.ID 
 		LEFT JOIN np_sys_person person on person.ID = card.PERSON_ID
