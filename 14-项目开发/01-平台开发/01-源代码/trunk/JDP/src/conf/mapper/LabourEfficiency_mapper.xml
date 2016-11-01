@@ -73,6 +73,16 @@
 	
 	<select id="getHistoryEfficiencyForChart" resultType="java.util.HashMap">
 	<![CDATA[
+		SELECT concat(concat((date_format(ond.BIZ_DATE,'%m')),'月'),concat((date_format(ond.BIZ_DATE,'%d')),'日')) as name,sum(IFNULL(ond.PERIOD_EFFICIENCY,0)) as effect
+		FROM jd_le_labour_efficiency ond 
+		WHERE ond.BIZ_DATE>=#{startDate} AND ond.BIZ_DATE<#{endDate}
+		AND ond.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+		GROUP by ond.BIZ_DATE
+	]]>
+	</select>
+	
+	<select id="getHistoryEfficiencyClerkForChart" resultType="java.util.HashMap">
+	<![CDATA[
 		SELECT concat(concat((date_format(ond.BIZ_DATE,'%m')),'月'),concat((date_format(ond.BIZ_DATE,'%d')),'日')) as name,sum(IFNULL(ond.AVG_QUANTITY,0)) as clerkNum
 		FROM JD_LE_LABOUR_ONDUTY_DAY_ST ond 
 		WHERE ond.BIZ_DATE>=#{startDate} AND ond.BIZ_DATE<#{endDate} AND ond.PERSON_TYPE != 5
