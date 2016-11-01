@@ -74,7 +74,7 @@
 	]]>
   </select>
   
-  <select id="getHistoryLabourOndutyForChart" resultType="java.util.HashMap">
+<!--   <select id="getHistoryLabourOndutyForChart" resultType="java.util.HashMap">
 	<![CDATA[	
 		SELECT concat(concat((date_format(LO.BIZ_DATE,'%m')),'月'),concat((date_format(LO.BIZ_DATE,'%d')),'日')) as name,sum(case when LO.PERSON_TYPE='1' THEN LO.AVG_QUANTITY ELSE 0 END) as EmpNum,sum(case when LO.PERSON_TYPE='2' THEN LO.AVG_QUANTITY
  				 when LO.PERSON_TYPE='3' THEN LO.AVG_QUANTITY
@@ -84,6 +84,21 @@
 			AND LO.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
 		 GROUP BY LO.BIZ_DATE
 	]]>
-  </select>
+  </select> -->
   
+    <select id="getHistoryLabourOndutyForChart" resultType="java.util.HashMap">
+	<![CDATA[	
+		select 
+		concat(concat((date_format(door.OPEN_TIME,'%m')),'月'),concat((date_format(door.OPEN_TIME,'%d')),'日')) as name,
+		sum(case when person.WORK_TYPE='1' THEN 1 ELSE 0 END) as EmpNum,
+		sum(case when person.WORK_TYPE='2' THEN 1
+		 		 when person.WORK_TYPE='3' THEN 1
+		         when person.WORK_TYPE='4' THEN 1 ELSE 0 END) as NotEmpNum 
+		from np_dt_door_inout door 
+		LEFT JOIN np_cd_card card on door.CARD_ID = card.ID 
+		LEFT JOIN np_sys_person person on person.ID = card.PERSON_ID
+		where door.OPEN_TIME >=#{startDate} AND door.OPEN_TIME<#{endDate} AND door.CONTROLUNITID in (select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+		GROUP BY door.OPEN_TIME,door.CARD_ID,person.WORK_TYPE;
+	]]>
+  </select>
 </mapper>
