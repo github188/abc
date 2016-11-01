@@ -170,42 +170,42 @@ body{
 				  <input class="col-md-1 btn btn-success" type="button" value="导出" ng-click="daochu()"></input>
 		      </div>
 		      <div class="center" style="padding-right:1rem;margin-top:1%;border:1px solid white;border-radius:5px;background-color:black;opacity:1;color:white;font-family: '造字工房悦圆常规体'">
-		    	<div class="row">
-		    		<div style="padding-top:1rem" class="col-md-2">
-				    	<div style="padding-top:0.5rem" class="col-md-4">区域</div>
-				    	<div class="col-md-6"><input style="color:black;font-family: '微软雅黑'" type="text" ng-model="input11"/></div>
-				    </div>
-				    <div style="padding-top:1rem" class="col-md-offset-1 col-md-3">
-				   		<div style="padding-top:0.5rem" class="col-md-4">分拣场地</div>
-				   		 <div class="col-md-6"><input style="color:black;font-family: '微软雅黑'" type="text"  ng-model="input22"/></div>
-		    		</div>
-		    		<div class="col-md-3">
-			  			<div style="padding-top:1.5rem" class="col-md-4">开始时间</div>
+			    	<div class="row">
+			    		<div style="padding-top:1rem" class="col-md-3">
+					    	<div style="padding-top:0.5rem" class="col-md-4">区域</div>
+					    	<div class="col-md-6"><input style="color:black;font-family: '微软雅黑'" type="text" ng-model="input11"/></div>
+					    </div>
+					    <div style="padding-top:1rem" class="col-md-3">
+					   		<div style="padding-top:0.5rem" class="col-md-4">分拣场地</div>
+					   		 <div class="col-md-6"><input style="color:black;font-family: '微软雅黑'" type="text"  ng-model="input22"/></div>
+			    		</div>
+			    		<div class="col-md-3">
+				  			<div style="padding-top:1.5rem" class="col-md-4">开始时间</div>
 <!-- 			    			<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd HH 时" ng-model="dt" is-open="opened" close-text="关闭"/> -->
 <!-- 		             		<button type="button" class="btn btn-default" ng-click="openCalendar($event)"><i class="glyphicon glyphicon-calendar"></i></button> -->
-			            <div  style="padding-top:1rem" class="form-group col-md-8">
-			                <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh 时" data-link-field="dtp_input1">
-			                    <input style="color:black;font-family: '微软雅黑'" type="text" ng-model="dt" readonly/>
-			<!--                     <input class="form-control" size="16" type="text" value="" readonly> -->
-								<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-			                </div>
-			            </div>
-		
-			    	</div>
-			    	<div class="col-md-3">
-			    		<div style="padding-top:1.5rem" class="col-md-4">结束时间</div>
+				            <div  style="padding-top:1rem" class="form-group">
+				                <div class="input-group date form_datetime col-md-5" data-date="" data-date-format="yyyy-mm-dd hh 时" data-link-field="dtp_input1">
+				                    <input style="color:black;font-family: '微软雅黑'" type="text" ng-model="dt" readonly/>
+				<!--                     <input class="form-control" size="16" type="text" value="" readonly> -->
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				                </div>
+				            </div>
+			
+				    	</div>
+				    	<div class="col-md-3">
+				    		<div style="padding-top:1.5rem" class="col-md-4">结束时间</div>
 <!-- 				    		<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd HH 时" ng-model="dt1" is-open="opened1" close-text="关闭"/> -->
 <!-- 		             		<button type="button" class="btn btn-default" ng-click="openCalendar1($event)"><i class="glyphicon glyphicon-calendar"></i></button> -->
-		             	 <div style="padding-top:1rem" class="form-group col-md-8">
-			                <div class="input-group date form_datetime" data-date="" data-date-format="yyyy-mm-dd hh 时" data-link-field="dtp_input1">
-			                    <input style="color:black;font-family: '微软雅黑'" type="text" ng-model="dt1" readonly/>
-			<!--                     <input class="form-control" size="16" type="text" value="" readonly> -->
-								<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-			                </div>
-			            </div>
-		            
-	             	</div>
-		   		</div>
+			             	 <div style="padding-top:1rem" class="form-group">
+				                <div class="input-group date form_datetime col-md-5" data-date="" data-date-format="yyyy-mm-dd hh 时" data-link-field="dtp_input1">
+				                    <input style="color:black;font-family: '微软雅黑'" type="text" ng-model="dt1" readonly/>
+				<!--                     <input class="form-control" size="16" type="text" value="" readonly> -->
+									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+				                </div>
+				            </div>
+			            
+		             	</div>
+			   		</div>
 		      </div>
 		    <div class="table-responsive" style="margin-top:30px;">
 		      <table class="table table-bordered">
@@ -248,7 +248,7 @@ body{
 		    </ul>
 		  </div>
 		</div>
-		<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog" style="background-color:#00FF00;">
 		      <div class="modal-content">
 		         <div class="modal-header">
@@ -295,11 +295,11 @@ body{
 		            <a class="btn btn-primary" data-dismiss="modal" ng-click="save()">查询</a>
 		            <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="quit()">退出</button>
 		         </div>
-		      </div>/.modal-content
-		   </div>/.modal
-		</div> -->
+		      </div><!-- /.modal-content -->
+		   </div><!-- /.modal -->
+		</div>
 	</div>
-	<!-- <div id="ycreports" class="container" ng-controller="ycreportsctrl">
+	<div id="ycreports" class="container" ng-controller="ycreportsctrl">
 		<div class="row">
 		  <div class="col-md-12" style="height: 88%;margin-top: 0;position: relative;width:100%;padding:0;">
 		      <div class="row">
@@ -347,7 +347,7 @@ body{
 		    </ul>
 		  </div>
 		</div>
-	</div> -->
+	</div>
 	
 	<footer class="center"><a  style="font-size:2rem;color:#46d7ff;font-family:'造字工房悦圆常规体';bottom:1%;position:absolute;" href="main.html">返回首页</a></footer>
 <script type="text/javascript">
