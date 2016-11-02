@@ -65,7 +65,7 @@ public class BizServiceImpl implements IBizService {
 		ControlUnit cu = userDao.findOrganization(cuId);
 		state.setCuName(cu.getCuName());
 		List<LabourOnduty> list;
-		//取时间跨度，当前时间到前10分钟这一时段
+		//取时间跨度，当前时间到前30分钟这一时段
 		String[] timeSpan=getTimeSpan(null);
 		//beginTime--;
 		list = labourOndutyDao.getCurrentTimeLabourOnduty(sFormat.format(date),
@@ -162,7 +162,7 @@ public class BizServiceImpl implements IBizService {
 		}
 		String[] times=new String[]{};
 		times[1]=df.format(currentTime.getTime());
-		currentTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE)-10);
+		currentTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE)-30);
 		times[0]=df.format(currentTime.getTime());
 		
 		return times;
