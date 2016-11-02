@@ -70,18 +70,22 @@ public class BizServiceImpl implements IBizService {
 		//beginTime--;
 		list = labourOndutyDao.getCurrentTimeLabourOnduty(sFormat.format(date),
 				timeSpan[0],timeSpan[1],cu.getFullPath());
+		Integer qty=0;
+		logger.debug("符合记录数--->"+list.size());
 		for (LabourOnduty rec : list) {
+			qty=rec.getQuantityOnduty()==null?0:rec.getQuantityOnduty();
+			logger.debug("记录信息：\n"+rec);
 			if (rec.getPersonType().equals("1") ) {
 				state.setNumEmp((state.getNumEmp() == null ? 0 : state
-						.getNumEmp()) + rec.getQuantityOnduty());
+						.getNumEmp()) + qty);
 			} else if (rec.getPersonType().equals("2")
 					|| rec.getPersonType().equals("3")
 					|| rec.getPersonType().equals("4")) {
 				state.setNumTemp((state.getNumTemp() == null ? 0 : state
-						.getNumTemp()) + rec.getQuantityOnduty());
+						.getNumTemp()) + qty);
 			} else if (rec.getPersonType().equals("5")) {
 				state.setNumOther((state.getNumOther() == null ? 0 : state
-						.getNumOther()) +rec.getQuantityOnduty());
+						.getNumOther()) +qty);
 			}
 		}
 
@@ -160,7 +164,7 @@ public class BizServiceImpl implements IBizService {
 		if(timePeriod!=null){
 			currentTime.set(Calendar.HOUR, timePeriod);
 		}
-		String[] times=new String[]{};
+		String[] times=new String[]{"",""};
 		times[1]=df.format(currentTime.getTime());
 		currentTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE)-30);
 		times[0]=df.format(currentTime.getTime());
