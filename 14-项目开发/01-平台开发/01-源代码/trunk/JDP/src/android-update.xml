@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<versions latestVersion="1">
+<versions latestVersion="2">
+	<version id="2">
+		<updateContent>
+		<![CDATA[
+			版本更新测试
+		]]>
+		</updateContent>
+		<updateUrl>
+		<![CDATA[
+			https://www.pgyer.com/Ntwa
+		]]>
+		</updateUrl>
+	</version>
 	<version id="1">
 		<updateContent>
 		<![CDATA[
