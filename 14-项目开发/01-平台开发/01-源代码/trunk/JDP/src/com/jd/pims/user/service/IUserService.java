@@ -1,5 +1,6 @@
 package com.jd.pims.user.service;
 
+import java.io.InputStream;
 import java.util.List;
 
 import com.jd.pims.comm.PIMSException;
@@ -53,4 +54,6 @@ public interface IUserService {
 	 * @return
 	 */
 	public List<Employee> searchEmployee(String inputStr);
+	
+	public String createAccount(InputStream inputStream);
 }

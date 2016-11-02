@@ -78,5 +78,5 @@
 			AND cu. NAME LIKE CONCAT('%', #{pimsname}, '%')
 	]]>
 	</select>
-
+  	
 </mapper>

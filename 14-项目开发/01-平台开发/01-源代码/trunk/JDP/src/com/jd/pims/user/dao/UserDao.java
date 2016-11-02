@@ -8,7 +8,9 @@ import org.apache.ibatis.annotations.Param;
 import com.jd.pims.comm.IBaseDao;
 import com.jd.pims.user.model.ControlUnit;
 import com.jd.pims.user.model.Employee;
+import com.jd.pims.user.model.Person;
 import com.jd.pims.user.model.User;
+import com.jd.pims.user.model.UserRole;
 
 public interface UserDao extends IBaseDao{
 	
@@ -64,4 +66,12 @@ public interface UserDao extends IBaseDao{
 	Integer getSubOrganizationSize(@Param("parentId")String parentId);
 	
 	List<Map<String, Object>> getCurrentTimeAreaForChart(@Param("name")String name);
+	
+	List<Map<String, Object>> queryControlunit();
+	
+	void createUser(List<User> users);
+	
+	void createUserRoles(List<UserRole> userroles);
+	
+	void createpersons(List<Person> persons);
 }

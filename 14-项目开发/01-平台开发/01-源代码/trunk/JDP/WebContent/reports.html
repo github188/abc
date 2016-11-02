@@ -12,6 +12,7 @@
 	<script type="text/javascript" src="js/common/angular-cookies.js"></script>
     <script type="text/javascript" src="js/common/angular-ui-bootstrap.js"></script>
     <script type="text/javascript" src="js/common/ng-file-upload.min.js"></script>
+    <script type="text/javascript" src="js/common/ngDialog.min.js"></script>
     <script type="text/javascript" src="js/common/ui-bootstrap-tpls-0.11.0.js"></script>
     <script type="text/javascript" src="js/common/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/common/bootstrap-datetimepicker.min.js"></script>
@@ -24,6 +25,9 @@
 	<script type="text/javascript" src="js/starAndClock.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/fileinput.min.css">
+	<link rel="stylesheet" type="text/css" href="css/ngDialog.min.css">
+  	<link rel="stylesheet" type="text/css" href="css/ngDialog-theme-default.min.css">
+  	<link rel="stylesheet" type="text/css" href="css/ngDialog-theme-plain.min.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css">
   	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elrements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -168,6 +172,10 @@ body{
 		<div class="row">
 		  <div class="col-md-12" style="height: 88%;margin-top: 0;position: relative;width:100%;padding:0;">
 		      <div class="row">
+		      	<!-- <input id="lefile" type="file" ng-show="false" ngf-select ng-model="excelFile" accept="application/vnd.ms-excel">
+		        <span onclick="lefile.click();"><a class="btn btn-primary">导入</a></span>{{excelFile.name}}
+		        <span ng-click="uploadExcel(excelFile)"><a class="btn btn-primary">上传</a></span> -->
+		        
 				  <input class="col-md-1 col-md-offset-10 btn btn-info" type="button" value="查询" ng-click="save11()"></input>
 				  <input class="col-md-1 btn btn-success" type="button" value="导出" ng-click="daochu()"></input>
 		      </div>

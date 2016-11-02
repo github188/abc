@@ -1,12 +1,16 @@
 package com.jd.pims.user.controller;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.jd.pims.comm.BaseController;
 import com.jd.pims.comm.PIMSException;
@@ -63,5 +67,12 @@ public class UserController extends BaseController {
 				.buildFailResponse(SUCESS_RETURN_COCE, SUCESS_RETURN_MESSAGE)
 				.toString();
 
+	}
+	
+	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
+	public String fileUpload(@RequestParam("file") CommonsMultipartFile file) throws IOException {
+
+		return userService.createAccount(file.getInputStream());
+		
 	}
 }

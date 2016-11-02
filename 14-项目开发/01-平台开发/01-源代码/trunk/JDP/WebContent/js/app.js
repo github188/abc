@@ -74,8 +74,8 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 	}
 }]);
 
-var reports = angular.module('reports', ['ngCookies','ui.bootstrap']);
-reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($scope,$http,$cookieStore){
+var reports = angular.module('reports', ['ngCookies','ui.bootstrap','ngFileUpload']);
+reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', function($scope,$http,$cookieStore,Upload){
 	end = new Date();
 	$scope.ee="2016-01-11T05:25:07Z";
 	$scope.dt=new Date(end.valueOf() - 7*24*60*60*1000).getFullYear()+"-"+(new Date(end.valueOf() - 7*24*60*60*1000).getMonth()+1)+"-"+new Date(end.valueOf() - 7*24*60*60*1000).getDate()+" "+new Date(end.valueOf() - 7*24*60*60*1000).getHours()+" 时";
@@ -392,6 +392,28 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 		$cookieStore.put('showornot', 'false');
 		window.location.href = "login.html";
 	}
+	$scope.uploadExcel=function(file){
+		console.log(file);
+		Upload.upload({
+            //服务端接收
+            url: 'user/fileUpload.do?',
+            //上传的同时带的参数
+            data: {},
+            //上传的文件
+            file: file
+        }).progress(function (evt) {
+            //进度条
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progess:' + progressPercentage + '%' + evt.config.file.name);
+        }).success(function (data, status, headers, config) {
+            //上传成功
+            console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+           // $scope.uploadImg = data;
+        }).error(function (data, status, headers, config) {
+            //上传失败
+            console.log('error status: ' + status);
+        });
+	};
 }]);
 
 reports.controller('ycreportsctrl', ['$scope','$http', function($scope,$http){

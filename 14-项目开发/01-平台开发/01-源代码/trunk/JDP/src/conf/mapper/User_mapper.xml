@@ -11,6 +11,42 @@
     <result column="controlunitid" property="controlunitid"  />
   </resultMap>
   
+  <resultMap id="userrole" type="com.jd.pims.user.model.UserRole" >
+    <result column="user_id" property="userId"  />
+    <result column="role_id" property="roleId"  />
+  </resultMap>
+
+  <resultMap id="person" type="com.jd.pims.user.model.Person" >
+    <id column="id" property="id"  />
+    <result column="person_code" property="person_code"  />
+    <result column="person_name" property="person_name"  />
+    <result column="org_id" property="org_id"  />
+    <result column="is_clerk" property="is_clerk"  />
+    <result column="sex" property="sex"  />
+    <result column="age" property="age"  />
+    <result column="native_place" property="native_place"  />
+    <result column="telephone" property="telephone"  />
+    <result column="address" property="address"  />
+    <result column="email" property="email"  />
+    <result column="card_type" property="card_type"  />
+    <result column="card_no" property="card_no"  />
+    <result column="photo" property="photo"  />
+    <result column="status" property="status"  />
+    <result column="controlunitid" property="controlunitid"  />
+    <result column="post" property="post"  />
+    <result column="office_tel" property="office_tel"  />
+    <result column="dimission_date" property="dimission_date"  />
+    <result column="join_date" property="join_date"  />
+    <result column="is_edit" property="is_edit"  />
+    <result column="person_type" property="person_type"  />
+    <result column="is_operator" property="is_operator"  />
+    <result column="visiter_key" property="visiter_key"  />
+    <result column="sub_person_id" property="sub_person_id"  />
+    <result column="pass_auth" property="pass_auth"  />
+    <result column="invalid_date" property="invalid_date"  />
+    <result column="work_type" property="work_type"  />
+  </resultMap>
+  
   <!-- 员工信息，包括组织架构 -->
   <resultMap id="employee" type="com.jd.pims.user.model.Employee" >
     <id column="id" property="id" />
@@ -210,4 +246,45 @@
 	  	and AREA.FULL_PATH like CONCAT((select FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' )
 	]]>
   </select>
+  
+	<select id="queryControlunit" resultType="java.util.HashMap">
+	<![CDATA[
+		SELECT
+			c.id AS CU_ID,
+			c. NAME AS NAME,
+			o.id AS ORG_ID
+		FROM
+			np_sys_controlunit c
+		LEFT JOIN np_sys_organize o ON o.CONTROLUNITID = c.ID
+	]]>
+	</select>
+
+	<insert id="createUser" parameterType="java.util.List">
+	   INSERT INTO np_au_user (ID, USER_NAME, PASSWORD, PERSON_ID, USER_TYPE, STATUS, CONTROLUNITID) 
+	   	VALUES 
+	   	 <foreach collection="list" item="item" index="index" separator="," >  
+       		 (#{item.id},#{item.userName},#{item.password},#{item.personId},#{item.userType},#{item.status},#{item.controlunitid})  
+    	</foreach>  
+  	</insert>
+  	
+	<insert id="createUserRoles" parameterType="java.util.List">
+	   INSERT INTO np_au_user_r_role (USER_ID, ROLE_ID)
+	    VALUES 
+	   	 <foreach collection="list" item="item" index="index" separator="," >  
+       		 (#{item.userId},#{item.roleId})  
+    	</foreach>  
+  	</insert>
+  	
+	<insert id="createpersons" parameterType="java.util.List">
+	  INSERT INTO np_sys_person (ID, PERSON_CODE, PERSON_NAME, ORG_ID, IS_CLERK, SEX, AGE, NATIVE_PLACE, TELEPHONE, ADDRESS, EMAIL, CARD_TYPE,
+	   CARD_NO, PHOTO, STATUS, CONTROLUNITID, POST, OFFICE_TEL, DIMISSION_DATE, JOIN_DATE, IS_EDIT, PERSON_TYPE, IS_OPERATOR, VISITER_KEY,
+	    SUB_PERSON_ID, PASS_AUTH, INVALID_DATE, WORK_TYPE) VALUES 
+	   	 <foreach collection="list" item="item" index="index" separator="," >  
+       		 (#{item.id},#{item.person_code},#{item.person_name},#{item.org_id},#{item.is_clerk},#{item.sex},#{item.age},#{item.native_place},
+       		 #{item.telephone},#{item.address}, #{item.email},#{item.card_type},#{item.card_no},#{item.photo},#{item.status},#{item.controlunitid},
+       		 #{item.post},#{item.office_tel},#{item.dimission_date},#{item.join_date},#{item.is_edit},#{item.person_type},#{item.is_operator},
+       		 #{item.visiter_key},#{item.sub_person_id},#{item.pass_auth},#{item.invalid_date},#{item.work_type})  
+    	</foreach>  
+  	</insert>
+  
 </mapper>

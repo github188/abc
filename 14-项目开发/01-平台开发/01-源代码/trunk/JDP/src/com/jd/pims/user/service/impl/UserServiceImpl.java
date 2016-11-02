@@ -1,8 +1,14 @@
 package com.jd.pims.user.service.impl;
 
+import java.io.InputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +20,14 @@ import com.jd.pims.comm.PIMSException;
 import com.jd.pims.user.dao.UserDao;
 import com.jd.pims.user.model.ControlUnit;
 import com.jd.pims.user.model.Employee;
+import com.jd.pims.user.model.Person;
 import com.jd.pims.user.model.User;
+import com.jd.pims.user.model.UserRole;
 import com.jd.pims.user.service.IUserService;
 import com.jd.pims.util.StringUtil;
+
+import jxl.Sheet;
+import jxl.Workbook;
 
 @Service("userService")
 public class UserServiceImpl implements IUserService {
@@ -89,6 +100,90 @@ public class UserServiceImpl implements IUserService {
 	public ControlUnit findRootOrganization() {
 		// TODO Auto-generated method stub
 		return userDao.findRootOrganization();
+	}
+	
+	@Override
+	public String createAccount(InputStream inputStream) {
+		
+		List<Map<String, Object>> controlunits = userDao.queryControlunit();
+		Map<String, String > map1 = new HashMap<>();
+		for (Map<String, Object> map : controlunits) {
+			map1.put(map.get("NAME")+"", map.get("CU_ID")+","+ map.get("ORG_ID"));
+		}
+		
+		Workbook book;
+		try {
+			book = Workbook.getWorkbook(inputStream);
+			// 获得第一个工作表对象
+			Sheet sheet = book.getSheet(0);
+			// 得到第一列第一行的单元格
+			int row = sheet.getRows();
+			int col = sheet.getColumns();
+			List<User> users = new ArrayList<>();
+			List<UserRole> userroles = new ArrayList<>();
+			List<Person> persons = new ArrayList<>();
+			for(int i =1;i<row ; i++){
+				String controlunit =sheet.getCell(0, i).getContents();
+				String name =sheet.getCell(1, i).getContents();
+				String sex =sheet.getCell(2, i).getContents();
+				String tel =sheet.getCell(3, i).getContents();
+				String email =sheet.getCell(4, i).getContents();
+				String worktype =sheet.getCell(5, i).getContents();
+				
+				User u = userDao.getUserByAccount(name);
+				if(u==null){
+					User user = new User();
+					String userId = UUID.randomUUID().toString().replace("-", "");
+					String personId = UUID.randomUUID().toString().replace("-", "");
+					user.setId(userId);
+					user.setUserName(name);
+					user.setPassword("e10adc3949ba59abbe56e057f20f883e");
+					user.setPersonId(personId);
+					user.setUserType("SYSUSER");
+					user.setStatus("NORMAL");
+					user.setControlunitid(map1.get(controlunit).split(",")[0]);
+					users.add(user);
+					
+					UserRole userRole = new UserRole();
+					userRole.setUserId(userId);
+					userRole.setRoleId("11111111111111111111111111111111");
+					userroles.add(userRole);
+					
+					Person person = new Person();
+					person.setId(personId);
+					person.setPerson_code(UUID.randomUUID().toString().replace("-", "").substring(0, 8));
+					person.setPerson_name(name);
+					person.setOrg_id(map1.get(controlunit).split(",")[1]);
+					person.setIs_clerk(1);
+					person.setSex((sex==null)?"UNKNOW":"男".equals(sex)?"MALE":"FEMALE");
+					person.setTelephone(tel);
+					person.setEmail(email);
+					person.setCard_type("GENERIDENT");
+					person.setStatus("NORMAL");
+					person.setControlunitid(map1.get(controlunit).split(",")[0]);
+					person.setIs_edit(1);
+					person.setWork_type(worktype);
+					
+					persons.add(person);
+				}
+			}
+			if(users!=null&&users.size()!=0){
+				userDao.createUser(users);
+			}
+			if(userroles!=null&&userroles.size()!=0){
+				userDao.createUserRoles(userroles);
+			}
+			if(persons!=null&&persons.size()!=0){
+				userDao.createpersons(persons);
+			}
+			
+			book.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "fail";
+		} 
+		
+		return "success";
 	}
 
 }
