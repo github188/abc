@@ -53,8 +53,8 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 //		$cookieStore.put('showornot', 'true');
 		console.log($scope.usr+':'+$scope.pwd);
 		var url = "user/login.do?";
-		$cookieStore.put('showornot', 'true');
-		location.href = "main.html";
+//		$cookieStore.put('showornot', 'true');
+//		location.href = "main.html";
 		$http.post(url+"account="+$scope.usr+"&password="+$scope.pwd+"").success(function(response) {
 			console.log(response);
 			console.log(angular.fromJson(angular.fromJson(response)).returnCode);
@@ -202,21 +202,25 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore', function($
 	$scope.inputssss.push("结束时间,"+$scope.dt1);
 	$scope.inputssss.push("分拣场地, ");
 	var url = "export/queryyydata.do?";
-	$http.post(url+"inputs="+$scope.inputssss+"&pages="+$scope.currentpage).success(function(response) {
-		console.log(angular.fromJson(angular.fromJson(response)));
-		$scope.projectList=angular.fromJson(angular.fromJson(response));
-		if(angular.fromJson(angular.fromJson(response)).length==0){
-			$scope.allpages=3;
-			$scope.counts=0;
-		}else{
-			$scope.counts=angular.fromJson(angular.fromJson(response))[0].counts;
-			if(angular.fromJson(angular.fromJson(response))[0].allpages<3){
+	$scope.flag=true;
+	if($scope.flag){
+		$http.post(url+"inputs="+$scope.inputssss+"&pages="+$scope.currentpage).success(function(response) {
+			console.log(angular.fromJson(angular.fromJson(response)));
+			$scope.projectList=angular.fromJson(angular.fromJson(response));
+			if(angular.fromJson(angular.fromJson(response)).length==0){
 				$scope.allpages=3;
+				$scope.counts=0;
 			}else{
-				$scope.allpages=angular.fromJson(angular.fromJson(response))[0].allpages;
+				$scope.counts=angular.fromJson(angular.fromJson(response))[0].counts;
+				if(angular.fromJson(angular.fromJson(response))[0].allpages<3){
+					$scope.allpages=3;
+				}else{
+					$scope.allpages=angular.fromJson(angular.fromJson(response))[0].allpages;
+				}
 			}
-		}
-	});
+			$scope.flag=false;
+		});
+	}
 	$scope.inputadd= function (){
 		if($scope.contents.length!=0){
 			$scope.input1='';

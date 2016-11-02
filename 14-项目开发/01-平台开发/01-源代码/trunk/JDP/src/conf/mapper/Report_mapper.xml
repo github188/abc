@@ -4,18 +4,28 @@
 
 	<select id="queryYydata" resultType="java.util.HashMap">
 	<![CDATA[
-		select
-		c.id as CU_ID,
-		c.PARENT_NAME AS PARENT_NAME,
-		c.NAME AS NAME,
-		sum(q.ORDER_QUANTITY) AS ORDER_QUANTITY,
-		AVG(o.QUANTITY_ONDUTY) AS QUANTITY_ONDUTY,
-		o.QUANTITY_ONDUTY  AS QUANTITY_ONDUTY
-		from NP_SYS_CONTROLUNIT c
-		left join JD_LE_LABOUR_ONDUTY o on c.id=o.CU_ID
-		left join JD_LE_ORDER_QUANTITY q on q.CU_ID=c.id
-		where c.PARENT_NAME like CONCAT('%',#{area},'%') and concat(DATE_FORMAT(o.BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(o.TIMING,'%H')) >= #{starttime} and concat(DATE_FORMAT(o.BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(o.TIMING,'%H')) < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
-		group by c.id
+		select CU.id as CU_ID,CU.NAME,CU.PARENT_NAME,dt.QUANTITY_ONDUTY,od.ORDER_QUANTITY from np_sys_controlunit cu 
+			LEFT JOIN
+			(select c.ID, AVG(d.QUANTITY_ONDUTY) AS QUANTITY_ONDUTY from jd_le_labour_onduty d
+			inner join np_sys_controlunit c on c.id=d.CU_ID
+			where  concat(
+				DATE_FORMAT(d.BIZ_DATE, '%Y-%m-%d'),
+				'-',
+				DATE_FORMAT(d.TIMING, '%H')
+			) >= #{starttime}
+			AND concat(
+				DATE_FORMAT(d.BIZ_DATE, '%Y-%m-%d'),
+				'-',
+				DATE_FORMAT(d.TIMING, '%H')
+			) < #{endtime}
+			group by c.id) dt
+			on dt.id=CU.id
+			LEFT JOIN (select c.id,sum(q.ORDER_QUANTITY) AS ORDER_QUANTITY from jd_le_order_quantity q
+			inner join np_sys_controlunit c on c.id=q.CU_ID
+			group by c.id)od
+			on od.id=cu.id
+			where cu.PARENT_NAME LIKE CONCAT('%', #{area}, '%')
+			AND cu. NAME LIKE CONCAT('%', #{pimsname}, '%')
 		LIMIT #{startpages},#{pageSize}
 	]]>
 	</select>
@@ -36,26 +46,36 @@
 	<![CDATA[
 		select
 		count(DISTINCT o.cu_id)
-		from NP_SYS_CONTROLUNIT c 
-		left join JD_LE_LABOUR_ONDUTY o on c.id=o.CU_ID
+		from JD_LE_LABOUR_ONDUTY o
+		left join NP_SYS_CONTROLUNIT c on c.id=o.CU_ID
 		where c.PARENT_NAME like CONCAT('%',#{area},'%') and concat(DATE_FORMAT(o.BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(o.TIMING,'%H')) >= #{starttime} and concat(DATE_FORMAT(o.BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(o.TIMING,'%H')) < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
 	]]>
 	</select>
 	
 	<select id="queryAllYydata" resultType="java.util.HashMap">
 	<![CDATA[
-		select
-		c.id as CU_ID,
-		c.PARENT_NAME AS PARENT_NAME,
-		c.NAME AS NAME,
-		sum(q.ORDER_QUANTITY) AS ORDER_QUANTITY,
-		AVG(o.QUANTITY_ONDUTY) AS QUANTITY_ONDUTY,
-		o.QUANTITY_ONDUTY  AS QUANTITY_ONDUTY
-		from NP_SYS_CONTROLUNIT c
-		left join JD_LE_LABOUR_ONDUTY o on c.id=o.CU_ID
-		left join JD_LE_ORDER_QUANTITY q on q.CU_ID=c.id
-		where c.PARENT_NAME like CONCAT('%',#{area},'%') and concat(DATE_FORMAT(o.BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(o.TIMING,'%H')) >= #{starttime} and concat(DATE_FORMAT(o.BIZ_DATE,'%Y-%m-%d'),'-',DATE_FORMAT(o.TIMING,'%H')) < #{endtime} and c.NAME like CONCAT('%',#{pimsname},'%')
-		group by c.id
+		select CU.id as CU_ID,CU.NAME,CU.PARENT_NAME,dt.QUANTITY_ONDUTY,od.ORDER_QUANTITY from np_sys_controlunit cu 
+			LEFT JOIN
+			(select c.ID, AVG(d.QUANTITY_ONDUTY) AS QUANTITY_ONDUTY from jd_le_labour_onduty d
+			inner join np_sys_controlunit c on c.id=d.CU_ID
+			where  concat(
+				DATE_FORMAT(d.BIZ_DATE, '%Y-%m-%d'),
+				'-',
+				DATE_FORMAT(d.TIMING, '%H')
+			) >= #{starttime}
+			AND concat(
+				DATE_FORMAT(d.BIZ_DATE, '%Y-%m-%d'),
+				'-',
+				DATE_FORMAT(d.TIMING, '%H')
+			) < #{endtime}
+			group by c.id) dt
+			on dt.id=CU.id
+			LEFT JOIN (select c.id,sum(q.ORDER_QUANTITY) AS ORDER_QUANTITY from jd_le_order_quantity q
+			inner join np_sys_controlunit c on c.id=q.CU_ID
+			group by c.id)od
+			on od.id=cu.id
+			where cu.PARENT_NAME LIKE CONCAT('%', #{area}, '%')
+			AND cu. NAME LIKE CONCAT('%', #{pimsname}, '%')
 	]]>
 	</select>
 

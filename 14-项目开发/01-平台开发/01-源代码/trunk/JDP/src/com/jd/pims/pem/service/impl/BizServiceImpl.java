@@ -171,7 +171,7 @@ public class BizServiceImpl implements IBizService {
 	@Override
 	public List<Map<String, Object>> queryYydata(String[] inputs,int startpages,int pageSize) {
 		for (int i = 0; i < inputs.length; i++) {
-			if("undefined".equals(inputs[i])){
+			if("undefined".equals(inputs[i].trim())){
 				inputs[i]="";
 			}
 		}
@@ -179,10 +179,10 @@ public class BizServiceImpl implements IBizService {
 		StringBuffer sBuffer1 = new StringBuffer();
 		String[] inputss = new String[]{"","","",""};
 		for (int i = 0; i < inputs.length; i++) {
-			if(inputs[i].equals("区域")){
+			if(inputs[i].trim().equals("区域")){
 				inputss[0]=inputs[i+1].trim();
 				i++;
-			}else if (inputs[i].equals("开始时间")) {
+			}else if (inputs[i].trim().equals("开始时间")) {
 				String[] sss = inputs[i+1].split("-");
 				for (int j = 0;j < sss.length; j++) {
 					if(sss[j].length()<2){
@@ -192,9 +192,9 @@ public class BizServiceImpl implements IBizService {
 				for (int j = 0; j < sss.length; j++) {
 					sBuffer.append(sss[j]+"-");
 				}
-				inputss[1]=sBuffer.substring(0, sBuffer.length()-1).trim();
+				inputss[1]=sBuffer.substring(0, sBuffer.length()-2).trim().replace(" ", "-");
 				i++;
-			}else if (inputs[i].equals("结束时间")) {
+			}else if (inputs[i].trim().equals("结束时间")) {
 				String[] sss = inputs[i+1].split("-");
 				for (int j = 0;j < sss.length; j++) {
 					if(sss[j].length()<2){
@@ -204,21 +204,21 @@ public class BizServiceImpl implements IBizService {
 				for (int j = 0; j < sss.length; j++) {
 					sBuffer1.append(sss[j]+"-");
 				}
-				inputss[2]=sBuffer1.substring(0, sBuffer1.length()-1).trim();
+				inputss[2]=sBuffer1.substring(0, sBuffer1.length()-2).trim().replace(" ", "-");
 				i++;
-			}else if (inputs[i].equals("分拣场地")) {
+			}else if (inputs[i].trim().equals("分拣场地")) {
 				inputss[3]=inputs[i+1].trim();
 				i++;
 			}
 		}
 		
-		List<Map<String, Object>> datas = reportDao.queryYydata(inputss[0],inputss[1].substring(0,inputss[1].length()-1).trim().replace(" ", "-").isEmpty()?"1970-01-01-00":inputss[1].substring(0,inputss[1].length()-1).trim().replace(" ", "-"),inputss[2].substring(0,inputss[2].length()-1).trim().replace(" ", "-").isEmpty()?"2050-01-01-00":inputss[2].substring(0,inputss[2].length()-1).trim().replace(" ", "-"),inputss[3],startpages*8,pageSize);
-		
+		List<Map<String, Object>> datas = reportDao.queryYydata(inputss[0],inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2],inputss[3],0,100);
+		String counts= Integer.toString(datas.size());
+		List<Map<String, Object>> responsedata = datas.subList(startpages*8,(startpages*8+pageSize>Integer.parseInt(counts))?Integer.parseInt(counts):startpages*8+pageSize);
 		List<Map<String, Object>> response = new ArrayList<>();
 		
 		int i =startpages*8+1;
-		String counts= reportDao.queryyyallpages(inputss[0],inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2],inputss[3]);
-		for (Map<String, Object> data : datas) {
+		for (Map<String, Object> data : responsedata) {
 			String PARENT_NAME = data.get("PARENT_NAME").toString();//区域
 			String NAME = data.get("NAME").toString();//分拣中心名称
 			String QUANTITY_ONDUTY = data.get("QUANTITY_ONDUTY")==null?"":data.get("QUANTITY_ONDUTY").toString();//在岗人数
@@ -269,7 +269,7 @@ public class BizServiceImpl implements IBizService {
 		try {
 			String[] conditions = inputs;
 			for (int i = 0; i < inputs.length; i++) {
-				if("undefined".equals(inputs[i])){
+				if("undefined".equals(inputs[i].trim())){
 					inputs[i]="";
 				}
 			}
@@ -277,10 +277,10 @@ public class BizServiceImpl implements IBizService {
 			StringBuffer sBuffer1 = new StringBuffer();
 			String[] inputss = new String[]{"","","",""};
 			for (int i = 0; i < inputs.length; i++) {
-				if(inputs[i].equals("区域")){
-					inputss[0]=inputs[i+1];
+				if(inputs[i].trim().equals("区域")){
+					inputss[0]=inputs[i+1].trim();
 					i++;
-				}else if (inputs[i].equals("开始时间")) {
+				}else if (inputs[i].trim().equals("开始时间")) {
 					String[] sss = inputs[i+1].split("-");
 					for (int j = 0;j < sss.length; j++) {
 						if(sss[j].length()<2){
@@ -290,9 +290,9 @@ public class BizServiceImpl implements IBizService {
 					for (int j = 0; j < sss.length; j++) {
 						sBuffer.append(sss[j]+"-");
 					}
-					inputss[1]=sBuffer.substring(0, sBuffer.length()-1);
+					inputss[1]=sBuffer.substring(0, sBuffer.length()-2).trim().replace(" ", "-");
 					i++;
-				}else if (inputs[i].equals("结束时间")) {
+				}else if (inputs[i].trim().equals("结束时间")) {
 					String[] sss = inputs[i+1].split("-");
 					for (int j = 0;j < sss.length; j++) {
 						if(sss[j].length()<2){
@@ -302,10 +302,10 @@ public class BizServiceImpl implements IBizService {
 					for (int j = 0; j < sss.length; j++) {
 						sBuffer1.append(sss[j]+"-");
 					}
-					inputss[2]=sBuffer1.substring(0, sBuffer1.length()-1);
+					inputss[2]=sBuffer1.substring(0, sBuffer1.length()-2).trim().replace(" ", "-");
 					i++;
-				}else if (inputs[i].equals("分拣场地")) {
-					inputss[3]=inputs[i+1];
+				}else if (inputs[i].trim().equals("分拣场地")) {
+					inputss[3]=inputs[i+1].trim();
 					i++;
 				}
 			}
@@ -319,7 +319,7 @@ public class BizServiceImpl implements IBizService {
 			for (Map<String, Object> data : datas) {
 				String PARENT_NAME = data.get("PARENT_NAME").toString();// 区域
 				String NAME = data.get("NAME").toString();// 分拣中心名称
-				String QUANTITY_ONDUTY = data.get("QUANTITY_ONDUTY").toString();// 在岗人数
+				String QUANTITY_ONDUTY = data.get("QUANTITY_ONDUTY")==null?"":data.get("QUANTITY_ONDUTY").toString();// 在岗人数
 				String ORDER_QUANTITY = data.get("ORDER_QUANTITY") == null ? "" : data.get("ORDER_QUANTITY").toString();// 订单总数
 				String CU_ID = data.get("CU_ID").toString();// 订单总数
 
