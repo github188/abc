@@ -33,4 +33,6 @@ public interface ReportDao extends IBaseDao {
 			@Param("starttime")String starttime,
 			@Param("endtime")String endtime,
 			@Param("pimsname")String pimsname);
+	
+	List<Map<String, Object>> queryondutybycontrolunit(@Param("starttime")String starttime,@Param("endtime")String endtime);
 }

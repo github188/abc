@@ -22,6 +22,16 @@
 			on dt.id=CU.id
 			LEFT JOIN (select c.id,sum(q.ORDER_QUANTITY) AS ORDER_QUANTITY from jd_le_order_quantity q
 			inner join np_sys_controlunit c on c.id=q.CU_ID
+			where  concat(
+				DATE_FORMAT(q.BIZ_DATE, '%Y-%m-%d'),
+				'-',
+				q.TIME_PERIOD
+			) >= #{starttime}
+			AND concat(
+				DATE_FORMAT(q.BIZ_DATE, '%Y-%m-%d'),
+				'-',
+				q.TIME_PERIOD
+			) < #{endtime}
 			group by c.id)od
 			on od.id=cu.id
 			where cu.PARENT_NAME LIKE CONCAT('%', #{area}, '%')
@@ -32,7 +42,7 @@
 	
 	<select id="queryavgefficiency" resultType="java.util.HashMap">
 	<![CDATA[
-		select AVG(e.AVG_EFFICIENCY) as AVG_EFFICIENCY from jd_le_labour_efficiency e where cu_id =#{cuid} and CONCAT(DATE_FORMAT(e.BIZ_DATE,'%Y-%m-%d'),'-',e.TIME_PERIOD)>= #{starttime} and CONCAT(DATE_FORMAT(e.BIZ_DATE,'%Y-%m-%d'),'-',e.TIME_PERIOD) < #{endtime}
+		select AVG(e.period_efficiency) as AVG_EFFICIENCY from jd_le_labour_efficiency e where cu_id =#{cuid} and CONCAT(DATE_FORMAT(e.BIZ_DATE,'%Y-%m-%d'),'-',e.TIME_PERIOD)>= #{starttime} and CONCAT(DATE_FORMAT(e.BIZ_DATE,'%Y-%m-%d'),'-',e.TIME_PERIOD) < #{endtime}
 	]]>
 	</select>
 	
@@ -76,6 +86,27 @@
 			on od.id=cu.id
 			where cu.PARENT_NAME LIKE CONCAT('%', #{area}, '%')
 			AND cu. NAME LIKE CONCAT('%', #{pimsname}, '%')
+	]]>
+	</select>
+	
+	<select id="queryondutybycontrolunit" resultType="java.util.HashMap">
+	<![CDATA[
+		select dd.controlunitid as CONTROLUNITID,
+		sum(case when dd.WORK_TYPE='1' THEN 1 ELSE 0 END) as NORMAL,
+		sum(case when dd.WORK_TYPE='2' THEN 1
+		 		 when dd.WORK_TYPE='3' THEN 1
+		         when dd.WORK_TYPE='4' THEN 1 ELSE 0 END) as NOTNORMAL,
+		sum(case when dd.WORK_TYPE='5' THEN 1 END) as OTHER
+		from (
+			select DISTINCT card.controlunitid,date_format(door.OPEN_TIME,'%y-%m-%d') open_time,wtp.work_type,door.card_id
+			  from np_dt_door_inout door 
+				LEFT JOIN np_cd_card card on door.CARD_ID = card.ID 
+				LEFT JOIN np_sys_person person on person.ID = card.PERSON_ID
+		    	LEFT JOIN (select person_code,work_type from np_sys_person p LEFT JOIN np_cd_card c on p.id=c.PERSON_ID and c.PERSON_ID is null) wtp on person.PERSON_CODE=wtp.person_code
+				where DATE_FORMAT(door.OPEN_TIME,'%Y-%m-%d-%H') >= #{starttime} AND DATE_FORMAT(door.OPEN_TIME,'%Y-%m-%d-%H')<#{endtime} and door.CARD_ID is not null
+		   group by card.controlunitid,open_time,wtp.work_type,door.card_id
+		) dd
+		group by dd.controlunitid
 	]]>
 	</select>
   	

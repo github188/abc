@@ -2,6 +2,7 @@ package com.jd.pims.pem.service.impl;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -263,6 +264,13 @@ public class BizServiceImpl implements IBizService {
 		}
 		
 		List<Map<String, Object>> datas = reportDao.queryYydata(inputss[0],inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2],inputss[3],0,100);
+		List<Map<String, Object>> ondutys = reportDao.queryondutybycontrolunit(inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2]);
+		Map<String, String> ondutyMap = new HashMap<>();
+		for (Map<String, Object> map : ondutys) {
+			ondutyMap.put(map.get("CONTROLUNITID").toString(), map.get("NORMAL")+","+map.get("NOTNORMAL")+","+map.get("OTHER"));
+			ondutyMap.put("11", map.get("NORMAL")+","+map.get("NOTNORMAL")+","+map.get("OTHER"));
+		}
+		
 		String counts= Integer.toString(datas.size());
 		List<Map<String, Object>> responsedata = datas.subList(startpages*8,(startpages*8+pageSize>Integer.parseInt(counts))?Integer.parseInt(counts):startpages*8+pageSize);
 		List<Map<String, Object>> response = new ArrayList<>();
@@ -278,18 +286,20 @@ public class BizServiceImpl implements IBizService {
 			HashMap<String, Object> map = new HashMap<>();
 			map.put("areaName", PARENT_NAME);
 			map.put("pimsName", NAME);
-			map.put("quantityOnduty", QUANTITY_ONDUTY);
 			map.put("orderQuantity", ORDER_QUANTITY);
 			
-			Map<String, Object> map1= reportDao.queryavgefficiency(CU_ID,inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2]);
+			Integer normal = Integer.parseInt(ondutyMap.get(CU_ID)==null?"0":ondutyMap.get(CU_ID).toString().split(",")[0]);
+			Integer notnomal= Integer.parseInt(ondutyMap.get(CU_ID)==null?"0":ondutyMap.get(CU_ID).toString().split(",")[1]);
+			Integer other= Integer.parseInt(ondutyMap.get(CU_ID)==null?"0":ondutyMap.get(CU_ID).toString().split(",")[2]);
+			
+			/*Map<String, Object> map1= reportDao.queryavgefficiency(CU_ID,inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2]);
 			if(map1!=null && map1.size()!=0){
 				map.put("avgEfficiency", map1.get("AVG_EFFICIENCY"));
-			}
-			List<Map<String, Object>> map2= reportDao.queryOnduty(CU_ID,inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2]);
-			Integer normal = 0;
-			Integer notnomal= 0;
-			Integer other= 0;
-			for (Map<String, Object> data1 : map2) {
+			}*/
+			map.put("avgEfficiency",new DecimalFormat(".00").format((normal+notnomal==0)?0:(float)(ORDER_QUANTITY.isEmpty()?0:Integer.parseInt(ORDER_QUANTITY))/(float)(normal+notnomal)));
+			
+//			List<Map<String, Object>> map2= reportDao.queryOnduty(CU_ID,inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2]);
+			/*for (Map<String, Object> data1 : map2) {
 				if("1".equals(data1.get("PERSON_TYPE"))){
 					normal = data1.get("QUANTITY_ONDUTY")==null?0:(Integer)data1.get("QUANTITY_ONDUTY"); //正式工
 				}
@@ -299,10 +309,11 @@ public class BizServiceImpl implements IBizService {
 				if("5".equals(data1.get("PERSON_TYPE"))){
 					other =   data1.get("QUANTITY_ONDUTY")==null?0:(Integer)data1.get("QUANTITY_ONDUTY");//其他工
 				}
-			}
+			}*/
 			map.put("normal", normal.toString());
 			map.put("notnomal", notnomal.toString());
 			map.put("other", other.toString());
+			map.put("quantityOnduty", normal+notnomal+other);
 			map.put("percent", normal.toString().equals("0")?0:(int)((float)normal/(float)(normal+notnomal)*100)+"%");		
 			map.put("allpages", Integer.parseInt(counts)/9+1);
 			map.put("counts", counts);
