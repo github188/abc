@@ -216,13 +216,11 @@ public class ChartServiceImpl implements IChartService {
 						totalOrder+=Integer.parseInt(totalOrderMap.get("orderNum").toString());
 					}
 				}
-				List<Map<String,Object>> clerklist=labourOndutyDao.getCurrentTimeLabourOndutyForChart(
-						time, begin,end,map.get("name").toString());
-				if(null!=clerklist&&!clerklist.isEmpty()&&clerklist.size()>0){
-					for(Map<String,Object>clerkMap:clerklist){
-						EmpNum+=Float.parseFloat(clerkMap.get("EmpNum").toString());
-						NotEmpNum+=Float.parseFloat(clerkMap.get("NotEmpNum").toString());
-						otherNumEmp+=Float.parseFloat(clerkMap.get("otherNumEmp").toString());
+				
+				List<Map<String,Object>> orderlist=labourEfficiencyDao.getEfficiencyOrderForChart(time,timePeriod,map.get("name").toString());
+				if(null!=orderlist&&!orderlist.isEmpty()&&orderlist.size()>0){
+					for(Map<String,Object>orderMap:orderlist){
+						order+=Float.parseFloat(orderMap.get("orderNum").toString());
 					}
 				}
 	            tempMap.put("EmpNum",EmpNum);
