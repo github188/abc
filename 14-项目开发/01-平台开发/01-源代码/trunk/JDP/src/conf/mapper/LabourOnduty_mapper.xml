@@ -101,7 +101,7 @@
 		LEFT JOIN np_cd_card card on door.CARD_ID = card.ID 
 		LEFT JOIN np_sys_person person on person.ID = card.PERSON_ID
     	LEFT JOIN (select person_code,work_type from np_sys_person p LEFT JOIN np_cd_card c on p.id=c.PERSON_ID and c.PERSON_ID is null) wtp on person.PERSON_CODE=wtp.person_code
-		where door.OPEN_TIME >=#{startDate} AND door.OPEN_TIME<#{endDate} AND door.CONTROLUNITID in (select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+		where door.OPEN_TIME >=#{startDate} AND door.OPEN_TIME<#{endDate} AND door.SUBSYSTEM_ID in (select sub.id from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
 		GROUP BY door.OPEN_TIME,door.CARD_ID,wtp.WORK_TYPE;
 	]]>
   </select>
