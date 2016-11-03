@@ -139,7 +139,7 @@ public class AppController extends BaseController {
 				
 				//求指定控制单元的平均人效
 				
-				double avgEfficiency=parent.getEfficiency()/controlUnits.size();
+				//double avgEfficiency=parent.getEfficiency()/controlUnits.size();
 			}
 			
 			
@@ -391,19 +391,23 @@ public class AppController extends BaseController {
 	@ResponseBody
 	public String getLabourAndEfficiencyOfGroup(HttpServletRequest request,
 			HttpServletResponse response) {
+		
+		
 		ControlUnit root = uesrService.findRootOrganization();
 
 		LabourEfficiency parent = pemService.getTimePeriodEfficience(
 				root.getId(), new Date(), null);
-		LabourOndutyState currentLabour = pemService.getNumberOnDuty(root
-				.getId());
+		//LabourOndutyState currentLabour = pemService.getNumberOnDuty(root
+		//		.getId());
 		JsonObject result = new JsonObject();
+		/*
 		int totalLabour = 0;
 		if (currentLabour != null) {
 			totalLabour = currentLabour.getNumEmp()
 					+ currentLabour.getNumTemp() + currentLabour.getNumOther();
 		}
-		result.addProperty("totalLabour", totalLabour);
+		*/
+		result.addProperty("totalLabour", parent.getNumberOnduty());
 		result.addProperty("avgEfficiency",
 				parent != null ? parent.getEfficiency() : 0);
 		return this.buildSuccessResponse(result).toString();

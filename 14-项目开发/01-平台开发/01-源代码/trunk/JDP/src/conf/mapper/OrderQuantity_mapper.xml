@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.jd.pims.pem.dao.OrderyQuantityDao" >
-  
+<mapper namespace="com.jd.pims.pem.dao.OrderQuantityDao" >
   <!-- 订单数量 -->
   <resultMap id="orderQuantity" type="com.jd.pims.pem.model.OrderQuantity" >
   	<id column="id" property="id" />
@@ -13,4 +12,12 @@
     <result column="last_update_time" property="lastUpdateTime"  />
   </resultMap>
   
+  <select id="getHourOrderQuantiy" resultMap="orderQuantity">
+   <![CDATA[
+    SELECT SUM(OD.ORDER_QUANTITY) AS ORDER_QUANTITY FROM JD_LE_ORDER_QUANTITY OD
+	LEFT JOIN NP_SYS_CONTROLUNIT CU ON CU.ID=OD.CU_ID
+	WHERE OD.BIZ_DATE=#{bizDate} and od.TIME_PERIOD=#{timePeriod}
+		AND CU.FULL_PATH LIKE CONCAT(#{fullPath},'%')
+	]]>	
+  </select>
 </mapper>

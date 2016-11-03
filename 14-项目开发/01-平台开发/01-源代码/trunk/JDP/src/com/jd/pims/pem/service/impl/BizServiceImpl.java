@@ -24,6 +24,7 @@ import com.jd.pims.pem.model.LabourEfficiency;
 import com.jd.pims.pem.model.LabourOnduty;
 import com.jd.pims.pem.model.LabourOndutyDayState;
 import com.jd.pims.pem.model.LabourOndutyState;
+import com.jd.pims.pem.model.OrderQuantity;
 import com.jd.pims.pem.service.IBizService;
 import com.jd.pims.user.dao.UserDao;
 import com.jd.pims.user.model.ControlUnit;
@@ -54,11 +55,11 @@ public class BizServiceImpl implements IBizService {
 
 	@Override
 	public LabourOndutyState getNumberOnDuty(String cuId) {
-		return this.getNumberOnDuty(cuId, new Date());
+		return this.getNumberOnDuty(cuId, new Date(),null);
 	}
 
 	@Override
-	public LabourOndutyState getNumberOnDuty(String cuId, Date date) {
+	public LabourOndutyState getNumberOnDuty(String cuId, Date date,Integer timePeriod) {
 		// TODO Auto-generated method stub
 		LabourOndutyState state = new LabourOndutyState();
 		state.setCuId(cuId);
@@ -66,7 +67,7 @@ public class BizServiceImpl implements IBizService {
 		state.setCuName(cu.getCuName());
 		List<LabourOnduty> list;
 		//取时间跨度，当前时间到前30分钟这一时段
-		String[] timeSpan=getTimeSpan(null);
+		String[] timeSpan=getTimeSpan(timePeriod,timePeriod==null?30:60);
 		//beginTime--;
 		list = labourOndutyDao.getCurrentTimeLabourOnduty(sFormat.format(date),
 				timeSpan[0],timeSpan[1],cu.getFullPath());
@@ -75,14 +76,16 @@ public class BizServiceImpl implements IBizService {
 		for (LabourOnduty rec : list) {
 			qty=rec.getQuantityOnduty()==null?0:rec.getQuantityOnduty();
 			logger.debug("记录信息：\n"+rec);
-			if (rec.getPersonType().equals("1") ) {
+			if (rec.getPersonType().equals("1") ) {//正式工 
 				state.setNumEmp((state.getNumEmp() == null ? 0 : state
 						.getNumEmp()) + qty);
-			} else if (rec.getPersonType().equals("2")
-					|| rec.getPersonType().equals("3")
-					|| rec.getPersonType().equals("4")) {
+			} else if (rec.getPersonType().equals("2")//长期派遗
+					|| rec.getPersonType().equals("4")) {//计件工
 				state.setNumTemp((state.getNumTemp() == null ? 0 : state
-						.getNumTemp()) + qty);
+						.getNumTemp()) + (int)(qty*0.8));
+			}else if( rec.getPersonType().equals("3")){
+				state.setNumTemp((state.getNumTemp() == null ? 0 : state
+						.getNumTemp()) + (int)(qty*0.5));
 			} else if (rec.getPersonType().equals("5")) {
 				state.setNumOther((state.getNumOther() == null ? 0 : state
 						.getNumOther()) +qty);
@@ -142,8 +145,30 @@ public class BizServiceImpl implements IBizService {
 			Integer timePeriod) {
 		ControlUnit cu = userDao.findOrganization(cuId);
 		
-		String[] timeSpan=getTimeSpan(timePeriod);
+		//String[] timeSpan=getTimeSpan(timePeriod,60);
+		if(timePeriod==null){
+			Calendar c = Calendar.getInstance();//可以对每个时间域单独修改
+			timePeriod=c.get(Calendar.HOUR_OF_DAY);
+			timePeriod=timePeriod==0?24:timePeriod;
+		}
+		LabourOndutyState lod=this.getNumberOnDuty(cuId, bizDate,timePeriod);
+		OrderQuantity oq=orderQuantityDao.getHourOrderQuantiy(sFormat.format(bizDate),timePeriod, cu.getFullPath());
+		
+		LabourEfficiency result=new LabourEfficiency();
+		result.setCuId(cuId);
+		result.setCuName(cu.getCuName());
+		logger.debug("-----------------------------1");
+		if(lod!=null && oq!=null){
+			logger.debug("订单量："+oq);
+			int onduty=lod.getNumEmp()+lod.getNumTemp();
+			result.setNumberOnduty(onduty);
+			double effi=onduty==0?0:oq.getOrderQuantity()/onduty;
+			result.setEfficiency(effi);
+			result.setAvgEfficiency(effi);
+		}
+		logger.debug("------------------------------2");
 		//取符合条件的人效记录（每个分拣中心一条记录）
+		/*
 		LabourEfficiency result = labourEfficiencyDao.getLabourEfficiency(
 				sFormat.format(bizDate), timePeriod, cu.getFullPath(),timeSpan[0],timeSpan[1]);
 		if(result==null){
@@ -154,19 +179,40 @@ public class BizServiceImpl implements IBizService {
 		if(result.getNumberOnduty()!=0){
 			result.setEfficiency(result.getOrderQuantity()/(double)result.getNumberOnduty());
 		}
+		*/
 		return result;
+		
 	}
 	
-	private String[] getTimeSpan(Integer timePeriod){
+	/**
+	 * 取时间跨度
+	 * @param timePeriod
+	 * @param span
+	 * @return
+	 */
+	private String[] getTimeSpan(Integer timePeriod,Integer span){
 		SimpleDateFormat df = new SimpleDateFormat("HH:mm:ss");
 		Calendar currentTime = Calendar.getInstance();
 		currentTime.setTime(new Date());
-		if(timePeriod!=null){
-			currentTime.set(Calendar.HOUR, timePeriod);
+		if(timePeriod!=null){//整点
+			if(timePeriod==24){
+				currentTime.set(Calendar.HOUR, timePeriod-1);
+				currentTime.set(Calendar.MINUTE, 59);
+				currentTime.set(Calendar.SECOND, 59);
+				span=59;
+			}else{
+				currentTime.set(Calendar.HOUR, timePeriod);
+				currentTime.set(Calendar.MINUTE, 0);
+				currentTime.set(Calendar.SECOND, 0);
+			}
+			
 		}
 		String[] times=new String[]{"",""};
 		times[1]=df.format(currentTime.getTime());
-		currentTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE)-30);
+		currentTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE)-span);
+		if(span==59){
+			currentTime.set(Calendar.SECOND, 0);
+		}
 		times[0]=df.format(currentTime.getTime());
 		
 		return times;

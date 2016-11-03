@@ -30,7 +30,7 @@ public interface IBizService {
 	 * @param date
 	 * @return
 	 */
-	public LabourOndutyState getNumberOnDuty(String cuId, Date date);
+	public LabourOndutyState getNumberOnDuty(String cuId, Date date,Integer timePeriod);
 
 	/**
 	 * 取历史在岗人数(当天的平均值)

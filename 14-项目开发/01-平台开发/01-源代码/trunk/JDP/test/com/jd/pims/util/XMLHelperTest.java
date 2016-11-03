@@ -2,6 +2,9 @@ package com.jd.pims.util;
 
 import static org.junit.Assert.*;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -57,4 +60,8 @@ public class XMLHelperTest {
 		}
 	}
 
+	@Test public void testMsic(){
+		Calendar c = Calendar.getInstance();//可以对每个时间域单独修改
+		System.out.println(c.get(Calendar.HOUR_OF_DAY));
+	}
 }

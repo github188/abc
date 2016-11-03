@@ -37,7 +37,7 @@ public class BizServiceImplTest extends
 		c1.setTime(new Date());
 		c1.set(2016, 8, 7);
 		LabourOndutyState state = pemService
-				.getNumberOnDuty("11111111111111111111111111111111",c1.getTime());
+				.getNumberOnDuty("11111111111111111111111111111111",c1.getTime(),null);
 		Assert.assertTrue(state.toString(), state != null);
 	}
 
