@@ -255,8 +255,8 @@ public class ChartServiceImpl implements IChartService {
 		Date endDate = cal.getTime();
 		String endtime =sdf.format(endDate);
 		List<Map<String,Object>> list = labourEfficiencyDao.getHistoryEfficiencyForChart(endtime,starttime,24, name);
-		List<Map<String,Object>> OrderList = labourEfficiencyDao.getHistoryEfficiencyClerkForChart(endtime,starttime,24, name);
-		List<Map<String,Object>> ClerkList = labourEfficiencyDao.getHistoryEfficiencyOrderForChart(endtime,starttime,24, name);
+		List<Map<String,Object>> ClerkList = labourEfficiencyDao.getHistoryEfficiencyClerkForChart(endtime,starttime,24, name);
+		List<Map<String,Object>> OrderList = labourEfficiencyDao.getHistoryEfficiencyOrderForChart(endtime,starttime,24, name);
 		if(null!=list&&!list.isEmpty()&&list.size()>0){
 			for(Map<String,Object>map:list){
 				Map<String,Object>tempMap = new HashMap<String,Object>();
@@ -278,7 +278,7 @@ public class ChartServiceImpl implements IChartService {
 						}
 					}
 				}else{
-					tempMap.put("orderNum",0);
+					tempMap.put("clerkNum",0);
 				}
 				result.add(tempMap);
 			}
