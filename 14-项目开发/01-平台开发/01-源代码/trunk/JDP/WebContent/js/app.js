@@ -392,6 +392,7 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', f
 		$cookieStore.put('showornot', 'false');
 		window.location.href = "login.html";
 	}
+	$scope.uploadresult="";
 	$scope.uploadExcel=function(file){
 		console.log(file);
 		Upload.upload({
@@ -405,6 +406,7 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', f
             //进度条
             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
             console.log('progess:' + progressPercentage + '%' + evt.config.file.name);
+            $scope.uploadresult="上传 "+progressPercentage + '%';
         }).success(function (data, status, headers, config) {
             //上传成功
             console.log('file ' + config.file.name + 'uploaded. Response: ' + data);

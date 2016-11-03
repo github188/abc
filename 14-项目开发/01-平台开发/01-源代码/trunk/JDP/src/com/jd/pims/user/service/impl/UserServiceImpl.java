@@ -119,9 +119,14 @@ public class UserServiceImpl implements IUserService {
 			// 得到第一列第一行的单元格
 			int row = sheet.getRows();
 			int col = sheet.getColumns();
+			if(col!=6||!"所属分公司".equals(sheet.getCell(0, 0).getContents())){
+				logger.info("excel文件格式有误");
+				return "";
+			} 
 			List<User> users = new ArrayList<>();
 			List<UserRole> userroles = new ArrayList<>();
 			List<Person> persons = new ArrayList<>();
+			
 			for(int i =1;i<row ; i++){
 				String controlunit =sheet.getCell(0, i).getContents();
 				String name =sheet.getCell(1, i).getContents();
@@ -179,9 +184,10 @@ public class UserServiceImpl implements IUserService {
 			
 			book.close();
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info("导入账户信息异常!",e);
 			return "fail";
 		} 
+		logger.info("导入账户信息成功");
 		
 		return "success";
 	}
