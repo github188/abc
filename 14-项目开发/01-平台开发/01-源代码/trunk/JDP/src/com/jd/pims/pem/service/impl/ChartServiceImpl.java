@@ -170,7 +170,7 @@ public class ChartServiceImpl implements IChartService {
 				List<Map<String,Object>> type3List = new ArrayList<Map<String,Object>>();
 				List<Map<String,Object>> type4List = new ArrayList<Map<String,Object>>();
 				List<Map<String,Object>> type5List = new ArrayList<Map<String,Object>>();
-					List<Map<String,Object>> labourOndutylist=labourOndutyDao.getCurrentTimeLabourOndutyForChart1(timePeriod+"",begin,end, map.get("name").toString());
+					List<Map<String,Object>> labourOndutylist=labourOndutyDao.getCurrentTimeLabourOndutyForChart1(new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"",begin,end, map.get("name").toString());
 					if(null!=labourOndutylist&&!labourOndutylist.isEmpty()&&labourOndutylist.size()>0){
 				        for(Map<String,Object> map1:labourOndutylist){
 				        	switch (map1.get("personType").toString()) {
