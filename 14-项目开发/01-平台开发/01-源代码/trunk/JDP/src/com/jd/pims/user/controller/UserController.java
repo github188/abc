@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.jd.pims.comm.BaseController;
 import com.jd.pims.comm.PIMSException;
+import com.jd.pims.pem.service.impl.BizServiceImpl;
 import com.jd.pims.user.model.Employee;
 import com.jd.pims.user.service.IUserService;
 
@@ -23,6 +25,9 @@ public class UserController extends BaseController {
 
 	@Resource
 	private IUserService userService;
+	
+	private static final Logger logger = Logger.getLogger(UserController.class
+			.getName());
 
 	/**
 	 * 用户登录
@@ -90,6 +95,7 @@ public class UserController extends BaseController {
 			String oldPwd = request.getParameter("oldPwd");
 			String newPwd = request.getParameter("newPwd");
 			String confirmPwd = request.getParameter("confirmPwd");
+			logger.info("empId  "+empId+"  oldPwd  "+oldPwd+"  newPwd  "+newPwd+"  confirmPwd  "+confirmPwd);
 			
 			userService.changePassword(empId,oldPwd,newPwd,confirmPwd);
 			return this
