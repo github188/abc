@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.jd.pims.comm.IBaseDao;
 import com.jd.pims.pem.model.LabourOnduty;
-import com.jd.pims.pem.model.LabourOndutyDayState;
+import com.jd.pims.pem.model.LabourOndutyState;
 
 public interface LabourOndutyDao extends IBaseDao {
 
@@ -45,7 +45,7 @@ public interface LabourOndutyDao extends IBaseDao {
 	 * @param cuId
 	 * @return
 	 */
-	List<LabourOndutyDayState> getHistoryLabourOnduty(
+	List<LabourOndutyState> getHistoryLabourOnduty(
 			@Param("startDate") String startDate,
 			@Param("endDate") String endDate, @Param("fullPath") String fullPath);
 }

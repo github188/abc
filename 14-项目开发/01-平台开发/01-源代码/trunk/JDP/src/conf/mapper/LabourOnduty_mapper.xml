@@ -39,13 +39,27 @@
 	]]>	
   </select>
 
-  <select id="getHistoryLabourOnduty" resultMap="labourOndutyDayState">
+  <select id="getHistoryLabourOnduty" resultMap="labourOndutyState">
   	<![CDATA[
-  	SELECT ST.ID, ST.CU_ID, ST.BIZ_DATE, ST.PERSON_TYPE, ST.AVG_QUANTITY, ST.MIN_QUANTITY, ST.MAX_QUANTITY
-	FROM  JD_LE_LABOUR_ONDUTY_DAY_ST ST
-	INNER JOIN NP_SYS_CONTROLUNIT CU ON ST.CU_ID=CU.ID
-	WHERE BIZ_DATE>=#{startDate} AND BIZ_DATE<=#{endDate} 
-		AND CU.FULL_PATH LIKE CONCAT(#{fullPath},'%' )
+  	select dd.controlunitid as cu_id,CU.name as cu_name,dd.open_time as day_time,
+		sum(case when dd.WORK_TYPE='1' THEN 1 ELSE 0 END) as num_emp,
+		sum(case when dd.WORK_TYPE='2' THEN 1
+		 		 when dd.WORK_TYPE='3' THEN 1
+		         when dd.WORK_TYPE='4' THEN 1 ELSE 0 END) as num_temp,
+	    sum(case when dd.WORK_TYPE='5' then 1 else 0 end) as num_other
+	from (
+		select DISTINCT card.controlunitid,date_format(door.OPEN_TIME,'%y-%m-%d') open_time,wtp.work_type,door.card_id
+		  from np_dt_door_inout door 
+			LEFT JOIN np_cd_card card on  card.ID =door.CARD_ID
+			LEFT JOIN np_sys_person person on person.ID = card.PERSON_ID
+	    LEFT JOIN (select person_code,work_type from np_sys_person p LEFT JOIN np_cd_card c on p.id=c.PERSON_ID and c.PERSON_ID is null) wtp on person.PERSON_CODE=wtp.person_code
+	    LEFT JOIN np_sys_controlunit cu on cu.id=card.controlunitid
+			where door.OPEN_TIME >=#{startDate} AND door.OPEN_TIME<=#{endDate} and door.card_id is not null
+				and CU.FULL_PATH like CONCAT(#{fullPath},'%' )
+	   group by card.controlunitid,open_time,wtp.work_type,door.card_id
+	) dd
+	LEFT JOIN np_sys_controlunit cu on CU.id =dd.controlunitid
+	group by dd.controlunitid,dd.open_time
   	]]>
   </select>
   
