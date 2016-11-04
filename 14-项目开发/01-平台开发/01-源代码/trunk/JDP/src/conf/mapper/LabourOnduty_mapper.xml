@@ -13,16 +13,14 @@
     <result column="last_update_time" property="lastUpdateTime"  />
   </resultMap>
   
-  <resultMap id="labourOndutyDayState" type="com.jd.pims.pem.model.LabourOndutyDayState" >
+  <resultMap id="labourOndutyState" type="com.jd.pims.pem.model.LabourOndutyState" >
     <id column="id" property="id" />
     <result column="cu_id" property="cuId"  />
-    <result column="biz_date" property="bizDate"  />
-    <result column="person_type" property="personType"  />
-    <result column="avg_quantity" property="avgQuantity"  />
-    <result column="max_quantity" property="maxQuantity"  />
-    <result column="min_quantity" property="minQuantity"  />
-    <result column="create_time" property="createTime"  />
-    <result column="last_update_time" property="lastUpdateTime"  />
+    <result column="cu_name" property="cuName"  />
+    <result column="day_time" property="dayTime"  />
+    <result column="num_emp" property="numEmp"  />
+    <result column="num_temp" property="numTemp"  />
+    <result column="num_other" property="numOther"  />
   </resultMap>
 
   <select id="getCurrentTimeLabourOnduty" resultMap="labourOnduty">
