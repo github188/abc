@@ -52,21 +52,63 @@
 	
 	<select id="getHistoryLabourEfficiency" resultMap="labourEfficiency">
 	<![CDATA[
-		SELECT RSS.BIZ_DATE,SUM(RSS.QUANTITY_ONDUTY) AS NUMBER_ONDUTY,SUM(LE.ORDER_QUANTITY ) AS ORDER_QUANTITY
-		FROM (
-			SELECT CU_ID,BIZ_DATE,SUM(QUANTITY_ONDUTY) AS QUANTITY_ONDUTY FROM (
-				SELECT CU_ID,BIZ_DATE,PERSON_TYPE,AVG(QUANTITY_ONDUTY) AS QUANTITY_ONDUTY 
-				FROM JD_LE_LABOUR_ONDUTY 
-				WHERE BIZ_DATE>=#{startDate} AND BIZ_DATE<=#{endDate} and PERSON_TYPE<>'5'
-				GROUP BY CU_ID,BIZ_DATE,PERSON_TYPE) RS
-			GROUP BY CU_ID,BIZ_DATE) RSS
- 		INNER JOIN (SELECT CU_ID,BIZ_DATE,SUM(ORDER_QUANTITY) ORDER_QUANTITY 
- 			FROM JD_LE_ORDER_QUANTITY WHERE BIZ_DATE>=#{startDate} AND BIZ_DATE<=#{endDate}
-			GROUP BY CU_ID,BIZ_DATE) LE 
-			ON RSS.CU_ID=LE.CU_ID AND LE.BIZ_DATE = RSS.BIZ_DATE
-		INNER JOIN NP_SYS_CONTROLUNIT CU ON CU.ID=RSS.CU_ID
-		WHERE  CU.FULL_PATH LIKE CONCAT(#{fullPath},'%' )
-		GROUP BY BIZ_DATE
+		SELECT
+			p.cu_id,
+			p.biz_date,
+			p.number_onduty,
+			od.TOTAL_QUANTITY AS ORDER_QUANTITY
+		FROM
+			(
+				SELECT
+					dd.cu_id,
+					dd.biz_date,
+					sum(
+						CASE
+						WHEN dd.WORK_TYPE = '5' THEN
+							0
+						ELSE
+							1
+						END
+					) AS number_onduty
+				FROM
+					(
+						SELECT DISTINCT
+							card.controlunitid AS cu_id,
+							date_format(door.OPEN_TIME, '%y-%m-%d') biz_date,
+							wtp.work_type,
+							door.card_id
+						FROM
+							np_dt_door_inout door
+						LEFT JOIN np_cd_card card ON card.ID = door.CARD_ID
+						LEFT JOIN np_sys_person person ON person.ID = card.PERSON_ID
+						LEFT JOIN (
+							SELECT
+								person_code,
+								work_type
+							FROM
+								np_sys_person p
+							LEFT JOIN np_cd_card c ON p.id = c.PERSON_ID
+							AND c.PERSON_ID IS NULL
+						) wtp ON person.PERSON_CODE = wtp.person_code
+						LEFT JOIN np_sys_controlunit cu ON cu.id = card.controlunitid
+						WHERE
+							door.OPEN_TIME >= #{startDate}
+						AND door.OPEN_TIME <= #{endDate}
+						AND door.card_id IS NOT NULL
+						AND CU.FULL_PATH LIKE CONCAT(#{fullPath}, '%')
+						GROUP BY
+							card.controlunitid,
+							open_time,
+							wtp.work_type,
+							door.card_id
+					) dd
+				GROUP BY
+					dd.cu_id,
+					dd.biz_date
+			) p
+		LEFT JOIN jd_le_order_quantity od ON od.cu_id = p.cu_id
+		AND p.biz_date = od.biz_date
+		AND od.TIME_PERIOD = 24
 	]]>
 	</select>
 	
