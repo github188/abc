@@ -192,4 +192,20 @@ public class UserServiceImpl implements IUserService {
 		return "success";
 	}
 
+	@Override
+	public String changePassword(String empId, String oldPwd, String newPwd, String confirmPwd) throws PIMSException {
+		if(!newPwd.equals(confirmPwd)){
+			throw new PIMSException(1, "修改无效");
+		}
+		
+		String userId = userDao.getEmployeeByIdandPwd(empId,StringUtil.md5(oldPwd));
+		if(userId==null){
+			throw new PIMSException(1,"修改无效");
+		}
+		
+		userDao.changePassword(userId, StringUtil.md5(newPwd));
+		
+		return null;
+	}
+
 }

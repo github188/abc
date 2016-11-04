@@ -145,6 +145,13 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <update id="changePassword" parameterType="String" >
+    update np_au_user
+    <set>
+        PASSWORD = #{newPwd} 
+    </set>
+    where id = #{userId}
+  </update>
   <select id="selectByPrimaryKey" resultMap="user" >
    SELECT * FROM t_user where id =#{id}
   </select>
@@ -182,6 +189,12 @@
   			INNER JOIN NP_SYS_ORGANIZE O ON E.ORG_ID=O.ID
   			INNER JOIN NP_SYS_CONTROLUNIT C ON E.CONTROLUNITID=C.ID
   		WHERE E.IS_CLERK=1 AND E.ID= #{id}
+  </select>
+  
+  <select id="getEmployeeByIdandPwd"  resultType="String">
+  		select u.id as UID from np_au_user u
+		left join np_sys_person p on p.id=u.PERSON_ID
+		where p.id=#{empId} and u.PASSWORD = #{pwd}
   </select>
   
   <select id="getOrganizations" resultMap="controlUnit" >

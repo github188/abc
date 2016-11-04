@@ -56,4 +56,6 @@ public interface IUserService {
 	public List<Employee> searchEmployee(String inputStr);
 	
 	public String createAccount(InputStream inputStream);
+	
+	public String changePassword(String empId,String oldPwd,String newPwd,String confirmPwd) throws PIMSException;
 }
