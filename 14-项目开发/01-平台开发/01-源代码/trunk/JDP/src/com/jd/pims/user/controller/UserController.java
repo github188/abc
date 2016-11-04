@@ -69,10 +69,39 @@ public class UserController extends BaseController {
 
 	}
 	
+	/**
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
 	@RequestMapping(value = "/fileUpload", method = RequestMethod.POST)
 	public String fileUpload(@RequestParam("file") CommonsMultipartFile file) throws IOException {
 
 		return userService.createAccount(file.getInputStream());
 		
 	}
+	
+	
+	@RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+	@ResponseBody
+	public String changePassword(HttpServletRequest request) {
+		try {
+			String empId = request.getParameter("empId");
+			String oldPwd = request.getParameter("oldPwd");
+			String newPwd = request.getParameter("newPwd");
+			String confirmPwd = request.getParameter("confirmPwd");
+			
+			userService.changePassword(empId,oldPwd,newPwd,confirmPwd);
+			return this
+					.buildFailResponse(SUCESS_RETURN_COCE, SUCESS_RETURN_MESSAGE)
+					.toString();
+		} catch (PIMSException e) {
+			return this
+					.buildFailResponse(e.getCode(), e.getMessage())
+					.toString();
+		}
+
+	}
+	
+	
 }

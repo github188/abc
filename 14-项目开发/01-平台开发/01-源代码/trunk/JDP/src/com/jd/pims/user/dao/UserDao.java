@@ -74,4 +74,9 @@ public interface UserDao extends IBaseDao{
 	void createUserRoles(List<UserRole> userroles);
 	
 	void createpersons(List<Person> persons);
+	
+	String getEmployeeByIdandPwd(@Param("empId")String empId,@Param("pwd")String pwd);
+
+	void changePassword(@Param("userId")String userId,@Param("newPwd")String newPwd);
+	
 }
