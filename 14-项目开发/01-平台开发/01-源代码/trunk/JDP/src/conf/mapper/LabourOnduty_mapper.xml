@@ -91,18 +91,23 @@
   
     <select id="getHistoryLabourOndutyForChart" resultType="java.util.HashMap">
 	<![CDATA[	
-		select 
-		concat(concat((date_format(door.OPEN_TIME,'%m')),'月'),concat((date_format(door.OPEN_TIME,'%d')),'日')) as name,
-		sum(case when wtp.WORK_TYPE='1' THEN 1 ELSE 0 END) as EmpNum,
-		sum(case when wtp.WORK_TYPE='2' THEN 0.8
-		 		 when wtp.WORK_TYPE='3' THEN 0.5
-		         when wtp.WORK_TYPE='4' THEN 0.8 ELSE 0 END) as NotEmpNum 
-		from np_dt_door_inout door 
-		LEFT JOIN np_cd_card card on door.CARD_ID = card.ID 
-		LEFT JOIN np_sys_person person on person.ID = card.PERSON_ID
-    	LEFT JOIN (select person_code,work_type from np_sys_person p LEFT JOIN np_cd_card c on p.id=c.PERSON_ID and c.PERSON_ID is null) wtp on person.PERSON_CODE=wtp.person_code
-		where door.OPEN_TIME >=#{startDate} AND door.OPEN_TIME<#{endDate} AND door.SUBSYSTEM_ID in (select sub.id from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
-		GROUP BY door.OPEN_TIME,door.CARD_ID,wtp.WORK_TYPE;
+		select concat(concat((date_format(dd.OPEN_TIME,'%m')),'月'),concat((date_format(dd.OPEN_TIME,'%d')),'日')) as name,
+		sum(case when dd.WORK_TYPE='1' THEN 1 ELSE 0 END) as EmpNum,
+		sum(case when dd.WORK_TYPE='2' THEN 1
+		 		 when dd.WORK_TYPE='3' THEN 1
+		         when dd.WORK_TYPE='4' THEN 1 ELSE 0 END) as NotEmpNum
+		from (
+			select DISTINCT date_format(door.OPEN_TIME,'%y-%m-%d') open_time,wtp.work_type,door.card_id
+			  from np_dt_door_inout door 
+				LEFT JOIN np_cd_card card on  card.ID =door.CARD_ID
+				LEFT JOIN np_sys_person person on person.ID = card.PERSON_ID
+		    LEFT JOIN (select person_code,work_type from np_sys_person p LEFT JOIN np_cd_card c on p.id=c.PERSON_ID and c.PERSON_ID is null) wtp on person.PERSON_CODE=wtp.person_code
+		    LEFT JOIN (select sub.id from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' )) sub
+					on sub.id=door.subsystem_id
+				where door.OPEN_TIME >=#{startDate} AND door.OPEN_TIME<#{endDate} and door.card_id is not null
+		   group by open_time,wtp.work_type,door.card_id
+		) dd
+		group by dd.open_time
 	]]>
   </select>
 </mapper>
