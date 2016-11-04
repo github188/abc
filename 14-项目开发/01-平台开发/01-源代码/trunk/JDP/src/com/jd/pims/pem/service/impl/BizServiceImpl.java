@@ -296,7 +296,7 @@ public class BizServiceImpl implements IBizService {
 			if(map1!=null && map1.size()!=0){
 				map.put("avgEfficiency", map1.get("AVG_EFFICIENCY"));
 			}*/
-			map.put("avgEfficiency",new DecimalFormat(".00").format((normal+notnomal==0)?0:(float)(ORDER_QUANTITY.isEmpty()?0:Integer.parseInt(ORDER_QUANTITY))/(float)(normal+notnomal)));
+			map.put("avgEfficiency",(normal+notnomal==0)?0:new DecimalFormat(".00").format((float)(ORDER_QUANTITY.isEmpty()?0:Integer.parseInt(ORDER_QUANTITY))/(float)(normal+notnomal)));
 			
 //			List<Map<String, Object>> map2= reportDao.queryOnduty(CU_ID,inputss[1].isEmpty()?"1970-01-01-00":inputss[1],inputss[2].isEmpty()?"2050-01-01-00":inputss[2]);
 			/*for (Map<String, Object> data1 : map2) {
