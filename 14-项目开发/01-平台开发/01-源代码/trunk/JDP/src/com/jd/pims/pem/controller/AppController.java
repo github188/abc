@@ -269,12 +269,14 @@ public class AppController extends BaseController {
 						.getEfficiencyHistory(cuId, sFormat.parse(startDate),
 								sFormat.parse(endDate));
 				if (null != results && !results.isEmpty()) {
+					/*在sql中实现
 					for (LabourEfficiency le : results) {
 						if(le.getNumberOnduty()>0){
 							le.setEfficiency(le.getOrderQuantity()/(double)le.getNumberOnduty());
 						}
 
 					}
+					*/
 					LabourEfficiency[] arr = results.toArray(
 							new LabourEfficiency[results.size()]);
 					//补充缺失日期数据

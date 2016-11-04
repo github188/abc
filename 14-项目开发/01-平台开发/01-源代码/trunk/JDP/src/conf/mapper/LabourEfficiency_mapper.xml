@@ -56,7 +56,8 @@
 			p.cu_id,
 			p.biz_date,
 			p.number_onduty,
-			od.TOTAL_QUANTITY AS ORDER_QUANTITY
+			od.TOTAL_QUANTITY AS ORDER_QUANTITY,
+			case when od.TOTAL_QUANTITY is null then 0 else FORMAT(od.TOTAL_QUANTITY / p.number_onduty,0) end as efficiency
 		FROM
 			(
 				SELECT
@@ -74,7 +75,7 @@
 					(
 						SELECT DISTINCT
 							card.controlunitid AS cu_id,
-							date_format(door.OPEN_TIME, '%y-%m-%d') biz_date,
+							date_format(door.OPEN_TIME, '%Y-%m-%d') biz_date,
 							wtp.work_type,
 							door.card_id
 						FROM
@@ -107,7 +108,7 @@
 					dd.biz_date
 			) p
 		LEFT JOIN jd_le_order_quantity od ON od.cu_id = p.cu_id
-		AND p.biz_date = od.biz_date
+		AND date_format(p.biz_date,'%Y-%m-%d') = date_format(od.biz_date,'%Y-%m-%d')
 		AND od.TIME_PERIOD = 24
 	]]>
 	</select>
