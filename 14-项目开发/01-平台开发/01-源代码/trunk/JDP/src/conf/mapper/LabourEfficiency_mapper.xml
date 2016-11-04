@@ -55,8 +55,8 @@
 		SELECT
 			p.cu_id,
 			p.biz_date,
-			p.number_onduty,
-			od.TOTAL_QUANTITY AS ORDER_QUANTITY,
+			IFNULL(p.number_onduty,0),
+			IFNULL(od.TOTAL_QUANTITY,0) AS ORDER_QUANTITY,
 			case when od.TOTAL_QUANTITY is null then 0 else FORMAT(od.TOTAL_QUANTITY / p.number_onduty,0) end as efficiency
 		FROM
 			(
