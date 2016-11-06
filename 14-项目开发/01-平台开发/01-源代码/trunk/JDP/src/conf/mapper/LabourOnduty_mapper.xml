@@ -109,15 +109,62 @@
 		 		 when dd.WORK_TYPE='3' THEN 1
 		         when dd.WORK_TYPE='4' THEN 1 ELSE 0 END) as NotEmpNum
 		from (
-			select DISTINCT date_format(door.OPEN_TIME,'%y-%m-%d') open_time,wtp.work_type,door.card_id
-			  from np_dt_door_inout door 
-				LEFT JOIN np_cd_card card on  card.ID =door.CARD_ID
-				LEFT JOIN np_sys_person person on person.ID = card.PERSON_ID
-		    LEFT JOIN (select person_code,work_type from np_sys_person p LEFT JOIN np_cd_card c on p.id=c.PERSON_ID and c.PERSON_ID is null) wtp on person.PERSON_CODE=wtp.person_code
-		    LEFT JOIN (select sub.id from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' )) sub
-					on sub.id=door.subsystem_id
-				where door.OPEN_TIME >=#{startDate} AND door.OPEN_TIME<#{endDate} and door.card_id is not null
-		   group by open_time,wtp.work_type,door.card_id
+			SELECT
+				aa.open_time,
+				bb.work_type,
+				aa.card_id
+			FROM
+			(
+		SELECT DISTINCT
+			date_format(door.OPEN_TIME, '%y-%m-%d') open_time,
+			door.card_id
+		FROM
+			np_dt_door_inout door FORCE INDEX (
+				IDX_DOOR_INOUT_1,
+				IDX_DOOR_INOUT_2
+			)
+		INNER JOIN (
+			SELECT
+				sub.id
+			FROM
+				NP_CF_SUBSYSTEM sub
+			LEFT JOIN NP_EQ_AREA area ON sub.AREA_ID = area.ID
+			WHERE
+				area.AREA_CLASS = 'BROUGH'
+			AND area.FULL_PATH LIKE CONCAT(
+				(
+					SELECT DISTINCT
+						FULL_PATH
+					FROM
+						NP_EQ_AREA
+					WHERE
+						AREA_NAME = #{name}),'%' )) sub
+						ON sub.id = door.subsystem_id
+					WHERE
+						door.OPEN_TIME >= #{startDate} AND door.OPEN_TIME<#{endDate} and door.card_id is not null
+				) aa
+				INNER JOIN (
+					SELECT
+						card.id,
+						card.subsystem_id,
+						wtp.work_type
+					FROM
+						np_cd_card card FORCE INDEX (IDX_CARD_1)
+					INNER JOIN np_sys_person person FORCE INDEX (PRIMARY) ON person.ID = card.PERSON_ID
+					INNER JOIN (
+						SELECT
+							person_code,
+							work_type
+						FROM
+							np_sys_person p
+						LEFT JOIN np_cd_card c ON p.id = c.PERSON_ID
+						AND c.PERSON_ID IS NULL
+					) wtp ON person.PERSON_CODE = wtp.person_code
+				) bb ON aa.card_id = bb.id
+				GROUP BY
+					aa.open_time,
+					bb.work_type,
+					aa.card_id
 		) dd
 		group by dd.open_time
 	]]>
