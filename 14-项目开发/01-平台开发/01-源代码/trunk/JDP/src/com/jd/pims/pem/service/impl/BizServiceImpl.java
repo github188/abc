@@ -72,8 +72,13 @@ public class BizServiceImpl implements IBizService {
 		String[] timeSpan = getTimeSpan(timePeriod, timePeriod == null ? 30
 				: 60);
 		// beginTime--;
+		if(timeSpan[0].compareTo(timeSpan[1])<0){
 		list = labourOndutyDao.getCurrentTimeLabourOnduty(sFormat.format(date),
 				timeSpan[0], timeSpan[1], cu.getFullPath());
+		}else{
+			list = labourOndutyDao.getCurrentTimeLabourOnduty2(sFormat.format(date),
+					timeSpan[0], timeSpan[1], cu.getFullPath());
+		}
 		Integer qty = 0;
 		logger.debug("符合记录数--->" + list.size());
 		for (LabourOnduty rec : list) {
@@ -194,7 +199,7 @@ public class BizServiceImpl implements IBizService {
 		}
 		String[] times = new String[] { "", "" };
 		times[1] = df.format(currentTime.getTime());
-		if(timePeriod==24){
+		if(timePeriod!=null && timePeriod==24){
 			currentTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY)
 					- 1);
 			times[1]=times[1].replaceFirst("00", "24");
