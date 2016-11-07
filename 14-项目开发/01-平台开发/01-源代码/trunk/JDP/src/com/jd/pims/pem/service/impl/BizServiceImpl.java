@@ -401,7 +401,19 @@ public class BizServiceImpl implements IBizService {
 							: inputss[1],
 					inputss[2].isEmpty() ? "2050-01-01-00" : inputss[2],
 					inputss[3]);
-
+			List<Map<String, Object>> ondutys = reportDao.queryondutybycontrolunit(
+					inputss[1].isEmpty() ? "1970-01-01-00" : inputss[1],
+					inputss[2].isEmpty() ? "2050-01-01-00" : inputss[2]);
+			Map<String, String> ondutyMap = new HashMap<>();
+			for (Map<String, Object> map : ondutys) {
+				ondutyMap.put(
+						map.get("CONTROLUNITID").toString(),
+						map.get("NORMAL") + "," + map.get("NOTNORMAL") + ","
+								+ map.get("OTHER"));
+				ondutyMap.put("11", map.get("NORMAL") + "," + map.get("NOTNORMAL")
+						+ "," + map.get("OTHER"));
+			}
+			
 			List<Map<String, Object>> response = new ArrayList<>();
 
 			for (Map<String, Object> data : datas) {
@@ -416,16 +428,32 @@ public class BizServiceImpl implements IBizService {
 				HashMap<String, Object> map = new HashMap<>();
 				map.put("areaName", PARENT_NAME);
 				map.put("pimsName", NAME);
-				map.put("quantityOnduty", QUANTITY_ONDUTY);
+//				map.put("quantityOnduty", QUANTITY_ONDUTY);
 				map.put("orderQuantity", ORDER_QUANTITY);
+				
+				Integer normal = Integer
+						.parseInt(ondutyMap.get(CU_ID) == null ? "0" : ondutyMap
+								.get(CU_ID).toString().split(",")[0]);
+				Integer notnomal = Integer
+						.parseInt(ondutyMap.get(CU_ID) == null ? "0" : ondutyMap
+								.get(CU_ID).toString().split(",")[1]);
+				Integer other = Integer.parseInt(ondutyMap.get(CU_ID) == null ? "0"
+						: ondutyMap.get(CU_ID).toString().split(",")[2]);
 
-				Map<String, Object> map1 = reportDao.queryavgefficiency(CU_ID,
+				/*Map<String, Object> map1 = reportDao.queryavgefficiency(CU_ID,
 						inputss[1].isEmpty() ? "1970-01-01-00" : inputss[1],
 						inputss[2].isEmpty() ? "2050-01-01-00" : inputss[2]);
 				if (map1 != null && map1.size() != 0) {
 					map.put("avgEfficiency", map1.get("AVG_EFFICIENCY"));
-				}
-				List<Map<String, Object>> map2 = reportDao.queryOnduty(CU_ID,
+				}*/
+				
+				map.put("avgEfficiency", new DecimalFormat(".00").format((normal
+						+ notnomal == 0) ? 0
+						: (float) (ORDER_QUANTITY.isEmpty() ? 0 : Integer
+								.parseInt(ORDER_QUANTITY))
+								/ (float) (normal + notnomal)));
+				
+				/*List<Map<String, Object>> map2 = reportDao.queryOnduty(CU_ID,
 						inputss[1].isEmpty() ? "1970-01-01-00" : inputss[1],
 						inputss[2].isEmpty() ? "2050-01-01-00" : inputss[2]);
 				Integer normal = 0;
@@ -444,7 +472,7 @@ public class BizServiceImpl implements IBizService {
 						other = data1.get("QUANTITY_ONDUTY") == null ? 0
 								: (Integer) data1.get("QUANTITY_ONDUTY");// 其他工
 					}
-				}
+				}*/
 				map.put("normal", normal.toString());
 				map.put("notnomal", notnomal.toString());
 				map.put("other", other.toString());
@@ -533,28 +561,28 @@ public class BizServiceImpl implements IBizService {
 								.toString());
 				sheet.addCell(pimsName);
 				Label orderQuantity = new Label(2, i,
-						map.get("orderQuantity") == null ? "" : map.get(
+						map.get("orderQuantity") == null ? "0" : map.get(
 								"orderQuantity").toString());
 				sheet.addCell(orderQuantity);
 				Label quantityOnduty = new Label(3, i,
-						map.get("quantityOnduty") == null ? "" : map.get(
+						map.get("quantityOnduty") == null ? "0" : map.get(
 								"quantityOnduty").toString());
 				sheet.addCell(quantityOnduty);
 				Label avgEfficiency = new Label(4, i,
-						map.get("avgEfficiency") == null ? "" : map.get(
+						map.get("avgEfficiency") == null ? "0" : map.get(
 								"avgEfficiency").toString());
 				sheet.addCell(avgEfficiency);
 				Label normal = new Label(5, i, map.get("normal") == null ? ""
 						: map.get("normal").toString());
 				sheet.addCell(normal);
 				Label notnomal = new Label(6, i,
-						map.get("notnomal") == null ? "" : map.get("notnomal")
+						map.get("notnomal") == null ? "0" : map.get("notnomal")
 								.toString());
 				sheet.addCell(notnomal);
-				Label other = new Label(7, i, map.get("other") == null ? ""
+				Label other = new Label(7, i, map.get("other") == null ? "0"
 						: map.get("other").toString());
 				sheet.addCell(other);
-				Label percent = new Label(8, i, map.get("percent") == null ? ""
+				Label percent = new Label(8, i, map.get("percent") == null ? "0"
 						: map.get("percent").toString());
 				sheet.addCell(percent);
 
