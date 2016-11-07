@@ -82,6 +82,16 @@
 			on dt.id=CU.id
 			LEFT JOIN (select c.id,sum(q.ORDER_QUANTITY) AS ORDER_QUANTITY from jd_le_order_quantity q
 			inner join np_sys_controlunit c on c.id=q.CU_ID
+			where  concat(
+				DATE_FORMAT(q.BIZ_DATE, '%Y-%m-%d'),
+				'-',
+				q.TIME_PERIOD
+			) >= #{starttime}
+			AND concat(
+				DATE_FORMAT(q.BIZ_DATE, '%Y-%m-%d'),
+				'-',
+				q.TIME_PERIOD
+			) < #{endtime}
 			group by c.id)od
 			on od.id=cu.id
 			where cu.PARENT_NAME LIKE CONCAT('%', #{area}, '%')
@@ -98,15 +108,66 @@
 		         when dd.WORK_TYPE='4' THEN 1 ELSE 0 END) as NOTNORMAL,
 		sum(case when dd.WORK_TYPE='5' THEN 1 END) as OTHER
 		from (
-			select DISTINCT card.controlunitid,date_format(door.OPEN_TIME,'%y-%m-%d') open_time,wtp.work_type,door.card_id
-			  from np_dt_door_inout door 
-				LEFT JOIN np_cd_card card on door.CARD_ID = card.ID 
-				LEFT JOIN np_sys_person person on person.ID = card.PERSON_ID
-		    	LEFT JOIN (select person_code,work_type from np_sys_person p LEFT JOIN np_cd_card c on p.id=c.PERSON_ID and c.PERSON_ID is null) wtp on person.PERSON_CODE=wtp.person_code
-				where DATE_FORMAT(door.OPEN_TIME,'%Y-%m-%d-%H') >= #{starttime} AND DATE_FORMAT(door.OPEN_TIME,'%Y-%m-%d-%H')<#{endtime} and door.CARD_ID is not null
-		   group by card.controlunitid,open_time,wtp.work_type,door.card_id
+			SELECT
+				bb.CONTROLUNITID,
+				aa.open_time,
+				bb.work_type,
+				aa.card_id
+			FROM
+			(
+		SELECT DISTINCT
+			date_format(door.OPEN_TIME, '%y-%m-%d') open_time,
+			door.card_id
+		FROM
+			np_dt_door_inout door FORCE INDEX (
+				IDX_DOOR_INOUT_1,
+				IDX_DOOR_INOUT_2
+			)
+		INNER JOIN (
+			SELECT
+				sub.id
+			FROM
+				NP_CF_SUBSYSTEM sub
+			LEFT JOIN NP_EQ_AREA area ON sub.AREA_ID = area.ID
+			WHERE
+				area.AREA_CLASS = 'BROUGH'
+			AND area.FULL_PATH in 
+				(
+					SELECT DISTINCT
+						FULL_PATH
+					FROM
+						NP_EQ_AREA
+					)) sub
+						ON sub.id = door.subsystem_id
+					WHERE
+						DATE_FORMAT(door.OPEN_TIME,'%Y-%m-%d-%H') >= #{starttime} AND DATE_FORMAT(door.OPEN_TIME,'%Y-%m-%d-%H')<#{endtime} and door.card_id is not null
+				) aa
+				INNER JOIN (
+					SELECT
+						card.id,
+						card.subsystem_id,
+						wtp.work_type,
+						card.CONTROLUNITID
+					FROM
+						np_cd_card card FORCE INDEX (IDX_CARD_1)
+					INNER JOIN np_sys_person person ON person.ID = card.PERSON_ID
+					INNER JOIN (
+						SELECT
+							person_code,
+							work_type
+						FROM
+							np_sys_person p
+						LEFT JOIN np_cd_card c ON p.id = c.PERSON_ID
+						AND c.PERSON_ID IS NULL
+					) wtp ON person.PERSON_CODE = wtp.person_code
+				) bb ON aa.card_id = bb.id
+				GROUP BY
+					bb.CONTROLUNITID,
+					aa.open_time,
+					bb.work_type,
+					aa.card_id
 		) dd
-		group by dd.controlunitid
+		group by dd.CONTROLUNITID
 	]]>
 	</select>
   	
