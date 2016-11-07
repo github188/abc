@@ -114,9 +114,9 @@
 	<![CDATA[	
 		select 		
 			IFNULL(round(avg(case when PERSON_TYPE='1' THEN QUANTITY_ONDUTY END),2),0) as EmpNum,
-			IFNULL(round(avg(case when PERSON_TYPE='2' THEN QUANTITY_ONDUTY END),2),0)*0.8+
-	 		IFNULL(round(avg(case	when PERSON_TYPE='3' THEN QUANTITY_ONDUTY END),2),0)*0.5+
-	        IFNULL(round(avg(case	when PERSON_TYPE='4' THEN QUANTITY_ONDUTY END),2),0)*0.8 as NotEmpNum,
+			IFNULL(round(avg(case when PERSON_TYPE='2' THEN QUANTITY_ONDUTY END),2),0)+
+	 		IFNULL(round(avg(case	when PERSON_TYPE='3' THEN QUANTITY_ONDUTY END),2),0)+
+	        IFNULL(round(avg(case	when PERSON_TYPE='4' THEN QUANTITY_ONDUTY END),2),0) as NotEmpNum,
 	        IFNULL(round(avg(case when PERSON_TYPE='5' THEN QUANTITY_ONDUTY END),2),0) as otherNumEmp
 	        from JD_LE_LABOUR_ONDUTY 
 	        WHERE BIZ_DATE=#{currentDate} 
