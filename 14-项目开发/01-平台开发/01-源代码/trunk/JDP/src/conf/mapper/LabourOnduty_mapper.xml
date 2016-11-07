@@ -46,15 +46,64 @@
 		         when dd.WORK_TYPE='4' THEN 1 ELSE 0 END) as num_temp,
 	    sum(case when dd.WORK_TYPE='5' then 1 else 0 end) as num_other
 	from (
-		select DISTINCT card.controlunitid,date_format(door.OPEN_TIME,'%y-%m-%d') open_time,wtp.work_type,door.card_id
-		  from np_dt_door_inout door 
-			LEFT JOIN np_cd_card card on  card.ID =door.CARD_ID
-			LEFT JOIN np_sys_person person on person.ID = card.PERSON_ID
-	    LEFT JOIN (select person_code,work_type from np_sys_person p LEFT JOIN np_cd_card c on p.id=c.PERSON_ID and c.PERSON_ID is null) wtp on person.PERSON_CODE=wtp.person_code
-	    LEFT JOIN np_sys_controlunit cu on cu.id=card.controlunitid
-			where door.OPEN_TIME >=#{startDate} AND door.OPEN_TIME<=#{endDate} and door.card_id is not null
-				and CU.FULL_PATH like CONCAT(#{fullPath},'%' )
-	   group by card.controlunitid,open_time,wtp.work_type,door.card_id
+		SELECT
+			aa.cu_id,
+			aa.open_time,
+			bb.work_type,
+			aa.card_id
+		FROM
+			(
+				SELECT DISTINCT
+				  sub.cu_id,
+					date_format(door.OPEN_TIME, '%y-%m-%d') open_time,
+					door.card_id
+				FROM
+					np_dt_door_inout door FORCE INDEX (
+						IDX_DOOR_INOUT_1,
+						IDX_DOOR_INOUT_2
+					)
+				INNER JOIN (
+					SELECT
+						sub.id,
+					  sub.controlunitid as cu_id
+					FROM
+						NP_CF_SUBSYSTEM sub
+					INNER JOIN np_sys_controlunit CU ON sub.CONTROLUNITID = CU.ID
+					WHERE
+						 CU.FULL_PATH like CONCAT(#{fullPath},'%' )
+					
+				) sub ON sub.id = door.subsystem_id
+				WHERE
+					door.OPEN_TIME >= #{startDate)
+				AND door.OPEN_TIME < #{endDate}
+				AND door.card_id IS NOT NULL
+			) aa
+		INNER JOIN (
+			SELECT
+				card.id,
+				card.subsystem_id,
+				wtp.work_type
+			FROM
+				np_cd_card card FORCE INDEX (IDX_CARD_1)
+		  INNER JOIN np_sys_controlunit CU ON card.CONTROLUNITID = CU.ID
+					
+			INNER JOIN np_sys_person person FORCE INDEX (PRIMARY) ON person.ID = card.PERSON_ID
+			INNER JOIN (
+				SELECT
+					person_code,
+					work_type
+				FROM
+					np_sys_person p
+				LEFT JOIN np_cd_card c ON p.id = c.PERSON_ID
+				AND c.PERSON_ID IS NULL
+			) wtp ON person.PERSON_CODE = wtp.person_code
+			WHERE
+						 CU.FULL_PATH like CONCAT(#{fullPath},'%' )
+		) bb ON aa.card_id = bb.id
+		GROUP BY
+			aa.open_time,
+			bb.work_type,
+			aa.card_id
 	) dd
 	LEFT JOIN np_sys_controlunit cu on CU.id =dd.controlunitid
 	group by dd.controlunitid,dd.open_time
@@ -150,7 +199,7 @@
 						wtp.work_type
 					FROM
 						np_cd_card card FORCE INDEX (IDX_CARD_1)
-					INNER JOIN np_sys_person person FORCE INDEX (PRIMARY) ON person.ID = card.PERSON_ID
+					INNER JOIN np_sys_person person  ON person.ID = card.PERSON_ID
 					INNER JOIN (
 						SELECT
 							person_code,
