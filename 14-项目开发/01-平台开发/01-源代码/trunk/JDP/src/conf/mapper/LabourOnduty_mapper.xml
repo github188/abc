@@ -87,7 +87,7 @@
 				np_cd_card card FORCE INDEX (IDX_CARD_1)
 		  INNER JOIN np_sys_controlunit CU ON card.CONTROLUNITID = CU.ID
 					
-			INNER JOIN np_sys_person person FORCE INDEX (PRIMARY) ON person.ID = card.PERSON_ID
+			INNER JOIN np_sys_person person  ON person.ID = card.PERSON_ID
 			INNER JOIN (
 				SELECT
 					person_code,
