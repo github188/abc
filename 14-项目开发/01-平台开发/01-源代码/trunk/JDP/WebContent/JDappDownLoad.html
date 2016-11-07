@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>JD分拣中心监控App下载</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telphone=no, email=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <link type="text/css" rel="stylesheet" href="appDownLoad/mreset.css">
+  <link type="text/css" rel="stylesheet" href="appDownLoad/qfang-mpage.css">
+  	<script type="text/javascript" src="js/common/jquery.min.js"></script>
+</head>
+
+<body>
+  <section class="box">
+    <div class="box-inner">
+      <p class="logo"><img src="appDownLoad/JDlogo.png"></p>
+      <p class="btns">
+        <a class="js-button" href="itms-services://?action=download-manifest&url=https%3A%2F%2Fwww.pgyer.com%2Fapiv1%2Fapp%2Fplist%3FaId%3D286dfa63b6b7b7735aec313f4b3d3e65%26_api_key%3D9cb594b528fc000ae57edc7487b1d013"><img src="appDownLoad/btn-ios.png"></a>
+        <a class="js-button" href="https://www.pgyer.com/Ntwa?sig=QRbQmtH2x9s7I5pd9rfCrUdSmnd32LDuBqhrSOXMQd4t6rrebWoCxC4T7rJWrLg5"><img src="appDownLoad/btn-android.png"></a>
+      </p>
+      <p class="tips">如果无法下载，请点击右上角<img src="appDownLoad/icon-menu.png">按钮，使用浏览器打开下载。</p>
+      <p class="tips" style="margin:2%"> 注：IOS9以上第一次安装企业版应用需要授权&nbsp;<input type="button" style="color: red;" id="show" value="点击查看安装说明"></input></p>
+    </div>
+  </section>
+  <section id="tip" style="height: 55%;width:100%;background-color:#56B454;position: absolute;top:100%;display: none;">
+		<img id="pic1" src="appDownLoad/1.png" style="height:95%;width: 14%;border-radius: 2px;margin: 1%;border: 1px solid #FED815;"/>
+		<img id="pic2" src="appDownLoad/2.png" style="height:95%;width: 14%;border-radius: 2px;margin: 1%;border: 1px solid #FED815;"/>
+		<img id="pic3" src="appDownLoad/3.png" style="height:95%;width: 14%;border-radius: 2px;margin: 1%;border: 1px solid #FED815;"/>
+		<img id="pic4" src="appDownLoad/4.png" style="height:95%;width: 14%;border-radius: 2px;margin: 1%;border: 1px solid #FED815;"/>
+		<img id="pic5" src="appDownLoad/5.png" style="height:95%;width: 14%;border-radius: 2px;margin: 1%;border: 1px solid #FED815;"/>
+		<img id="pic6" src="appDownLoad/6.png" style="height:95%;width: 14%;border-radius: 2px;margin: 1%;border: 1px solid #FED815;"/>
+  </section>
+  <div id="arrow" class="arrow"><img src="arrow.png" style="width:100%;"></div>
+  <script>
+  (function() {
+    function checkWX() {
+      var ua = navigator.userAgent.toLowerCase();
+      return (ua.match(/MicroMessenger/i) == 'micromessenger');
+    }
+
+    if (checkWX()) {
+      var arrow = document.getElementById('arrow');
+      arrow.style.display = 'block';
+       $("#arrow").bind('click', function(e) {
+        if (arrow.style.display == 'block') {
+          arrow.style.display = 'none';
+        } else {
+          arrow.style.display = 'block';
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      });
+    }
+    var flag = false;
+    $("#show").bind('click',function(){
+    		if(!flag){
+    			flag = true;
+    			$("#tip").fadeIn();
+    		}else{
+    			flag = false;
+    			$("#tip").fadeOut();
+    		}
+    });
+    
+    var flag1 = false;
+    $("img[id^='pic']").bind('click',function(){
+    		if(!flag1){
+    			flag1 = true;
+    			$("img[id^='pic']").hide();
+    			$(this).css({
+    				"width":"30%","margin-left":"35%"
+    			});
+    			$(this).fadeIn();
+    		}else{
+    			flag1 = false;
+    			//$(this).fadeOut();		
+    			$(this).css({
+    				"width":"14%","margin-left":"0"
+    			});
+    			$("img[id^='pic']").show();
+    		}
+    });
+  })();
+  </script>
+  <div style="display: none">
+   
+  </div>
+
+
+</body></html>
