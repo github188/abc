@@ -228,7 +228,7 @@ public class BizServiceImpl implements IBizService {
 				inputss[0] = inputs[i + 1].trim();
 				i++;
 			} else if (inputs[i].trim().equals("开始时间")) {
-				String[] sss = inputs[i + 1].split("-");
+				String[] sss = inputs[i + 1].trim().replace("时", "").replace(" ", "-").split("-");
 				for (int j = 0; j < sss.length; j++) {
 					if (sss[j].length() < 2) {
 						sss[j] = "0" + sss[j];
@@ -237,11 +237,11 @@ public class BizServiceImpl implements IBizService {
 				for (int j = 0; j < sss.length; j++) {
 					sBuffer.append(sss[j] + "-");
 				}
-				inputss[1] = sBuffer.substring(0, sBuffer.length() - 2).trim()
+				inputss[1] = sBuffer.substring(0, sBuffer.length() - 1).trim()
 						.replace(" ", "-");
 				i++;
 			} else if (inputs[i].trim().equals("结束时间")) {
-				String[] sss = inputs[i + 1].split("-");
+				String[] sss = inputs[i + 1].trim().replace("时", "").replace(" ", "-").split("-");
 				for (int j = 0; j < sss.length; j++) {
 					if (sss[j].length() < 2) {
 						sss[j] = "0" + sss[j];
@@ -250,7 +250,7 @@ public class BizServiceImpl implements IBizService {
 				for (int j = 0; j < sss.length; j++) {
 					sBuffer1.append(sss[j] + "-");
 				}
-				inputss[2] = sBuffer1.substring(0, sBuffer1.length() - 2)
+				inputss[2] = sBuffer1.substring(0, sBuffer1.length() - 1)
 						.trim().replace(" ", "-");
 				i++;
 			} else if (inputs[i].trim().equals("分拣场地")) {
@@ -370,7 +370,7 @@ public class BizServiceImpl implements IBizService {
 					inputss[0] = inputs[i + 1].trim();
 					i++;
 				} else if (inputs[i].trim().equals("开始时间")) {
-					String[] sss = inputs[i + 1].split("-");
+					String[] sss = inputs[i + 1].trim().replace("时", "").replace(" ", "-").split("-");
 					for (int j = 0; j < sss.length; j++) {
 						if (sss[j].length() < 2) {
 							sss[j] = "0" + sss[j];
@@ -379,11 +379,11 @@ public class BizServiceImpl implements IBizService {
 					for (int j = 0; j < sss.length; j++) {
 						sBuffer.append(sss[j] + "-");
 					}
-					inputss[1] = sBuffer.substring(0, sBuffer.length() - 2)
+					inputss[1] = sBuffer.substring(0, sBuffer.length() - 1)
 							.trim().replace(" ", "-");
 					i++;
 				} else if (inputs[i].trim().equals("结束时间")) {
-					String[] sss = inputs[i + 1].split("-");
+					String[] sss = inputs[i + 1].trim().replace("时", "").replace(" ", "-").split("-");
 					for (int j = 0; j < sss.length; j++) {
 						if (sss[j].length() < 2) {
 							sss[j] = "0" + sss[j];
@@ -392,7 +392,7 @@ public class BizServiceImpl implements IBizService {
 					for (int j = 0; j < sss.length; j++) {
 						sBuffer1.append(sss[j] + "-");
 					}
-					inputss[2] = sBuffer1.substring(0, sBuffer1.length() - 2)
+					inputss[2] = sBuffer1.substring(0, sBuffer1.length() - 1)
 							.trim().replace(" ", "-");
 					i++;
 				} else if (inputs[i].trim().equals("分拣场地")) {
@@ -480,6 +480,8 @@ public class BizServiceImpl implements IBizService {
 				}*/
 				map.put("normal", normal.toString());
 				map.put("notnomal", notnomal.toString());
+				map.put("quantityOnduty", normal+notnomal);
+				map.put("quantityOnduty", normal+notnomal+other);
 				map.put("other", other.toString());
 				map.put("percent",
 						normal.toString().equals("0") ? 0
