@@ -1,0 +1,73 @@
+html{font-size:62.5%; font-family:"\5fae\8f6f\96c5\9ed1","Microsoft YaHei";}
+img{vertical-align:top; width:100%; max-width:inherit;}
+body{height: 100%;}
+.box{background-color: #fed815;height: 100%;width: 100%; display:-webkit-box; display:-moz-box; display:box; -webkit-box-align:center; -moz-box-align:center; box-align:center; -webkit-box-pack:center; -moz-box-pack:center; box-pack:center;}
+.box-inner{display:inline-block;}
+.logo{width:62.34%; margin:0 auto;}
+.text{text-align:center; font-size:2em; line-height:1.5em; margin:1em auto 0;}
+.btns{margin:3.5em 0 0;}
+.btns a{display:block; width:85.625%; margin:0 auto 1.4em;}
+.tips{text-align:center; font-size:1.3em; line-height:1.3em; margin:3em 0 0; color:#675e25;}
+.tips img{width:.55em; height:auto; margin:0 .2em;}
+.arrow {
+display:none;position:fixed;top:0;right:0;bottom:0;left:0;text-align:right;
+filter: progid:DXImageTransform.Microsoft.gradient(enabled='true', startColorstr='#99000000', endColorstr='#99000000');
+}
+
+:root .arrow {
+filter: none;
+background-color: rgba(0, 0, 0, 0.6);
+}
+/* m2 UC QQ */
+@media only screen and (max-width:360px) and (min-height:508px) and (max-height:528px) {
+    body{font-size:90%;}
+}
+/* m2 WX Google */
+@media only screen and (max-width:360px) and (min-height:549px) and (max-height:569px) {
+    body{font-size:90%;}
+}
+
+/* iphone4 QQ */
+@media only screen and (max-width:320px) and (min-height:360px) and (max-height:380px) {
+    body{font-size:75%;}
+    .logo{width:60%;}
+    .btns{margin:2em .5em 0;}
+    .btns a{margin:0 auto 1.2em;}
+    .tips{margin:1.5em 0 0; padding:0 2em;}
+}
+/* iphone4 WX */
+@media only screen and (max-width:320px) and (min-height:410px) and (max-height:420px) {
+    body{font-size:80%;}
+    .logo{width:60%;}
+    .btns{margin:2.5em .5em 0;}
+    .btns a{margin:0 auto 1.2em;}
+    .tips{margin:1.5em 0 0; padding:0 2em;}
+}
+/* iphone4 Safari */
+@media only screen and (max-width:320px) and (min-height:440px) and (max-height:445px) {
+    body{font-size:85%;}
+    .logo{width:60%;}
+    .btns{margin:3em .5em 0;}
+    .btns a{margin:0 auto 1.4em;}
+    .tips{margin:2em 0 0; padding:0 2em;}
+}
+/* iphone5 QQ Safari */
+@media only screen and (max-width:320px) and (min-height:450px) and (max-height:470px) {
+    body{font-size:85%;}
+    .logo{width:60%;}
+    .btns{margin:3em .5em 0;}
+    .btns a{margin:0 auto 1.4em;}
+    .tips{margin:2em 0 0; padding:0 2em;}
+}
+/* iphone6 QQ Safari */
+@media only screen and (max-width:375px) and (min-height:556px) and (max-height:600px) {
+    body{font-size:90%;}
+}
+/* iphone6 WX */
+@media only screen and (max-width:375px) and (min-height:601px) and (max-height:605px) {
+    body{font-size:90%;}
+}
+/* MX4 Pro WX UC QQ */
+@media only screen and (min-width:384px) and (min-height:500px) and (max-height:520px) {
+    body{font-size:90%;}
+}
