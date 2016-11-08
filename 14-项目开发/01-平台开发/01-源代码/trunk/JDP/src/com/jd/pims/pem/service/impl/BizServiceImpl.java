@@ -72,8 +72,13 @@ public class BizServiceImpl implements IBizService {
 		String[] timeSpan = getTimeSpan(timePeriod, timePeriod == null ? 30
 				: 60);
 		// beginTime--;
+		if(timeSpan[0].compareTo(timeSpan[1])<0){
 		list = labourOndutyDao.getCurrentTimeLabourOnduty(sFormat.format(date),
 				timeSpan[0], timeSpan[1], cu.getFullPath());
+		}else{
+			list = labourOndutyDao.getCurrentTimeLabourOnduty2(sFormat.format(date),
+					timeSpan[0], timeSpan[1], cu.getFullPath());
+		}
 		Integer qty = 0;
 		logger.debug("符合记录数--->" + list.size());
 		for (LabourOnduty rec : list) {
@@ -145,13 +150,14 @@ public class BizServiceImpl implements IBizService {
 			Integer timePeriod) {
 		ControlUnit cu = userDao.findOrganization(cuId);
 
-		// String[] timeSpan=getTimeSpan(timePeriod,60);
 		if (timePeriod == null) {
 			Calendar c = Calendar.getInstance();// 可以对每个时间域单独修改
 			timePeriod = c.get(Calendar.HOUR_OF_DAY);
 			timePeriod = timePeriod == 0 ? 24 : timePeriod;
 		}
+		//取前一小时的在岗人数
 		LabourOndutyState lod = this.getNumberOnDuty(cuId, bizDate, timePeriod);
+		//取前一小时的订单量
 		OrderQuantity oq = orderQuantityDao.getHourOrderQuantiy(
 				sFormat.format(bizDate), timePeriod, cu.getFullPath());
 
@@ -168,17 +174,7 @@ public class BizServiceImpl implements IBizService {
 			result.setAvgEfficiency(effi);
 		}
 		logger.debug("------------------------------2");
-		// 取符合条件的人效记录（每个分拣中心一条记录）
-		/*
-		 * LabourEfficiency result = labourEfficiencyDao.getLabourEfficiency(
-		 * sFormat.format(bizDate), timePeriod,
-		 * cu.getFullPath(),timeSpan[0],timeSpan[1]); if(result==null){
-		 * result=new LabourEfficiency(); } result.setCuId(cuId);
-		 * result.setCuName(cu.getCuName()); if(result.getNumberOnduty()!=0){
-		 * result
-		 * .setEfficiency(result.getOrderQuantity()/(double)result.getNumberOnduty
-		 * ()); }
-		 */
+		
 		return result;
 
 	}
@@ -195,24 +191,21 @@ public class BizServiceImpl implements IBizService {
 		Calendar currentTime = Calendar.getInstance();
 		currentTime.setTime(new Date());
 		if (timePeriod != null) {// 整点
-			if (timePeriod == 24) {
-				currentTime.set(Calendar.HOUR, timePeriod - 1);
-				currentTime.set(Calendar.MINUTE, 59);
-				currentTime.set(Calendar.SECOND, 59);
-				span = 59;
-			} else {
-				currentTime.set(Calendar.HOUR, timePeriod);
-				currentTime.set(Calendar.MINUTE, 0);
-				currentTime.set(Calendar.SECOND, 0);
-			}
+			
+			currentTime.set(Calendar.HOUR_OF_DAY, timePeriod);
+			currentTime.set(Calendar.MINUTE, 0);
+			currentTime.set(Calendar.SECOND, 0);
 
 		}
 		String[] times = new String[] { "", "" };
 		times[1] = df.format(currentTime.getTime());
-		currentTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE)
+		if(timePeriod!=null && timePeriod==24){
+			currentTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY)
+					- 1);
+			times[1]=times[1].replaceFirst("00", "24");
+		}else{
+			currentTime.set(Calendar.MINUTE, currentTime.get(Calendar.MINUTE)
 				- span);
-		if (span == 59) {
-			currentTime.set(Calendar.SECOND, 0);
 		}
 		times[0] = df.format(currentTime.getTime());
 

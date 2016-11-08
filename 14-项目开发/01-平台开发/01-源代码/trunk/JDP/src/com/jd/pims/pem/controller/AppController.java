@@ -137,9 +137,6 @@ public class AppController extends BaseController {
 				//构造返回的数据结构
 				result.add("subItems", subItems);
 				
-				//求指定控制单元的平均人效
-				
-				//double avgEfficiency=parent.getEfficiency()/controlUnits.size();
 			}
 			
 			

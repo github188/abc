@@ -62,9 +62,9 @@ public class BizServiceImplTest extends
 	public void testGetEfficiency() {
 		Calendar c1 = Calendar.getInstance();
 		c1.setTime(new Date());
-		c1.set(2016, 8, 7);
+		c1.set(2016, 10, 31);
 		LabourEfficiency le = pemService
-				.getTimePeriodEfficience("11111111111111111111111111111111",c1.getTime(),10);
+				.getTimePeriodEfficience("11111111111111111111111111111111",c1.getTime(),24);
 		Assert.assertTrue("人效信息："+le, le != null);
 		logger.debug(le);
 	}
