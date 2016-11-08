@@ -34,7 +34,7 @@
 		<img id="pic5" src="appDownLoad/5.png" style="height:95%;width: 14%;border-radius: 2px;margin: 1%;border: 1px solid #FED815;"/>
 		<img id="pic6" src="appDownLoad/6.png" style="height:95%;width: 14%;border-radius: 2px;margin: 1%;border: 1px solid #FED815;"/>
   </section>
-  <div id="arrow" class="arrow"><img src="arrow.png" style="width:100%;"></div>
+  <div id="arrow" class="arrow"><img src="appDownLoad/arrow.png" style="width:100%;"></div>
   <script>
   (function() {
     function checkWX() {
@@ -45,17 +45,16 @@
     if (checkWX()) {
       var arrow = document.getElementById('arrow');
       arrow.style.display = 'block';
-       $("#arrow").bind('click', function(e) {
+    }
+    
+    $("#arrow").bind('click', function() {
         if (arrow.style.display == 'block') {
           arrow.style.display = 'none';
         } else {
           arrow.style.display = 'block';
         }
-        e.preventDefault();
-        e.stopPropagation();
         return false;
       });
-    }
     var flag = false;
     $("#show").bind('click',function(){
     		if(!flag){
