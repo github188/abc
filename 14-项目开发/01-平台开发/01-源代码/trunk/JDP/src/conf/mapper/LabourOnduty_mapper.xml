@@ -225,14 +225,14 @@
 						np_cd_card card FORCE INDEX (IDX_CARD_1)
 					INNER JOIN np_sys_person person  ON person.ID = card.PERSON_ID
 					INNER JOIN (
-						SELECT
-							person_code,
-							work_type
-						FROM
-							np_sys_person p
-						LEFT JOIN np_cd_card c ON p.id = c.PERSON_ID
-						AND c.PERSON_ID IS NULL
-					) wtp ON person.PERSON_CODE = wtp.person_code
+				SELECT
+					controlunitid,
+					person_code,
+					sum(work_type)-5 as work_type
+				FROM  np_sys_person
+				group by controlunitid,person_code
+				having (sum(work_type)-5)>0 and (sum(work_type)-5)<=5
+			) wtp ON person.PERSON_CODE = wtp.person_code and person.controlunitid = wtp.controlunitid
 				) bb ON aa.card_id = bb.id
 				GROUP BY
 					aa.open_time,
