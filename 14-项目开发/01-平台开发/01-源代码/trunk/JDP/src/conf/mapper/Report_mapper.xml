@@ -110,9 +110,8 @@
 		from (
 			SELECT
 				bb.CONTROLUNITID,
-				aa.open_time,
-				bb.work_type,
-				aa.card_id
+				
+				bb.work_type
 			FROM
 			(
 		SELECT DISTINCT
@@ -162,9 +161,7 @@
 					) wtp ON person.PERSON_CODE = wtp.person_code
 				) bb ON aa.card_id = bb.id
 				GROUP BY
-					bb.CONTROLUNITID,
-					aa.open_time,
-					bb.work_type,
+					
 					aa.card_id
 		) dd
 		group by dd.CONTROLUNITID

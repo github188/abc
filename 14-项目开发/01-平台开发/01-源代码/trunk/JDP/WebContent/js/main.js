@@ -535,7 +535,7 @@ option = {
 				if(seconds=='0'&&(minutes%5==0)){
 					//location.reload(true);
 					// init (mapName||'全国');
-					 getData(mapName);
+					 getData2(mapName);
 				}
 				$("#year").html(year);
 				$("#month").html(( month < 10 ? "0" : "" ) + month);
@@ -917,6 +917,15 @@ option = {
 /*			}*/
 		};
 		
+		function getData2(name){
+			setTimeout(searchMap2(name),1);
+			setTimeout(searchBar2(name),1);
+		/*	if(!enlarged){*/
+			setTimeout(searchBar(name),1);
+			setTimeout(searchBar1(name),1);
+/*			}*/
+		};
+		
 		function searchMap(name) {
 			var url = "chart/getMapData.do?name="+name;
 			$.ajax({
@@ -939,6 +948,16 @@ option = {
 			});
 		};
 		
+		function searchMap2(name) {
+			var url = "chart/getMapData.do?name="+name;
+			$.ajax({
+				url: url,
+				type: "post",
+				success: function (data) {
+					makeMapData2(data,name);
+				}
+			});
+		};
 		
 		//获取拼接地图数据
 		function makeMapData(data,name){
@@ -1165,6 +1184,80 @@ option = {
 			setMapOption(null,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
 		}
 		
+		//获取拼接地图数据
+		function makeMapData2(data,name){
+			mapdata= new Array();
+			piedata= new Array();
+			pieLegendData= new Array();
+			var data=eval(data);
+			var numEmp = 0.0;
+			var notNumEmp = 0.0;
+			var otherNumEmp = 0.0;
+			var a = 0.00;
+			var b = 0.00;
+			if(data!=null){
+				$.each(data, function(index, row){
+/*					if(row.name.match(/^黑龙江|^内蒙古/)){
+						row.name=data[index].name.substring(0,3);
+					}*/
+					var c = eval(row.EmpNum+row.NotEmpNum+row.otherNumEmp);
+					otherNumEmp += row.otherNumEmp;
+					numEmp += row.EmpNum;
+					notNumEmp += row.NotEmpNum;
+				});
+			}
+			a=numEmp+notNumEmp==0?0:((numEmp/(numEmp+notNumEmp)).toFixed(2));
+			b=numEmp+notNumEmp==0?0:((notNumEmp/(numEmp+notNumEmp)).toFixed(2));
+			piedata.push(
+					{
+						name:'正式员工  '+Math.ceil(a*100)+'%',
+						value: Math.ceil(numEmp),
+			            label: {
+			                normal: {
+			                    position: 'center',
+			                    textStyle:{
+			                    	fontWeight:'normal',fontSize:'1'
+			                    },
+			                    show:true
+			                },               
+			                emphasis: {
+			                    show: true,
+			                    textStyle: {
+			                        fontSize: '1',
+			                        fontWeight: 'bold'
+			                    }
+			                }	
+			                
+			            },
+					},
+					{
+						name:'非正式员工  '+Math.ceil(b*100)+'%',
+						value:Math.ceil(notNumEmp),
+			            label: {
+			                normal: {
+			                    position: 'center',
+			                    textStyle:{
+			                    	fontWeight:'normal',fontSize:'1'
+			                    },
+			                    show:true
+			                },               
+			                emphasis: {
+			                    show: true,
+			                    textStyle: {
+			                        fontSize: '1',
+			                        fontWeight: 'bold'
+			                    }
+			                }	
+			                
+			            },
+					}
+
+				); 
+			pieLegendData.push('正式员工  '+Math.ceil(a*100)+'%');
+			pieLegendData.push('非正式员工  '+Math.ceil(b*100)+'%');
+			setMapOption1(null,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
+		}
+		
 		function setMapOption(mapdata,piedata,pieLegendData,total,name){
 			$("#areaTip").html(name||"全国");
 			$("#mapTopLeft").html(name?name+'实时人力构成':'全国实时人力构成');
@@ -1172,6 +1265,32 @@ option = {
 			option.title.subtext =(total?""+Math.ceil(total)+"":'0');
 			if(mapdata){
 				option.geo.map= (name||"全国");
+				option.series[0].data = mapdata;
+				if(name=='海南'){
+					option.geo.center = [109.8,19];
+					option.geo.zoom = 4;
+				}else{
+					option.geo.center = [];
+					option.geo.zoom = 1;
+				};
+/*				if(name=='全国'){
+					option.geo.label.normal.show = true;
+				}else{
+					option.geo.label.normal.show = false;
+				}*/
+			};
+			pieOption.series[0].data = piedata;
+			pieOption.legend.data = pieLegendData;
+			mapchart.setOption(option, true);
+			piechart.setOption(pieOption, true);
+		}
+		
+		function setMapOption1(mapdata,piedata,pieLegendData,total,name){
+			$("#areaTip").html(name||"全国");
+			$("#mapTopLeft").html(name?name+'实时人力构成':'全国实时人力构成');
+			option.title.text = name?(name+"在岗总人数"):"在岗总人数";
+			option.title.subtext =(total?""+Math.ceil(total)+"":'0');
+			if(mapdata){
 				option.series[0].data = mapdata;
 				if(name=='海南'){
 					option.geo.center = [109.8,19];
