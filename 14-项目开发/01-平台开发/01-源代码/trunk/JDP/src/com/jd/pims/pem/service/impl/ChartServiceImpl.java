@@ -151,14 +151,14 @@ public class ChartServiceImpl implements IChartService {
 			if(timePeriod<0){
 				timePeriod=24;
 			}
-			SimpleDateFormat df = new SimpleDateFormat("HH:00:00");
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
 			currentTime.set(Calendar.HOUR_OF_DAY, currentTime.get(Calendar.HOUR_OF_DAY));
 			String end = df.format(currentTime.getTime());
 			currentTime.add(Calendar.HOUR_OF_DAY, -1);
 			String begin = df.format(currentTime.getTime());
-			if(timePeriod==0){
-				begin="00:00:00";
-			}
+			//if(timePeriod==0){
+			//	begin="00:00:00";
+			//}
 	        List<Map<String,Object>>areaList = userDao.getAreaList(name);
 	        for(Map<String,Object>map:areaList){
 		        double EmpNum = 0;
