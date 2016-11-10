@@ -56,7 +56,7 @@
 
   <select id="getHistoryLabourOnduty" resultMap="labourOndutyState">
   	<![CDATA[
-  	select dd.controlunitid as cu_id,CU.name as cu_name,dd.open_time as day_time,
+  	select dd.cu_id,CU.name as cu_name,dd.open_time as day_time,
 		sum(case when dd.WORK_TYPE='1' THEN 1 ELSE 0 END) as num_emp,
 		sum(case when dd.WORK_TYPE='2' THEN 1
 		 		 when dd.WORK_TYPE='3' THEN 1
@@ -72,7 +72,7 @@
 			(
 				SELECT DISTINCT
 				  sub.cu_id,
-					date_format(door.OPEN_TIME, '%y-%m-%d') open_time,
+					date_format(door.OPEN_TIME, '%Y-%m-%d') open_time,
 					door.card_id
 				FROM
 					np_dt_door_inout door FORCE INDEX (
@@ -91,7 +91,7 @@
 					
 				) sub ON sub.id = door.subsystem_id
 				WHERE
-					door.OPEN_TIME >= #{startDate)
+					door.OPEN_TIME >= #{startDate}
 				AND door.OPEN_TIME < #{endDate}
 				AND door.card_id IS NOT NULL
 			) aa
@@ -107,13 +107,13 @@
 			INNER JOIN np_sys_person person  ON person.ID = card.PERSON_ID
 			INNER JOIN (
 				SELECT
+					controlunitid,
 					person_code,
-					work_type
-				FROM
-					np_sys_person p
-				LEFT JOIN np_cd_card c ON p.id = c.PERSON_ID
-				AND c.PERSON_ID IS NULL
-			) wtp ON person.PERSON_CODE = wtp.person_code
+					sum(work_type)-5 as work_type
+				FROM  np_sys_person
+				group by controlunitid,person_code
+				having (sum(work_type)-5)>0 and (sum(work_type)-5)<=5
+			) wtp ON person.PERSON_CODE = wtp.person_code and person.controlunitid = wtp.controlunitid
 			WHERE
 						 CU.FULL_PATH like CONCAT(#{fullPath},'%' )
 		) bb ON aa.card_id = bb.id
@@ -122,8 +122,8 @@
 			bb.work_type,
 			aa.card_id
 	) dd
-	LEFT JOIN np_sys_controlunit cu on CU.id =dd.controlunitid
-	group by dd.controlunitid,dd.open_time
+	LEFT JOIN np_sys_controlunit cu on CU.id =dd.cu_id
+	group by dd.cu_id,dd.open_time
   	]]>
   </select>
   
