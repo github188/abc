@@ -49,8 +49,8 @@ public class ChartServiceImpl implements IChartService {
 		List<Map<String,Object>> result= new ArrayList<Map<String,Object>>();
 		Calendar calendar = Calendar.getInstance();
 		int hour = calendar.get(Calendar.HOUR_OF_DAY);
-		String temp_str=sdf.format(calendar.getTime()); 
-		SimpleDateFormat df = new SimpleDateFormat("HH:mm:00");
+		//String temp_str=sdf.format(calendar.getTime()); 
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
 		String end= df.format(calendar.getTime());
 		calendar.add(Calendar.MINUTE, -30);
 		String begin = df.format(calendar.getTime());
@@ -70,7 +70,7 @@ public class ChartServiceImpl implements IChartService {
 			List<Map<String,Object>> type3List = new ArrayList<Map<String,Object>>();
 			List<Map<String,Object>> type4List = new ArrayList<Map<String,Object>>();
 			List<Map<String,Object>> type5List = new ArrayList<Map<String,Object>>();
-				List<Map<String,Object>> labourOndutylist=labourOndutyDao.getCurrentTimeLabourOndutyForChart1(temp_str,begin,end, map.get("name").toString());
+				List<Map<String,Object>> labourOndutylist=labourOndutyDao.getCurrentTimeLabourOndutyForChart1(begin,end, map.get("name").toString());
 				if(null!=labourOndutylist&&!labourOndutylist.isEmpty()&&labourOndutylist.size()>0){
 			        for(Map<String,Object> map1:labourOndutylist){
 			        	switch (map1.get("personType").toString()) {
@@ -174,7 +174,7 @@ public class ChartServiceImpl implements IChartService {
 				List<Map<String,Object>> type3List = new ArrayList<Map<String,Object>>();
 				List<Map<String,Object>> type4List = new ArrayList<Map<String,Object>>();
 				List<Map<String,Object>> type5List = new ArrayList<Map<String,Object>>();
-					List<Map<String,Object>> labourOndutylist=labourOndutyDao.getCurrentTimeLabourOndutyForChart1(new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"",begin,end, map.get("name").toString());
+					List<Map<String,Object>> labourOndutylist=labourOndutyDao.getCurrentTimeLabourOndutyForChart1(begin,end, map.get("name").toString());
 					if(null!=labourOndutylist&&!labourOndutylist.isEmpty()&&labourOndutylist.size()>0){
 				        for(Map<String,Object> map1:labourOndutylist){
 				        	switch (map1.get("personType").toString()) {

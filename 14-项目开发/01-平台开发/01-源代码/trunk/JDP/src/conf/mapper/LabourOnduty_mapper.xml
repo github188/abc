@@ -136,10 +136,9 @@
 	        IFNULL(round(avg(case	when PERSON_TYPE='4' THEN QUANTITY_ONDUTY END),2),0) as NotEmpNum,
 	        IFNULL(round(avg(case when PERSON_TYPE='5' THEN QUANTITY_ONDUTY END),2),0) as otherNumEmp
 	        from JD_LE_LABOUR_ONDUTY 
-	        WHERE BIZ_DATE=#{currentDate} 
-	        AND TIMING >=#{begin} 
-	        AND TIMING <#{end} 
-			AND  CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+	        WHERE create_time >=#{begin} 
+	         	AND create_time <=#{end} 
+				CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
 	]]>
   </select>
   
@@ -148,15 +147,23 @@
 		select 		
 	        PERSON_TYPE as personType,IFNULL(QUANTITY_ONDUTY,0) as Num
 	        from JD_LE_LABOUR_ONDUTY 
-	        WHERE BIZ_DATE=#{currentDate} 
-	        AND TIMING >=#{begin} 
-	        AND TIMING <#{end} 
-			AND  CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+	        WHERE create_time >=#{begin} 
+	         	AND create_time <=#{end} 
+				AND  CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
 	]]>
   </select>
   
 <!--   <select id="getHistoryLabourOndutyForChart" resultType="java.util.HashMap">
 	<![CDATA[	
+		select 		
+	        PERSON_TYPE as personType,IFNULL(QUANTITY_ONDUTY,0) as Num
+	        from JD_LE_LABOUR_ONDUTY 
+	        WHERE BIZ_DATE=#{currentDate} 
+	        AND TIMING >=#{begin} 
+	        AND TIMING <#{end} 
+			AND  CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+			
+	
 		SELECT concat(concat((date_format(LO.BIZ_DATE,'%m')),'月'),concat((date_format(LO.BIZ_DATE,'%d')),'日')) as name,sum(case when LO.PERSON_TYPE='1' THEN LO.AVG_QUANTITY ELSE 0 END) as EmpNum,sum(case when LO.PERSON_TYPE='2' THEN LO.AVG_QUANTITY
  				 when LO.PERSON_TYPE='3' THEN LO.AVG_QUANTITY
                  when LO.PERSON_TYPE='4' THEN LO.AVG_QUANTITY ELSE 0 END) as NotEmpNum
