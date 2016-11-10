@@ -3,6 +3,7 @@ function randomData() {
     return Math.round(Math.random()*100)+100;
 }
 var datalist = null;
+var mapName = null;
 option = {
     title: {
         text: '在岗总人数',
@@ -533,7 +534,7 @@ option = {
 				var hours = new Date().getHours();
 				if(seconds=='0'&&(minutes%5==0)){
 					//location.reload(true);
-					 init ('全国');
+					 init (mapName||'全国');
 				}
 				$("#year").html(year);
 				$("#month").html(( month < 10 ? "0" : "" ) + month);
@@ -565,8 +566,8 @@ option = {
 		    init ('全国'); 
 		});
 		var enlarged = false;
-		function init (mapName){
-			$("#areaTip").html(mapName||"全国");
+		function init (nameMap){
+			$("#areaTip").html(nameMap||"全国");
 		    mapchart = echarts.init(document.getElementById('map'));
 			barchart = echarts.init(document.getElementById('effect'));
 			barchart1 = echarts.init(document.getElementById('count'));
@@ -574,35 +575,35 @@ option = {
 /*			barchart3 = echarts.init(document.getElementById('bar1'));*/
 			piechart = echarts.init(document.getElementById('pie'));
 			$.ajax({
-				url: 'geoJson/'+mapName+'.json',
+				url: 'geoJson/'+nameMap+'.json',
 				type: "get",
 				dataType: "json",
 				success: function (chinaJson) {
-				    echarts.registerMap(mapName, chinaJson);   
-				    getData(mapName);
+				    echarts.registerMap(nameMap, chinaJson);   
+				    getData(nameMap);
 				    //loadDault(mapName);
 				},statusCode: {404: function() {init ('全国');}}
 			});
 			mapchart.on('click', function (param){
-				var name=param.name;
+				mapName=param.name;
 				if(param.componentType=='geo'){
 					//在中国地图上要去掉这几个地方的点击事件 直辖市 台湾 
-					if(!name.match(/^北京|^天津|^重庆|^上海|^在线|^离线|^台湾/)&&name!=""){
-						$("#areaTip").html(name||"全国");
+					if(!mapName.match(/^北京|^天津|^重庆|^上海|^在线|^离线|^台湾/)&&mapName!=""){
+						$("#areaTip").html(mapName||"全国");
 						$.ajax({
-							url: 'geoJson/'+name+'.json',
+							url: 'geoJson/'+mapName+'.json',
 							type: "get",
 							dataType: "json",
 							success: function (chinaJson) {
-							    echarts.registerMap(name, chinaJson);   
-							    getData(name);
-							    //loadDault(name);
+							    echarts.registerMap(mapName, chinaJson);   
+							    getData(mapName);
+							    //loadDault(mapName);
 							},
 						  statusCode: {404: function() {init ('全国');}}
 						});
 				    }
 				}else{
-					getData1(name);
+					getData1(mapName);
 				}
 			}); 
 		};
