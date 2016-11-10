@@ -3,7 +3,7 @@ function randomData() {
     return Math.round(Math.random()*100)+100;
 }
 var datalist = null;
-var mapName = null;
+var mapName = '全国';
 option = {
     title: {
         text: '在岗总人数',
@@ -534,7 +534,8 @@ option = {
 				var hours = new Date().getHours();
 				if(seconds=='0'&&(minutes%5==0)){
 					//location.reload(true);
-					 init (mapName||'全国');
+					// init (mapName||'全国');
+					 getData(mapName);
 				}
 				$("#year").html(year);
 				$("#month").html(( month < 10 ? "0" : "" ) + month);
@@ -586,6 +587,7 @@ option = {
 			});
 			mapchart.on('click', function (param){
 				mapName=param.name;
+				componentType=param.componentType;
 				if(param.componentType=='geo'){
 					//在中国地图上要去掉这几个地方的点击事件 直辖市 台湾 
 					if(!mapName.match(/^北京|^天津|^重庆|^上海|^在线|^离线|^台湾/)&&mapName!=""){
