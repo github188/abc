@@ -148,7 +148,7 @@ public class ChartServiceImpl implements IChartService {
 			Calendar currentTime = Calendar.getInstance();
 			currentTime.setTime(new Date());
 			 timePeriod=currentTime.get(Calendar.HOUR_OF_DAY);
-			if(timePeriod<0){
+			if(timePeriod<=0){
 				timePeriod=24;
 			}
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:00:00");
