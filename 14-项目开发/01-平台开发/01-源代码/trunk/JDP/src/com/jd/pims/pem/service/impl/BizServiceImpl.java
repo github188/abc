@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.annotation.JsonFormat.Value;
 import com.jd.pims.pem.dao.LabourEfficiencyDao;
 import com.jd.pims.pem.dao.LabourOndutyDao;
 import com.jd.pims.pem.dao.OrderQuantityDao;
@@ -411,12 +412,14 @@ public class BizServiceImpl implements IBizService {
 					inputss[2].isEmpty() ? "2050-01-01-00" : inputss[2]);
 			Map<String, String> ondutyMap = new HashMap<>();
 			for (Map<String, Object> map : ondutys) {
-				ondutyMap.put(
-						map.get("CONTROLUNITID").toString(),
-						map.get("NORMAL") + "," + map.get("NOTNORMAL") + ","
-								+ map.get("OTHER"));
-				ondutyMap.put("11", map.get("NORMAL") + "," + map.get("NOTNORMAL")
-						+ "," + map.get("OTHER"));
+//				System.out.println(map.get("CONTROLUNITID").toString());
+//				System.out.println(map.get("OTHER")==null?"0":map.get("OTHER").toString());
+				if(map.get("CONTROLUNITID")!=null&&!"".equals(map.get("CONTROLUNITID"))){
+					String key =map.get("CONTROLUNITID").toString();
+					String value = map.get("NORMAL")==null?"0":map.get("NORMAL").toString() + "," + map.get("NOTNORMAL")==null?"0":map.get("NOTNORMAL").toString() + ","
+							+ map.get("OTHER")==null?"0":map.get("OTHER").toString();
+					ondutyMap.put( key,value );
+				}
 			}
 			
 			List<Map<String, Object>> response = new ArrayList<>();
@@ -435,15 +438,16 @@ public class BizServiceImpl implements IBizService {
 				map.put("pimsName", NAME);
 //				map.put("quantityOnduty", QUANTITY_ONDUTY);
 				map.put("orderQuantity", ORDER_QUANTITY);
-				
+
 				Integer normal = Integer
 						.parseInt(ondutyMap.get(CU_ID) == null ? "0" : ondutyMap
 								.get(CU_ID).toString().split(",")[0]);
 				Integer notnomal = Integer
 						.parseInt(ondutyMap.get(CU_ID) == null ? "0" : ondutyMap
-								.get(CU_ID).toString().split(",")[1]);
+								.get(CU_ID).toString().split(",").length>1?ondutyMap
+										.get(CU_ID).toString().split(",")[1]:"0");
 				Integer other = Integer.parseInt(ondutyMap.get(CU_ID) == null ? "0"
-						: ondutyMap.get(CU_ID).toString().split(",")[2]);
+						: ondutyMap.get(CU_ID).toString().split(",").length>2?ondutyMap.get(CU_ID).toString().split(",")[2]:"0");
 
 				/*Map<String, Object> map1 = reportDao.queryavgefficiency(CU_ID,
 						inputss[1].isEmpty() ? "1970-01-01-00" : inputss[1],
