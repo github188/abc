@@ -136,13 +136,15 @@
   </select>
   
    <select id="getCurrentTimeLabourOndutyForChart1" resultType="java.util.HashMap">
-	<![CDATA[	
-		select 		
-	        PERSON_TYPE as personType,IFNULL(QUANTITY_ONDUTY,0) as Num
+	<![CDATA[
+	select dd.personType,sum(dd.Num) as Num from 
+		(select  cu_id,PERSON_TYPE as personType,max(timing),IFNULL(QUANTITY_ONDUTY,0) as Num
 	        from JD_LE_LABOUR_ONDUTY 
 	        WHERE create_time >=#{begin} 
 	         	AND create_time <=#{end} 
 				AND  CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+		group by cu_id,PERSON_TYPE) dd
+	group by dd.personType
 	]]>
   </select>
   

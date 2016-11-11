@@ -2,7 +2,11 @@ package com.jd.pims.pem.service.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +29,14 @@ public class ChartServiceImplTest extends
 
 	@Test
 	public void testGetNumberOnDuty() {
-		fail("Not yet implemented");
+		logger.info("图表上的人效接口测试");
+		try{
+			List<Map<String, Object>> results=service.getNumberOnDuty("京东集团");
+			Assert.assertTrue("返回记录数"+results.size(), results != null);
+		}catch(Exception e){
+			logger.debug("", e);
+			fail("测试失败！原因："+e.getMessage());
+		}
 	}
 
 	@Test
