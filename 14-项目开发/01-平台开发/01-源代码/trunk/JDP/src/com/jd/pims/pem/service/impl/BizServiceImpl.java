@@ -416,8 +416,8 @@ public class BizServiceImpl implements IBizService {
 //				System.out.println(map.get("OTHER")==null?"0":map.get("OTHER").toString());
 				if(map.get("CONTROLUNITID")!=null&&!"".equals(map.get("CONTROLUNITID"))){
 					String key =map.get("CONTROLUNITID").toString();
-					String value = map.get("NORMAL")==null?"0":map.get("NORMAL").toString() + "," + map.get("NOTNORMAL")==null?"0":map.get("NOTNORMAL").toString() + ","
-							+ map.get("OTHER")==null?"0":map.get("OTHER").toString();
+					String value = (map.get("NORMAL")==null?"0":map.get("NORMAL").toString()) + "," + (map.get("NOTNORMAL")==null?"0":map.get("NOTNORMAL").toString()) + ","
+							+ (map.get("OTHER")==null?"0":map.get("OTHER").toString());
 					ondutyMap.put( key,value );
 				}
 			}
