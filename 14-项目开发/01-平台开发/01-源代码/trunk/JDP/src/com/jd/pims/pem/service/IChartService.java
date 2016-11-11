@@ -36,12 +36,12 @@ public interface IChartService {
 	/**
 	 * 取按小时为单位人效统计
 	 * 
-	 * @param cuId  控制单元
+	 * @param areaName  防区名称
 	 * @param bizDate 业务日期
 	 * @param timePeriod 时间点
 	 * @return
 	 */
-	public List<Map<String, Object>> getEfficience(String cuId);
+	public List<Map<String, Object>> getEfficience(String areaName);
 
 	/**
 	 * 取历史人效
