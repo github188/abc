@@ -48,13 +48,13 @@ public class ChartServiceImpl implements IChartService {
 		}
 		List<Map<String,Object>> result= new ArrayList<Map<String,Object>>();
 		Calendar calendar = Calendar.getInstance();
-		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+		//int hour = calendar.get(Calendar.HOUR_OF_DAY);
 		//String temp_str=sdf.format(calendar.getTime()); 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
 		String end= df.format(calendar.getTime());
 		calendar.add(Calendar.MINUTE, -30);
 		String begin = df.format(calendar.getTime());
-		if(hour==0){begin="00:00:00";}
+		//if(hour==0){begin="00:00:00";}
 		List<Map<String,Object>> arealist=userDao.getCurrentTimeAreaForChart(name);
 		for(Map<String,Object>map:arealist){
 			Map<String,Object>tempMap = new HashMap<String,Object>();
