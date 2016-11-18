@@ -17,9 +17,10 @@ public interface IChartService {
 	 * 
 	 * @param cuId
 	 *            控制单元（组织架构)id
+	 * @param bizDate 业务日期（此参数方便测试，默认应该是当天）           
 	 * @return
 	 */
-	public List<Map<String, Object>> getNumberOnDuty(String cuId);
+	public List<Map<String, Object>> getNumberOnDuty(String cuId,Date bizDate);
 
 	/**
 	 * 取历史在岗人数(当天的平均值)

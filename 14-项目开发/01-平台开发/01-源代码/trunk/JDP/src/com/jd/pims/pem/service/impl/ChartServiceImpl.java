@@ -45,16 +45,17 @@ public class ChartServiceImpl implements IChartService {
 	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
 	@Override
-	public List<Map<String, Object>> getNumberOnDuty(String name) {
+	public List<Map<String, Object>> getNumberOnDuty(String name,Date bizDate) {
 		// TODO Auto-generated method stub
 		if ("全国".equals(name)) {
 			name = "京东集团";
 		}
 		List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
 		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(bizDate);
 		// int hour = calendar.get(Calendar.HOUR_OF_DAY);
 		// String temp_str=sdf.format(calendar.getTime());
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:00");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String end = df.format(calendar.getTime());
 		calendar.add(Calendar.MINUTE, -30);
 		String begin = df.format(calendar.getTime());
@@ -178,9 +179,7 @@ public class ChartServiceImpl implements IChartService {
 			String end = df.format(currentTime.getTime());
 			currentTime.add(Calendar.HOUR_OF_DAY, -1);
 			String begin = df.format(currentTime.getTime());
-			// if(timePeriod==0){
-			// begin="00:00:00";
-			// }
+			
 			List<Map<String, Object>> areaList = userDao.getAreaList(name);
 			for (Map<String, Object> map : areaList) {
 				double EmpNum = 0;
@@ -395,7 +394,7 @@ public class ChartServiceImpl implements IChartService {
 		String bizDate = sdf.format(today);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(today);
-		int currentTime = calendar.get(Calendar.HOUR_OF_DAY) + 1;
+		int currentTime = calendar.get(Calendar.HOUR_OF_DAY) ;
 		Set<Integer> allTimes=new HashSet<Integer>();
 		for(int i=1;i<currentTime;i++){
 			allTimes.add(i);

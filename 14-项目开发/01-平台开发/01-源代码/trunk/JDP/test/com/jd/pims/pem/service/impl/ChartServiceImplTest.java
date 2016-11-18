@@ -30,9 +30,13 @@ public class ChartServiceImplTest extends
 
 	@Test
 	public void testGetNumberOnDuty() {
-		logger.info("图表上的人效接口测试");
+		logger.info("图表上的在岗人数接口测试");
 		try{
-			List<Map<String, Object>> results=service.getNumberOnDuty("京东集团");
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.YEAR, 2016);
+			calendar.set(Calendar.MONTH, 10);
+			calendar.set(Calendar.DAY_OF_MONTH, 18);
+			List<Map<String, Object>> results=service.getNumberOnDuty("东莞麻涌分拣中心",calendar.getTime());
 			Assert.assertTrue("返回记录数"+results.size(), results != null);
 		}catch(Exception e){
 			logger.debug("", e);

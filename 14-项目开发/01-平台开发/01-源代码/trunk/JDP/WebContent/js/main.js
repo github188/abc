@@ -5,6 +5,7 @@ function randomData() {
 var datalist = null;
 var mapName = '全国';
 showCenterflag = false;
+var currentCenterName=null;
 option = {
     title: {
         text: '在岗总人数',
@@ -540,7 +541,7 @@ option = {
 					if(!showCenterflag){
 						getData2(mapName);
 					}else{
-						searchMyCenterData();
+						searchMyCenterData(currentCenterName);
 					} 
 				}
 				$("#year").html(year);
@@ -1963,7 +1964,8 @@ option = {
 			myCenterchart.setOption(MyCenterOption, true);
 		};
 		function searchMyCenterData(cuName){
-			var url = "chart/getMyCenterData.do?cuName="+(cuName==null?window.uerInfo.cuName:cuName);
+			currentCenterName=cuName==null?window.uerInfo.cuName:cuName;
+			var url = "chart/getMyCenterData.do?cuName="+currentCenterName;
 			$.ajax({
 				url: url,
 				type: "post",
@@ -1978,10 +1980,11 @@ option = {
 					var nowNotClerkNum = 0;
 					var nowOtherClerkNum = 0;
 					if(data!=null){
+						debugger;
 						$.each(data, function(index, row){
 							//clerkNum 员工数 orderNum 订单数  date 日期
 							eachHourTotalNum=(row.clerkNum?row.clerkNum:0)+(row.notClerkNum?row.notClerkNum:0)+(row.otherClerkNum?row.otherClerkNum:0);
-							if(new Date().getHours()+1==row.time){
+							if(new Date().getHours()==row.time){
 								nowClerkNum =(row.clerkNum?row.clerkNum:0);
 								nowNotClerkNum =(row.notClerkNum?row.notClerkNum:0);
 								nowOtherClerkNum =(row.otherClerkNum?row.otherClerkNum:0);

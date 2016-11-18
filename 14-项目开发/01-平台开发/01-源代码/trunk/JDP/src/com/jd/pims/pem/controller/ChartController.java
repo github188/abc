@@ -33,7 +33,7 @@ public class ChartController extends BaseController {
 	@ResponseBody
 	public String getMapData(HttpServletRequest request,HttpServletResponse response) {
 		String name = request.getParameter("name");
-		List<Map<String, Object>> list = chartService.getNumberOnDuty(name);
+		List<Map<String, Object>> list = chartService.getNumberOnDuty(name,new Date());
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}
