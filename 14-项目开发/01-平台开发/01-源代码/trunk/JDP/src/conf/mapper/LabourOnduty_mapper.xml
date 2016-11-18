@@ -139,12 +139,22 @@
    <select id="getCurrentTimeLabourOndutyForChart1" resultType="java.util.HashMap">
 	<![CDATA[
 	select dd.personType,sum(dd.Num) as Num from 
-		(select  cu_id,PERSON_TYPE as personType,max(timing),IFNULL(QUANTITY_ONDUTY,0) as Num
-	        from JD_LE_LABOUR_ONDUTY 
+		(select  lab.cu_id,lab.PERSON_TYPE as personType,lab.timing,IFNULL(lab.QUANTITY_ONDUTY,0) as Num
+	        from JD_LE_LABOUR_ONDUTY lab 
+					INNER JOIN(
+						 select  cu_id,PERSON_TYPE,BIZ_DATE ,max(timing) as TIMING
+							from JD_LE_LABOUR_ONDUTY 
+							WHERE create_time >=#{begin}  
+								AND create_time <=#{end}  
+						 AND  CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID 
+						 				where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+							group by cu_id,PERSON_TYPE
+					) maxt on maxt.cu_id=LAB.CU_ID AND maxt.PERSON_TYPE=LAB.PERSON_TYPE AND maxt.BIZ_DATE=lab.BIZ_DATE AND maxt.TIMING=lab.TIMING
 	        WHERE create_time >=#{begin} 
 	         	AND create_time <=#{end} 
-				AND  CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
-		group by cu_id,PERSON_TYPE) dd
+				AND  lab.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID 
+									where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+	) dd
 	group by dd.personType
 	]]>
   </select>
@@ -252,12 +262,34 @@
   
   <select id="getCurrentTimeLabourOndutyForEDC" resultMap="labourOnduty">
   	<![CDATA[
-  		select person_type,max(timing) as timing,quantity_onduty
-  		from jd_le_labour_onduty lab
-  		left join np_sys_controlunit cu on cu.id=lab.cu_id
-  		where biz_date=#{bizDate} and cu.name=#{cuName} and substring(timing,1,2)=#{currentHour}
-  		and CREATE_TIME<now()
-  		group by person_type
+  		SELECT
+			lab.person_type,
+			lab.timing,
+			lab.quantity_onduty
+		FROM
+			jd_le_labour_onduty lab
+		INNER JOIN (
+			SELECT
+				cu_id,
+				BIZ_DATE,
+				person_type,
+				max(timing) AS timing
+			FROM
+				jd_le_labour_onduty lab
+			LEFT JOIN np_sys_controlunit cu ON cu.id = lab.cu_id
+			WHERE
+				biz_date = #{bizDate} and cu.name=#{cuName} and substring(timing,1,2)=#{currentHour}
+			AND CREATE_TIME < now()
+			GROUP BY
+				person_type
+		) maxt ON maxt.cu_id = LAB.CU_ID
+		AND maxt.PERSON_TYPE = LAB.PERSON_TYPE
+		AND maxt.BIZ_DATE = lab.BIZ_DATE
+		AND maxt.TIMING = lab.TIMING
+		LEFT JOIN np_sys_controlunit cu ON cu.id = lab.cu_id
+		WHERE
+			lab.biz_date = #{bizDate} and cu.name=#{cuName} and substring(lab.timing,1,2)=#{currentHour}
+		AND lab.CREATE_TIME < now()
   		
   	]]>
   </select>

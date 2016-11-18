@@ -777,7 +777,7 @@ option = {
 		    barchart1.setOption(barOption1, true);
 		    var barOption2 = {
 					title: {
-			            text: '实时监控',
+			            text: '前一小时人数/人效监控',
 			            subtext:'人数',
 			            left: 'left',
 				        top: 5,
@@ -1460,7 +1460,7 @@ option = {
 			barOption2 = {
 					background:"rga(0,0,0,0.9)",
 					title: {
-			            text: '实时监控',
+			            text: '前一小时人数/人效监控',
 			            subtext:'',
 			            left: 'left',
 				        top: 5,
