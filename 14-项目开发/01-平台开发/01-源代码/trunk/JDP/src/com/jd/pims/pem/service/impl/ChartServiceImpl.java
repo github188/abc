@@ -119,13 +119,13 @@ public class ChartServiceImpl implements IChartService {
 						+ Integer
 								.parseInt(String.valueOf(type2List.size() == 0 ? 0
 										: type2List.get(0).get("Num")))
-						* 0.8
+						
 						+ Integer
 								.parseInt(String.valueOf(type3List.size() == 0 ? 0
-										: type3List.get(0).get("Num"))) * 0.5;
+										: type3List.get(0).get("Num"))) ;
 				NotEmpNum = Integer
 						.parseInt(String.valueOf(type4List.size() == 0 ? 0
-								: type4List.get(0).get("Num"))) * 0.8;
+								: type4List.get(0).get("Num"))) ;
 				otherNumEmp = Integer
 						.parseInt(String.valueOf(type5List.size() == 0 ? 0
 								: type5List.get(0).get("Num")));
@@ -243,14 +243,13 @@ public class ChartServiceImpl implements IChartService {
 											.valueOf(type2List.size() == 0 ? 0
 													: type2List.get(0).get(
 															"Num")))
-							* 0.8
 							+ Integer
 									.parseInt(String
 											.valueOf(type3List.size() == 0 ? 0
 													: type3List.get(0).get(
-															"Num"))) * 0.5;
+															"Num"))) ;
 					NotEmpNum = Integer.parseInt(String.valueOf(type4List
-							.size() == 0 ? 0 : type4List.get(0).get("Num"))) * 0.8;
+							.size() == 0 ? 0 : type4List.get(0).get("Num"))) ;
 					otherNumEmp = Integer.parseInt(String.valueOf(type5List
 							.size() == 0 ? 0 : type5List.get(0).get("Num")));
 				}
