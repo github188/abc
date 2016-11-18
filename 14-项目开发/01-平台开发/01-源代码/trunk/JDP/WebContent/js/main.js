@@ -1818,7 +1818,7 @@ option = {
 				initMyCenter();
 				assembThisHourBar(145582,25633,7525);
 				$('#myCenterButton').css({"background":"url(images/2on.png)no-repeat","color":"#9eddff","background-size":"cover"});
-				searchMyCenterData();
+				searchMyCenterData(cuName);
 				showCenterflag =true;
 			}else{
 				getUserInfo();
@@ -1962,8 +1962,8 @@ option = {
 			myCenterchart = echarts.init(document.getElementById('myCenterAreaA'));
 			myCenterchart.setOption(MyCenterOption, true);
 		};
-		function searchMyCenterData(){
-			var url = "chart/getMyCenterData.do?cuName="+window.uerInfo.cuName;
+		function searchMyCenterData(cuName){
+			var url = "chart/getMyCenterData.do?cuName="+(cuName==null?window.uerInfo.cuName:cuName);
 			$.ajax({
 				url: url,
 				type: "post",
