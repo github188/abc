@@ -426,6 +426,13 @@ public class ChartServiceImpl implements IChartService {
 					notClerkNum = 0;
 					time++;
 					map = new HashMap<String, Object>();
+					if (lab.getPersonType().equals("1")) {// 正式工
+						map.put("clerkNum", lab.getQuantityOnduty());
+					} else if (lab.getPersonType().equals("5")) {// 其他
+						map.put("otherClerkNum", lab.getQuantityOnduty());
+					} else {// 非正式工
+						notClerkNum += lab.getQuantityOnduty();
+					}
 				}
 			}
 		}

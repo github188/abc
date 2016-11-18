@@ -74,7 +74,7 @@ public class ChartServiceImplTest extends
 			calendar.set(Calendar.YEAR, 2016);
 			calendar.set(Calendar.MONTH, 10);//11月
 			calendar.set(Calendar.DAY_OF_MONTH, 18);
-			List<Map<String, Object>> result=service.getMyCenterData("北京马驹桥分拣中心",calendar.getTime());
+			List<Map<String, Object>> result=service.getMyCenterData("东莞麻涌分拣中心",calendar.getTime());
 			if(result!=null){
 				logger.info(result);
 			}
