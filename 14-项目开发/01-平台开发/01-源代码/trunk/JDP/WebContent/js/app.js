@@ -78,13 +78,16 @@ var reports = angular.module('reports', ['ngCookies','ui.bootstrap','ngFileUploa
 reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', function($scope,$http,$cookieStore,Upload){
 	end = new Date();
 	$scope.ee="2016-01-11T05:25:07Z";
-	$scope.dt=new Date(end.valueOf() - 7*24*60*60*1000).getFullYear()+"-"+(new Date(end.valueOf() - 7*24*60*60*1000).getMonth()+1)+"-"+new Date(end.valueOf() - 7*24*60*60*1000).getDate()+" "+new Date(end.valueOf() - 7*24*60*60*1000).getHours()+" 时";
-    $scope.openCalendar = function ($event) {
+	$scope.dt=new Date(end.valueOf() - 7*24*60*60*1000).getFullYear()+"-"+(new Date(end.valueOf() - 7*24*60*60*1000).getMonth()+1)+"-"+new Date(end.valueOf() - 7*24*60*60*1000).getDate();
+	$scope.dttime=" "+new Date(end.valueOf() - 7*24*60*60*1000).getHours()+" 时";
+    
+	$scope.openCalendar = function ($event) {
         $event.preventDefault();
         $event.stopPropagation();
         $scope.opened = true;
     };
-    $scope.dt1=new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate()+" "+new Date().getHours()+" 时";
+    $scope.dt1=new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate();
+    $scope.dt1time=" "+new Date().getHours()+" 时";
     $scope.openCalendar1 = function ($event) {
     	$event.preventDefault();
     	$event.stopPropagation();
@@ -131,8 +134,8 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', f
 	$scope.changepage = function(index){
 		$scope.inputsss=[];
 		$scope.inputsss.push("区域,"+$scope.input11);
-		$scope.inputsss.push("开始时间,"+$scope.dt);
-		$scope.inputsss.push("结束时间,"+$scope.dt1);
+		$scope.inputsss.push("开始时间,"+$scope.dt+$scope.dttime);
+		$scope.inputsss.push("结束时间,"+$scope.dt1+$scope.dt1time);
 		$scope.inputsss.push("分拣场地,"+$scope.input22);
 //		$scope.pages[$scope.currentpage].status=$scope.status2;
 		$scope.pages[index].status=$scope.status3;
@@ -170,8 +173,8 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', f
 	$scope.first=function(){
 		$scope.inputsss=[];
 		$scope.inputsss.push("区域,"+$scope.input11);
-		$scope.inputsss.push("开始时间,"+$scope.dt);
-		$scope.inputsss.push("结束时间,"+$scope.dt1);
+		$scope.inputsss.push("开始时间,"+$scope.dt+$scope.dttime);
+		$scope.inputsss.push("结束时间,"+$scope.dt1+$scope.dt1time);
 		$scope.inputsss.push("分拣场地,"+$scope.input22);
 		$scope.currentpage=0;
 		$scope.pages=[
@@ -198,8 +201,8 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', f
 	console.log($scope.currentpage);
 	$scope.inputssss=[];
 	$scope.inputssss.push("区域, ");
-	$scope.inputssss.push("开始时间,"+$scope.dt);
-	$scope.inputssss.push("结束时间,"+$scope.dt1);
+	$scope.inputssss.push("开始时间,"+$scope.dt+$scope.dttime);
+	$scope.inputssss.push("结束时间,"+$scope.dt1+$scope.dt1time);
 	$scope.inputssss.push("分拣场地, ");
 	var url = "export/queryyydata.do?";
 	$scope.flag=true;
@@ -219,6 +222,7 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', f
 				}
 			}
 			$scope.flag=false;
+			$scope.refresh=false;
 		});
 	}
 	$scope.inputadd= function (){
@@ -258,15 +262,17 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', f
 			$scope.inputshow1=true;
 		}
 	};
+	$scope.refresh=true;
 	$scope.save11= function (){
+		$scope.refresh=true;
 		$scope.inputsss=[];
 		console.log($scope.input11);
-		console.log($scope.dt);
-		console.log($scope.dt1);
+		console.log($scope.dt+$scope.dttime);
+		console.log($scope.dt1+$scope.dt1time);
 		console.log($scope.input22);
 		$scope.inputsss.push("区域,"+$scope.input11);
-		$scope.inputsss.push("开始时间,"+$scope.dt);
-		$scope.inputsss.push("结束时间,"+$scope.dt1);
+		$scope.inputsss.push("开始时间,"+$scope.dt+$scope.dttime);
+		$scope.inputsss.push("结束时间,"+$scope.dt1+$scope.dt1time);
 		$scope.inputsss.push("分拣场地,"+$scope.input22);
 		$scope.currentpage=0;
 		$scope.pages=[
@@ -292,6 +298,7 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', f
 			}
 		});
 		$scope.inputsss=[];
+		$scope.refresh=false;
 	};
 
 	$scope.outputshow1=false;
@@ -337,12 +344,12 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', f
 	$scope.daochu=function(){
 		$scope.inputsss=[];
 		console.log($scope.input11);
-		console.log($scope.dt);
-		console.log($scope.dt1);
+		console.log($scope.dt+$scope.dttime);
+		console.log($scope.dt1+$scope.dt1time);
 		console.log($scope.input22);
 		$scope.inputsss.push("区域,"+$scope.input11);
-		$scope.inputsss.push("开始时间,"+$scope.dt);
-		$scope.inputsss.push("结束时间,"+$scope.dt1);
+		$scope.inputsss.push("开始时间,"+$scope.dt+$scope.dttime);
+		$scope.inputsss.push("结束时间,"+$scope.dt1+$scope.dttime);
 		$scope.inputsss.push("分拣场地,"+$scope.input22);
 		var url = "export/yydata.do?";
 		$http.post(url+"inputs="+$scope.inputsss).success(function(response) {
@@ -356,12 +363,12 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', f
 	$scope.save=function(){
 		$scope.inputsss=[];
 		console.log($scope.input11);
-		console.log($scope.dt);
-		console.log($scope.dt1);
+		console.log($scope.dt+$scope.dttime);
+		console.log($scope.dt1+$scope.dt1time);
 		console.log($scope.input22);
 		$scope.inputsss.push("区域,"+$scope.input11);
-		$scope.inputsss.push("开始时间,"+$scope.dt);
-		$scope.inputsss.push("结束时间,"+$scope.dt1);
+		$scope.inputsss.push("开始时间,"+$scope.dt+$scope.dttime);
+		$scope.inputsss.push("结束时间,"+$scope.dt1+$scope.dt1time);
 		$scope.inputsss.push("分拣场地,"+$scope.input22);
 		$scope.currentpage=0;
 		$scope.pages=[
@@ -416,6 +423,33 @@ reports.controller('yyreportsctrl', ['$scope','$http','$cookieStore','Upload', f
             console.log('error status: ' + status);
         });
 	};
+	$scope.minusdttime = function(){
+		if(!($scope.dttime.trim().split(" ")[0]=="0")){
+			$scope.dttime = " "+($scope.dttime.trim().split(" ")[0]-1)+" 时";
+		}
+		console.log($scope.dttime.trim().split(" ")[0].length);
+		console.log($scope.dt+$scope.dttime);
+	}
+	$scope.adddttime = function(){
+		if(!($scope.dttime.trim().split(" ")[0]=="23")){
+			$scope.dttime = " "+($scope.dttime.trim().split(" ")[0]-1+2)+" 时";
+		}
+		console.log($scope.dt+$scope.dttime);
+	}
+	$scope.minusdt1time = function(){
+		if(!($scope.dt1time.trim().split(" ")[0]=="0")){
+			$scope.dt1time = " "+($scope.dt1time.trim().split(" ")[0]-1)+" 时";
+		}
+		console.log($scope.dt1time.trim().split(" ")[0].length);
+		console.log($scope.dt1+$scope.dt1time);
+	}
+	$scope.adddt1time = function(){
+		if(!($scope.dt1time.trim().split(" ")[0]=="23")){
+			$scope.dt1time = " "+($scope.dt1time.trim().split(" ")[0]-1+2)+" 时";
+		}
+		console.log($scope.dt1+$scope.dt1time);
+	}
+	
 }]);
 
 reports.controller('ycreportsctrl', ['$scope','$http', function($scope,$http){

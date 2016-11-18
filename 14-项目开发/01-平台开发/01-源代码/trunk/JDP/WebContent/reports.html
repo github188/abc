@@ -75,13 +75,11 @@ body{
 #logOutButton {border: none;height: 3%;width: 3%; margin:0 auto;background:url(images/logout.png)no-repeat; background-size: 100% 100%;position:absolute;right:3%;top:6%}
 #reportsButton {border: none;height: 3%;width: 3%; margin:0 auto;background:url(images/logout.png)no-repeat; background-size: 100% 100%;position:absolute;right:6%;top:6%}
 /* .title {height: 8%; margin:0 auto;padding-top:0.5rem;padding-bottom:0.5rem; color:#46d7ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;} */
-#world {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:4.0rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
-#reportTitle {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:4.0rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:none}
+#world {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:3.5rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
+#reportTitle {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:3.5rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:none}
 .clock {display:inline;width:31%;height: 5%; margin-left:auto; padding-top:0.3%;position:relative;color:#46d7ff; background:url(images/clock.png)no-repeat;  background-size: 100% 100%;margin-top:0.1%}
-.ng-binding{color:white}
-#clock,#page1 { display:inline; margin:0 auto; padding:0px; list-style:none; text-align:center; }
-#clock>li{display:inline;  font-size:4.0rem; text-align:center; font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
-#page1>li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
+ul { display:inline; margin:0 auto; padding:0px; list-style:none; text-align:center; }
+ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
 #point {  -moz-animation:mymove 1s ease infinite; -webkit-animation:mymove 1s ease infinite;}
 @-webkit-keyframes mymove 
 {
@@ -179,45 +177,42 @@ body{
 				  <input class="col-md-1 col-md-offset-10 btn btn-info" type="button" value="查询" ng-click="save11()"></input>
 				  <input class="col-md-1 btn btn-success" type="button" value="导出" ng-click="daochu()"></input>
 		      </div>
-		      <div class="center" style="padding-right:1rem;margin-top:1%;border:1px solid white;border-radius:5px;background-color:black;opacity:1;color:white;font-family: '造字工房悦圆常规体'">
+		      <div class="center" style="padding-left:1rem;padding-right:1rem;margin-top:1%;border:1px solid white;border-radius:5px;background-color:black;opacity:1;color:white;font-family: '造字工房悦圆常规体'">
 			    	<div class="row">
 			    		<div style="padding-top:1rem" class="col-md-3">
-					    	<div style="padding-top:0.5rem" class="col-md-4">区域</div>
+					    	<div style="padding-top:0.5rem" class="col-md-6">区域</div>
 					    	<div class="col-md-6"><input style="color:black;font-family: '微软雅黑'" type="text" ng-model="input11"/></div>
 					    </div>
-					    <div style="padding-top:1rem" class="col-md-3">
-					   		<div style="padding-top:0.5rem" class="col-md-4">分拣场地</div>
-					   		 <div class="col-md-6"><input style="color:black;font-family: '微软雅黑'" type="text"  ng-model="input22"/></div>
-			    		</div>
-			    		<div class="col-md-3">
-				  			<div style="padding-top:1.5rem" class="col-md-4">开始时间</div>
-<!-- 			    			<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd HH 时" ng-model="dt" is-open="opened" close-text="关闭"/> -->
-<!-- 		             		<button type="button" class="btn btn-default" ng-click="openCalendar($event)"><i class="glyphicon glyphicon-calendar"></i></button> -->
-				            <div  style="padding-top:1rem" class="form-group">
-				                <div class="input-group date form_datetime col-md-5" data-date="" data-date-format="yyyy-mm-dd hh 时" data-link-field="dtp_input1">
-				                    <input style="color:black;font-family: '微软雅黑'" type="text" ng-model="dt" readonly/>
-				<!--                     <input class="form-control" size="16" type="text" value="" readonly> -->
-									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-				                </div>
-				            </div>
-			
+			    		<div class="col-md-offset-3 col-md-6">
+				  			<div style="padding-top:1.5rem" class="col-md-offet-2 col-md-2">开始时间</div>
+				  			<div class="col-md-8" style="padding-top:0.5rem">
+				    			<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd" ng-model="dt" is-open="opened" close-text="关闭" readonly/>
+			             		<button type="button" class="btn btn-default" ng-click="openCalendar($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								<button type="button" class="pull-right btn btn-default" ng-click="adddttime()"><i class="glyphicon glyphicon-chevron-right"></i></button>
+			             		<input type="text" class="pull-right form-control" style="width:20%;" ng-model="dttime" readonly>
+			             		<button type="button" class="pull-right btn btn-default" ng-click="minusdttime()"><i class="glyphicon glyphicon-chevron-left"></i></button>
+				  			</div>
 				    	</div>
-				    	<div class="col-md-3">
-				    		<div style="padding-top:1.5rem" class="col-md-4">结束时间</div>
-<!-- 				    		<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd HH 时" ng-model="dt1" is-open="opened1" close-text="关闭"/> -->
-<!-- 		             		<button type="button" class="btn btn-default" ng-click="openCalendar1($event)"><i class="glyphicon glyphicon-calendar"></i></button> -->
-			             	 <div style="padding-top:1rem" class="form-group">
-				                <div class="input-group date form_datetime col-md-5" data-date="" data-date-format="yyyy-mm-dd hh 时" data-link-field="dtp_input1">
-				                    <input style="color:black;font-family: '微软雅黑'" type="text" ng-model="dt1" readonly/>
-				<!--                     <input class="form-control" size="16" type="text" value="" readonly> -->
-									<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-				                </div>
-				            </div>
-			            
+			   		</div>
+			   		
+			   		<div class="row">
+					    <div style="" class="col-md-3">
+					   		<div style="padding-top:0.5rem" class="col-md-6">分拣场地</div>
+					   		 <div style="padding-top:0.3rem"class="col-md-6"><input style="color:black;font-family: '微软雅黑'" type="text"  ng-model="input22" readonly/></div>
+			    		</div>
+				    	<div class="col-md-offset-3 col-md-6">
+				    		<div style="padding-top:0.5rem" class="col-md-offet-2 col-md-2">结束时间</div>
+				    		<div class="col-md-8" style="padding-bottom:0.5rem">
+				    			<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd" ng-model="dt1" is-open="opened1" close-text="关闭"/>
+		             			<button type="button" style="margin-top:0.5rem" class="btn btn-default" ng-click="openCalendar1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+		             			<button type="button" style="margin-top:0.5rem" class="pull-right btn btn-default" ng-click="adddt1time()"><i class="glyphicon glyphicon-chevron-right"></i></button>
+			             		<input type="text" class="pull-right form-control" style="width:20%;margin-top:0.5rem;"  ng-model="dt1time" readonly>
+			             		<button type="button" style="margin-top:0.5rem" class="pull-right btn btn-default" ng-click="minusdt1time()"><i class="glyphicon glyphicon-chevron-left"></i></button>
+		             		</div>
 		             	</div>
 			   		</div>
 		      </div>
-		    <div class="table-responsive" style="margin-top:30px;">
+		    <div class="table-responsive" style="margin-top:30px;" ng-hide="refresh">
 		      <table class="table table-bordered">
 		        <thead style="font-size:12px;color:white">
 		          <tr>
@@ -249,6 +244,37 @@ body{
 		        </tbody>
 		      </table>
 		    </div>
+		    <div class="table-responsive" style="margin-top:30px;margin-bottom:13%;" ng-show="refresh">
+		    <table class="table">
+		        <thead style="font-size:12px;color:white">
+		          <tr>
+		            <th>区域</th>
+		            <th>分拣场地名称</th>
+		            <th>操作总单数</th>
+		            <th>出勤总人数</th>
+		            <th>平均人效</th>
+		            <th>正式工数量</th>
+		            <th>非正式工数量</th>
+		            <th>其他人员数量</th>
+		            <th>正式工占比</th>
+		          </tr>
+		        </thead>
+		        <tbody style="font-size:12px;color:white">
+		          <tr>
+		            <td></td>
+		            <td></td>
+		            <td></td>
+		            <td></td>
+		            <td><img style="margin-top:50px;width:50px;height:50px;" src="images/refresh.gif"></td>
+		            <td></td>
+		            <td></td>
+		            <td></td>
+		            <td></td>
+		          </tr>
+		        </tbody>
+		      </table>
+		    </div>
+		    
 		    <ul id="page1" class="col-md-5 col-md-offset-2 pull-right">
 		      <li class="enable" ng-click="first()"><a href="#"><small style="color:#FFF;text-shadow: none;">首页</small></a></li>
 		      <li class="{{leftpagestatus}}" ng-click="leftchangepage()"><a style="color:#FFF;text-shadow: none;" href="#">&laquo;</a></li>

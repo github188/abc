@@ -9136,8 +9136,8 @@ function $LocaleProvider(){
             '一月,二月,三月,四月,五月,六月,七月,八月,九月,十月,十一月,十二月'
             .split(','),
         SHORTMONTH:  '1月,2月,3月,4月,5月,6月,7月,8月,9月,10月,11月,12月'.split(','),
-        DAY: '周日,周一,周二,周三,周四,周五,周六'.split(','),
-        SHORTDAY: '周日,周一,周二,周三,周四,周五,周六'.split(','),
+        DAY: '日,一,二,三,四,五,六'.split(','),
+        SHORTDAY: '日,一,二,三,四,五,六'.split(','),
         AMPMS: ['早','晚'],
         medium: 'MMM d, y h:mm:ss a',
         short: 'M/d/yy h:mm a',
