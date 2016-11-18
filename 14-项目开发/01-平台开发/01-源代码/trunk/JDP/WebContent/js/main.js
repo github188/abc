@@ -31,7 +31,7 @@ option = {
             var name = params.name;
             var value = params.value;
             var res ='<div style="margin:0;background:url(images/tooltip.png)no-repeat;background-size: 100% 100% ;text-align:center;padding:0;width:150%;padding-top:20%;box-shadow: 2px 2px 10px #32bbec;z-index:4">'
-            	+'<p style="background:#32bbec;color:#FFF;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:"造字工房悦圆常规体", Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value[2].toFixed(0)+'</p></div>';
+            	+'<p style="background:#32bbec;color:#FFF;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:黑体, Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value[2].toFixed(0)+'</p></div>';
                     //设置自定义数据的模板，这里的模板是图片
             console.log(res);
 /*            setTimeout(function (){
@@ -55,11 +55,11 @@ option = {
         	 normal: {
                  position: 'right',
                  show: true,
-                 textStyle:{color:'#FFFFFF',fontFamily:'造字工房悦圆常规体'}
+                 textStyle:{color:'#FFFFFF',fontFamily:'黑体'}
              },
              emphasis: {
             	 show: true,
-			     textStyle:{color:'#46D7FF',fontFamily:'造字工房悦圆常规体',fontSize:20}
+			     textStyle:{color:'#46D7FF',fontFamily:'黑体',fontSize:20}
 			 }
          },
          left:0,
@@ -90,11 +90,11 @@ option = {
                     formatter: '{b}',
                     position: 'right',
                     show: false,
-                    textStyle:{color:'#FFFFFF',fontFamily:'造字工房悦圆常规体'}
+                    textStyle:{color:'#FFFFFF',fontFamily:'黑体'}
                 },
 /*                emphasis: {
                     show: true,
-                    textStyle:{color:'#46D7FF',fontFamily:'造字工房悦圆常规体',fontSize:20}
+                    textStyle:{color:'#46D7FF',fontFamily:'黑体',fontSize:20}
                 }*/
             },
             itemStyle: {
@@ -169,7 +169,7 @@ option = {
 	        yAxis: [
 	        {
 	        	type:'value',
-	        	name: '数量(个)',
+	        	name: '数量',
 	        	axisLine:{
 		    		lineStyle:{
 		    			color:'#7ab8f9'
@@ -182,7 +182,7 @@ option = {
 	        },	        
 	        {
 	        	type:'value',
-	        	name: '人效(单/每人)',
+	        	name: '人效',
 	        	axisLine:{
 		    		lineStyle:{
 		    			color:'#7ab8f9'
@@ -307,7 +307,7 @@ option = {
 	        yAxis: [
 	        {
 	        	type:'value',
-	        	name: '数量(个)',
+	        	name: '数量',
 	        	axisLine:{
 		    		lineStyle:{
 		    			color:'#7ab8f9'
@@ -1439,8 +1439,8 @@ option = {
 			$("#orderCountNum").html(avgEffect);
 /*			$("#averageEffectName").html('小时处理量<span style="font-size:3rem;font-family:黑体;color:#FFF"> | </span>当日总单量');
 			$("#averageEffectNum").html(totalOrderNum+'<span style="font-size:3rem;font-family:黑体;color:#FFF"> | </span>'+totalOrder);*/
-			$("#averageEffectName").html('<p style="color:#FFF;font-size: 2.5rem;font-family:造字工房悦圆常规体,微软雅黑, Arial, Helvetica, sans-serif;">小时处理量</p><span style="color:#fedd1b;font-size: 4rem;font-family:digital-7__mono, Arial, Helvetica, sans-serif;">'+totalOrderNum+'</span>');
-			$("#averageEffectNum").html('<p style="color:#FFF;font-size: 2.5rem;font-family:造字工房悦圆常规体,微软雅黑, Arial, Helvetica, sans-serif;">当日总单量</p><span style="color:#fedd1b;font-size: 4rem;font-family:digital-7__mono, Arial, Helvetica, sans-serif;">'+totalOrder+'</span>');
+			$("#averageEffectName").html('<p style="color:#FFF;font-size: 2.5rem;font-family:黑体,微软雅黑, Arial, Helvetica, sans-serif;">小时处理量</p><span style="color:#fedd1b;font-size: 4rem;font-family:digital-7__mono, Arial, Helvetica, sans-serif;">'+totalOrderNum+'</span>');
+			$("#averageEffectNum").html('<p style="color:#FFF;font-size: 2.5rem;font-family:黑体,微软雅黑, Arial, Helvetica, sans-serif;">当日总单量</p><span style="color:#fedd1b;font-size: 4rem;font-family:digital-7__mono, Arial, Helvetica, sans-serif;">'+totalOrder+'</span>');
 			barOption2 = {
 					title: {
 			            text: '实时监控',
@@ -1524,7 +1524,7 @@ option = {
 				            			color:'#FFF',
 				                        fontSize: '12',
 				                        fontWeight: 'bold',
-				                        fontFamily:'造字工房悦圆常规体'
+				                        fontFamily:'黑体'
 				                    }	
 				            	},
 				            },
@@ -1566,7 +1566,7 @@ option = {
 			            			color:'#FFF',
 			                        fontSize: '12',
 			                        fontWeight: 'normal',
-			                        fontFamily:'造字工房悦圆常规体'
+			                        fontFamily:'黑体'
 			                    }
 			            	},
 			            },
