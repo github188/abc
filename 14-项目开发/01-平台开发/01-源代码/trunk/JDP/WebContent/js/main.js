@@ -214,8 +214,9 @@ option = {
 		            		  offset: 1, color: '#0054a8' // 100% 处的颜色
 		            		}], false)
 		            	}
-		            },
+		            }/*,
 		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
+		            */
 	        	},
 	        	{
 		            name: '人效',type: 'line',
@@ -238,8 +239,9 @@ option = {
 		            		  offset: 1, color: '#15B421' // 100% 处的颜色
 		            		}], false)
 		            	}
-		            },
+		            }/*,
 		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
+		            */
 	        	},
 	        	{
 		            name: '总订单数量',type: 'bar',barMaxWidth:30,
@@ -261,8 +263,9 @@ option = {
 		            		  offset: 1, color: '#570E72' // 100% 处的颜色
 		            		}], false)
 		            	}
-		            },
+		            }/*,
 		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
+		            */
 	        	},
 	        ]
 		};
@@ -340,8 +343,9 @@ option = {
 		            		  offset: 1, color: '#0054a8' // 100% 处的颜色
 		            		}], false)
 		            	}
-		            },
+		            }/*,
 		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
+		            */
 	        	}
 	        ]
 		};
@@ -861,8 +865,9 @@ option = {
 				            		}], false),
 				                    //barBorderRadius:[5, 5, 5, 5]
 				                }
-			               },
+			               }/*,
 			               data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
+			               */
 		            },	           
 		            {
 			            name: '非正式工',
@@ -899,8 +904,9 @@ option = {
 				            		}], false),
 			                   // barBorderRadius:[5, 5, 5, 5]
 			                }
-		               },
+		               }/*,
 		               data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
+		               */
 		        }
 			        ]
 				};
@@ -1931,10 +1937,11 @@ option = {
 				            		  offset: 1, color: '#0c6add' // 100% 处的颜色
 				            		}], false)
 				            	}
-				            },
+				            }/*,
 				            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
 				                   ,randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
 				                   ,randomData(),randomData(),randomData()]
+				            */
 			        	},
 			        	{
 				            name: '正式工占比',type: 'line',
@@ -1953,10 +1960,11 @@ option = {
 				            	normal:{
 				            		color:'#ff9f39'
 					            	}
-				            },
+				            }/*,
 				            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
 				                   ,randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
 				                   ,randomData(),randomData(),randomData()]
+				            */
 			        	}
 			        ]
 				};
