@@ -191,6 +191,15 @@
   		WHERE E.IS_CLERK=1 AND E.ID= #{id}
   </select>
   
+    <!-- 根据员工ID取员工基本信息 -->
+  <select id="getUserInfo" parameterType="String" resultType="java.util.HashMap">
+  		SELECT C.TYPE AS type,C.NAME AS cuName
+  		FROM NP_SYS_PERSON E 
+  			INNER JOIN NP_SYS_ORGANIZE O ON E.ORG_ID=O.ID
+  			INNER JOIN NP_SYS_CONTROLUNIT C ON E.CONTROLUNITID=C.ID
+  		WHERE E.PERSON_NAME = #{empName}
+  </select>
+  
   <select id="getEmployeeByIdandPwd"  resultType="String">
   		select u.id as UID from np_au_user u
 		left join np_sys_person p on p.id=u.PERSON_ID

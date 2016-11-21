@@ -78,5 +78,7 @@ public interface UserDao extends IBaseDao{
 	String getEmployeeByIdandPwd(@Param("empId")String empId,@Param("pwd")String pwd);
 
 	void changePassword(@Param("userId")String userId,@Param("newPwd")String newPwd);
+
+	Map<String, Object> getUserInfo(@Param("empName")String empName);
 	
 }

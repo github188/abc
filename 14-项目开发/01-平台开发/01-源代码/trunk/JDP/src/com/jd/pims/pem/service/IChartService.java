@@ -57,5 +57,7 @@ public interface IChartService {
 	 * @return
 	 */
 	public List<Map<String, Object>> getEfficiencyHistory(String cuId);
+
+	public List<Map<String, Object>> getMyCenterData(String cuName);
 	
 }

@@ -1,6 +1,7 @@
 package com.jd.pims.user.controller;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.google.gson.Gson;
 import com.jd.pims.comm.BaseController;
 import com.jd.pims.comm.PIMSException;
 import com.jd.pims.pem.service.impl.BizServiceImpl;
@@ -109,5 +111,20 @@ public class UserController extends BaseController {
 
 	}
 	
+	/**
+	 * 用户登出
+	 * 
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getUserInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public String getUserInfo(HttpServletRequest request) {
+		String empName = request.getParameter("empName");
+		Map<String, Object> uerInfo = userService.getUserInfo(empName);
+		Gson gson = new Gson();
+		return gson.toJson(uerInfo);
+
+	}
 	
 }

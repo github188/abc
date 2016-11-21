@@ -4,6 +4,7 @@ function randomData() {
 }
 var datalist = null;
 var mapName = '全国';
+uerInfo = new Array();
 option = {
     title: {
         text: '在岗总人数',
@@ -31,7 +32,7 @@ option = {
             var name = params.name;
             var value = params.value;
             var res ='<div style="margin:0;background:url(images/tooltip.png)no-repeat;background-size: 100% 100% ;text-align:center;padding:0;width:150%;padding-top:20%;box-shadow: 2px 2px 10px #32bbec;z-index:4">'
-            	+'<p style="background:#32bbec;color:#FFF;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:黑体, Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value[2].toFixed(0)+'</p></div>';
+            	+'<p style="background:#32bbec;color:#FFF;padding:0;margin:0;width:70%;margin-left:auto;margin-right:auto;font-size:1px;font-family:黑体, Arial, Helvetica, sans-serif;">'+name+'</p><p style="margin:0;color:#32bced;padding:0;">人数</p><p style="margin:0;padding:0;color:#11d320;font-family:digital-7__mono, Arial, Helvetica, sans-serif; ">'+value[2].toFixed(0)+'</p><a onlick="showMyCenter('+name+')">详情</a></div>';
                     //设置自定义数据的模板，这里的模板是图片
             console.log(res);
 /*            setTimeout(function (){
@@ -492,7 +493,7 @@ option = {
 				                emphasis: {
 				                    show: true,
 				                    textStyle: {
-				                        fontSize: '12',
+				                        fontSize: '5rem',
 				                        fontWeight: 'bold'
 				                    }
 				                }			                
@@ -509,7 +510,7 @@ option = {
 				                emphasis: {
 				                    show: true,
 				                    textStyle: {
-				                        fontSize: '12',
+				                        fontSize: '5rem',
 				                        fontWeight: 'bold'
 				                    }
 				                }
@@ -566,6 +567,10 @@ option = {
 		    });
 		    init ('全国'); 
 		});
+		  var thisURL = document.URL;    
+		  var  getval =thisURL.split('?')[1];  
+		  var showval= getval.split("=")[1];  
+		getUserInfo(showval);
 		var enlarged = false;
 		function init (nameMap){
 			$("#areaTip").html(nameMap||"全国");
@@ -901,10 +906,11 @@ option = {
 		}
 		function getData(name){
 			setTimeout(searchMap(name),1);
-			setTimeout(searchBar2(name),1);
-		/*	if(!enlarged){*/
 			setTimeout(searchBar(name),1);
 			setTimeout(searchBar1(name),1);
+			setTimeout(searchBar2(name),1);
+		/*	if(!enlarged){*/
+
 /*			}*/
 		};
 		
@@ -1771,3 +1777,28 @@ option = {
 		function ycreports(){
 			window.location.href = "ycreports.html";
 		}
+		function getUserInfo(empName){
+			var url = "user/getUserInfo.do?empName="+empName;
+			$.ajax({
+				url: url,
+				type: "post",
+				success: function (data) {
+					uerInfo = eval(data);
+				}
+			});
+		}
+		
+		function showMycenter(cuName){
+			if(null==cuName){
+				cuName=uerInfo.cuName;
+			}
+			var url = "chart/getMyCenterData.do?cuName="+cuName;
+			$.ajax({
+				url: url,
+				type: "post",
+				success: function (data) {
+					uerInfo = eval(data);
+				}
+			});
+		}
+		

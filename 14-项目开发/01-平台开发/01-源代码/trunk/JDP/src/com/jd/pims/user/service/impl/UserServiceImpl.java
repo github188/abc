@@ -210,4 +210,10 @@ public class UserServiceImpl implements IUserService {
 		return null;
 	}
 
+	@Override
+	public Map<String, Object> getUserInfo(String empName) {
+		// TODO Auto-generated method stub
+		return userDao.getUserInfo(empName);
+	}
+
 }

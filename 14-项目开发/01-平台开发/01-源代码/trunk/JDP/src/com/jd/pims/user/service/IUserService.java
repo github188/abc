@@ -2,6 +2,7 @@ package com.jd.pims.user.service;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 import com.jd.pims.comm.PIMSException;
 import com.jd.pims.user.model.ControlUnit;
@@ -58,4 +59,6 @@ public interface IUserService {
 	public String createAccount(InputStream inputStream);
 	
 	public String changePassword(String empId,String oldPwd,String newPwd,String confirmPwd) throws PIMSException;
+	
+	public Map<String,Object> getUserInfo(String empName);
 }
