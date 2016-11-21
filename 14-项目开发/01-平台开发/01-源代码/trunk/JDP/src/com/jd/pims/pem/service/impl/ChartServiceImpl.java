@@ -352,7 +352,7 @@ public class ChartServiceImpl implements IChartService {
 //	}
 
 	@Override
-	public List<Map<String, Object>> getMyCenterData(String cuName) {
+	public List<Map<String, Object>> getMyCenterData(String cuName,Date bizDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
