@@ -4,7 +4,8 @@ function randomData() {
 }
 var datalist = null;
 var mapName = '全国';
-uerInfo = new Array();
+uerInfo = null;
+showCenterflag = false;
 option = {
     title: {
         text: '在岗总人数',
@@ -523,6 +524,7 @@ option = {
 		    ]
 		};
 		$(document).ready(function () {
+			$('#myCenterFrame').hide();
 			var newDate = new Date();
 			/*newDate.setDate(newDate.getDate());*/
 
@@ -536,7 +538,11 @@ option = {
 				if(seconds=='0'&&(minutes%5==0)){
 					//location.reload(true);
 					// init (mapName||'全国');
-					 getData2(mapName);
+					if(!showCenterflag){
+						getData2(mapName);
+					}else{
+						searchMyCenterData();
+					} 
 				}
 				$("#year").html(year);
 				$("#month").html(( month < 10 ? "0" : "" ) + month);
@@ -566,11 +572,9 @@ option = {
 		        });
 		    });
 		    init ('全国'); 
+			getUserInfo();
 		});
-		  var thisURL = document.URL;    
-		  var  getval =thisURL.split('?')[1];  
-		  var showval= getval.split("=")[1];  
-		getUserInfo(showval);
+
 		var enlarged = false;
 		function init (nameMap){
 			$("#areaTip").html(nameMap||"全国");
@@ -982,7 +986,8 @@ option = {
 /*					if(row.name.match(/^黑龙江|^内蒙古/)){
 						row.name=data[index].name.substring(0,3);
 					}*/
-					var c = eval(row.EmpNum+row.NotEmpNum+row.otherNumEmp);
+				//	var c = eval(row.EmpNum+row.NotEmpNum+row.otherNumEmp);
+					var c = eval(row.EmpNum+row.NotEmpNum);
 					if(c<1){
 						mapdata.push({
 							//地区名称 取china area表
@@ -1113,7 +1118,8 @@ option = {
 				); 
 			pieLegendData.push('正式员工  '+Math.ceil(a*100)+'%');
 			pieLegendData.push('非正式员工  '+Math.ceil(b*100)+'%');
-			setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
+			//setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
+			setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp,name);
 		}
 
 		//获取拼接地图数据
@@ -1132,7 +1138,8 @@ option = {
 /*					if(row.name.match(/^黑龙江|^内蒙古/)){
 						row.name=data[index].name.substring(0,3);
 					}*/
-					var c = eval(row.EmpNum+row.NotEmpNum+row.otherNumEmp);
+//					var c = eval(row.EmpNum+row.NotEmpNum+row.otherNumEmp);
+					var c = eval(row.EmpNum+row.NotEmpNum);
 					otherNumEmp += row.otherNumEmp;
 					numEmp += row.EmpNum;
 					notNumEmp += row.NotEmpNum;
@@ -1187,7 +1194,8 @@ option = {
 				); 
 			pieLegendData.push('正式员工  '+Math.ceil(a*100)+'%');
 			pieLegendData.push('非正式员工  '+Math.ceil(b*100)+'%');
-			setMapOption(null,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
+			//setMapOption(null,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
+			setMapOption1(null,piedata,pieLegendData,numEmp+notNumEmp,name);
 		}
 		
 		//获取拼接地图数据
@@ -1206,7 +1214,8 @@ option = {
 /*					if(row.name.match(/^黑龙江|^内蒙古/)){
 						row.name=data[index].name.substring(0,3);
 					}*/
-					var c = eval(row.EmpNum+row.NotEmpNum+row.otherNumEmp);
+//					var c = eval(row.EmpNum+row.NotEmpNum+row.otherNumEmp);
+					var c = eval(row.EmpNum+row.NotEmpNum);
 					otherNumEmp += row.otherNumEmp;
 					numEmp += row.EmpNum;
 					notNumEmp += row.NotEmpNum;
@@ -1261,7 +1270,8 @@ option = {
 				); 
 			pieLegendData.push('正式员工  '+Math.ceil(a*100)+'%');
 			pieLegendData.push('非正式员工  '+Math.ceil(b*100)+'%');
-			setMapOption1(null,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
+//			setMapOption1(null,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
+			setMapOption1(null,piedata,pieLegendData,numEmp+notNumEmp,name);
 		}
 		
 		function setMapOption(mapdata,piedata,pieLegendData,total,name){
@@ -1448,6 +1458,7 @@ option = {
 			$("#averageEffectName").html('<p style="color:#FFF;font-size: 2.5rem;font-family:黑体,微软雅黑, Arial, Helvetica, sans-serif;">小时处理量</p><span style="color:#fedd1b;font-size: 4rem;font-family:digital-7__mono, Arial, Helvetica, sans-serif;">'+totalOrderNum+'</span>');
 			$("#averageEffectNum").html('<p style="color:#FFF;font-size: 2.5rem;font-family:黑体,微软雅黑, Arial, Helvetica, sans-serif;">当日总单量</p><span style="color:#fedd1b;font-size: 4rem;font-family:digital-7__mono, Arial, Helvetica, sans-serif;">'+totalOrder+'</span>');
 			barOption2 = {
+					background:"rga(0,0,0,0.9)",
 					title: {
 			            text: '实时监控',
 			            subtext:'',
@@ -1777,28 +1788,224 @@ option = {
 		function ycreports(){
 			window.location.href = "ycreports.html";
 		}
-		function getUserInfo(empName){
+		function getUserInfo(){
+			var thisURL = document.URL;    
+			var  getval =thisURL.split('?')[1];  
+			var empName= getval.split("=")[1];  
 			var url = "user/getUserInfo.do?empName="+empName;
 			$.ajax({
 				url: url,
 				type: "post",
 				success: function (data) {
-					uerInfo = eval(data);
+					uerInfo = eval("("+data+")");
+//					if("MANAGE"!=uerInfo.cuType){
+//						$('#myCenterButton').hide();
+//					}
 				}
 			});
 		}
 		
 		function showMycenter(cuName){
-			if(null==cuName){
-				cuName=uerInfo.cuName;
+			if(uerInfo){
+				$('#mainFrame').fadeOut();
+				if(null==cuName){
+					cuName=uerInfo.cuName;
+				}
+				$('#myCenterFrame').fadeIn(); 
+				$('#myCenterTile').html(cuName+"分拣中心");
+				initMyCenter();
+				DrawCanvas();
+				$('#myCenterButton').css({"background":"url(images/2on.png)no-repeat","color":"#9eddff","background-size":"cover"});
+				//searchMyCenterData();
+				showCenterflag =true;
+			}else{
+				getUserInfo();
 			}
+		}
+		
+		function showMain(){
+			if(!uerInfo){
+				getUserInfo();
+			}
+			$('#myCenterFrame').fadeOut();
+			$('#mainFrame').fadeIn(); 
+			$('#myCenterButton').css({"background":"url(images/2off.png)no-repeat","color":"#008bd6","background-size":"cover"});
+			showCenterflag = false;
+		}
+		
+		function initMyCenter(){
+			MyCenterOption = {
+					title: {
+			            text: '',
+			            left: 'left',
+				        top: 5,
+			        },
+					legend:{
+						data:['在岗人数图','正式工占比'],
+						bottom:5,
+						right:30,
+						textStyle:{
+				        	color:'#7de2ff'
+				        }
+					},
+				    tooltip : {
+				        trigger: 'item',
+				        textStyle:{
+				        	color:'#7ab8f9'
+				        }
+				    },
+				    xAxis: {
+				    	type:'category',
+				    	data:['1','2','3','4','5','6','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23'],
+				    	axisLine:{
+				    		lineStyle:{
+				    			color:'#00acf3'
+				    		}
+				        },
+				       	splitLine:{  
+		                    show:false  
+		                }
+			        },
+			        grid:{
+			        	left:10,
+			        	right:12,
+			        	bottom:'10%',
+			        	top:'20%',
+			        	containLabel:true
+			        },
+			        yAxis: [
+			        {
+			        	type:'value',
+			        	name: '数量',
+			        	axisLine:{
+				    		lineStyle:{
+				    			color:'#7ab8f9'
+				    		}
+				        } ,
+				        splitLine:{  
+		                    show:false  
+		                },
+		                //position:'right',
+			        },
+			        {
+			        	type:'value',
+			        	name: '占比',
+			        	axisLine:{
+				    		lineStyle:{
+				    			color:'#7ab8f9'
+				    		}
+				        } ,
+				        splitLine:{  
+		                    show:false  
+		                },
+		                //position:'right',
+			        }
+			        ],
+		           // color: ['#32bbec'],
+			        series: [
+			            {
+				            name: '在岗人数图',type: 'bar',barMaxWidth:30,
+				            label:{
+				            	normal:{
+				            		show:true,
+				            		position:'top'
+				            	},
+				            },
+				            barMinHeight:1,
+				            itemStyle:{
+				            	normal:{
+				            		color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+					            	  offset: 0, color: '#31fbfd' // 0% 处的颜色
+				            		}, {
+				            		  offset: 1, color: '#0c6add' // 100% 处的颜色
+				            		}], false)
+				            	}
+				            },
+				            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
+				                   ,randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
+				                   ,randomData(),randomData(),randomData()]
+			        	},
+			        	{
+				            name: '正式工占比',type: 'line',
+				            label:{
+				            	normal:{
+				            		show:true,
+				            		position:'top'
+				            	},
+				            },
+				            symbol:'circle',
+				            symbolSize:'10',
+				            smooth:true,
+				            barMinHeight:1,
+				            yAxisIndex:1,
+				            itemStyle:{
+				            	normal:{
+				            		color:'#ff9f39'
+					            	}
+				            },
+				            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
+				                   ,randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
+				                   ,randomData(),randomData(),randomData()]
+			        	}
+			        ]
+				};
+			myCenterchart = echarts.init(document.getElementById('myCenterAreaA'));
+			myCenterchart.setOption(MyCenterOption, true);
+		};
+		function searchMyCenterData(){
 			var url = "chart/getMyCenterData.do?cuName="+cuName;
 			$.ajax({
 				url: url,
 				type: "post",
 				success: function (data) {
-					uerInfo = eval(data);
-				}
+					myCenterdata= new Array();
+					myCenterdata[0] = new Array();
+					myCenterdata[1] = new Array();
+					myCenterdata[2] = new Array();
+					var data=eval(data);
+					var eachHourTotalNum = 0;
+					var totalClerkNum = 0;
+					var totalNotClerkNum = 0;
+					var totalOtherkNum = 0;
+					if(data!=null){
+						$.each(data, function(index, row){
+							//clerkNum 员工数 orderNum 订单数  date 日期
+							eachHourTotalNum=row.clerkNum+row.notClerkNum+row.otherNum;
+							totalClerkNum +=row.clerkNum;
+							totalNotClerkNum +=row.notClerkNum;
+							totalOtherkNum +=row.otherNum;
+							myCenterdata[0].push(Math.ceil(eachHourTotalNum));
+							myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil((row.clerkNum/eachHourTotalNum))*100);
+							myCenterdata[2].push(row.time);
+						});
+					}
+					MyCenterOption.series[0].data = myCenterdata[0];
+					MyCenterOption.series[1].data = myCenterdata[1];
+					MyCenterOption.xAxis.data = myCenterdata[2];
+					myCenterchart.setOption(MyCenterOption, true);
+					DrawCanvas(totalClerkNum,totalNotClerkNum,totalOtherkNum);
+			   }
 			});
+		};
+		function DrawCanvas(totalClerkNum,totalNotClerkNum,totalOtherkNum){
+            var painting = document.getElementById("myCenterAreaB");
+            if (painting == null)
+                return false;
+            var context = painting.getContext("2d");
+            //实践表明在不设施fillStyle下的默认fillStyle=black
+            context.fillRect(0, 0, 100, 100);
+            //实践表明在不设施strokeStyle下的默认strokeStyle=black
+            context.strokeRect(120, 0, 100, 100);
+
+            //设置纯色
+            context.fillStyle = "red";
+            context.strokeStyle = "blue";
+            context.fillRect(0, 120, 100, 100);
+            context.strokeRect(120, 120, 100, 100);
+
+            //设置透明度实践证明透明度值>0,<1值越低，越透明，值>=1时为纯色，值<=0时为完全透明
+            context.fillStyle = "rgba(255,0,0,0.2)";
+            context.strokeStyle = "rgba(255,0,0,0.2)";
+            context.fillRect(240,0 , 100, 100);
+            context.strokeRect(240, 120, 100, 100);
 		}
-		

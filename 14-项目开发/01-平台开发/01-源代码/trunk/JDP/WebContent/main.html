@@ -63,9 +63,13 @@ body{
     font-weight: normal;
     font-style: normal;
 }
+*{
+	padding:0;
+	margin:0
+}
 #logOutButton {border: none;height: 3%;width: 3%; margin:0 auto;background:url(images/logout.png)no-repeat; background-size: 100% 100%;position:absolute;right:3%;}
-#reportButton{width:7%;height:4%;background:url(images/reportButton.png)no-repeat; background-size: 100% 100%;position:absolute;left:0.5%;}
-#myCenterButton{width:7%;height:4%;background:url(images/reportButton.png)no-repeat; background-size: 100% 100%;position:absolute;left:7.5%;}
+#reportButton{border:none;width:9%;height:4%;background:url(images/1off.png)no-repeat; background-size: cover;position:absolute;left:0.5%;color:#008bd6;font-family:'黑体';text-align:center;font-size:2.5rem;padding-top: 0.5%;top:7.1%}
+#myCenterButton{border:none;width:9%;height:4%;background:url(images/2off.png)no-repeat; background-size: cover;position:absolute;left:8%;color:#008bd6;font-family:'黑体';text-align:center;font-size:2.5rem;top:7.5%}
 /* .title {height: 8%; margin:0 auto;padding-top:0.5rem;padding-bottom:0.5rem; color:#46d7ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;} */
 #world {width:100%;margin:0 auto;padding-bottom:1.5%;position:relative;font-family:'黑体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:4.0rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
 .clock {display:inline;width:31%;height: 5%; margin-left:auto; padding-top:0.3%;position:relative;color:#46d7ff; background:url(images/clock.png)no-repeat;  background-size: 100% 100%;margin-top:0.1%}
@@ -133,9 +137,9 @@ ul li {display:inline;  font-size:4.0rem; text-align:center; font-family:'digita
 		<div class="stars"></div>
 		<div id="world">京东集团分拣中心管理部全国在岗人员管理平台</div>	
 <!-- 		<button type="button" id="reportsButton" onclick="reports()"alt="报表"title="报表"></button> -->
-		<input type="button" id="logOutButton" ng-click="logout()" alt="退出"title="退出"></input>
-		<a id='reportButton'href='reports.html'></a>
-		<a id='myCenterButton'onclick="showMycenter()"></a>
+		<input type="button" id="logOutButton" ng-click="logout()" alt="退出"title="退出"/>
+		<input type="button" class="button" id='reportButton' onclick="window.location.href='reports.html'" value="运营报表"/>
+		<input type="button" id='myCenterButton' onclick="showMycenter()" value="我的分拣中心"/>
 		<div class="clock">
 			<ul>
 				<li id="year"></li>
@@ -193,13 +197,15 @@ ul li {display:inline;  font-size:4.0rem; text-align:center; font-family:'digita
 				</div>
 			</div>
 		</div>
-		<div id="myCenter" style="height: 88%;margin-top: 0.5%;position: relative;width:100%;padding:0;display:none">
-			<div id="myCenterAreaA" class="col-md-7 col-sm-7" style="height: 100%;padding:0;">	
-			</div>
-			<div id="myCenterAreaB" class="col-md-5 col-sm-5" style="height: 100%;padding:0;" >	
-			</div>
-		</div>
 		
+		<div id="myCenterFrame" style="height: 80%;margin-left: 1%;margin-top: 1%;position: relative;width:98%;padding:0;border: 1px solid #2E67AB;box-shadow:0 0 10px #2E67AB inset">
+			<div id="myCenterTile" class="" style="height: 6%;font-family:'黑体';left:42%;position:absolute;width:17%;background:url(images/myCenterTitle.png)no-repeat;background-size: 100% 100% ;color:#54e2ff;font-size:3rem">XX分拣中心</div>
+			<div id="myCenterAreaA" class="col-md-10 col-sm-10" style="height: 100%;padding:0;">	
+			</div>
+			<canvas id="myCenterAreaB" class="col-md-2 col-sm-2" style="height: 100%;padding:0;border: 1px solid #00C6FF;box-shadow:0 0 5px #00C6FF" >	
+			</canvas>
+		</div>
+		<div class="button" onclick="showMain()" style="width: 9%;height: 4%;background:none;position:absolute;left:46%;color:#00b5e6;font-family:'黑体';text-align:center;font-size:2.5rem;margin-top:1%;border: 1px solid #2E67AB;box-shadow:0 0 10px #2E67AB inset"> 返回首页 </div>
 </body>
 </html>
 
