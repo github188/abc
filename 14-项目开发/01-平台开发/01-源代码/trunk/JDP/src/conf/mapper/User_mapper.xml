@@ -193,7 +193,7 @@
   
     <!-- 根据员工ID取员工基本信息 -->
   <select id="getUserInfo" parameterType="String" resultType="java.util.HashMap">
-  		SELECT C.TYPE AS type,C.NAME AS cuName
+  		SELECT C.TYPE AS cuType,C.NAME AS cuName
   		FROM NP_SYS_PERSON E 
   			INNER JOIN NP_SYS_ORGANIZE O ON E.ORG_ID=O.ID
   			INNER JOIN NP_SYS_CONTROLUNIT C ON E.CONTROLUNITID=C.ID

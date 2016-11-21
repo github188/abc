@@ -75,8 +75,8 @@ body{
 #logOutButton {border: none;height: 3%;width: 3%; margin:0 auto;background:url(images/logout.png)no-repeat; background-size: 100% 100%;position:absolute;right:3%;top:6%}
 #reportsButton {border: none;height: 3%;width: 3%; margin:0 auto;background:url(images/logout.png)no-repeat; background-size: 100% 100%;position:absolute;right:6%;top:6%}
 /* .title {height: 8%; margin:0 auto;padding-top:0.5rem;padding-bottom:0.5rem; color:#46d7ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;} */
-#world {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:3.5rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
-#reportTitle {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'造字工房悦圆常规体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:3.5rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:none}
+#world {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'黑体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:3.5rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
+#reportTitle {width:100%;margin:0 auto;padding-bottom:1.5rem;position:relative;font-family:'黑体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:3.5rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:none}
 .clock {display:inline;width:31%;height: 5%; margin-left:auto; padding-top:0.3%;position:relative;color:#46d7ff; background:url(images/clock.png)no-repeat;  background-size: 100% 100%;margin-top:0.1%}
 ul { display:inline; margin:0 auto; padding:0px; list-style:none; text-align:center; }
 ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digital-7__mono', Arial, Helvetica, sans-serif; text-shadow:0 0 5px #00c6ff; }
@@ -185,7 +185,7 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 					    </div>
 			    		<div class="col-md-offset-3 col-md-6">
 				  			<div style="padding-top:1.5rem" class="col-md-offet-2 col-md-2">开始时间</div>
-				  			<div class="col-md-8" style="padding-top:0.5rem">
+				  			<div class="col-md-9" style="padding-top:0.5rem">
 				    			<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd" ng-model="dt" is-open="opened" close-text="关闭" readonly/>
 			             		<button type="button" class="btn btn-default" ng-click="openCalendar($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 								<button type="button" class="pull-right btn btn-default" ng-click="adddttime()"><i class="glyphicon glyphicon-chevron-right"></i></button>
@@ -202,7 +202,7 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 			    		</div>
 				    	<div class="col-md-offset-3 col-md-6">
 				    		<div style="padding-top:0.5rem" class="col-md-offet-2 col-md-2">结束时间</div>
-				    		<div class="col-md-8" style="padding-bottom:0.5rem">
+				    		<div class="col-md-9" style="padding-bottom:0.5rem">
 				    			<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd" ng-model="dt1" is-open="opened1" close-text="关闭"/>
 		             			<button type="button" style="margin-top:0.5rem" class="btn btn-default" ng-click="openCalendar1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
 		             			<button type="button" style="margin-top:0.5rem" class="pull-right btn btn-default" ng-click="adddt1time()"><i class="glyphicon glyphicon-chevron-right"></i></button>

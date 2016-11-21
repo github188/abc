@@ -86,7 +86,7 @@ public class ChartController extends BaseController {
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(value = "/getBar2Data", method = RequestMethod.POST)
+	@RequestMapping(value = "/getMyCenterData", method = RequestMethod.POST)
 	@ResponseBody
 	public String getMyCenterData(HttpServletRequest request,HttpServletResponse response) {
 		String cuName = request.getParameter("cuName");
