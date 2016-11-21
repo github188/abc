@@ -62,7 +62,7 @@ app.controller('indexCtrl', ['$scope','$rootScope', '$http','$cookieStore',funct
 			if(angular.fromJson(angular.fromJson(response)).returnCode=="0"){
 //				$scope.showornot='false';
 				$cookieStore.put('showornot', 'true');
-				location.href = "main.html";
+				location.href = "main.html?empName="+angular.fromJson(angular.fromJson(response)).result.empName;
 			}else{
 				$("#alert-user").attr("class","alert alert-danger");
 			}
