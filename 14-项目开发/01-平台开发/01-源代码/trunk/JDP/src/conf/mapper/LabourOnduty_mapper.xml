@@ -248,6 +248,7 @@
   		order by timing asc
   	]]>
   </select>
+  
   <select id="getCurrentTimeLabourOndutyForEDC" resultMap="labourOnduty">
   	<![CDATA[
   		select person_type,max(timing) as timing,quantity_onduty

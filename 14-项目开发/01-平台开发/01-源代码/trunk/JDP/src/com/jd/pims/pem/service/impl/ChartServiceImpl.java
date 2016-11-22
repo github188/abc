@@ -328,29 +328,7 @@ public class ChartServiceImpl implements IChartService {
 		}
 		return result;
 	}
-//	public static void main(String args[]){
-//		List<Map<String, String>> a = new ArrayList<Map<String, String>>();
-//		Map<String, String> map = new HashMap<String, String>();
-//		Map<String, String> map1 = new HashMap<String, String>();
-//		Map<String, String> map2 = new HashMap<String, String>();
-//		map.put("Num","1");
-//		map1.put("Num","2");
-//		map2.put("Num","3");
-//		a.add(map);
-//		a.add(map1);
-//		a.add(map2);
-//        Comparator<Map<String, String>> rule= new Comparator<Map<String, String>>(){  
-//            public int compare(Map<String, String> o1, Map<String, String> o2) {  
-//             String name1 =(String)o1.get("Num");//name1是从你list里面拿出来的一个  
-//             String name2= (String)o2.get("Num"); //name1是从你list里面拿出来的第二个name      
-//             return name2.compareTo(name1);    
-//        } 
-//     };      
-//     Collections.sort(a,rule); 
-//     for(Map<String, String>map3:a){
-//    	 System.out.println(map3.get("Num"));
-//     }
-//	}
+
 
 	@Override
 	public List<Map<String, Object>> getMyCenterData(String cuName,Date today) {
@@ -363,11 +341,58 @@ public class ChartServiceImpl implements IChartService {
 		int currentTime=calendar.get(Calendar.HOUR_OF_DAY);
 		
 		List<LabourOnduty> listBefore=labourOndutyDao.getTodayLabourOndutyForEDC(bizDate, currentTime, cuName);
-		int time=0;
-		for(LabourOnduty lab:listBefore){
-			
+		if(listBefore!=null){
+			int time=0;
+			Map<String,Object> map=null;
+			int notClerkNum=0;
+			for(LabourOnduty lab:listBefore){
+				if(Integer.parseInt(lab.getTiming().toString())==time){
+					if(lab.getPersonType().equals("1")){//正式工
+						map.put("clerkNum", lab.getQuantityOnduty());
+					}else if(lab.getPersonType().equals("5")){//其他
+						map.put("otherClerkNum", lab.getQuantityOnduty());
+					}else{//非正式工
+						notClerkNum+=lab.getQuantityOnduty();
+					}
+				}else{
+					if(time>0){
+						map.put("time", time);
+						map.put("notClerkNum", notClerkNum);
+						list.add(map);
+					}
+					notClerkNum=0;
+					time++;
+					map=new HashMap<String,Object>();
+				}
+			}
 		}
 		List<LabourOnduty> listCurrent=labourOndutyDao.getCurrentTimeLabourOndutyForEDC(bizDate, currentTime, cuName);
+		if(listCurrent!=null){
+			int time=0;
+			Map<String,Object> map=null;
+			int notClerkNum=0;
+			for(LabourOnduty lab:listCurrent){
+				if(Integer.parseInt(lab.getTiming().toString())==time){
+					if(lab.getPersonType().equals("1")){//正式工
+						map.put("clerkNum", lab.getQuantityOnduty());
+					}else if(lab.getPersonType().equals("5")){//其他
+						map.put("otherClerkNum", lab.getQuantityOnduty());
+					}else{//非正式工
+						notClerkNum+=lab.getQuantityOnduty();
+					}
+				}else{
+					if(time>0){
+						map.put("time", time);
+						map.put("notClerkNum", notClerkNum);
+						list.add(map);
+					}
+					time=currentTime;
+					notClerkNum=0;
+					map=new HashMap<String,Object>();
+				}
+			}
+		}
+		
 		return list;
 	}
 }
