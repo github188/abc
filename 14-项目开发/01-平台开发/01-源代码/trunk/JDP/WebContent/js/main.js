@@ -4,7 +4,6 @@ function randomData() {
 }
 var datalist = null;
 var mapName = '全国';
-uerInfo = null;
 showCenterflag = false;
 option = {
     title: {
@@ -1797,34 +1796,35 @@ option = {
 				url: url,
 				type: "post",
 				success: function (data) {
-					uerInfo = eval("("+data+")");
-//					if("MANAGE"!=uerInfo.cuType){
-//						$('#myCenterButton').hide();
-//					}
+					window.uerInfo = eval("("+data+")");
+					if("MANAGE"!=window.uerInfo.cuType){
+						$('#myCenterButton').hide();
+					}
 				}
 			});
 		}
 		
 		function showMycenter(cuName){
-			if(uerInfo){
+			if(window.uerInfo){
 				$('#mainFrame').fadeOut();
 				if(null==cuName){
-					cuName=uerInfo.cuName;
+					cuName=window.uerInfo.cuName;
 				}
 				$('#myCenterFrame').fadeIn(); 
 				$('#myCenterTile').html(cuName+"分拣中心");
 				initMyCenter();
 				DrawCanvas();
 				$('#myCenterButton').css({"background":"url(images/2on.png)no-repeat","color":"#9eddff","background-size":"cover"});
-				//searchMyCenterData();
+				searchMyCenterData();
 				showCenterflag =true;
 			}else{
 				getUserInfo();
 			}
+			$("#myCenterButton").blur()
 		}
 		
 		function showMain(){
-			if(!uerInfo){
+			if(!window.uerInfo){
 				getUserInfo();
 			}
 			$('#myCenterFrame').fadeOut();
@@ -1841,7 +1841,7 @@ option = {
 				        top: 5,
 			        },
 					legend:{
-						data:['在岗人数图','正式工占比'],
+						data:['在岗人数','正式工占比'],
 						bottom:5,
 						right:30,
 						textStyle:{
@@ -1904,7 +1904,7 @@ option = {
 		           // color: ['#32bbec'],
 			        series: [
 			            {
-				            name: '在岗人数图',type: 'bar',barMaxWidth:30,
+				            name: '在岗人数',type: 'bar',barMaxWidth:30,
 				            label:{
 				            	normal:{
 				            		show:true,
@@ -1953,7 +1953,7 @@ option = {
 			myCenterchart.setOption(MyCenterOption, true);
 		};
 		function searchMyCenterData(){
-			var url = "chart/getMyCenterData.do?cuName="+cuName;
+			var url = "chart/getMyCenterData.do?cuName="+window.uerInfo.cuName;
 			$.ajax({
 				url: url,
 				type: "post",
@@ -1964,48 +1964,74 @@ option = {
 					myCenterdata[2] = new Array();
 					var data=eval(data);
 					var eachHourTotalNum = 0;
-					var totalClerkNum = 0;
-					var totalNotClerkNum = 0;
-					var totalOtherkNum = 0;
+					var nowClerkNum = 0;
+					var nowNotClerkNum = 0;
+					var nowOtherkNum = 0;
 					if(data!=null){
 						$.each(data, function(index, row){
 							//clerkNum 员工数 orderNum 订单数  date 日期
 							eachHourTotalNum=row.clerkNum+row.notClerkNum+row.otherNum;
-							totalClerkNum +=row.clerkNum;
-							totalNotClerkNum +=row.notClerkNum;
-							totalOtherkNum +=row.otherNum;
+							if(new Date().getHour()==row.time){
+								nowClerkNum =row.clerkNum;
+								nowNotClerkNum =row.notClerkNum;
+								nowOtherkNum =row.otherNum;
+							}
 							myCenterdata[0].push(Math.ceil(eachHourTotalNum));
 							myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil((row.clerkNum/eachHourTotalNum))*100);
 							myCenterdata[2].push(row.time);
 						});
+						MyCenterOption.series[0].data = myCenterdata[0];
+						MyCenterOption.series[1].data = myCenterdata[1];
+						MyCenterOption.xAxis.data = myCenterdata[2];
+						myCenterchart.setOption(MyCenterOption, true);
+						$("#nowClerkNum").html(nowClerkNum);
+						$("#nowNotClerkNum").html(nowNotClerkNum);
+						$("#nowOtherkNum").html(nowOtherkNum);
 					}
-					MyCenterOption.series[0].data = myCenterdata[0];
-					MyCenterOption.series[1].data = myCenterdata[1];
-					MyCenterOption.xAxis.data = myCenterdata[2];
-					myCenterchart.setOption(MyCenterOption, true);
-					DrawCanvas(totalClerkNum,totalNotClerkNum,totalOtherkNum);
+
 			   }
 			});
 		};
-		function DrawCanvas(totalClerkNum,totalNotClerkNum,totalOtherkNum){
-            var painting = document.getElementById("myCenterAreaB");
-            if (painting == null)
-                return false;
-            var context = painting.getContext("2d");
+		function DrawCanvas(){
+            $("#myCanvas").attr("width",$("#myCenterAreaB").width());
+            $("#myCanvas").attr("height",$("#myCenterAreaB").height());
+            var painting = document.getElementById("myCanvas");
+            var cxt = painting.getContext("2d");
             //实践表明在不设施fillStyle下的默认fillStyle=black
-            context.fillRect(0, 0, 100, 100);
-            //实践表明在不设施strokeStyle下的默认strokeStyle=black
-            context.strokeRect(120, 0, 100, 100);
+            var paintingWidth = Math.ceil(painting.clientWidth);
+            var paintingHeight = Math.ceil(painting.clientHeight);
+            cxt.beginPath();
+            cxt.fillStyle = "#31fbfd";
+            cxt.moveTo(paintingWidth*0.1,paintingHeight*0.1);
+            cxt.lineTo(paintingWidth*0.85,paintingHeight*0.1);
+            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.12);
+            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.5);
+            cxt.lineTo(paintingWidth*0.1,paintingHeight*0.5);
+            cxt.fill();
+            cxt.closePath();
+            cxt.beginPath();
+            cxt.fillStyle = "#3088ff";
+            cxt.moveTo(paintingWidth*0.1,paintingHeight*0.52);
+            cxt.lineTo(paintingWidth*0.85,paintingHeight*0.52);
+            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.54);
+            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.76);
+            cxt.lineTo(paintingWidth*0.1,paintingHeight*0.76);
+            cxt.fill();
+            cxt.closePath();
+            cxt.beginPath();
+            cxt.fillStyle = "#dc61ff";
+            cxt.moveTo(paintingWidth*0.1,paintingHeight*0.78);
+            cxt.lineTo(paintingWidth*0.85,paintingHeight*0.78);
+            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.8);
+            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.9);
+            cxt.lineTo(paintingWidth*0.1,paintingHeight*0.9);
+            cxt.fill();
+            cxt.closePath();
 
-            //设置纯色
-            context.fillStyle = "red";
-            context.strokeStyle = "blue";
-            context.fillRect(0, 120, 100, 100);
-            context.strokeRect(120, 120, 100, 100);
-
-            //设置透明度实践证明透明度值>0,<1值越低，越透明，值>=1时为纯色，值<=0时为完全透明
-            context.fillStyle = "rgba(255,0,0,0.2)";
-            context.strokeStyle = "rgba(255,0,0,0.2)";
-            context.fillRect(240,0 , 100, 100);
-            context.strokeRect(240, 120, 100, 100);
 		}
+		function jumpToReport(){
+			var thisURL = document.URL;    
+			var  getval =thisURL.split('?')[1];  
+			var empName= getval.split("=")[1];  
+			window.location.href='reports.html?empName='+empName;
+		} 

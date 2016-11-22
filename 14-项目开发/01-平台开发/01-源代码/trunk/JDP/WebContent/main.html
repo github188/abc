@@ -39,7 +39,7 @@
 body{
 /* 	 background:url(images/mainBg.png)no-repeat;
 	 background-size: 200% 200%; */
-	 font:1.6rem Arial, Helvetica, sans-serif;
+	 font:1.6rem '黑体', Helvetica, sans-serif;
 	 margin:0;
 	 padding:0;
 	 color:#0F0F0F; 
@@ -138,7 +138,7 @@ ul li {display:inline;  font-size:4.0rem; text-align:center; font-family:'digita
 		<div id="world">京东集团分拣中心管理部全国在岗人员管理平台</div>	
 <!-- 		<button type="button" id="reportsButton" onclick="reports()"alt="报表"title="报表"></button> -->
 		<input type="button" id="logOutButton" ng-click="logout()" alt="退出"title="退出"/>
-		<input type="button" class="button" id='reportButton' onclick="window.location.href='reports.html'" value="运营报表"/>
+		<input type="button" class="button" id='reportButton' onclick="jumpToReport()" value="运营报表"/>
 		<input type="button" id='myCenterButton' onclick="showMycenter()" value="我的分拣中心"/>
 		<div class="clock">
 			<ul>
@@ -199,13 +199,22 @@ ul li {display:inline;  font-size:4.0rem; text-align:center; font-family:'digita
 		</div>
 		
 		<div id="myCenterFrame" style="height: 80%;margin-left: 1%;margin-top: 1%;position: relative;width:98%;padding:0;border: 1px solid #2E67AB;box-shadow:0 0 10px #2E67AB inset">
-			<div id="myCenterTile" class="" style="height: 6%;font-family:'黑体';left:42%;position:absolute;width:17%;background:url(images/myCenterTitle.png)no-repeat;background-size: 100% 100% ;color:#54e2ff;font-size:3rem">XX分拣中心</div>
+			<div id="myCenterTile" class="" style="height: 6%;font-family:'黑体';left:42%;position:absolute;width:17%;background:url(images/myCenterTitle.png)no-repeat;background-size: 100% 100% ;color:#54e2ff;font-size:3rem;padding-top:0.5%">XX分拣中心</div>
 			<div id="myCenterAreaA" class="col-md-10 col-sm-10" style="height: 100%;padding:0;">	
 			</div>
-			<canvas id="myCenterAreaB" class="col-md-2 col-sm-2" style="height: 100%;padding:0;border: 1px solid #00C6FF;box-shadow:0 0 5px #00C6FF" >	
-			</canvas>
+			<div  id="myCenterAreaB" class="col-md-2 col-sm-2"  style="height: 100%;padding:0;border: 1px solid #2E67AB;z-index:500">
+				<canvas id="myCanvas"></canvas>
+				<div style="width:8%;height:3%;position:absolute;left:12%;top:3.5%;background-color:#0673AE;border: 1px solid #31fbfd;"></div><p style="font-family:'黑体';color:#84E9FF;font-size:3rem;position:absolute;left:23%;text-align:center;top:3%">当前人数</p>
+				<p style="font-family:'黑体';color:#00132a;font-size:2.5rem;position:absolute;left:40%;text-align:center;top:27%">正式工</p>
+				<p style="font-family:'digital-7__mono';color:#00132a;font-size:5rem;position:absolute;left:29%;text-align:center;top:30%" id="nowClerkNum">145582</p>
+				<p style="font-family:'黑体';color:#00132a;font-size:2.5rem;position:absolute;left:37%;text-align:center;top:62%">非正式工</p>
+				<p style="font-family:'digital-7__mono';color:#00132a;font-size:5rem;position:absolute;left:33%;text-align:center;top:65%" id="nowNotClerkNum">25633</p>
+				<p style="font-family:'黑体';color:#00132a;font-size:2.5rem;position:absolute;left:44%;text-align:center;top:80%">其他</p>
+				<p style="font-family:'digital-7__mono';color:#00132a;font-size:5rem;position:absolute;left:38%;text-align:center;top:83%" id="nowOtherkNum">7525</p>
+			</div>
+			
 		</div>
-		<div class="button" onclick="showMain()" style="width: 9%;height: 4%;background:none;position:absolute;left:46%;color:#00b5e6;font-family:'黑体';text-align:center;font-size:2.5rem;margin-top:1%;border: 1px solid #2E67AB;box-shadow:0 0 10px #2E67AB inset"> 返回首页 </div>
+		<div class="button" onclick="showMain()" style="width: 9%;height: 4%;background:none;position:absolute;left:46%;color:#00b5e6;font-family:'黑体';text-align:center;font-size:2.5rem;margin-top:1%;border: 1px solid #2E67AB;box-shadow:0 0 10px #2E67AB inset;padding-top:0.3%"> 返回首页 </div>
 </body>
 </html>
 

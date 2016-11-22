@@ -2,6 +2,7 @@ package com.jd.pims.pem.service.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +64,21 @@ public class ChartServiceImplTest extends
 	@Test
 	public void testGetData() {
 		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void testGetMyCenterData(){
+		logger.info("分拣中心在岗人数接口测试");
+		try{
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.YEAR, 2016);
+			calendar.set(Calendar.MONTH, 10);//11月
+			calendar.set(Calendar.DAY_OF_MONTH, 18);
+			service.getMyCenterData("北京马驹桥分拣中心",calendar.getTime());
+		}catch(Exception e){
+			logger.debug("", e);
+			fail("测试失败！原因："+e.getMessage());
+		}
 	}
 
 }

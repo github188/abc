@@ -385,7 +385,7 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 		</div>
 	</div>
 	
-	<footer class="center"><a  style="font-size:2rem;color:#46d7ff;font-family:'造字工房悦圆常规体';bottom:1%;position:absolute;" href="main.html">返回首页</a></footer>
+	<footer class="center"><a  style="font-size:2rem;color:#46d7ff;font-family:'造字工房悦圆常规体';bottom:1%;position:absolute;"  onclick="jumpToMain()" href="">返回首页</a></footer>
 <script type="text/javascript">
     $('.form_datetime').datetimepicker({
         language:  'zh-CN',
@@ -397,6 +397,12 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 		forceParse: 0,
         showMeridian: 1
     });
+	function jumpToMain(){
+		var thisURL = document.URL;    
+		var  getval =thisURL.split('?')[1];  
+		var empName= getval.split("=")[1];  
+		window.location.href='main.html?empName='+empName;
+	} 
 </script>
 </body>
 </html>

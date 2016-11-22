@@ -52,4 +52,25 @@ public interface LabourOndutyDao extends IBaseDao {
 	List<LabourOndutyState> getHistoryLabourOnduty(
 			@Param("startDate") String startDate,
 			@Param("endDate") String endDate, @Param("fullPath") String fullPath);
+	
+	/**
+	 *  取分拣中心当天分时段在刚人数
+	 *  逻辑：取过去每一小时最高人数，当前一小时取最新一条
+	 * @param bizDate 业务日期，默认是当天
+	 * @param currentTime 当前小时数,从1开始计算
+	 * @param name 分拣中心名称
+	 * @return
+	 */
+	List<LabourOnduty> getTodayLabourOndutyForEDC(
+			@Param("bizDate") String bizDate,@Param("currentHour") int currentHour, @Param("cuName") String cuName);
+	
+	/**
+	 *  取分拣中心当前一小时的最新人数
+	 * @param bizDate 业务日期，默认是当天
+	 * @param currentTime 当前小时数,从1开始计算
+	 * @param name 分拣中心名称
+	 * @return
+	 */
+	List<LabourOnduty> getCurrentTimeLabourOndutyForEDC(
+			@Param("bizDate") String bizDate,@Param("currentHour") int currentHour, @Param("cuName") String cuName);
 }
