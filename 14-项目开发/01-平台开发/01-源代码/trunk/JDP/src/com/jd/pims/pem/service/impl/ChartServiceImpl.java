@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.jd.pims.pem.dao.LabourEfficiencyDao;
 import com.jd.pims.pem.dao.LabourOndutyDao;
+import com.jd.pims.pem.model.LabourOnduty;
 import com.jd.pims.pem.service.IChartService;
 import com.jd.pims.user.dao.UserDao;
 
@@ -352,8 +353,21 @@ public class ChartServiceImpl implements IChartService {
 //	}
 
 	@Override
-	public List<Map<String, Object>> getMyCenterData(String cuName) {
+	public List<Map<String, Object>> getMyCenterData(String cuName,Date today) {
 		// TODO Auto-generated method stub
-		return null;
+		List<Map<String, Object>> list=new ArrayList<Map<String, Object>>();
+		//取当时小时之前每一小时的在岗人数
+		String bizDate=sdf.format(today);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(today);
+		int currentTime=calendar.get(Calendar.HOUR_OF_DAY);
+		
+		List<LabourOnduty> listBefore=labourOndutyDao.getTodayLabourOndutyForEDC(bizDate, currentTime, cuName);
+		int time=0;
+		for(LabourOnduty lab:listBefore){
+			
+		}
+		List<LabourOnduty> listCurrent=labourOndutyDao.getCurrentTimeLabourOndutyForEDC(bizDate, currentTime, cuName);
+		return list;
 	}
 }

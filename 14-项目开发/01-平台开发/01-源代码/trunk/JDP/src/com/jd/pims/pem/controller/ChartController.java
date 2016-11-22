@@ -1,5 +1,6 @@
 package com.jd.pims.pem.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -90,7 +91,7 @@ public class ChartController extends BaseController {
 	@ResponseBody
 	public String getMyCenterData(HttpServletRequest request,HttpServletResponse response) {
 		String cuName = request.getParameter("cuName");
-		List<Map<String, Object>> list=chartService.getMyCenterData(cuName);
+		List<Map<String, Object>> list=chartService.getMyCenterData(cuName,new Date());
 		Gson gson = new Gson();
 		return gson.toJson(list);
 	}

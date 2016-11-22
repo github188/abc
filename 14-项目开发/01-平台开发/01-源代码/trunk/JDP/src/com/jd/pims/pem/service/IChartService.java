@@ -3,6 +3,7 @@
  */
 package com.jd.pims.pem.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +59,6 @@ public interface IChartService {
 	 */
 	public List<Map<String, Object>> getEfficiencyHistory(String cuId);
 
-	public List<Map<String, Object>> getMyCenterData(String cuName);
+	public List<Map<String, Object>> getMyCenterData(String cuName,Date bizDate);
 	
 }
