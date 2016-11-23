@@ -244,7 +244,7 @@
   		select substring(timing,1,2)+1 as hour,person_type,max(quantity_onduty) as quantity_onduty
   		from jd_le_labour_onduty lab
   		left join np_sys_controlunit cu on cu.id=lab.cu_id
-  		where biz_date="2016-11-19" and cu.name=#{cuName} and substring(timing,1,2)<#{currentHour}
+  		where biz_date=#{bizDate} and cu.name=#{cuName} and substring(timing,1,2)<#{currentHour}
   		group by substring(timing,1,2),person_type
   		order by hour asc,person_type asc
   	]]>
