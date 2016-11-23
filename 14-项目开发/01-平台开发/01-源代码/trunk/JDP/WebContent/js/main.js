@@ -1797,9 +1797,9 @@ option = {
 				type: "post",
 				success: function (data) {
 					window.uerInfo = eval("("+data+")");
-//					if("MANAGE"!=window.uerInfo.cuType){
-//						$('#myCenterButton').hide();
-//					}
+					if("MANAGE"!=window.uerInfo.cuType){
+						$('#myCenterButton').hide();
+					}
 				}
 			});
 		}
