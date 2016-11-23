@@ -1972,7 +1972,7 @@ option = {
 						$.each(data, function(index, row){
 							//clerkNum 员工数 orderNum 订单数  date 日期
 							eachHourTotalNum=row.clerkNum?row.clerkNum:0+row.notClerkNum?row.notClerkNum:0+row.otherClerkNum?row.otherClerkNum:0;
-							if(new Date().getHours()==row.time){
+							if(new Date().getHours()+1==row.time){
 								nowClerkNum =row.clerkNum;
 								nowNotClerkNum =row.notClerkNum;
 								nowOtherClerkNum =row.otherClerkNum;
