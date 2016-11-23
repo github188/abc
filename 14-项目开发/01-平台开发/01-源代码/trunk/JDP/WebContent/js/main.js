@@ -1797,9 +1797,9 @@ option = {
 				type: "post",
 				success: function (data) {
 					window.uerInfo = eval("("+data+")");
-					if("MANAGE"!=window.uerInfo.cuType){
-						$('#myCenterButton').hide();
-					}
+//					if("MANAGE"!=window.uerInfo.cuType){
+//						$('#myCenterButton').hide();
+//					}
 				}
 			});
 		}
@@ -1971,21 +1971,21 @@ option = {
 					if(data!=null){
 						$.each(data, function(index, row){
 							//clerkNum 员工数 orderNum 订单数  date 日期
-							eachHourTotalNum=row.clerkNum?row.clerkNum:0+row.notClerkNum?row.notClerkNum:0+row.otherClerkNum?row.otherClerkNum:0;
+							eachHourTotalNum=(row.clerkNum?row.clerkNum:0)+(row.notClerkNum?row.notClerkNum:0)+(row.otherClerkNum?row.otherClerkNum:0);
 							if(new Date().getHours()+1==row.time){
-								nowClerkNum =row.clerkNum;
-								nowNotClerkNum =row.notClerkNum;
-								nowOtherClerkNum =row.otherClerkNum;
+								nowClerkNum =(row.clerkNum?row.clerkNum:0);
+								nowNotClerkNum =(row.notClerkNum?row.notClerkNum:0);
+								nowOtherClerkNum =(row.otherClerkNum?row.otherClerkNum:0);
 							}
 							myCenterdata[0].push(Math.ceil(eachHourTotalNum));
-							myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil((row.clerkNum/eachHourTotalNum))*100);
+							myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil(((row.clerkNum?row.clerkNum:0)/eachHourTotalNum))*100);
 							myCenterdata[2].push(row.time);
 						});
 						MyCenterOption.series[0].data = myCenterdata[0];
 						MyCenterOption.series[1].data = myCenterdata[1];
-						//MyCenterOption.xAxis.data = myCenterdata[2];
+						MyCenterOption.xAxis.data = myCenterdata[2];
 						myCenterchart.setOption(MyCenterOption, true);
-						myCenterchart.resize();
+						//myCenterchart.resize();
 						$("#nowClerkNum").html(nowClerkNum);
 						$("#nowNotClerkNum").html(nowNotClerkNum);
 						$("#nowOtherkNum").html(nowOtherClerkNum);
