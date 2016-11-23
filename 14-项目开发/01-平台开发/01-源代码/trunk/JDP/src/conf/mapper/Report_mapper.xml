@@ -152,12 +152,17 @@
 					INNER JOIN np_sys_person person ON person.ID = card.PERSON_ID
 					INNER JOIN (
 						SELECT
+							controlunitid,
 							person_code,
-							work_type
+							sum(work_type) - 5 AS work_type
 						FROM
-							np_sys_person p
-						LEFT JOIN np_cd_card c ON p.id = c.PERSON_ID
-						AND c.PERSON_ID IS NULL
+							np_sys_person
+						GROUP BY
+							controlunitid,
+							person_code
+						HAVING
+							(sum(work_type) - 5) > 0
+						AND (sum(work_type) - 5) <= 5
 					) wtp ON person.PERSON_CODE = wtp.person_code
 				) bb ON aa.card_id = bb.id
 				GROUP BY
