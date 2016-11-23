@@ -1797,9 +1797,9 @@ option = {
 				type: "post",
 				success: function (data) {
 					window.uerInfo = eval("("+data+")");
-//					if("MANAGE"!=window.uerInfo.cuType){
-//						$('#myCenterButton').hide();
-//					}
+					if("MANAGE"!=window.uerInfo.cuType){
+						$('#myCenterButton').hide();
+					}
 				}
 			});
 		}
@@ -1863,9 +1863,13 @@ option = {
 				    			color:'#00acf3'
 				    		}
 				        },
+				        axisLabel:{  
+				            interval: 0  
+				        } ,
 				       	splitLine:{  
 		                    show:false  
-		                }
+		                },
+		                minInterval: 1
 			        },
 			        grid:{
 			        	left:10,
@@ -1981,9 +1985,11 @@ option = {
 							myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil(((row.clerkNum?row.clerkNum:0)/eachHourTotalNum))*100);
 							myCenterdata[2].push(row.time);
 						});
-						MyCenterOption.series[0].data = myCenterdata[0];
-						MyCenterOption.series[1].data = myCenterdata[1];
-						MyCenterOption.xAxis.data = myCenterdata[2];
+						//MyCenterOption.series[0].data = myCenterdata[0];
+						//MyCenterOption.series[1].data = myCenterdata[1];
+						MyCenterOption.series[0].data = [];
+						MyCenterOption.series[1].data = [];
+						//MyCenterOption.xAxis.data = myCenterdata[2];
 						myCenterchart.setOption(MyCenterOption, true);
 						//myCenterchart.resize();
 						$("#nowClerkNum").html(nowClerkNum);
