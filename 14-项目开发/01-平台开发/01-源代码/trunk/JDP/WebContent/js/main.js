@@ -1982,7 +1982,7 @@ option = {
 								nowOtherClerkNum =(row.otherClerkNum?row.otherClerkNum:0);
 							}
 							myCenterdata[0].push(Math.ceil(eachHourTotalNum));
-							myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil(((row.clerkNum?row.clerkNum:0)/eachHourTotalNum))*100);
+							myCenterdata[1].push(eachHourTotalNum==0?0:(((row.clerkNum?row.clerkNum:0)/eachHourTotalNum)).toFixed(2)*100);
 							myCenterdata[2].push(row.time);
 						});
 						MyCenterOption.series[0].data = myCenterdata[0];
