@@ -403,8 +403,8 @@ public class ChartServiceImpl implements IChartService {
 		List<LabourOnduty> listBefore = labourOndutyDao
 				.getTodayLabourOndutyForEDC(bizDate, currentTime, cuName);
 		if (listBefore != null) {
-			int time = 0;
-			Map<String, Object> map = null;
+			int time = 1;
+			Map<String, Object> map = new HashMap<String, Object>();
 			int notClerkNum = 0;
 			for (LabourOnduty lab : listBefore) {
 				if (Integer.parseInt(lab.getHour().toString()) == time) {
@@ -416,6 +416,7 @@ public class ChartServiceImpl implements IChartService {
 						notClerkNum += lab.getQuantityOnduty();
 					}
 				} else {
+					
 					if (time > 0) {
 						map.put("time", time);
 						map.put("notClerkNum", notClerkNum);
@@ -461,6 +462,7 @@ public class ChartServiceImpl implements IChartService {
 
 		return list;
 	}
+	
 	
 	private Map<String, Object>  createEmptyHourData(Integer hour){
 		Map<String, Object> map = new HashMap<String, Object>();
