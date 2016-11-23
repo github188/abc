@@ -44,7 +44,7 @@ public class LabourOnduty extends BaseDataModel{
 	
 	private Date lastUpdateTime;
 	
-
+	private Integer hour;
 
 	public String getId() {
 		return id;
@@ -138,6 +138,18 @@ public class LabourOnduty extends BaseDataModel{
 
 	public void setLastUpdateTime(Date lastUpdateTime) {
 		this.lastUpdateTime = lastUpdateTime;
+	}
+
+
+
+	public Integer getHour() {
+		return hour;
+	}
+
+
+
+	public void setHour(Integer hour) {
+		this.hour = hour;
 	}
 	
 
