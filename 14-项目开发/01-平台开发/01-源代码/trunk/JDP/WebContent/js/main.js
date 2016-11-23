@@ -1774,6 +1774,9 @@ option = {
 			barchart1.resize();
 			barchart2.resize();
 			piechart.resize();
+			thisHourDatachart.resize();
+			myCenterchart.resize();
+			
 		};
 		function logout(){
 			window.location.href = "login.html";
@@ -1813,14 +1816,15 @@ option = {
 				$('#myCenterFrame').fadeIn(); 
 				$('#myCenterTile').html(cuName);
 				initMyCenter();
-				DrawCanvas();
+				assembThisHourBar(145582,25633,7525);
 				$('#myCenterButton').css({"background":"url(images/2on.png)no-repeat","color":"#9eddff","background-size":"cover"});
 				searchMyCenterData();
 				showCenterflag =true;
 			}else{
 				getUserInfo();
 			}
-			$("#myCenterButton").blur()
+			$("#myCenterButton").blur();
+			$('#showMainButton').show();
 		}
 		
 		function showMain(){
@@ -1831,6 +1835,7 @@ option = {
 			$('#mainFrame').fadeIn(); 
 			$('#myCenterButton').css({"background":"url(images/2off.png)no-repeat","color":"#008bd6","background-size":"cover"});
 			showCenterflag = false;
+			$('#showMainButton').hide();
 		}
 		
 		function initMyCenter(){
@@ -1989,51 +1994,194 @@ option = {
 						MyCenterOption.series[1].data = myCenterdata[1];
 						MyCenterOption.xAxis.data = myCenterdata[2];
 						myCenterchart.setOption(MyCenterOption, true);
-						//myCenterchart.resize();
 						$("#nowClerkNum").html(nowClerkNum);
 						$("#nowNotClerkNum").html(nowNotClerkNum);
 						$("#nowOtherkNum").html(nowOtherClerkNum);
+						assembThisHourBar(nowClerkNum,nowNotClerkNum,nowOtherClerkNum);
 					}
 
 			   }
 			});
 		};
-		function DrawCanvas(){
-            $("#myCanvas").attr("width",$("#myCenterAreaB").width());
-            $("#myCanvas").attr("height",$("#myCenterAreaB").height());
-            var painting = document.getElementById("myCanvas");
-            var cxt = painting.getContext("2d");
-            //实践表明在不设施fillStyle下的默认fillStyle=black
-            var paintingWidth = Math.ceil(painting.clientWidth);
-            var paintingHeight = Math.ceil(painting.clientHeight);
-            cxt.beginPath();
-            cxt.fillStyle = "#31fbfd";
-            cxt.moveTo(paintingWidth*0.1,paintingHeight*0.1);
-            cxt.lineTo(paintingWidth*0.85,paintingHeight*0.1);
-            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.12);
-            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.5);
-            cxt.lineTo(paintingWidth*0.1,paintingHeight*0.5);
-            cxt.fill();
-            cxt.closePath();
-            cxt.beginPath();
-            cxt.fillStyle = "#3088ff";
-            cxt.moveTo(paintingWidth*0.1,paintingHeight*0.52);
-            cxt.lineTo(paintingWidth*0.85,paintingHeight*0.52);
-            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.54);
-            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.76);
-            cxt.lineTo(paintingWidth*0.1,paintingHeight*0.76);
-            cxt.fill();
-            cxt.closePath();
-            cxt.beginPath();
-            cxt.fillStyle = "#dc61ff";
-            cxt.moveTo(paintingWidth*0.1,paintingHeight*0.78);
-            cxt.lineTo(paintingWidth*0.85,paintingHeight*0.78);
-            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.8);
-            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.9);
-            cxt.lineTo(paintingWidth*0.1,paintingHeight*0.9);
-            cxt.fill();
-            cxt.closePath();
+//		function DrawCanvas(nowClerkNum,nowNotClerkNum,nowOtherClerkNum){
+//            $("#myCanvas").attr("width",$("#myCenterAreaB").width());
+//            $("#myCanvas").attr("height",$("#myCenterAreaB").height());
+//            var painting = document.getElementById("myCanvas");
+//            var cxt = painting.getContext("2d");
+//            //实践表明在不设施fillStyle下的默认fillStyle=black
+//            var paintingWidth = Math.ceil(painting.clientWidth);
+//            var paintingHeight = Math.ceil(painting.clientHeight);
+//            cxt.beginPath();
+//            cxt.fillStyle = "#31fbfd";
+//            cxt.moveTo(paintingWidth*0.1,paintingHeight*0.1);
+//            cxt.lineTo(paintingWidth*0.85,paintingHeight*0.1);
+//            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.12);
+//            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.5);
+//            cxt.lineTo(paintingWidth*0.1,paintingHeight*0.5);
+//            cxt.fill();
+//            cxt.closePath();
+//            cxt.beginPath();
+//            cxt.fillStyle = "#3088ff";
+//            cxt.moveTo(paintingWidth*0.1,paintingHeight*0.52);
+//            cxt.lineTo(paintingWidth*0.85,paintingHeight*0.52);
+//            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.54);
+//            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.76);
+//            cxt.lineTo(paintingWidth*0.1,paintingHeight*0.76);
+//            cxt.fill();
+//            cxt.closePath();
+//            cxt.beginPath();
+//            cxt.fillStyle = "#dc61ff";
+//            cxt.moveTo(paintingWidth*0.1,paintingHeight*0.78);
+//            cxt.lineTo(paintingWidth*0.85,paintingHeight*0.78);
+//            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.8);
+//            cxt.lineTo(paintingWidth*0.9,paintingHeight*0.9);
+//            cxt.lineTo(paintingWidth*0.1,paintingHeight*0.9);
+//            cxt.fill();
+//            cxt.closePath();
+//
+//		}
+		
+		function assembThisHourBar(nowClerkNum,nowNotClerkNum,nowOtherClerkNum){
+			var thisHourOption = {
+					title: {
+			            text: '员工数量',
+			            left: '20%',
+			            top:'4%',
+				        textStyle:{
+				        	color:'#84E9FF',
+				        	fontFamily:'黑体',
+				        	fontSize:'20'
+				        }
+			        },
+				    xAxis: {
+				    	type:'category',
+				    	data:[''],
+				    	axisLine:{
+				    		lineStyle:{
+				    			color:'#7ab8f9'
+				    		}
+				        },
+				       	splitLine:{  
+		                    show:false  
+		                },
+		                show:false
+			        },
+			        yAxis: [
+			    	        {
+			    	        	type:'value',
+			    	        	name: '数量',
+			    	        	axisLine:{
+			    		    		lineStyle:{
+			    		    			color:'#7ab8f9'
+			    		    		}
+			    		        },
+			    		        splitLine:{  
+			                        show:false  
+			                    },
+			                    splitNumber:6,
+			                    show:false  
+			    	        }
+			    	     ],
+			        grid:{
+			        	left:0,
+			        	right:'20%',
+			        	bottom:0,
+			        	top:'20%',
+			        	containLabel:true
+			        },
 
+		            //color: ['#32bbec','#11d320','#9035B1'],
+			        series: [
+
+			        	{
+				            name: '非正式工',
+				            type: 'bar',
+				            barWidth:300,
+				            stack:1,
+				            label:{
+				            	normal:{
+				            		show:true,
+				            		position:'inside',
+				            		formatter : function(params){
+				            			return "非正式工 : "+params.value;
+				        		    },			            		
+				        		    textStyle: {
+				            			color:'#00132a',
+				                        fontSize: '20',
+				                        fontWeight: 'bold',
+				                        fontFamily:'digital-7__mono'
+				                    }	
+				            	}
+			            	},
+				            itemStyle:{
+				            	normal:{
+				            		color:"#3088ff",
+				            		barBorderRadius: [0, 20, 0, 0]
+				            	}
+				            },
+				            data: [nowNotClerkNum]
+			        	},		          
+			        	{
+				            name: '正式工',
+				            type: 'bar',
+				            barWidth:300,
+				            stack:1,
+				            label:{
+				            	normal:{
+				            		show:true,
+				            		position:'inside',
+				            		formatter : function(params){
+				            			return "正式工 : "+params.value;
+				        		    },			            		
+				        		    textStyle: {
+				            			color:'#00132a',
+				                        fontSize: '20',
+				                        fontWeight: 'bold',
+				                        fontFamily:'digital-7__mono'
+				                    }	
+				            	}
+			            	},
+				            itemStyle:{
+				            	normal:{
+				            		color:"#31fbfd",
+				            		barBorderRadius: [0, 20, 0, 0]
+				            	}
+				            },
+				            data: [nowClerkNum]
+			        	},
+			        	{
+				            name: '其他',
+				            type: 'bar',
+				            barWidth:300,
+				            stack:1,
+				            label:{
+				            	normal:{
+				            		show:true,
+				            		position:'inside',
+				            		formatter : function(params){
+				            			return "其他 : "+params.value;
+				        		    },			            		
+				        		    textStyle: {
+				            			color:'#00132a',
+				                        fontSize: '20',
+				                        fontWeight: 'bold',
+				                        fontFamily:'digital-7__mono'
+				                    }	
+				            	},
+				            },
+				            itemStyle:{
+				            	normal:{
+				            		color:"#dc61ff",
+				            		barBorderRadius: [0, 20, 0, 0]
+				            	}
+				            },
+				            data: [nowOtherClerkNum]
+			        	},	
+			        ]
+				};
+			thisHourDatachart = echarts.init(document.getElementById('thisHourData'));
+			thisHourDatachart.setOption(thisHourOption, true);
+			
 		}
 		function jumpToReport(){
 			var thisURL = document.URL;    

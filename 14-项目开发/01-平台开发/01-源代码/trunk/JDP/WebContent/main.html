@@ -67,8 +67,8 @@ body{
 	margin:0
 }
 #logOutButton {border: none;height: 3%;width: 3%; margin:0 auto;background:url(images/logout.png)no-repeat; background-size: 100% 100%;position:absolute;right:3%;}
-#reportButton{border:none;width:9%;height:4%;background:url(images/1off.png)no-repeat; background-size: cover;position:absolute;left:0.5%;color:#008bd6;font-family:'黑体';text-align:center;font-size:2.5rem;padding-top: 0.5%;top:7.1%}
-#myCenterButton{border:none;width:9%;height:4%;background:url(images/2off.png)no-repeat; background-size: cover;position:absolute;left:8%;color:#008bd6;font-family:'黑体';text-align:center;font-size:2.5rem;top:7.5%}
+#reportButton{border:none;width:8%;height:4%;background:url(images/1off.png)no-repeat; background-size: contain;position:absolute;left:0.5%;color:#008bd6;font-family:'黑体';text-align:center;font-size:2.5rem;padding-top: 0.5%;top:7.1%}
+#myCenterButton{border:none;width:8%;height:4%;background:url(images/2off.png)no-repeat; background-size: contain;position:absolute;left:7%;color:#008bd6;font-family:'黑体';text-align:center;font-size:2.5rem;top:7.5%}
 /* .title {height: 8%; margin:0 auto;padding-top:0.5rem;padding-bottom:0.5rem; color:#46d7ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;} */
 #world {width:100%;margin:0 auto;padding-bottom:1.5%;position:relative;font-family:'黑体', Arial, Helvetica, sans-serif;color:#46d7ff; font-size:4.0rem; text-align:center; text-shadow:0 0 5px #00c6ff;background:url(images/top.png)no-repeat; background-size: 100% 100%;}
 .clock {display:inline;width:31%;height: 5%; margin-left:auto; padding-top:0.3%;position:relative;color:#46d7ff; background:url(images/clock.png)no-repeat;  background-size: 100% 100%;margin-top:0.1%}
@@ -202,18 +202,22 @@ ul li {display:inline;  font-size:4.0rem; text-align:center; font-family:'digita
 			<div id="myCenterAreaA" class="col-md-10 col-sm-10" style="height: 100%;padding:0;">	
 			</div>
 			<div  id="myCenterAreaB" class="col-md-2 col-sm-2"  style="height: 100%;padding:0;border: 1px solid #2E67AB;z-index:500">
-				<canvas id="myCanvas"></canvas>
-				<div style="width:8%;height:3%;position:absolute;left:12%;top:3.5%;background-color:#0673AE;border: 1px solid #31fbfd;"></div><p style="font-family:'黑体';color:#84E9FF;font-size:3rem;position:absolute;left:23%;text-align:center;top:3%">当前人数</p>
-				<p style="font-family:'黑体';color:#00132a;font-size:2.5rem;position:absolute;left:40%;text-align:center;top:27%">正式工</p>
-				<p style="font-family:'digital-7__mono';color:#00132a;font-size:5rem;position:absolute;left:29%;text-align:center;top:30%" id="nowClerkNum">145582</p>
-				<p style="font-family:'黑体';color:#00132a;font-size:2.5rem;position:absolute;left:37%;text-align:center;top:62%">非正式工</p>
-				<p style="font-family:'digital-7__mono';color:#00132a;font-size:5rem;position:absolute;left:33%;text-align:center;top:65%" id="nowNotClerkNum">25633</p>
-				<p style="font-family:'黑体';color:#00132a;font-size:2.5rem;position:absolute;left:44%;text-align:center;top:80%">其他</p>
-				<p style="font-family:'digital-7__mono';color:#00132a;font-size:5rem;position:absolute;left:38%;text-align:center;top:83%" id="nowOtherkNum">7525</p>
+				<!-- <canvas id="myCanvas"></canvas> -->
+				<div style="width:8%;height:3%;position:absolute;left:12%;top:3.5%;background-color:#0673AE;border: 1px solid #31fbfd;">
+				</div>
+				<div id="thisHourData" style="width:100%;height:100%;position:absolute;">
+				</div>
+				<!-- <p style="font-family:'黑体';color:#84E9FF;font-size:3rem;position:absolute;left:23%;text-align:center;top:3%">当前人数</p>
+				<p style="font-family:'黑体';color:#00132a;font-size:2.5rem;position:absolute;left:40%;text-align:left;top:27%">正式工</p>
+				<p style="font-family:'digital-7__mono';color:#00132a;font-size:5rem;position:absolute;left:40%;text-align:left;top:30%" id="nowClerkNum">145582</p>
+				<p style="font-family:'黑体';color:#00132a;font-size:2.5rem;position:absolute;left:37%;text-align:left;top:62%">非正式工</p>
+				<p style="font-family:'digital-7__mono';color:#00132a;font-size:5rem;position:absolute;left:40%;text-align:left;top:65%" id="nowNotClerkNum">25633</p>
+				<p style="font-family:'黑体';color:#00132a;font-size:2.5rem;position:absolute;left:44%;text-align:left;top:80%">其他</p>
+				<p style="font-family:'digital-7__mono';color:#00132a;font-size:5rem;position:absolute;left:40%;text-align:left;top:83%" id="nowOtherkNum">7525</p> -->
 			</div>
 			
 		</div>
-		<div class="button" onclick="showMain()" style="width: 9%;height: 4%;background:none;position:absolute;left:46%;color:#00b5e6;font-family:'黑体';text-align:center;font-size:2.5rem;margin-top:1%;border: 1px solid #2E67AB;box-shadow:0 0 10px #2E67AB inset;padding-top:0.3%"> 返回首页 </div>
+		<div id="showMainButton" class="button" onclick="showMain()" style="width: 9%;height: 4%;background:none;position:absolute;left:46%;color:#00b5e6;font-family:'黑体';text-align:center;font-size:2.5rem;margin-top:1%;border: 1px solid #2E67AB;box-shadow:0 0 10px #2E67AB inset;padding-top:0.3%;display:none"> 返回首页 </div>
 </body>
 </html>
 
