@@ -17,6 +17,7 @@
     <script type="text/javascript" src="js/common/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/common/bootstrap-datetimepicker.min.js"></script>
     <script type="text/javascript" src="js/common/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script type="text/javascript" src="js/common/bootstrap-slider.js"></script>
   	<script type="text/javascript" src="js/app.js"></script>
   	<script type="text/javascript" src="js/prefixfree.min.js"></script>
 	<script type="text/javascript" src="js/stopExecutionOnTimeout.js"></script>
@@ -29,6 +30,7 @@
   	<link rel="stylesheet" type="text/css" href="css/ngDialog-theme-default.min.css">
   	<link rel="stylesheet" type="text/css" href="css/ngDialog-theme-plain.min.css">
 	<link rel="stylesheet" type="text/css" href="css/bootstrap-datetimepicker.min.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap-slider.css">
   	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elrements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -183,14 +185,16 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 					    	<div style="padding-top:0.5rem" class="col-md-6">区域</div>
 					    	<div class="col-md-6"><input style="color:black;font-family: '微软雅黑'" type="text" ng-model="input11"/></div>
 					    </div>
-			    		<div class="col-md-offset-3 col-md-6">
+			    		<div class="col-md-offset-2 col-md-7">
 				  			<div style="padding-top:1.5rem" class="col-md-offet-2 col-md-2">开始时间</div>
-				  			<div class="col-md-9" style="padding-top:0.5rem">
-				    			<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd" ng-model="dt" is-open="opened" close-text="关闭" readonly/>
-			             		<button type="button" class="btn btn-default" ng-click="openCalendar($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-								<button type="button" class="pull-right btn btn-default" ng-click="adddttime()"><i class="glyphicon glyphicon-chevron-right"></i></button>
-			             		<input type="text" class="pull-right form-control" style="width:20%;" ng-model="dttime" readonly>
-			             		<button type="button" class="pull-right btn btn-default" ng-click="minusdttime()"><i class="glyphicon glyphicon-chevron-left"></i></button>
+				  			<div class="col-md-9" style="padding-top:0.5rem;padding-right:0rem;">
+				    			<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd 5 时" ng-model="dt" is-open="opened" close-text="关闭" readonly/>
+			             		<button style="margin-top:0.5rem;margin-right:1rem"  type="button" class="btn btn-default" ng-click="openCalendar($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+<!-- 								<button type="button" class="pull-right btn btn-default" ng-click="adddttime()"><i class="glyphicon glyphicon-chevron-right"></i></button> -->
+<!-- 			             		<input type="text" class="pull-right form-control" style="width:20%;" ng-model="dttime" readonly> -->
+<!-- 			             		<button type="button" class="pull-right btn btn-default" ng-click="minusdttime()"><i class="glyphicon glyphicon-chevron-left"></i></button> -->
+			             		<button type="button" style="margin-left:2rem" class="pull-right btn btn-default" ng-click="dtchangetime()">{{dtclock}}</button>
+				  				<input ng-change="tttchange()" id="ex1" type="text" ng-model="ttt" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["0","1", "2", "3", "4", "5","6","7","8","9","10","11"]'/>
 				  			</div>
 				    	</div>
 			   		</div>
@@ -200,14 +204,16 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 					   		<div style="padding-top:0.5rem" class="col-md-6">分拣场地</div>
 					   		 <div style="padding-top:0.3rem"class="col-md-6"><input style="color:black;font-family: '微软雅黑'" type="text"  ng-model="input22" readonly/></div>
 			    		</div>
-				    	<div class="col-md-offset-3 col-md-6">
+				    	<div class="col-md-offset-2 col-md-7">
 				    		<div style="padding-top:0.5rem" class="col-md-offet-2 col-md-2">结束时间</div>
-				    		<div class="col-md-9" style="padding-bottom:0.5rem">
-				    			<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd" ng-model="dt1" is-open="opened1" close-text="关闭"/>
-		             			<button type="button" style="margin-top:0.5rem" class="btn btn-default" ng-click="openCalendar1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-		             			<button type="button" style="margin-top:0.5rem" class="pull-right btn btn-default" ng-click="adddt1time()"><i class="glyphicon glyphicon-chevron-right"></i></button>
-			             		<input type="text" class="pull-right form-control" style="width:20%;margin-top:0.5rem;"  ng-model="dt1time" readonly>
-			             		<button type="button" style="margin-top:0.5rem" class="pull-right btn btn-default" ng-click="minusdt1time()"><i class="glyphicon glyphicon-chevron-left"></i></button>
+				    		<div class="col-md-9" style="padding-bottom:0.5rem;padding-right:0rem;">
+				    			<input style="color:black;font-family: '微软雅黑'" type="text" datepicker-popup="yyyy-MM-dd 5 时" ng-model="dt1" is-open="opened1" close-text="关闭"/>
+		             			<button type="button" style="margin-top:0.5rem;margin-right:1rem" class="btn btn-default" ng-click="openCalendar1($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+<!-- 		             			<button type="button" style="margin-top:0.5rem" class="pull-right btn btn-default" ng-click="adddt1time()"><i class="glyphicon glyphicon-chevron-right"></i></button> -->
+<!-- 			             		<input type="text" class="pull-right form-control" style="width:20%;margin-top:0.5rem;"  ng-model="dt1time" readonly> -->
+<!-- 			             		<button type="button" style="margin-top:0.5rem" class="pull-right btn btn-default" ng-click="minusdt1time()"><i class="glyphicon glyphicon-chevron-left"></i></button> -->
+			             		<button type="button" style="margin-left:2rem;margin-top:0.5rem" class="pull-right btn btn-default" ng-click="dt1changetime()">{{dt1clock}}</button>
+			             		<input ng-change="ttt1change()" id="ex2" type="text" ng-model="ttt1" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["0","1", "2", "3", "4", "5","6","7","8","9","10","11"]'/>  
 		             		</div>
 		             	</div>
 			   		</div>
@@ -402,7 +408,17 @@ ul li {display:inline;  font-size:3.0rem; text-align:center; font-family:'digita
 		var  getval =thisURL.split('?')[1];  
 		var empName= getval.split("=")[1];  
 		window.location.href='main.html?empName='+empName;
-	} 
+	};
+	 $("#ex1").slider({  
+	        ticks: [0,1, 2, 3, 4,5,6,7,8,9,10,11],  
+	        ticks_labels: ['0','1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11(时)' ],  
+	        ticks_snap_bounds: 1
+	    });
+	 $("#ex2").slider({  
+	        ticks: [0,1, 2, 3, 4,5,6,7,8,9,10,11],  
+	        ticks_labels: ['0','1', '2', '3', '4', '5','6', '7', '8', '9', '10', '11(时)' ],  
+	        ticks_snap_bounds: 1
+	    });
 </script>
 </body>
 </html>
