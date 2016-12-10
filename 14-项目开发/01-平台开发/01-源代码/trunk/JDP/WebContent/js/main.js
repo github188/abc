@@ -7,6 +7,7 @@ var mapName = '全国';
 showCenterflag = false;
 var currentCenterName=null;
 option = {
+	backgroundColor:"rgba(0,0,0,0.2)",
     title: {
         text: '在岗总人数',
         subtext: randomData(),
@@ -130,147 +131,130 @@ option = {
 };
 
 		var barOption = {
-			title: {
-	            text: '',
-	            left: 'left',
-		        top: 5,
-	        },
-			legend:{
-				data:['员工数量','总订单数量','人效'],
-				bottom:5,
-				right:30,
-				textStyle:{
-		        	color:'#7ab8f9'
-		        }
-			},
-		    tooltip : {
-		        trigger: 'item',
-		        textStyle:{
-		        	color:'#7ab8f9'
-		        }
-		    },
-		    xAxis: {
-		    	type:'category',
-		    	data:['周一','周二','周三','周四','周五','周六','周日'],
-		    	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
+				backgroundColor:"rgba(0,0,0,0.2)",
+				title: {
+		            text: '',
+		            left: 'left',
+			        top: 5,
 		        },
-		       	splitLine:{  
-                    show:false  
-                }
-	        },
-	        grid:{
-	        	left:10,
-	        	right:12,
-	        	bottom:'10%',
-	        	top:'20%',
-	        	containLabel:true
-	        },
-	        yAxis: [
-	        {
-	        	type:'value',
-	        	name: '数量',
-	        	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
-		        } ,
-		        splitLine:{  
-                    show:false  
-                },
-                //position:'right',
-	        },	        
-	        {
-	        	type:'value',
-	        	name: '人效',
-	        	axisLine:{
-		    		lineStyle:{
-		    			color:'#7ab8f9'
-		    		}
-		        } ,
-		        splitLine:{  
-                    show:false  
-                },//position:'right',
-	        }
-	        ],
-            color: ['#32bbec','#11d320','#9035B1'],
-	        series: [
-	            {
-		            name: '员工数量',type: 'bar',barMaxWidth:30,
-		            label:{
-		            	normal:{
-		            		show:true,
-		            		position:'top'
-		            	},
-		            },
-		            barMinHeight:1,
-		            itemStyle:{
-		            	normal:{
-		            		color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-			            	  offset: 0, color: '#32bbec' // 0% 处的颜色
-		            		}, {
-		            		  offset: 1, color: '#0054a8' // 100% 处的颜色
-		            		}], false)
-		            	}
-		            }/*,
-		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-		            */
-	        	},
-	        	{
-		            name: '人效',type: 'line',
-		            label:{
-		            	normal:{
-		            		show:true,
-		            		position:'top'
-		            	},
-		            },
-		            symbol:'diamond',
-		            symbolSize:'10',
-		            smooth:true,
-		            barMinHeight:1,
-		            yAxisIndex:1,
-		            itemStyle:{
-		            	normal:{
-		            		color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-			            	  offset: 0, color: '#11D320' // 0% 处的颜色
-		            		}, {
-		            		  offset: 1, color: '#15B421' // 100% 处的颜色
-		            		}], false)
-		            	}
-		            }/*,
-		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-		            */
-	        	},
-	        	{
-		            name: '总订单数量',type: 'bar',barMaxWidth:30,
-		            label:{
-		            	normal:{
-		            		show:true,
-		                    textStyle:{
-		                    	color:'white',fontWeight:'bold'
-		                    },
-		            		position:'top'
-		            	},
-		            },
-		            barMinHeight:1,
-		            itemStyle:{
-		            	normal:{
-		            		color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-			            	  offset: 0, color: '#9035B1' // 0% 处的颜色
-		            		}, {
-		            		  offset: 1, color: '#570E72' // 100% 处的颜色
-		            		}], false)
-		            	}
-		            }/*,
-		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-		            */
-	        	},
-	        ]
-		};
+				legend:{
+					data:['在岗人数','正式工占比'],
+					bottom:5,
+					right:30,
+					textStyle:{
+			        	color:'#7de2ff'
+			        }
+				},
+			    tooltip : {
+			        trigger: 'item',
+			        textStyle:{
+			        	color:'#7ab8f9'
+			        }
+			    },
+			    xAxis: {
+			    	type:'category',
+			    	data:['1','2','3','4','5','6','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'],
+			    	axisLine:{
+			    		lineStyle:{
+			    			color:'#00acf3'
+			    		}
+			        },
+			        axisLabel:{  
+			            interval: 0  
+			        } ,
+			       	splitLine:{  
+	                    show:false  
+	                },
+	                minInterval: 1
+		        },
+		        grid:{
+		        	left:10,
+		        	right:12,
+		        	bottom:'10%',
+		        	top:'20%',
+		        	containLabel:true
+		        },
+		        yAxis: [
+		        {
+		        	type:'value',
+		        	name: '数量',
+		        	axisLine:{
+			    		lineStyle:{
+			    			color:'#7ab8f9'
+			    		}
+			        } ,
+			        splitLine:{  
+	                    show:false  
+	                },
+	                //position:'right',
+		        },
+		        {
+		        	type:'value',
+		        	name: '占比',
+		        	axisLine:{
+			    		lineStyle:{
+			    			color:'#7ab8f9'
+			    		}
+			        } ,
+			        splitLine:{  
+	                    show:false  
+	                },
+	                //position:'right',
+		        }
+		        ],
+	           // color: ['#32bbec'],
+		        series: [
+		            {
+			            name: '在岗人数',type: 'bar',barMaxWidth:30,
+			            label:{
+			            	normal:{
+			            		show:true,
+			            		position:'top'
+			            	},
+			            },
+			            barMinHeight:1,
+			            itemStyle:{
+			            	normal:{
+			            		color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+				            	  offset: 0, color: '#31fbfd' // 0% 处的颜色
+			            		}, {
+			            		  offset: 1, color: '#0c6add' // 100% 处的颜色
+			            		}], false)
+			            	}
+			            }/*,
+			            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
+			                   ,randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
+			                   ,randomData(),randomData(),randomData()]
+			            */
+		        	},
+		        	{
+			            name: '正式工占比',type: 'line',
+			            label:{
+			            	normal:{
+			            		show:true,
+			            		position:'top'
+			            	},
+			            },
+			            symbol:'circle',
+			            symbolSize:'10',
+			            smooth:true,
+			            barMinHeight:1,
+			            yAxisIndex:1,
+			            itemStyle:{
+			            	normal:{
+			            		color:'#ff9f39'
+				            	}
+			            }/*,
+			            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
+			                   ,randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
+			                   ,randomData(),randomData(),randomData()]
+			            */
+		        	}
+		        ]
+			};
 
 	    var barOption1 = {
+	    	backgroundColor:"rgba(0,0,0,0.2)",
 			title: {
 	            text: '',
 	            left: 'center',
@@ -338,11 +322,11 @@ option = {
 		            itemStyle:{
 		            	normal:{
 		            		color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-			            	  offset: 0, color: '#32bbec' // 0% 处的颜色
-		            		}, {
-		            		  offset: 1, color: '#0054a8' // 100% 处的颜色
-		            		}], false)
-		            	}
+				            	  offset: 0, color: '#31fbfd' // 0% 处的颜色
+			            		}, {
+			            		  offset: 1, color: '#0c6add' // 100% 处的颜色
+			            		}], false)
+			            }
 		            }/*,
 		            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
 		            */
@@ -780,6 +764,7 @@ option = {
 		    barchart.setOption(barOption, true);
 		    barchart1.setOption(barOption1, true);
 		    var barOption2 = {
+		    		backgroundColor:"rgba(0,0,0,0.2)",
 					title: {
 			            text: '前一小时人数/人效监控',
 			            subtext:'人数',
@@ -858,12 +843,12 @@ option = {
 				                        ];
 				                        return colorList[params.dataIndex%2]
 				                    },*/
-				                	color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-					            	  offset: 0, color: '#32bbec' // 0% 处的颜色
+				            		color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+					            	  offset: 0, color: '#31fbfd' // 0% 处的颜色
 				            		}, {
-				            		  offset: 1, color: '#0054a8' // 100% 处的颜色
-				            		}], false),
-				                    //barBorderRadius:[5, 5, 5, 5]
+				            		  offset: 1, color: '#0c6add' // 100% 处的颜色
+				            		}], false)
+				            //barBorderRadius:[5, 5, 5, 5]
 				                }
 			               }/*,
 			               data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
@@ -1333,46 +1318,59 @@ option = {
 			piechart.setOption(pieOption, true);
 		}
 			
-		function searchBar(name) {
-			var url = "chart/getBarData.do?name="+name;
+		function searchBar(cuName) {
+			currentCenterName=(cuName==null?window.uerInfo.cuName:cuName);
+			var url = "chart/getMyCenterData.do?cuName="+currentCenterName;
 			$.ajax({
 				url: url,
 				type: "post",
 				success: function (data) {
-					makebarData(data,name);
+					makebarData(data,cuName);
 				}
 			});
+		
 		};
 		
 		//获取拼接右上数据
-		function makebarData(data,name){
-			bardata= new Array();
-			bardata[0] = new Array();
-			bardata[1] = new Array();
-			bardata[2] = new Array();
-			bardata[3] = new Array();
+		function makebarData(data,name){	
+			$("#effectTopLeft").html(name?name+'一周人效走势图':'全国一周人效走势图');
+			myCenterdata= new Array();
+			myCenterdata[0] = new Array();
+			myCenterdata[1] = new Array();
+			myCenterdata[2] = new Array();
 			var data=eval(data);
+			var eachHourTotalNum = 0;
+			var nowClerkNum = 0;
+			var nowNotClerkNum = 0;
+			var nowOtherClerkNum = 0;
 			if(data!=null){
+				debugger;
 				$.each(data, function(index, row){
 					//clerkNum 员工数 orderNum 订单数  date 日期
-					bardata[0].push(row.clerkNum);
-					bardata[2].push(row.orderNum);
-/*					bardata[1].push(row.clerkNum>0?Math.ceil(eval(row.orderNum/row.clerkNum)):0);*/
-					bardata[1].push(row.effect);
-					bardata[3].push(row.name);
+					eachHourTotalNum=(row.clerkNum?row.clerkNum:0)+(row.notClerkNum?row.notClerkNum:0)+(row.otherClerkNum?row.otherClerkNum:0);
+					if(new Date().getHours()==row.time){
+						nowClerkNum =(row.clerkNum?row.clerkNum:0);
+						nowNotClerkNum =(row.notClerkNum?row.notClerkNum:0);
+						nowOtherClerkNum =(row.otherClerkNum?row.otherClerkNum:0);
+					}
+					myCenterdata[0].push(Math.ceil(eachHourTotalNum));
+					myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil(((row.clerkNum?row.clerkNum:0)/eachHourTotalNum)*100));
+					myCenterdata[2].push(row.time);
 				});
+				barOption.series[0].data = myCenterdata[0];
+				barOption.series[1].data = myCenterdata[1];
+				barOption.xAxis.data = myCenterdata[2];
+				barchart.setOption(barOption, true);
 			}
-			setBarOption(bardata,name);
 		}
-		
-		function setBarOption(bardata,name){
-			$("#effectTopLeft").html(name?name+'一周人效走势图':'全国一周人效走势图');
-		    barOption.series[0].data = bardata[0];
-		    barOption.series[1].data = bardata[1];
-		    barOption.series[2].data = bardata[2];
-		    barOption.xAxis.data = bardata[3];
-			barchart.setOption(barOption, true);  
-		}
+//		function setBarOption(bardata,name){
+//			$("#effectTopLeft").html(name?name+'一周人效走势图':'全国一周人效走势图');
+//		    barOption.series[0].data = bardata[0];
+//		    barOption.series[1].data = bardata[1];
+//		    barOption.series[2].data = bardata[2];
+//		    barOption.xAxis.data = bardata[3];
+//			barchart.setOption(barOption, true);  
+//		}
 		
 		function searchBar1(name) {
 			var url = "chart/getBar1Data.do?name="+name;
@@ -1547,7 +1545,7 @@ option = {
 				            			color:'#FFF',
 				                        fontSize: '12',
 				                        fontWeight: 'bold',
-				                        fontFamily:'黑体'
+				                        fontFamily:'宋体'
 				                    }	
 				            	},
 				            },
@@ -1560,11 +1558,11 @@ option = {
 				                        ];
 				                        return colorList[params.dataIndex%2]
 				                    },*/
-				                	color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-					            	  offset: 0, color: '#32bbec' // 0% 处的颜色
+				            		color:new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+					            	  offset: 0, color: '#31fbfd' // 0% 处的颜色
 				            		}, {
-				            		  offset: 1, color: '#0054a8' // 100% 处的颜色
-				            		}], false),
+				            		  offset: 1, color: '#0c6add' // 100% 处的颜色
+				            		}], false)
 				                    //barBorderRadius:[5, 5, 5, 5]
 				                }
 			               },
@@ -1589,7 +1587,7 @@ option = {
 			            			color:'#FFF',
 			                        fontSize: '12',
 			                        fontWeight: 'normal',
-			                        fontFamily:'黑体'
+			                        fontFamily:'宋体'
 			                    }
 			            	},
 			            },
@@ -1847,7 +1845,7 @@ option = {
 		
 		function initMyCenter(){
 			MyCenterOption = {
-					backgroundColor:"rgba(0,0,0,0.5)",
+					backgroundColor:"rgba(0,0,0,0.2)",
 					title: {
 			            text: '',
 			            left: 'left',
