@@ -1779,9 +1779,12 @@ option = {
 			barchart1.resize();
 			barchart2.resize();
 			piechart.resize();
-			thisHourDatachart.resize();
-			myCenterchart.resize();
-			
+			if(thisHourDatachart){
+				thisHourDatachart.resize();				
+			}
+			if(myCenterchart){
+				myCenterchart.resize();				
+			}
 		};
 		function logout(){
 			window.location.href = "login.html";
