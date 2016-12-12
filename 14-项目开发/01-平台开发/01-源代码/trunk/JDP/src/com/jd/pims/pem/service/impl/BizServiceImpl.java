@@ -306,7 +306,7 @@ public class BizServiceImpl implements IBizService {
 					.parseInt(ondutyMap.get(CU_ID) == null ? "0" : ondutyMap
 							.get(CU_ID).toString().split(",")[1]);
 			Integer other = Integer.parseInt(ondutyMap.get(CU_ID) == null ? "0"
-					: ondutyMap.get(CU_ID).toString().split(",")[2]);
+					: ondutyMap.get(CU_ID).toString().split(",")[2].equals("null")?"0":ondutyMap.get(CU_ID).toString().split(",")[2]);
 
 			/*
 			 * Map<String, Object> map1=
@@ -447,7 +447,7 @@ public class BizServiceImpl implements IBizService {
 								.get(CU_ID).toString().split(",").length>1?ondutyMap
 										.get(CU_ID).toString().split(",")[1]:"0");
 				Integer other = Integer.parseInt(ondutyMap.get(CU_ID) == null ? "0"
-						: ondutyMap.get(CU_ID).toString().split(",").length>2?ondutyMap.get(CU_ID).toString().split(",")[2]:"0");
+						: ondutyMap.get(CU_ID).toString().split(",")[2].equals("null")?"0":ondutyMap.get(CU_ID).toString().split(",")[2]);
 
 				/*Map<String, Object> map1 = reportDao.queryavgefficiency(CU_ID,
 						inputss[1].isEmpty() ? "1970-01-01-00" : inputss[1],

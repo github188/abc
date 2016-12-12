@@ -1320,7 +1320,7 @@ option = {
 			
 		function searchBar(cuName) {
 			currentCenterName=(cuName==null?window.uerInfo.cuName:cuName);
-			var url = "chart/getMyCenterData.do?cuName="+currentCenterName;
+			var url = 'chart/getMyCenterData.do?cuName='+(currentCenterName==='全国'?'京东集团':currentCenterName);
 			$.ajax({
 				url: url,
 				type: "post",

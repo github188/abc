@@ -445,19 +445,23 @@ public class ChartServiceImpl implements IChartService {
 				.getCurrentTimeLabourOndutyForEDC(bizDate, currentTime, cuName);
 		Map<String, Object> map = new HashMap<String, Object>();
 		int notClerkNum = 0;
+		int clerkNum = 0;
+		int otherClerkNum = 0;
 		if (listCurrent != null) {
 			for (LabourOnduty lab : listCurrent) {
 
 				if (lab.getPersonType().equals("1")) {// 正式工
-					map.put("clerkNum", lab.getQuantityOnduty());
+					clerkNum += lab.getQuantityOnduty();
 				} else if (lab.getPersonType().equals("5")) {// 其他
-					map.put("otherClerkNum", lab.getQuantityOnduty());
+					otherClerkNum += lab.getQuantityOnduty();
 				} else {// 非正式工
 					notClerkNum += lab.getQuantityOnduty();
 				}
 
 			}
 			map.put("time", currentTime);
+			map.put("clerkNum", clerkNum);
+			map.put("otherClerkNum",otherClerkNum);
 			map.put("notClerkNum", notClerkNum);
 			list.add(map);
 		}else{//如果没有返回记录，默认为0
