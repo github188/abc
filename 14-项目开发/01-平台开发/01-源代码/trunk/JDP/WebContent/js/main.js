@@ -1344,21 +1344,27 @@ option = {
 			var nowNotClerkNum = 0;
 			var nowOtherClerkNum = 0;
 			if(data!=null){
-				debugger;
-				$.each(data, function(index, row){
-					//clerkNum 员工数 orderNum 订单数  date 日期
-					eachHourTotalNum=(row.clerkNum?row.clerkNum:0)+(row.notClerkNum?row.notClerkNum:0)+(row.otherClerkNum?row.otherClerkNum:0);
-					if(new Date().getHours()==row.time){
-						nowClerkNum =(row.clerkNum?row.clerkNum:0);
-						nowNotClerkNum =(row.notClerkNum?row.notClerkNum:0);
-						nowOtherClerkNum =(row.otherClerkNum?row.otherClerkNum:0);
+				//clerkNum 员工数 orderNum 订单数  date 日期
+				var dataL=data.length;
+				for(var i=0;i<24;i++){
+					if(i<dataL){
+						eachHourTotalNum=(data[i].clerkNum?data[i].clerkNum:0)+(data[i].notClerkNum?data[i].notClerkNum:0)+(data[i].otherClerkNum?data[i].otherClerkNum:0);
+						if(new Date().getHours()==data[i].time){
+							nowClerkNum =(data[i].clerkNum?data[i].clerkNum:0);
+							nowNotClerkNum =(data[i].notClerkNum?data[i].notClerkNum:0);
+							nowOtherClerkNum =(data[i].otherClerkNum?data[i].otherClerkNum:0);
+						}
+						myCenterdata[0].push(Math.ceil(eachHourTotalNum));
+						myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil(((data[i].clerkNum?data[i].clerkNum:0)/eachHourTotalNum)*100));
+
+					}else{
+						myCenterdata[0].push(Math.ceil(eachHourTotalNum));
+						//myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil(((row.clerkNum?row.clerkNum:0)/eachHourTotalNum)*100));
 					}
-					myCenterdata[0].push(Math.ceil(eachHourTotalNum));
-					myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil(((row.clerkNum?row.clerkNum:0)/eachHourTotalNum)*100));
-					myCenterdata[2].push(row.time);
-				});
+					myCenterdata[2].push(i+"点");
+				}
 				barOption.series[0].data = myCenterdata[0];
-				//barOption.series[1].data = myCenterdata[1];
+				barOption.series[1].data = myCenterdata[1];
 				barOption.xAxis.data = myCenterdata[2];
 				barchart.setOption(barOption, true);
 			}
