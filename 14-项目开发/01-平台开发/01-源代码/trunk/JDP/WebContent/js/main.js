@@ -187,20 +187,20 @@ option = {
 	                    show:false  
 	                },
 	                //position:'right',
-		        },
-		        {
-		        	type:'value',
-		        	name: '占比',
-		        	axisLine:{
-			    		lineStyle:{
-			    			color:'#7ab8f9'
-			    		}
-			        } ,
-			        splitLine:{  
-	                    show:false  
-	                },
-	                //position:'right',
 		        }
+//		        ,{
+//		        	type:'value',
+//		        	name: '占比',
+//		        	axisLine:{
+//			    		lineStyle:{
+//			    			color:'#7ab8f9'
+//			    		}
+//			        } ,
+//			        splitLine:{  
+//	                    show:false  
+//	                },
+//	                //position:'right',
+//		        }
 		        ],
 	           // color: ['#32bbec'],
 		        series: [
@@ -226,30 +226,30 @@ option = {
 			                   ,randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
 			                   ,randomData(),randomData(),randomData()]
 			            */
-		        	},
-		        	{
-			            name: '正式工占比',type: 'line',
-			            label:{
-			            	normal:{
-			            		show:true,
-			            		position:'top'
-			            	},
-			            },
-			            symbol:'circle',
-			            symbolSize:'10',
-			            smooth:true,
-			            barMinHeight:1,
-			            yAxisIndex:1,
-			            itemStyle:{
-			            	normal:{
-			            		color:'#ff9f39'
-				            	}
-			            }/*,
-			            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
-			                   ,randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
-			                   ,randomData(),randomData(),randomData()]
-			            */
 		        	}
+//		            ,{
+//			            name: '正式工占比',type: 'line',
+//			            label:{
+//			            	normal:{
+//			            		show:true,
+//			            		position:'top'
+//			            	},
+//			            },
+//			            symbol:'circle',
+//			            symbolSize:'10',
+//			            smooth:true,
+//			            barMinHeight:1,
+//			            yAxisIndex:1,
+//			            itemStyle:{
+//			            	normal:{
+//			            		color:'#ff9f39'
+//				            	}
+//			            }/*,
+//			            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
+//			                   ,randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
+//			                   ,randomData(),randomData(),randomData()]
+//			            */
+//		        	}
 		        ]
 			};
 
@@ -334,101 +334,6 @@ option = {
 	        ]
 		};
 		
-		
-		/*
-		var barOption3 = {
-				title: {
-		            text: '',
-		            subtext:'人效',
-		            left: 'center',
-			        top: 5,
-			        textStyle:{
-			        	color:'#FFF'
-			        },
-					subtextStyle:{
-					    color:'#FFF',
-					   // fontFamily:'digital-7__mono',
-					    fontSize:'18'
-					}
-		        },
-				legend:{
-					data:['实时人效'],
-					bottom:5,
-					textStyle:{
-			        	color:'#fff'
-			      	},
-			     	show:false
-				},
-			    tooltip : {
-					trigger: 'axis',
-			        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-			            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-			        }
-			    },
-			    //color:[ '#7ab8f9','#fedd1b'],
-		        grid:{
-		        	//width:'85%',
-		        	left:0,
-		        	bottom:0,
-		        	containLabel:true
-		        },
-		        barWidth:20,
-			    xAxis: {
-			    	type:'value',
-			    	left:'10%',
-			    	axisLine:{
-			    		lineStyle:{
-			    			color:'#7ab8f9'
-			    		}
-			     	},
-			    	show:false
-		       },
-		        yAxis: [
-		        {
-		        	type:'category',
-		        	data:[''],
-			    	axisLine:{
-			    		lineStyle:{
-			    			color:'#7ab8f9'
-			    		}
-			       },show:false
-		        }
-		        ],
-	          	series: [
-		            {
-			            name: '实时人效',
-			            type: 'bar',
-			            label:{
-			            	normal:{
-			            		show:true,
-			                    textStyle:{
-			                    	color:'white',fontWeight:'bold'
-			                    },
-			            		position:'right'
-			            	},
-			            },
-			            itemStyle: {
-			                normal: {
-			                    color: function(params) {
-			                        // build a color map as your need.
-			                        var colorList = [
-			                          '#7ab8f9','#fedd1b'
-			                        ];
-			                        return colorList[params.dataIndex%2]
-			                    },
-			            		color:new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
-					            	  offset: 0, color: '#9035B1' // 0% 处的颜色
-				            		}, {
-				            		  offset: 1, color: '#570E72' // 100% 处的颜色
-				            		}], false),
-			                   // barBorderRadius:[5, 5, 5, 5]
-			                }
-		               },
-		               data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()]
-	            }
-		        ]
-			};
-		*/
 		var pieOption = {
 			title: {
 	            text: '',
@@ -502,9 +407,7 @@ option = {
 				                        fontSize: '5rem',
 				                        fontWeight: 'bold'
 				                    }
-				                }
-
-				                
+				                }  
 				            },
 			            }
 		            ]
@@ -570,7 +473,6 @@ option = {
 			barchart = echarts.init(document.getElementById('effect'));
 			barchart1 = echarts.init(document.getElementById('count'));
 			barchart2 = echarts.init(document.getElementById('bar'));
-/*			barchart3 = echarts.init(document.getElementById('bar1'));*/
 			piechart = echarts.init(document.getElementById('pie'));
 			$.ajax({
 				url: 'geoJson/'+nameMap+'.json',
@@ -868,7 +770,7 @@ option = {
 			        		    },		                    
 			            		textStyle: {
 			            			color:'#FFF',
-			                        fontSize: '12',
+			                        fontSize: '5rem',
 			                        fontWeight: 'bold'
 			                    }
 			            	},
@@ -1358,7 +1260,7 @@ option = {
 					myCenterdata[2].push(row.time);
 				});
 				barOption.series[0].data = myCenterdata[0];
-				barOption.series[1].data = myCenterdata[1];
+				//barOption.series[1].data = myCenterdata[1];
 				barOption.xAxis.data = myCenterdata[2];
 				barchart.setOption(barOption, true);
 			}
@@ -1544,8 +1446,7 @@ option = {
 				        		    textStyle: {
 				            			color:'#FFF',
 				                        fontSize: '12',
-				                        fontWeight: 'bold',
-				                        fontFamily:'宋体'
+				                        fontWeight: 'bold'
 				                    }	
 				            	},
 				            },
