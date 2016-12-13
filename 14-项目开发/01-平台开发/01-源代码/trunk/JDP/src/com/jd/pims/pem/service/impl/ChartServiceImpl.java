@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -388,7 +389,7 @@ public class ChartServiceImpl implements IChartService {
 	@Override
 	public List<Map<String, Object>> getMyCenterData(String cuName, Date today) {
 		// TODO Auto-generated method stub
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> list = new LinkedList<Map<String, Object>>();
 		// 取当时小时之前每一小时的在岗人数
 		String bizDate = sdf.format(today);
 		Calendar calendar = Calendar.getInstance();
@@ -399,9 +400,17 @@ public class ChartServiceImpl implements IChartService {
 		}else{
 			list=getSingleCenterData(bizDate, currentTime, cuName);
 		}
+		//补充数据,前端补
+		//patchForWholeDate(list);
 		return list;
 	}
 	
+	private void patchForWholeDate(List<Map<String, Object>> list){
+		for(int i=list.size();i<24;i++){
+			Map<String, Object> map= createEmptyHourData(i+1);
+			list.add(map);
+		}
+	}
 	
 	private List<Map<String, Object>> getAllCenterData(String bizDate, int currentTime, String cuName) {
 		List<Map<String, Object>> arealist = userDao.getCurrentTimeAreaForChart(cuName);
