@@ -255,7 +255,11 @@
   		from jd_le_labour_onduty lab
   		left join np_sys_controlunit cu on cu.id=lab.cu_id
   		where biz_date=#{bizDate} 
-		and cu.name=#{cuName}
+  	]]>
+  	<if test="cuName !='京东集团' " >
+        <![CDATA[and cu.name=#{cuName}]]>
+    </if>
+  	 <![CDATA[	 
   		and substring(timing,1,2)<#{currentHour}
   		group by substring(timing,1,2),person_type
   		order by hour asc,person_type asc
