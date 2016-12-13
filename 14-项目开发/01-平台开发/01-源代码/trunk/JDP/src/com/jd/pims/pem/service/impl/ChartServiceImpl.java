@@ -394,10 +394,119 @@ public class ChartServiceImpl implements IChartService {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(today);
 		int currentTime = calendar.get(Calendar.HOUR_OF_DAY) ;
+		if("京东集团".equals(cuName)){
+			list=getAllCenterData(bizDate, currentTime, cuName);
+		}else{
+			list=getSingleCenterData(bizDate, currentTime, cuName);
+		}
+		return list;
+	}
+	
+	
+	private List<Map<String, Object>> getAllCenterData(String bizDate, int currentTime, String cuName) {
+		List<Map<String, Object>> arealist = userDao.getCurrentTimeAreaForChart(cuName);
+		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+		for (Map<String, Object> areaMap : arealist) {
+			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			Set<Integer> allTimes=new HashSet<Integer>();
+			for(int i=1;i<currentTime;i++){
+				allTimes.add(i);
+			}
+			// TODO Auto-generated method stub
+			List<LabourOnduty> listBefore = labourOndutyDao
+					.getTodayLabourOndutyForEDC(bizDate, currentTime, areaMap.get("name").toString());
+			if (listBefore != null) {
+				int time = 1;
+				Map<String, Object> map = new HashMap<String, Object>();
+				int notClerkNum = 0;
+				for (LabourOnduty lab : listBefore) {
+					if (Integer.parseInt(lab.getHour().toString()) == time) {
+						if (lab.getPersonType().equals("1")) {// 正式工
+							map.put("clerkNum", lab.getQuantityOnduty());
+						} else if (lab.getPersonType().equals("5")) {// 其他
+							map.put("otherClerkNum", lab.getQuantityOnduty());
+						} else {// 非正式工
+							notClerkNum += lab.getQuantityOnduty();
+						}
+					} else {
+						
+						if (time > 0) {
+							map.put("time", time);
+							map.put("notClerkNum", notClerkNum);
+							list.add(map);
+							allTimes.remove(time);
+						}
+						notClerkNum = 0;
+						time++;
+						map = new HashMap<String, Object>();
+						if (lab.getPersonType().equals("1")) {// 正式工
+							map.put("clerkNum", lab.getQuantityOnduty());
+						} else if (lab.getPersonType().equals("5")) {// 其他
+							map.put("otherClerkNum", lab.getQuantityOnduty());
+						} else {// 非正式工
+							notClerkNum += lab.getQuantityOnduty();
+						}
+					}
+				}
+			}
+			//增补空记录
+			if(!allTimes.isEmpty()){
+				Iterator<Integer> it=allTimes.iterator();
+				while(it.hasNext()){
+					list.add(createEmptyHourData(it.next()));
+				}
+			}
+			List<LabourOnduty> listCurrent = labourOndutyDao
+					.getCurrentTimeLabourOndutyForEDC(bizDate, currentTime, cuName);
+			Map<String, Object> map = new HashMap<String, Object>();
+			int notClerkNum = 0;
+			int clerkNum = 0;
+			int otherClerkNum = 0;
+			if (listCurrent != null) {
+				for (LabourOnduty lab : listCurrent) {
+	
+					if (lab.getPersonType().equals("1")) {// 正式工
+						clerkNum += lab.getQuantityOnduty();
+					} else if (lab.getPersonType().equals("5")) {// 其他
+						otherClerkNum += lab.getQuantityOnduty();
+					} else {// 非正式工
+						notClerkNum += lab.getQuantityOnduty();
+					}
+	
+				}
+				map.put("time", currentTime);
+				map.put("clerkNum", clerkNum);
+				map.put("otherClerkNum",otherClerkNum);
+				map.put("notClerkNum", notClerkNum);
+				list.add(map);
+			}else{//如果没有返回记录，默认为0
+				list.add(createEmptyHourData(currentTime));
+			}
+			if(resultList.isEmpty()){
+				resultList.addAll(list);
+			}else{
+				for(Map<String, Object> resultMap :resultList){
+					for(Map<String, Object> singleMap :list){
+						if (resultMap.get("time").equals(singleMap.get("time"))) {
+							resultMap.put("clerkNum", Integer.parseInt(resultMap.get("clerkNum")==null?"0":resultMap.get("clerkNum").toString())+Integer.parseInt(singleMap.get("clerkNum")==null?"0":singleMap.get("clerkNum").toString()));
+							resultMap.put("otherClerkNum",Integer.parseInt(resultMap.get("otherClerkNum")==null?"0":resultMap.get("otherClerkNum").toString())+Integer.parseInt(singleMap.get("otherClerkNum")==null?"0":singleMap.get("otherClerkNum").toString()));
+							resultMap.put("notClerkNum", Integer.parseInt(resultMap.get("notClerkNum")==null?"0":resultMap.get("notClerkNum").toString())+Integer.parseInt(singleMap.get("notClerkNum")==null?"0":singleMap.get("notClerkNum").toString()));
+						}
+					}
+				}
+			}
+		}  
+		return resultList;
+	
+	}
+
+	private List<Map<String, Object>> getSingleCenterData(String bizDate, int currentTime, String cuName) {
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		Set<Integer> allTimes=new HashSet<Integer>();
 		for(int i=1;i<currentTime;i++){
 			allTimes.add(i);
 		}
+		// TODO Auto-generated method stub
 		List<LabourOnduty> listBefore = labourOndutyDao
 				.getTodayLabourOndutyForEDC(bizDate, currentTime, cuName);
 		if (listBefore != null) {
@@ -468,11 +577,10 @@ public class ChartServiceImpl implements IChartService {
 			
 			list.add(createEmptyHourData(currentTime));
 		}
-
+          
 		return list;
 	}
-	
-	
+
 	private Map<String, Object>  createEmptyHourData(Integer hour){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("time", hour);
