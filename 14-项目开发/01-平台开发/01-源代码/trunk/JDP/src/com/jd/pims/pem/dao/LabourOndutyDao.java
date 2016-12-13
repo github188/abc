@@ -1,5 +1,6 @@
 package com.jd.pims.pem.dao;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +62,7 @@ public interface LabourOndutyDao extends IBaseDao {
 	 * @param name 分拣中心名称
 	 * @return
 	 */
-	List<LabourOnduty> getTodayLabourOndutyForEDC(
+	LinkedList<LabourOnduty> getTodayLabourOndutyForEDC(
 			@Param("bizDate") String bizDate,@Param("currentHour") int currentHour, @Param("cuName") String cuName);
 	
 	/**

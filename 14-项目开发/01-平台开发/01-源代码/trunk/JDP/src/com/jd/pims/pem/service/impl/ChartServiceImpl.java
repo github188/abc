@@ -511,6 +511,7 @@ public class ChartServiceImpl implements IChartService {
 
 	private List<Map<String, Object>> getSingleCenterData(String bizDate, int currentTime, String cuName) {
 		List<Map<String, Object>> list = new LinkedList<Map<String, Object>>();
+		
 		Set<Integer> allTimes=new HashSet<Integer>();
 		for(int i=1;i<currentTime;i++){
 			allTimes.add(i);
