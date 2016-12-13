@@ -482,7 +482,7 @@ option = {
 				                emphasis: {
 				                    show: true,
 				                    textStyle: {
-				                        fontSize: '5rem',
+				                        fontSize: '13',
 				                        fontWeight: '600'
 				                    }
 				                }			                
@@ -499,7 +499,7 @@ option = {
 				                emphasis: {
 				                    show: true,
 				                    textStyle: {
-				                        fontSize: '5rem',
+				                        fontSize: '13',
 				                        fontWeight: '600'
 				                    }
 				                }
@@ -1361,7 +1361,7 @@ option = {
 						myCenterdata[0].push(Math.ceil(eachHourTotalNum));
 						//myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil(((row.clerkNum?row.clerkNum:0)/eachHourTotalNum)*100));
 					}
-					myCenterdata[2].push(i+"点");
+					myCenterdata[2].push((i+1)+"点");
 				}
 				barOption.series[0].data = myCenterdata[0];
 				//barOption.series[1].data = myCenterdata[1];
@@ -1995,7 +1995,7 @@ option = {
 					if(data!=null){
 						//clerkNum 员工数 orderNum 订单数  date 日期
 						var dataL=data.length;
-						for(var i=0;i<24;i++){
+						for(var i=1;i<24;i++){
 							if(i<dataL){
 								eachHourTotalNum=(data[i].clerkNum?data[i].clerkNum:0)+(data[i].notClerkNum?data[i].notClerkNum:0)+(data[i].otherClerkNum?data[i].otherClerkNum:0);
 								if(new Date().getHours()==data[i].time){
@@ -2010,7 +2010,7 @@ option = {
 								myCenterdata[0].push(Math.ceil(eachHourTotalNum));
 								//myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil(((row.clerkNum?row.clerkNum:0)/eachHourTotalNum)*100));
 							}
-							myCenterdata[2].push(i+"点");
+							myCenterdata[2].push((i+1)+"点");
 						}
 						MyCenterOption.series[0].data = myCenterdata[0];
 						MyCenterOption.series[1].data = myCenterdata[1];
