@@ -138,7 +138,7 @@ option = {
 			        top: 5,
 		        },
 				legend:{
-					data:['在岗人数','正式工占比'],
+					data:['在岗人数'],
 					bottom:5,
 					right:30,
 					textStyle:{
@@ -188,19 +188,19 @@ option = {
 	                },
 	                //position:'right',
 		        },
-		        {
-		        	type:'value',
-		        	name: '占比',
-		        	axisLine:{
-			    		lineStyle:{
-			    			color:'#7ab8f9'
-			    		}
-			        } ,
-			        splitLine:{  
-	                    show:false  
-	                },
-	                //position:'right',
-		        }
+//		        {
+//		        	type:'value',
+//		        	name: '占比',
+//		        	axisLine:{
+//			    		lineStyle:{
+//			    			color:'#7ab8f9'
+//			    		}
+//			        } ,
+//			        splitLine:{  
+//	                    show:false  
+//	                },
+//	                //position:'right',
+//		        }
 		        ],
 	           // color: ['#32bbec'],
 		        series: [
@@ -227,29 +227,29 @@ option = {
 			                   ,randomData(),randomData(),randomData()]
 			            */
 		        	},
-		        	{
-			            name: '正式工占比',type: 'line',
-			            label:{
-			            	normal:{
-			            		show:true,
-			            		position:'top'
-			            	},
-			            },
-			            symbol:'circle',
-			            symbolSize:'10',
-			            smooth:true,
-			            barMinHeight:1,
-			            yAxisIndex:1,
-			            itemStyle:{
-			            	normal:{
-			            		color:'#ff9f39'
-				            	}
-			            }/*,
-			            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
-			                   ,randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
-			                   ,randomData(),randomData(),randomData()]
-			            */
-		        	}
+//		        	{
+//			            name: '正式工占比',type: 'line',
+//			            label:{
+//			            	normal:{
+//			            		show:true,
+//			            		position:'top'
+//			            	},
+//			            },
+//			            symbol:'circle',
+//			            symbolSize:'10',
+//			            smooth:true,
+//			            barMinHeight:1,
+//			            yAxisIndex:1,
+//			            itemStyle:{
+//			            	normal:{
+//			            		color:'#ff9f39'
+//				            	}
+//			            }/*,
+//			            data: [randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
+//			                   ,randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData(),randomData()
+//			                   ,randomData(),randomData(),randomData()]
+//			            */
+//		        	}
 		        ]
 			};
 
@@ -483,7 +483,7 @@ option = {
 				                    show: true,
 				                    textStyle: {
 				                        fontSize: '5rem',
-				                        fontWeight: 'bold'
+				                        fontWeight: '600'
 				                    }
 				                }			                
 				            },
@@ -500,7 +500,7 @@ option = {
 				                    show: true,
 				                    textStyle: {
 				                        fontSize: '5rem',
-				                        fontWeight: 'bold'
+				                        fontWeight: '600'
 				                    }
 				                }
 
@@ -1358,7 +1358,7 @@ option = {
 					myCenterdata[2].push(row.time);
 				});
 				barOption.series[0].data = myCenterdata[0];
-				barOption.series[1].data = myCenterdata[1];
+				//barOption.series[1].data = myCenterdata[1];
 				barOption.xAxis.data = myCenterdata[2];
 				barchart.setOption(barOption, true);
 			}
@@ -1543,9 +1543,8 @@ option = {
 				        		    },			            		
 				        		    textStyle: {
 				            			color:'#FFF',
-				                        fontSize: '12',
-				                        fontWeight: 'bold',
-				                        fontFamily:'宋体'
+				                        fontSize: '5rem',
+				                        fontWeight: '600'
 				                    }	
 				            	},
 				            },
@@ -1585,9 +1584,8 @@ option = {
 			        		    },		                    
 			            		textStyle: {
 			            			color:'#FFF',
-			                        fontSize: '12',
-			                        fontWeight: 'normal',
-			                        fontFamily:'宋体'
+			                        fontSize: '5rem',
+			                        fontWeight: '600'
 			                    }
 			            	},
 			            },
