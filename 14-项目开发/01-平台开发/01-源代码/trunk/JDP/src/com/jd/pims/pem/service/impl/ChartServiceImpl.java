@@ -414,9 +414,9 @@ public class ChartServiceImpl implements IChartService {
 	
 	private List<Map<String, Object>> getAllCenterData(String bizDate, int currentTime, String cuName) {
 		List<Map<String, Object>> arealist = userDao.getCurrentTimeAreaForChart(cuName);
-		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> resultList = new LinkedList<Map<String, Object>>();
 		for (Map<String, Object> areaMap : arealist) {
-			List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+			List<Map<String, Object>> list = new LinkedList<Map<String, Object>>();
 			Set<Integer> allTimes=new HashSet<Integer>();
 			for(int i=1;i<currentTime;i++){
 				allTimes.add(i);
@@ -510,7 +510,7 @@ public class ChartServiceImpl implements IChartService {
 	}
 
 	private List<Map<String, Object>> getSingleCenterData(String bizDate, int currentTime, String cuName) {
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		List<Map<String, Object>> list = new LinkedList<Map<String, Object>>();
 		Set<Integer> allTimes=new HashSet<Integer>();
 		for(int i=1;i<currentTime;i++){
 			allTimes.add(i);
