@@ -1535,17 +1535,17 @@ option = {
 				            label:{
 				            	normal:{
 				            		show:true,
-				            		position:['190%', '10%'],
+				            		position:['190%', '10%'],			            		
+				        		    textStyle: {
+				            			color:'#FFF',
+				                        fontSize: '13',
+				                        fontWeight: '400'
+				                    },
 				            		formatter : function(params){
 				        		    	//alert(a,b,c);
 				        		    	//return datalist[b];
 				            			return datalist[0][params.name];
-				        		    },			            		
-				        		    textStyle: {
-				            			color:'#FFF',
-				                        fontSize: '5rem',
-				                        fontWeight: '600'
-				                    }	
+				        		    }
 				            	},
 				            },
 				            itemStyle: {
@@ -1576,17 +1576,17 @@ option = {
 			            label:{
 			            	normal:{
 			            		show:true,
-			            		position:['100%', '10%'],
+			            		position:['100%', '10%'],		                    
+			            		textStyle: {
+			            			color:'#FFF',
+			                        fontSize: '13',
+			                        fontWeight: '400'
+			                    },
 			            		formatter : function(params){
 			        		    	//alert(a,b,c);
 			        		    	//return datalist[b];
 			            			return datalist[1][params.name];
-			        		    },		                    
-			            		textStyle: {
-			            			color:'#FFF',
-			                        fontSize: '5rem',
-			                        fontWeight: '600'
-			                    }
+			        		    }
 			            	},
 			            },
 			            itemStyle: {
