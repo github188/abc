@@ -2007,7 +2007,7 @@ option = {
 								myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil(((data[i].clerkNum?data[i].clerkNum:0)/eachHourTotalNum)*100));
 
 							}else{
-								myCenterdata[0].push(Math.ceil(eachHourTotalNum));
+								myCenterdata[0].push(Math.ceil(0));
 								//myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil(((row.clerkNum?row.clerkNum:0)/eachHourTotalNum)*100));
 							}
 							myCenterdata[2].push((i+1)+"点");
