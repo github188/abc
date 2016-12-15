@@ -741,7 +741,7 @@ option = {
 			    		            ];
 			//pieOption.legend.data = pieLegendData;
 			pieOption.legend.data = ['正式员工'+eval(7035/10821).toFixed(2)*100+'%','非正式员工'+eval(3786/10821).toFixed(2)*100+'%'];
-			$("#effectTopLeft").html(name?name+'今天在岗人数走势图':'全国今天在岗人数走势图');
+			$("#effectTopLeft").html(name?name+'实时在岗人数走势图':'全国实时在岗人数走势图');
 		    barOption.series[0].data =[10823,11375,10315,10008,11027,9875,9763];
 		    barOption.series[1].data =[8019843,8679125,7756880,7315848,8248196,7119875,7126990];
 		    barOption.series[2].data =[741,763,752,731,748,721,730];
