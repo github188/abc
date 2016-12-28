@@ -969,8 +969,6 @@ option = {
 			var numEmp = 0.0;
 			var notNumEmp = 0.0;
 			var otherNumEmp = 0.0;
-			var a = 0.00;
-			var b = 0.00;
 			var colorList={1:"#f4e925",2:"#F327F5"}
 			if(data!=null){
 				$.each(data, function(index, row){
@@ -1060,11 +1058,13 @@ option = {
 					notNumEmp += row.NotEmpNum;
 				});
 			}
-			a=numEmp+notNumEmp==0?0:((numEmp/(numEmp+notNumEmp)).toFixed(2));
-			b=numEmp+notNumEmp==0?0:((notNumEmp/(numEmp+notNumEmp)).toFixed(2));
+			var numEmpPer = 0.00;
+			var notNumEmpPer = 0.00;
+			numEmpPer=(numEmp+notNumEmp==0)?0:((numEmp/(numEmp+notNumEmp)).toFixed(2));
+			notNumEmpPer=(numEmp+notNumEmp==0)?0:((notNumEmp/(numEmp+notNumEmp)).toFixed(2));
 			piedata.push(
 					{
-						name:'正式员工  '+Math.ceil(a*100)+'%',
+						name:'正式员工  '+(numEmpPer*100)+'%',
 						value: Math.ceil(numEmp),
 			            label: {
 			                normal: {
@@ -1085,7 +1085,7 @@ option = {
 			            },
 					},
 					{
-						name:'非正式员工  '+Math.ceil(b*100)+'%',
+						name:'非正式员工  '+(notNumEmpPer*100)+'%',
 						value:Math.ceil(notNumEmp),
 			            label: {
 			                normal: {
@@ -1107,8 +1107,8 @@ option = {
 					}
 
 				); 
-			pieLegendData.push('正式员工  '+Math.ceil(a*100)+'%');
-			pieLegendData.push('非正式员工  '+Math.ceil(b*100)+'%');
+			pieLegendData.push('正式员工  '+(numEmpPer*100)+'%');
+			pieLegendData.push('非正式员工  '+(notNumEmpPer*100)+'%');
 			//setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
 			setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp,name);
 		}
@@ -1136,11 +1136,13 @@ option = {
 					notNumEmp += row.NotEmpNum;
 				});
 			}
-			a=numEmp+notNumEmp==0?0:((numEmp/(numEmp+notNumEmp)).toFixed(2));
-			b=numEmp+notNumEmp==0?0:((notNumEmp/(numEmp+notNumEmp)).toFixed(2));
+			var numEmpPer = 0.00;
+			var notNumEmpPer = 0.00;
+			numEmpPer=(numEmp+notNumEmp==0)?0:((numEmp/(numEmp+notNumEmp)).toFixed(2));
+			notNumEmpPer=(numEmp+notNumEmp==0)?0:((notNumEmp/(numEmp+notNumEmp)).toFixed(2));
 			piedata.push(
 					{
-						name:'正式员工  '+Math.ceil(a*100)+'%',
+						name:'正式员工  '+(numEmpPer*100)+'%',
 						value: Math.ceil(numEmp),
 			            label: {
 			                normal: {
@@ -1161,7 +1163,7 @@ option = {
 			            },
 					},
 					{
-						name:'非正式员工  '+Math.ceil(b*100)+'%',
+						name:'非正式员工  '+(notNumEmpPer*100)+'%',
 						value:Math.ceil(notNumEmp),
 			            label: {
 			                normal: {
@@ -1183,8 +1185,8 @@ option = {
 					}
 
 				); 
-			pieLegendData.push('正式员工  '+Math.ceil(a*100)+'%');
-			pieLegendData.push('非正式员工  '+Math.ceil(b*100)+'%');
+			pieLegendData.push('正式员工  '+(numEmpPer*100)+'%');
+			pieLegendData.push('非正式员工  '+(notNumEmpPer*100)+'%');
 			//setMapOption(null,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
 			setMapOption1(null,piedata,pieLegendData,numEmp+notNumEmp,name);
 		}
@@ -1212,11 +1214,13 @@ option = {
 					notNumEmp += row.NotEmpNum;
 				});
 			}
-			a=numEmp+notNumEmp==0?0:((numEmp/(numEmp+notNumEmp)).toFixed(2));
-			b=numEmp+notNumEmp==0?0:((notNumEmp/(numEmp+notNumEmp)).toFixed(2));
+			var numEmpPer = 0.00;
+			var notNumEmpPer = 0.00;
+			numEmpPer=(numEmp+notNumEmp==0)?0:((numEmp/(numEmp+notNumEmp)).toFixed(2));
+			notNumEmpPer=(numEmp+notNumEmp==0)?0:((notNumEmp/(numEmp+notNumEmp)).toFixed(2));
 			piedata.push(
 					{
-						name:'正式员工  '+Math.ceil(a*100)+'%',
+						name:'正式员工  '+(numEmpPer*100)+'%',
 						value: Math.ceil(numEmp),
 			            label: {
 			                normal: {
@@ -1237,7 +1241,7 @@ option = {
 			            },
 					},
 					{
-						name:'非正式员工  '+Math.ceil(b*100)+'%',
+						name:'非正式员工  '+(notNumEmpPer*100)+'%',
 						value:Math.ceil(notNumEmp),
 			            label: {
 			                normal: {
@@ -1259,8 +1263,8 @@ option = {
 					}
 
 				); 
-			pieLegendData.push('正式员工  '+Math.ceil(a*100)+'%');
-			pieLegendData.push('非正式员工  '+Math.ceil(b*100)+'%');
+			pieLegendData.push('正式员工  '+(numEmpPer*100)+'%');
+			pieLegendData.push('非正式员工  '+(notNumEmpPer*100)+'%');
 //			setMapOption1(null,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
 			setMapOption1(null,piedata,pieLegendData,numEmp+notNumEmp,name);
 		}
