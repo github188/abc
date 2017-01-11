@@ -71,14 +71,14 @@ public class ChartServiceImplTest extends
 	}
 	
 	@Test
-	public void testGetMyCenterData(){
+	public void testGetMyCenterDataGroup(){
 		logger.info("分拣中心在岗人数接口测试");
 		try{
 			Calendar calendar = Calendar.getInstance();
 			calendar.set(Calendar.YEAR, 2016);
 			calendar.set(Calendar.MONTH, 10);//11月
 			calendar.set(Calendar.DAY_OF_MONTH, 18);
-			List<Map<String, Object>> result=service.getMyCenterData("东莞麻涌分拣中心",calendar.getTime());
+			List<Map<String, Object>> result=service.getMyCenterData("京东集团",calendar.getTime());
 			if(result!=null){
 				logger.info(result);
 			}
@@ -89,4 +89,5 @@ public class ChartServiceImplTest extends
 		}
 	}
 
+	
 }

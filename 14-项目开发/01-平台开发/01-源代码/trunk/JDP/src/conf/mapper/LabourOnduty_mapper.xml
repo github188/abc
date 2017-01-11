@@ -138,22 +138,14 @@
   
    <select id="getCurrentTimeLabourOndutyForChart1" resultType="java.util.HashMap">
 	<![CDATA[
-	select dd.personType,sum(dd.Num) as Num from 
-		(select  lab.cu_id,lab.PERSON_TYPE as personType,lab.timing,IFNULL(lab.QUANTITY_ONDUTY,0) as Num
-	        from JD_LE_LABOUR_ONDUTY lab 
-					INNER JOIN(
-						 select  cu_id,PERSON_TYPE,BIZ_DATE ,max(timing) as TIMING
-							from JD_LE_LABOUR_ONDUTY 
-							WHERE create_time >=#{begin}  
-								AND create_time <=#{end}  
-						 AND  CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID 
+	select dd.personType,sum(dd.quantity_onduty) as Num from 
+		(
+			select  cu_id,PERSON_TYPE as personType,BIZ_DATE ,max(quantity_onduty) as quantity_onduty
+			from JD_LE_LABOUR_ONDUTY 
+			WHERE create_time >=#{begin}  AND create_time <=#{end}  
+					 AND  CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID 
 						 				where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
-							group by cu_id,PERSON_TYPE
-					) maxt on maxt.cu_id=LAB.CU_ID AND maxt.PERSON_TYPE=LAB.PERSON_TYPE AND maxt.BIZ_DATE=lab.BIZ_DATE AND maxt.TIMING=lab.TIMING
-	        WHERE create_time >=#{begin} 
-	         	AND create_time <=#{end} 
-				AND  lab.CU_ID in(select MANAGE_ID from NP_CF_SUBSYSTEM sub LEFT JOIN NP_EQ_AREA area on sub.AREA_ID = area.ID 
-									where area.AREA_CLASS='BROUGH' and area.FULL_PATH like CONCAT((select distinct FULL_PATH from NP_EQ_AREA where AREA_NAME = #{name}),'%' ))
+			group by cu_id,PERSON_TYPE
 	) dd
 	group by dd.personType
 	]]>
