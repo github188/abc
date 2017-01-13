@@ -53,7 +53,9 @@ public class ChartServiceImplTest extends
 	public void testGetEfficience() {
 		logger.info("图表上的人效接口测试");
 		try{
-			service.getEfficience("京东集团");
+			List<Map<String, Object>> results=service.getEfficience("北京马驹桥分拣中心");
+			logger.info(results.toString());
+			
 		}catch(Exception e){
 			logger.debug("", e);
 			fail("测试失败！原因："+e.getMessage());

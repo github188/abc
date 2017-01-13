@@ -397,7 +397,8 @@ public class ChartServiceImpl implements IChartService {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(today);
 		int currentTime = calendar.get(Calendar.HOUR_OF_DAY);
-		if ("京东集团".equals(cuName)) {
+		//if ("京东集团".equals(cuName)) {
+		if(!cuName.contains("中心")){
 			list = getAllCenterData(bizDate, currentTime, cuName);
 		} else {
 			list = getSingleCenterData(bizDate, currentTime, cuName);
@@ -407,68 +408,21 @@ public class ChartServiceImpl implements IChartService {
 		return list;
 	}
 
-	private void patchForWholeDate(List<Map<String, Object>> list) {
-		for (int i = list.size(); i < 24; i++) {
-			Map<String, Object> map = createEmptyHourData(i + 1);
-			list.add(map);
-		}
-	}
-
 	private List<Map<String, Object>> getAllCenterData(String bizDate,
 			int currentTime, String cuName) {
 		List<Map<String, Object>> arealist = userDao
 				.getCurrentTimeAreaForChart(cuName);
 		List<Map<String, Object>> resultList = new LinkedList<Map<String, Object>>();
+		Map<String, Map<String, Object>> fullMap = new HashMap<String, Map<String, Object>>();
 		for (Map<String, Object> areaMap : arealist) {
-			List<Map<String, Object>> list = new LinkedList<Map<String, Object>>();
-			Set<Integer> allTimes = new HashSet<Integer>();
-			for (int i = 1; i < currentTime; i++) {
-				allTimes.add(i);
-			}
-			// TODO Auto-generated method stub
+
 			List<LabourOnduty> listBefore = labourOndutyDao
 					.getTodayLabourOndutyForEDC(bizDate, currentTime, areaMap
 							.get("name").toString());
+			Map<String, Map<String, Object>> sigleMap = new HashMap<String, Map<String, Object>>();
 			if (listBefore != null) {
-				int time = 1;
-				Map<String, Object> map = new HashMap<String, Object>();
-				int notClerkNum = 0;
-				for (LabourOnduty lab : listBefore) {
-					if (Integer.parseInt(lab.getHour().toString()) == time) {
-						if (lab.getPersonType().equals("1")) {// 正式工
-							map.put("clerkNum", lab.getQuantityOnduty());
-						} else if (lab.getPersonType().equals("5")) {// 其他
-							map.put("otherClerkNum", lab.getQuantityOnduty());
-						} else {// 非正式工
-							notClerkNum += lab.getQuantityOnduty();
-						}
-					} else {
+				sigleMap = arrangeData(listBefore);
 
-						if (time > 0) {
-							map.put("time", time);
-							map.put("notClerkNum", notClerkNum);
-							list.add(map);
-							allTimes.remove(time);
-						}
-						notClerkNum = 0;
-						time++;
-						map = new HashMap<String, Object>();
-						if (lab.getPersonType().equals("1")) {// 正式工
-							map.put("clerkNum", lab.getQuantityOnduty());
-						} else if (lab.getPersonType().equals("5")) {// 其他
-							map.put("otherClerkNum", lab.getQuantityOnduty());
-						} else {// 非正式工
-							notClerkNum += lab.getQuantityOnduty();
-						}
-					}
-				}
-			}
-			// 增补空记录
-			if (!allTimes.isEmpty()) {
-				Iterator<Integer> it = allTimes.iterator();
-				while (it.hasNext()) {
-					list.add(createEmptyHourData(it.next()));
-				}
 			}
 			// 取当前小时内的在岗人数
 			List<LabourOnduty> listCurrent = labourOndutyDao
@@ -494,111 +448,80 @@ public class ChartServiceImpl implements IChartService {
 				map.put("clerkNum", clerkNum);
 				map.put("otherClerkNum", otherClerkNum);
 				map.put("notClerkNum", notClerkNum);
-				list.add(map);
-			} else {// 如果没有返回记录，默认为0
-				list.add(createEmptyHourData(currentTime));
+				// list.add(map);
+				sigleMap.put(currentTime + "", map);
 			}
-			if (resultList.isEmpty()) {
-				resultList.addAll(list);
+
+			addUp(fullMap, sigleMap);
+		}
+		for (int i = 1; i <= 24; i++) {
+			if (fullMap.containsKey(i + "")) {
+				resultList.add(fullMap.get(i + ""));
 			} else {
-				for (Map<String, Object> resultMap : resultList) {
-					for (Map<String, Object> singleMap : list) {
-						if (resultMap.get("time").equals(singleMap.get("time"))) {
-							resultMap
-									.put("clerkNum",
-											Integer.parseInt(resultMap
-													.get("clerkNum") == null ? "0"
-													: resultMap.get("clerkNum")
-															.toString())
-													+ Integer.parseInt(singleMap
-															.get("clerkNum") == null ? "0"
-															: singleMap.get(
-																	"clerkNum")
-																	.toString()));
-							resultMap
-									.put("otherClerkNum",
-											Integer.parseInt(resultMap
-													.get("otherClerkNum") == null ? "0"
-													: resultMap.get(
-															"otherClerkNum")
-															.toString())
-													+ Integer.parseInt(singleMap
-															.get("otherClerkNum") == null ? "0"
-															: singleMap
-																	.get("otherClerkNum")
-																	.toString()));
-							resultMap
-									.put("notClerkNum",
-											Integer.parseInt(resultMap
-													.get("notClerkNum") == null ? "0"
-													: resultMap.get(
-															"notClerkNum")
-															.toString())
-													+ Integer.parseInt(singleMap
-															.get("notClerkNum") == null ? "0"
-															: singleMap
-																	.get("notClerkNum")
-																	.toString()));
-						}
-					}
-				}
+				resultList.add(createEmptyHourData(i));
 			}
 		}
+
 		return resultList;
+
+	}
+
+	/**
+	 * 累计所有分拣中心的数据
+	 * @param resultList
+	 * @param sigleList
+	 */
+	private void addUp(Map<String, Map<String, Object>> resultList,
+			Map<String, Map<String, Object>> sigleList) {
+		Iterator<String> keys = sigleList.keySet().iterator();
+		while (keys.hasNext()) {
+			String key = keys.next();
+			if (resultList.containsKey(key)) {
+				Map<String, Object> resultMap = resultList.get(key);
+				Map<String, Object> singleMap = resultList.get(key);
+				resultMap
+						.put("clerkNum",
+								Integer.parseInt(resultMap.get("clerkNum") == null ? "0"
+										: resultMap.get("clerkNum").toString())
+										+ Integer.parseInt(singleMap
+												.get("clerkNum") == null ? "0"
+												: singleMap.get("clerkNum")
+														.toString()));
+				resultMap
+						.put("otherClerkNum",
+								Integer.parseInt(resultMap.get("otherClerkNum") == null ? "0"
+										: resultMap.get("otherClerkNum")
+												.toString())
+										+ Integer.parseInt(singleMap
+												.get("otherClerkNum") == null ? "0"
+												: singleMap
+														.get("otherClerkNum")
+														.toString()));
+				resultMap
+						.put("notClerkNum",
+								Integer.parseInt(resultMap.get("notClerkNum") == null ? "0"
+										: resultMap.get("notClerkNum")
+												.toString())
+										+ Integer.parseInt(singleMap
+												.get("notClerkNum") == null ? "0"
+												: singleMap.get("notClerkNum")
+														.toString()));
+			} else {
+				resultList.put(key, sigleList.get(key));
+			}
+		}
 
 	}
 
 	private List<Map<String, Object>> getSingleCenterData(String bizDate,
 			int currentTime, String cuName) {
-		List<Map<String, Object>> list = new LinkedList<Map<String, Object>>();
 
-		Set<Integer> allTimes = new HashSet<Integer>();
-		for (int i = 1; i < currentTime; i++) {
-			allTimes.add(i);
-		}
 		// TODO Auto-generated method stub
 		List<LabourOnduty> listBefore = labourOndutyDao
 				.getTodayLabourOndutyForEDC(bizDate, currentTime, cuName);
+		Map<String, Map<String, Object>> fullMap = new HashMap<String, Map<String, Object>>();
 		if (listBefore != null) {
-			int time = 1;
-			Map<String, Object> map = new HashMap<String, Object>();
-			int notClerkNum = 0;
-			for (LabourOnduty lab : listBefore) {
-				if (Integer.parseInt(lab.getHour().toString()) == time) {
-					if (lab.getPersonType().equals("1")) {// 正式工
-						map.put("clerkNum", lab.getQuantityOnduty());
-					} else if (lab.getPersonType().equals("5")) {// 其他
-						map.put("otherClerkNum", lab.getQuantityOnduty());
-					} else {// 非正式工
-						notClerkNum += lab.getQuantityOnduty();
-					}
-				} else {
-
-					if (time > 0) {
-						map.put("time", time);
-						map.put("notClerkNum", notClerkNum);
-						list.add(map);
-						allTimes.remove(time);
-					}
-					notClerkNum = 0;
-					time++;
-					map = new HashMap<String, Object>();
-					if (lab.getPersonType().equals("1")) {// 正式工
-						map.put("clerkNum", lab.getQuantityOnduty());
-					} else if (lab.getPersonType().equals("5")) {// 其他
-						map.put("otherClerkNum", lab.getQuantityOnduty());
-					} else {// 非正式工
-						notClerkNum += lab.getQuantityOnduty();
-					}
-				}
-			}
-		}
-		// 增补空记录
-		if (!allTimes.isEmpty()) {
-			Iterator<Integer> it = allTimes.iterator();
-			while (it.hasNext()) {
-				list.add(createEmptyHourData(it.next()));
-			}
+			fullMap = arrangeData(listBefore);
 		}
 		// 取当前小时内的在岗人数
 		List<LabourOnduty> listCurrent = labourOndutyDao
@@ -623,13 +546,52 @@ public class ChartServiceImpl implements IChartService {
 			map.put("clerkNum", clerkNum);
 			map.put("otherClerkNum", otherClerkNum);
 			map.put("notClerkNum", notClerkNum);
-			list.add(map);
-		} else {// 如果没有返回记录，默认为0
-
-			list.add(createEmptyHourData(currentTime));
+			// list.add(map);
+			fullMap.put(currentTime + "", map);
+		}
+		// 补全
+		List<Map<String, Object>> result = new LinkedList<Map<String, Object>>();
+		for (int i = 1; i <= 24; i++) {
+			if (fullMap.containsKey(i + "")) {
+				result.add(fullMap.get(i + ""));
+			} else {
+				result.add(createEmptyHourData(i));
+			}
 		}
 
-		return list;
+		return result;
+	}
+
+	private Map<String, Map<String, Object>> arrangeData(
+			List<LabourOnduty> listBefore) {
+		Map<String, Map<String, Object>> fullMap = new HashMap<String, Map<String, Object>>();
+		for (LabourOnduty lab : listBefore) {
+			String hour = lab.getHour().toString();
+			Map<String, Object> map = null;
+			if (fullMap.containsKey(hour)) {
+				map = fullMap.get(hour);
+			} else {
+				map = new HashMap<String, Object>();
+				fullMap.put(hour, map);
+			}
+			if (lab.getPersonType().equals("1")) {// 正式工
+				map.put("clerkNum", lab.getQuantityOnduty());
+			} else if (lab.getPersonType().equals("5")) {// 其他
+				map.put("otherClerkNum", lab.getQuantityOnduty());
+			} else {// 非正式工
+				int otherClerkNum = map.get("notClerkNum") == null ? 0
+						: Integer.parseInt(map.get("notClerkNum").toString());
+				otherClerkNum += lab.getQuantityOnduty();
+				map.put("notClerkNum", otherClerkNum);
+			}
+		}
+		/*
+		 * List<Map<String,Object>> result=new LinkedList<Map<String,Object>>();
+		 * for(int i=1;i<=24;i++){ if(fullMap.containsKey(i+"")){
+		 * result.add(fullMap.get(i+"")); }else{
+		 * result.add(createEmptyHourData(i)); } }
+		 */
+		return fullMap;
 	}
 
 	private Map<String, Object> createEmptyHourData(Integer hour) {

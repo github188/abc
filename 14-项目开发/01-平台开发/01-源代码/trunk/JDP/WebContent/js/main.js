@@ -1335,9 +1335,9 @@ option = {
 		
 		};
 		
-		//获取拼接右上数据
+		//获取拼接右上角图表数据
 		function makebarData(data,name){	
-			$("#effectTopLeft").html(name?name+'今天在岗人数走势图':'全国今天在岗人数走势图');
+			$("#effectTopLeft").html(name?name+'实时在岗人数走势图':'全国实时在岗人数走势图');
 			myCenterdata= new Array();
 			myCenterdata[0] = new Array();
 			myCenterdata[1] = new Array();
@@ -1352,11 +1352,12 @@ option = {
 				var dataL=data.length;
 				for(var i=0;i<24;i++){
 					if(i<dataL){
-						eachHourTotalNum=(data[i].clerkNum?data[i].clerkNum:0)+(data[i].notClerkNum?data[i].notClerkNum:0)+(data[i].otherClerkNum?data[i].otherClerkNum:0);
+						//去掉其他人员
+						eachHourTotalNum=(data[i].clerkNum?data[i].clerkNum:0)+(data[i].notClerkNum?data[i].notClerkNum:0);//+(data[i].otherClerkNum?data[i].otherClerkNum:0);
 						if(new Date().getHours()==data[i].time){
 							nowClerkNum =(data[i].clerkNum?data[i].clerkNum:0);
 							nowNotClerkNum =(data[i].notClerkNum?data[i].notClerkNum:0);
-							nowOtherClerkNum =(data[i].otherClerkNum?data[i].otherClerkNum:0);
+							//nowOtherClerkNum =(data[i].otherClerkNum?data[i].otherClerkNum:0);
 						}
 						myCenterdata[0].push(Math.ceil(eachHourTotalNum));
 						myCenterdata[1].push(eachHourTotalNum==0?0:Math.ceil(((data[i].clerkNum?data[i].clerkNum:0)/eachHourTotalNum)*100));
@@ -1373,14 +1374,7 @@ option = {
 				barchart.setOption(barOption, true);
 			}
 		}
-//		function setBarOption(bardata,name){
-//			$("#effectTopLeft").html(name?name+'一周人效走势图':'全国一周人效走势图');
-//		    barOption.series[0].data = bardata[0];
-//		    barOption.series[1].data = bardata[1];
-//		    barOption.series[2].data = bardata[2];
-//		    barOption.xAxis.data = bardata[3];
-//			barchart.setOption(barOption, true);  
-//		}
+
 		
 		function searchBar1(name) {
 			var url = "chart/getBar1Data.do?name="+name;
