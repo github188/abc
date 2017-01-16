@@ -1060,11 +1060,11 @@ option = {
 			}
 			var numEmpPer = 0.00;
 			var notNumEmpPer = 0.00;
-			numEmpPer=(numEmp+notNumEmp==0)?0:((numEmp/(numEmp+notNumEmp)).toFixed(2));
-			notNumEmpPer=(numEmp+notNumEmp==0)?0:((notNumEmp/(numEmp+notNumEmp)).toFixed(2));
+			numEmpPer=(numEmp+notNumEmp==0)?0:((numEmp/(numEmp+notNumEmp)*100).toFixed(0));
+			notNumEmpPer=(numEmp+notNumEmp==0)?0:((notNumEmp/(numEmp+notNumEmp)*100).toFixed(0));
 			piedata.push(
 					{
-						name:'正式员工  '+(numEmpPer*100)+'%',
+						name:'正式员工  '+numEmpPer+'%',
 						value: Math.ceil(numEmp),
 			            label: {
 			                normal: {
@@ -1085,7 +1085,7 @@ option = {
 			            },
 					},
 					{
-						name:'非正式员工  '+(notNumEmpPer*100)+'%',
+						name:'非正式员工  '+notNumEmpPer+'%',
 						value:Math.ceil(notNumEmp),
 			            label: {
 			                normal: {
@@ -1107,8 +1107,8 @@ option = {
 					}
 
 				); 
-			pieLegendData.push('正式员工  '+(numEmpPer*100)+'%');
-			pieLegendData.push('非正式员工  '+(notNumEmpPer*100)+'%');
+			pieLegendData.push('正式员工  '+numEmpPer+'%');
+			pieLegendData.push('非正式员工  '+notNumEmpPer+'%');
 			//setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp+otherNumEmp,name);
 			setMapOption(mapdata,piedata,pieLegendData,numEmp+notNumEmp,name);
 		}
@@ -1993,10 +1993,10 @@ option = {
 					if(data!=null){
 						//clerkNum 员工数 orderNum 订单数  date 日期
 						var dataL=data.length;
-						for(var i=1;i<24;i++){
+						for(var i=0;i<24;i++){
 							if(i<dataL){
 								eachHourTotalNum=(data[i].clerkNum?data[i].clerkNum:0)+(data[i].notClerkNum?data[i].notClerkNum:0)+(data[i].otherClerkNum?data[i].otherClerkNum:0);
-								if(new Date().getHours()==data[i].time){
+								if(new Date().getHours()+1==data[i].time){
 									nowClerkNum =(data[i].clerkNum?data[i].clerkNum:0);
 									nowNotClerkNum =(data[i].notClerkNum?data[i].notClerkNum:0);
 									nowOtherClerkNum =(data[i].otherClerkNum?data[i].otherClerkNum:0);
@@ -2017,6 +2017,7 @@ option = {
 						$("#nowClerkNum").html(nowClerkNum);
 						$("#nowNotClerkNum").html(nowNotClerkNum);
 						$("#nowOtherkNum").html(nowOtherClerkNum);
+						
 						assembThisHourBar(nowClerkNum,nowNotClerkNum,nowOtherClerkNum);
 					}
 
@@ -2199,6 +2200,7 @@ option = {
 			        	},	
 			        ]
 				};
+			
 			thisHourDatachart = echarts.init(document.getElementById('thisHourData'));
 			thisHourDatachart.setOption(thisHourOption, true);
 			

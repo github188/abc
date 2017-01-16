@@ -403,8 +403,7 @@ public class ChartServiceImpl implements IChartService {
 		} else {
 			list = getSingleCenterData(bizDate, currentTime, cuName);
 		}
-		// 补充数据,前端补
-		// patchForWholeDate(list);
+	
 		return list;
 	}
 
@@ -427,7 +426,8 @@ public class ChartServiceImpl implements IChartService {
 			// 取当前小时内的在岗人数
 			List<LabourOnduty> listCurrent = labourOndutyDao
 					.getCurrentTimeLabourOndutyForEDC(bizDate, currentTime,
-							cuName);
+							areaMap
+							.get("name").toString());
 			Map<String, Object> map = new HashMap<String, Object>();
 			int notClerkNum = 0;
 			int clerkNum = 0;
@@ -444,12 +444,12 @@ public class ChartServiceImpl implements IChartService {
 					}
 
 				}
-				map.put("time", currentTime);
+				map.put("time", currentTime+1);
 				map.put("clerkNum", clerkNum);
 				map.put("otherClerkNum", otherClerkNum);
 				map.put("notClerkNum", notClerkNum);
 				// list.add(map);
-				sigleMap.put(currentTime + "", map);
+				sigleMap.put((currentTime+1) + "", map);
 			}
 
 			addUp(fullMap, sigleMap);
@@ -472,13 +472,13 @@ public class ChartServiceImpl implements IChartService {
 	 * @param sigleList
 	 */
 	private void addUp(Map<String, Map<String, Object>> resultList,
-			Map<String, Map<String, Object>> sigleList) {
-		Iterator<String> keys = sigleList.keySet().iterator();
-		while (keys.hasNext()) {
+			Map<String, Map<String, Object>> singleList) {
+		Iterator<String> keys = singleList.keySet().iterator();
+		while (keys.hasNext()) {//遍历singleList的key值
 			String key = keys.next();
-			if (resultList.containsKey(key)) {
+			if (resultList.containsKey(key)) {//如果resultList包含了此key
 				Map<String, Object> resultMap = resultList.get(key);
-				Map<String, Object> singleMap = resultList.get(key);
+				Map<String, Object> singleMap = singleList.get(key);
 				resultMap
 						.put("clerkNum",
 								Integer.parseInt(resultMap.get("clerkNum") == null ? "0"
@@ -507,7 +507,7 @@ public class ChartServiceImpl implements IChartService {
 												: singleMap.get("notClerkNum")
 														.toString()));
 			} else {
-				resultList.put(key, sigleList.get(key));
+				resultList.put(key, singleList.get(key));
 			}
 		}
 
@@ -542,12 +542,12 @@ public class ChartServiceImpl implements IChartService {
 				}
 
 			}
-			map.put("time", currentTime);
+			map.put("time", currentTime+1);
 			map.put("clerkNum", clerkNum);
 			map.put("otherClerkNum", otherClerkNum);
 			map.put("notClerkNum", notClerkNum);
 			// list.add(map);
-			fullMap.put(currentTime + "", map);
+			fullMap.put((currentTime+1) + "", map);
 		}
 		// 补全
 		List<Map<String, Object>> result = new LinkedList<Map<String, Object>>();
@@ -572,6 +572,7 @@ public class ChartServiceImpl implements IChartService {
 				map = fullMap.get(hour);
 			} else {
 				map = new HashMap<String, Object>();
+				map.put("time", hour);
 				fullMap.put(hour, map);
 			}
 			if (lab.getPersonType().equals("1")) {// 正式工
@@ -585,12 +586,7 @@ public class ChartServiceImpl implements IChartService {
 				map.put("notClerkNum", otherClerkNum);
 			}
 		}
-		/*
-		 * List<Map<String,Object>> result=new LinkedList<Map<String,Object>>();
-		 * for(int i=1;i<=24;i++){ if(fullMap.containsKey(i+"")){
-		 * result.add(fullMap.get(i+"")); }else{
-		 * result.add(createEmptyHourData(i)); } }
-		 */
+		
 		return fullMap;
 	}
 
