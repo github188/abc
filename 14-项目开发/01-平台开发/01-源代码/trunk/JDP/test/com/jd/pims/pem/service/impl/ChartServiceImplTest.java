@@ -53,9 +53,7 @@ public class ChartServiceImplTest extends
 	public void testGetEfficience() {
 		logger.info("图表上的人效接口测试");
 		try{
-			List<Map<String, Object>> results=service.getEfficience("北京马驹桥分拣中心");
-			logger.info(results.toString());
-			
+			service.getEfficience("京东集团");
 		}catch(Exception e){
 			logger.debug("", e);
 			fail("测试失败！原因："+e.getMessage());
@@ -91,5 +89,22 @@ public class ChartServiceImplTest extends
 		}
 	}
 
-	
+	@Test
+	public void testGetMyCenterData(){
+		logger.info("分拣中心在岗人数接口测试");
+		try{
+			Calendar calendar = Calendar.getInstance();
+			calendar.set(Calendar.YEAR, 2016);
+			calendar.set(Calendar.MONTH, 10);//11月
+			calendar.set(Calendar.DAY_OF_MONTH, 18);
+			List<Map<String, Object>> result=service.getMyCenterData("京东集团",calendar.getTime());
+			if(result!=null){
+				logger.info(result);
+			}
+			Assert.assertTrue(true);
+		}catch(Exception e){
+			logger.debug("", e);
+			fail("测试失败！原因："+e.getMessage());
+		}
+	}
 }

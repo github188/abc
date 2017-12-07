@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jd.pims.pem.dao.OndutyInsertDao">
+
+	<insert id="insert" parameterType="com.jd.pims.pem.model.LabourOnduty">
+		INSERT INTO
+		`jd_le_labour_onduty` (`ID`, `CU_ID`, `BIZ_DATE`,
+		`TIMING`,
+		`PERSON_TYPE`, `QUANTITY_ONDUTY`, `CREATE_TIME`)
+		VALUES (#{id}, #{cuId}, #{bizDate}, #{timing}, #{personType}, #{quantityOnduty},
+		#{createTime});
+
+	</insert>
+
+</mapper>
